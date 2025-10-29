@@ -1,0 +1,32 @@
+{
+  "Spacers": {
+    "0": {
+      "$type": "number",
+      "$value": "{utilities.rem.0}"
+    },
+    "1": {
+      "$type": "number",
+      "$value": "{utilities.rem.0,25}"
+    },
+    "2": {
+      "$type": "number",
+      "$value": "{utilities.rem.0,5}"
+    },
+    "3 (base)": {
+      "$type": "number",
+      "$value": "{utilities.rem.1}"
+    },
+    "4": {
+      "$type": "number",
+      "$value": "{utilities.rem.1,25}"
+    },
+    "5": {
+      "$type": "number",
+      "$value": "{utilities.rem.2}"
+    },
+    "6": {
+      "$type": "number",
+      "$value": "{utilities.rem.3}"
+    }
+  }
+}
