@@ -1,16 +1,21 @@
 import { fn } from 'storybook/test';
-
+import {fireEvent, within} from 'storybook/test';
 import { Button } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
-  title: 'Example/Button',
+  title: 'Components/Button',
   component: Button,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        // Simulates clicking the button
+        await fireEvent.click(canvas.getByText('Button'));
+        window.console.log('Button clicked!'); // This is just for demonstration purposes
+    },
   tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
