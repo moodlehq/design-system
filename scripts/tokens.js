@@ -14,35 +14,37 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /* jshint node: true, browser: false */
 /* eslint-env node */
-import fs from 'fs';
-import StyleDictionary from 'style-dictionary';
+import fs from "fs";
+import StyleDictionary from "style-dictionary";
 
 // Read all .tokens files from the 'src/tokens' directory
-const tokenFiles = fs.readdirSync('assets/src').filter((file) => file.endsWith('.json'));
+const tokenFiles = fs
+  .readdirSync("assets/src")
+  .filter((file) => file.endsWith(".json"));
 // Configure Style Dictionary
 const myStyleDictionary = new StyleDictionary({
-    source: tokenFiles.map((file) => `assets/src/${file}`),
-    platforms: {
-        scss: {
-            transformGroup: 'scss',
-            buildPath: 'assets/scss',
-            files: tokenFiles.map((file) => ({
-                // Replace '.tokens' with '.scss' for the destination
-                destination: `${file.replace('.json', '.scss')}`,
-                format: 'scss/variables',
-                // Match tokens by filename
-                filter: (token) => file === token.filePath.split('/').pop(),
-                options: {
-                    outputReferences: true,
-                },
-            })),
+  source: tokenFiles.map((file) => `assets/src/${file}`),
+  platforms: {
+    scss: {
+      transformGroup: "scss",
+      buildPath: "assets/scss",
+      files: tokenFiles.map((file) => ({
+        // Replace '.tokens' with '.scss' for the destination
+        destination: `${file.replace(".json", ".scss")}`,
+        format: "scss/variables",
+        // Match tokens by filename
+        filter: (token) => file === token.filePath.split("/").pop(),
+        options: {
+          outputReferences: true,
         },
+      })),
     },
-    hooks: {
-        transformGroups: {
-            scss: ['size/pxToRem'],
-        },
+  },
+  hooks: {
+    transformGroups: {
+      scss: ["size/pxToRem"],
     },
+  },
 });
 // Build all platforms
 myStyleDictionary.buildAllPlatforms();
