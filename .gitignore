@@ -49,3 +49,6 @@ phpcs.xml
 jsconfig.json
 UPGRADING-CURRENT.md
 .phpunit.cache
+
+/dist/
+/storybook-static/

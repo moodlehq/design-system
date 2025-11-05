@@ -6,12 +6,23 @@
   "type": "module",
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
+    "@eslint/compat": "^1.4.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.39.1",
     "@storybook/addon-a11y": "^9.1.15",
     "@storybook/addon-docs": "^9.1.15",
     "@storybook/addon-vitest": "^9.1.15",
     "@storybook/react-vite": "^9.1.15",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "@vitest/browser-playwright": "^4.0.4",
     "@vitest/coverage-v8": "^4.0.4",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.5.0",
     "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "prop-types": "^15.8.1",
@@ -24,7 +35,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-tokens": "node scripts/tokens.js",
-    "format": "prettier --write --parser typescript '**/*.{ts,tsx,js,jsx}'"
+    "format": "prettier --write --parser typescript '**/*.{ts,tsx,js,jsx}'",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "repository": {
     "type": "git",
