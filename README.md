@@ -29,7 +29,7 @@ Welcome! Whether you're a designer or a developer, this guide will help you get 
 
 ### Design Tools
 
-- **[Figma](https://www.figma.com/)**:  A collaborative design and prototyping tool. It's the heart of the design process, allowing designers to work together seamlessly.
+- **[Figma](https://www.figma.com/)**: A collaborative design and prototyping tool. It's the heart of the design process, allowing designers to work together seamlessly.
 - **[ZeroHeight](https://zeroheight.com/)**: A platform for creating and maintaining design systems. It helps document design guidelines and components for easy access by the team.
 
 ### UI/UX Design Guidelines
@@ -69,6 +69,7 @@ Your development environment is critical. Here are some tools and resources to h
 ### Repository Commands
 
 #### Build the Design System
+
 @TODO
 
 #### Convert tokens from ZeroHeight to SCSS variables
