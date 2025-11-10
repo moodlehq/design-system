@@ -1,5 +1,5 @@
 {
-  "name": "moodle_design-system",
+  "name": "design-system",
   "version": "1.0.0",
   "description": "The Moodle Design System",
   "main": "index.js",
@@ -9,39 +9,46 @@
     "react-bootstrap": "^2.10.10"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^4.1.1",
+    "@chromatic-com/storybook": "^4.1.2",
     "@eslint/compat": "^1.4.1",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
-    "@storybook/addon-a11y": "^9.1.15",
-    "@storybook/addon-docs": "^9.1.15",
-    "@storybook/addon-vitest": "^9.1.15",
-    "@storybook/react-vite": "^9.1.15",
+    "@storybook/addon-a11y": "^10.0.5",
+    "@storybook/addon-coverage": "^2.0.0",
+    "@storybook/addon-docs": "^10.0.5",
+    "@storybook/addon-vitest": "^10.0.5",
+    "@storybook/react-vite": "^10.0.5",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
     "@vitest/browser-playwright": "^4.0.4",
-    "@vitest/coverage-v8": "^4.0.4",
+    "@vitest/coverage-istanbul": "^4.0.7",
     "bootstrap": "^5.3.8",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-storybook": "10.0.5",
     "globals": "^16.5.0",
+    "jsdom": "^27.1.0",
     "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "react-bootstrap": "^2.10.10",
     "sass": "^1.93.3",
-    "storybook": "^9.1.15",
+    "storybook": "^10.0.5",
     "style-dictionary": "^5.1.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
+    "vite-plugin-istanbul": "^7.2.0",
+    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test-storybook": "vitest run --project=storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-tokens": "tsx scripts/tokens.ts",
@@ -50,12 +57,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moodlehq/moodle_design-system.git"
+    "url": "git+https://github.com/moodlehq/design-system.git"
   },
   "author": "",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/moodlehq/moodle_design-system/issues"
+    "url": "https://github.com/moodlehq/design-system/issues"
   },
-  "homepage": "https://github.com/moodlehq/moodle_design-system#readme"
+  "homepage": "https://github.com/moodlehq/design-system#readme"
 }

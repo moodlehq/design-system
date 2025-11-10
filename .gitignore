@@ -56,3 +56,4 @@ UPGRADING-CURRENT.md
 
 /dist/
 /storybook-static/
+/coverage/

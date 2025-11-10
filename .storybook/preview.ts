@@ -7,14 +7,13 @@ const preview = {
         date: /Date$/i,
       },
     },
-
     a11y: {
       /*
        * Axe's context parameter
        * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#context-parameter
        * to learn more. Typically, this is the CSS selector for the part of the DOM you want to analyze.
        */
-      context: 'div#storybook-root',
+      context: 'body',
       /*
        * Axe's configuration
        * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#api-name-axeconfigure
@@ -37,6 +36,7 @@ const preview = {
          */
         test: 'error',
       },
+      test: 'error',
     },
     docs: {
       canvas: {
