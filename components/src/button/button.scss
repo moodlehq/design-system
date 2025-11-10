@@ -1,0 +1,6 @@
+@use 'bootstrap' as *;
+@use '../../../assets/scss/token_LMSPrimitives_Defaultmode.scss' as *;
+
+.mds-btn {
+  background-color: $brand-orange-400;
+}
