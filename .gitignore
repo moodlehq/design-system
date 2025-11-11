@@ -40,7 +40,6 @@ composer.phar
 /vendor/
 atlassian-ide-plugin.xml
 /node_modules/
-/.vscode/
 .eslintignore
 .stylelintignore
 /jsdoc
@@ -49,6 +48,11 @@ phpcs.xml
 jsconfig.json
 UPGRADING-CURRENT.md
 .phpunit.cache
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 
 /dist/
 /storybook-static/
