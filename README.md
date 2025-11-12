@@ -87,7 +87,19 @@ npm run build-tokens
 
 ### Running unit tests
 
-@TODO
+Various test scripts are available to ensure the quality and reliability of the design system components.
+
+You can run these tests using the following commands:
+```bash
+# Install dependencies.
+npm install
+# Run unit tests.
+npm run test-unit
+# Run unit tests with coverage report.
+npm run test-unit-coverage
+# Run Storybook interaction & accessibility tests .
+npm run test-storybook
+```
 
 ### Viewing the components within Storybook locally
 

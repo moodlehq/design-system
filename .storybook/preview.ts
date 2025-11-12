@@ -1,5 +1,20 @@
 /** @type { import('@storybook/react-vite').Preview } */
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Only import this if you want to use Bootstrap's
+// JQuery helpers
+// import 'bootstrap/dist/js/bootstrap.bundle';
+import 'react-bootstrap/dist/react-bootstrap.min.js';
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
 const preview = {
+  controls: {
+    expanded: true,
+    hideNoControlsWarning: true,
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
   parameters: {
     controls: {
       matchers: {
@@ -47,3 +62,13 @@ const preview = {
 };
 
 export default preview;
+
+export const decorators = [
+  withThemeByDataAttribute({
+    themes: {
+      light: 'light',
+    },
+    defaultTheme: 'light',
+    attributeName: 'data-bs-theme',
+  }),
+];

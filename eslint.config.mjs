@@ -31,6 +31,12 @@ export default defineConfig([
       ),
     ),
 
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+
     plugins: {
       '@typescript-eslint': fixupPluginRules(typescriptEslint),
     },

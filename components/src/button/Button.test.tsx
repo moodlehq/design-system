@@ -1,48 +1,34 @@
-// TODO: This is a sample test file for a Button component using Storybook stories and Vitest but not currently run.
+/// <reference types="vitest" />
 import { composeStories } from '@storybook/react-vite';
-import { screen, waitFor } from '@testing-library/react';
-import { expect, test } from 'vitest';
-import * as stories from './Button.stories'; // 👈 Our stories imported here.
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import * as stories from './Button.stories';
 
-const { Primary, Secondary, Small } = composeStories(stories);
+const { Primary, Secondary, Large, Small } = composeStories(stories);
 
-test('renders primary button with default args', async () => {
-  await Primary.run();
-  const buttonElement = screen.getByText(
-    'Text coming from args in stories file!',
-  );
-
-  await waitFor(() => {
-    expect(buttonElement).not.toBeNull();
+describe('Button (Storybook stories)', () => {
+  it('renders Primary button with default args', () => {
+    render(<Primary />);
+    expect(screen.getByText('Button')).toBeInTheDocument();
   });
-});
 
-test('renders secondary button with default args', async () => {
-  await Secondary.run();
-  const buttonElement = screen.getByText(
-    'Text coming from args in stories file!',
-  );
-  await waitFor(() => {
-    expect(buttonElement).not.toBeNull();
+  it('renders Secondary button with default args', () => {
+    render(<Secondary />);
+    expect(screen.getByText('Button')).toBeInTheDocument();
   });
-});
 
-test('renders primary button with overridden props', async () => {
-  // You can override props by passing them in the context argument of the run function
-  await Primary.run({ args: { ...Primary.args, label: 'Hello world' } });
-  const buttonElement = screen.getByText(/Hello world/i);
-  await waitFor(() => {
-    expect(buttonElement).not.toBeNull();
+  it('renders Large button with default args', () => {
+    render(<Large />);
+    expect(screen.getByText('Button')).toBeInTheDocument();
   });
-});
 
-test('renders small button with default args', async () => {
-  await Small.run();
-  const buttonElement = screen.getByText(
-    'Text coming from args in stories file!',
-  );
+  it('renders Small button with default args', () => {
+    render(<Small />);
+    expect(screen.getByText('Button')).toBeInTheDocument();
+  });
 
-  await waitFor(() => {
-    expect(buttonElement).not.toBeNull();
+  it('renders Primary button with overridden label', () => {
+    render(<Primary label="Hello world" />);
+    expect(screen.getByText('Hello world')).toBeInTheDocument();
   });
 });

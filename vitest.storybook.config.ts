@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-// Vitest config for Storybook interaction & accessibility tests within the Storybook UI.
+// Vitest config for Storybook interaction & accessibility tests in the components package.
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
@@ -14,12 +14,9 @@ const dirname =
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react/jsx-dev-runtime'],
+    include: ['react', 'react-dom', 'react/jsx-dev-runtime', 'react-bootstrap'],
   },
   test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./setupTests.ts'],
     include: ['**/*.stories.*', '.storybook/**', '**/.storybook/**'],
     exclude: ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
     projects: [
@@ -45,13 +42,5 @@ export default defineConfig({
         },
       },
     ],
-    coverage: {
-      provider: 'istanbul',
-      include: ['components/src/**/*.{ts,tsx,js,jsx}'],
-      exclude: ['**/*.stories.*', '.storybook/**', '**/.storybook/**', 'components/src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-      watermarks: {
-        statements: [50, 80],
-      },
-    },
   },
 });
