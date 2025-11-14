@@ -21,7 +21,6 @@
 #
 /cscope.*
 /.patches/
-/.idea/
 .phpstorm.*
 !/.phpstorm.meta.php/
 /.phpstorm.meta.php/*
@@ -48,6 +47,13 @@ phpcs.xml
 jsconfig.json
 UPGRADING-CURRENT.md
 .phpunit.cache
+
+# JetBrains
+.idea/*
+!.idea/prettier.xml
+!.idea/jsLinters/
+.idea/jsLinters/*
+!.idea/jsLinters/eslint.xml
 
 # VSCode
 .vscode/*
