@@ -1,0 +1,96 @@
+{
+  "color": {
+    "Body": {
+      "Background": {
+        "default": "#ffffff",
+        "secondary": "#e9ecef",
+        "tertiary": "#f8f9fa"
+      },
+      "Text": {
+        "default": "#1d2125",
+        "emphasis": "#000000",
+        "secondary": "rgba(29, 33, 37, 0.75)",
+        "tertiary": "rgba(29, 33, 37, 0.5)"
+      }
+    },
+    "Border": {
+      "default": "#dee2e6",
+      "translucent": "rgba(0, 0, 0, 0)"
+    },
+    "Brand": {
+      "Primary": {
+        "moodle black": "#282828",
+        "moodle blue": "#194866",
+        "moodle orange": "#f98012"
+      },
+      "Secondary": {
+        "bright blue": "#69e0ff",
+        "dark grey": "#545454",
+        "light blue": "#65a1b3",
+        "light grey": "#8a8a8e",
+        "light peach": "#fff8f1",
+        "medium peach": "#ffecdb",
+        "peach": "#fedec3"
+      }
+    },
+    "Component active": {
+      "background": "#0f6cbf",
+      "text": "#ffffff"
+    },
+    "Contrast": {
+      "contrast dark": "#000000",
+      "contrast light": "#ffffff"
+    },
+    "Focus ring": {
+      "default": "#0f6cbf"
+    },
+    "Icon": {
+      "fa border color": "#eeeeee",
+      "fa inverse": "#ffffff"
+    },
+    "Link": {
+      "default": "#0f6cbf",
+      "hover": "#0c5699"
+    },
+    "Theme": {
+      "Background subtle": {
+        "danger": "#f4d6d2",
+        "dark": "#ced4da",
+        "info": "#cce6ea",
+        "light": "#f8f9fa",
+        "primary": "#cfe2f2",
+        "secondary": "#f8f9fa",
+        "success": "#d7e4d6",
+        "warning": "#fcefdc"
+      },
+      "Border subtle": {
+        "danger": "#eaada6",
+        "dark": "#8f959e",
+        "info": "#aecaad",
+        "light": "#e9ecef",
+        "primary": "#9fc4e5",
+        "secondary": "#e9ecef",
+        "success": "#aecaad",
+        "warning": "#f9deb8"
+      },
+      "Text emphasis": {
+        "danger": "#51140d",
+        "dark": "#495057",
+        "info": "#00343c",
+        "light": "#495057",
+        "primary": "#062b4c",
+        "secondary": "#343a40",
+        "success": "#153114",
+        "warning": "#60451f"
+      },
+      "danger": "#ca3120",
+      "dark": "#1d2125",
+      "info": "#008196",
+      "light": "#f8f9fa",
+      "primary": "#0f6cbf",
+      "secondary": "#ced4da",
+      "success": "#357a32",
+      "warning": "#f0ad4e"
+    }
+  }
+}
