@@ -1,0 +1,17 @@
+{
+  "content": {
+    "Font family": {
+      "base": "Roboto",
+      "code": "Menlo"
+    },
+    "Font weight": {
+      "Italic": {
+        "bold": "Bold Italic",
+        "light": "Light Italic",
+        "medium": "Medium Italic",
+        "normal (base)": "Italic",
+        "semibold": "Semi Bold Italic"
+      }
+    }
+  }
+}
