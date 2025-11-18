@@ -1,0 +1,17 @@
+{
+  "color": {
+    "Background colors": {
+      "Primary": "#ffffff",
+      "Secondary": "#e9ecef",
+      "Tertiary": "#f8f9fa"
+    },
+    "Text colors": {
+      "Emphasis": "#000000",
+      "Link": "#0f6cbf",
+      "Link hover": "#0c5699",
+      "Primary": "#1d2125",
+      "Secondary": "rgba(29, 33, 37, 0.75)",
+      "Tertiary": "rgba(29, 33, 37, 0.5)"
+    }
+  }
+}
