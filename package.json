@@ -1,13 +1,9 @@
 {
   "name": "design-system",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "The Moodle Design System",
   "main": "index.js",
   "type": "module",
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
   "peerDependencies": {
     "bootstrap": "^5.3.8",
     "react": "^18.3.1",
@@ -62,13 +58,13 @@
     "vitest": "^4.0.4"
   },
   "scripts": {
-    "test-unit": "vitest run --config vitest.unit.config.ts",
-    "test-unit-coverage": "vitest run --config vitest.unit.config.ts --coverage",
-    "test-storybook": "vitest run --config vitest.storybook.config.ts --",
+    "test-unit": "VITEST_STORYBOOK=false vitest run",
+    "test-unit-coverage": "VITEST_STORYBOOK=false vitest run --coverage",
+    "test-storybook": "VITEST_STORYBOOK=true vitest run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-tokens": "tsx scripts/tokens.ts",
-    "format": "prettier --write --parser typescript '**/*.{ts,tsx,js,jsx}'",
+    "format": "prettier --write . '**/*.{ts,tsx,js,jsx,yml}'",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
   },
   "repository": {

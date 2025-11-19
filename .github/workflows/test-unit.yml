@@ -1,21 +1,22 @@
 name: JSUnit with coverage
-#on: deployment_status
 on: pull_request
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22.12.0
-            - name: Install dependencies
-              run: |
-                rm -rf node_modules
-                npm install
-              # 👇 This will run all unit tests with coverage.
-            - name: Run tests
-              run: npm run test-unit-coverage
-              env:
-                SB_URL: '${{ github.event.deployment_status.environment_url }}'
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+
+      - name: Install dependencies
+        run: |
+          rm -rf node_modules
+          npm install
+
+      - name: Run tests
+        run: npm run test-unit-coverage
+        env:
+          SB_URL: '${{ github.event.deployment_status.environment_url }}'

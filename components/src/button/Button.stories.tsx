@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { act } from 'react';
+import { ThemeProvider } from 'react-bootstrap';
 import { expect, fireEvent, within } from 'storybook/test';
 import { Button } from './Button';
-import { ThemeProvider } from 'react-bootstrap';
 
 const meta = {
   title: 'Components/Button',
@@ -45,7 +45,6 @@ export const Primary = {
     label: 'Button',
   },
 } satisfies Story;
-
 
 export const Secondary = {
   args: {

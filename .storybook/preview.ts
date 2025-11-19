@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Only import this if you want to use Bootstrap's
 // JQuery helpers
 // import 'bootstrap/dist/js/bootstrap.bundle';
-import 'react-bootstrap/dist/react-bootstrap.min.js';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import 'react-bootstrap/dist/react-bootstrap.min.js';
 const preview = {
   controls: {
     expanded: true,

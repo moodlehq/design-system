@@ -27,7 +27,7 @@ export default defineConfig([
         'prettier',
         'plugin:prettier/recommended',
         'plugin:react-hooks/recommended',
-        "plugin:storybook/recommended"
+        'plugin:storybook/recommended',
       ),
     ),
 

@@ -2,7 +2,8 @@
 
 [![npm version - PoC](https://badge.fury.io/js/ngx-moodleds.svg)](https://badge.fury.io/js/ngx-moodleds)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Chromatic - PoC](https://github.com/Chocolate-lightning/mds-ws/actions/workflows/chromatic.yml/badge.svg)](https://github.com/Chocolate-lightning/mds-ws/actions/workflows/chromatic.yml)
+[![JSUnit with coverage](https://github.com/moodlehq/design-system/actions/workflows/test-unit.yml/badge.svg)](https://github.com/moodlehq/design-system/actions/workflows/test-unit.yml)
+[![Storybook & Accessibility test](https://github.com/moodlehq/design-system/actions/workflows/test-storybook.yml/badge.svg)](https://github.com/moodlehq/design-system/actions/workflows/test-storybook.yml)
 
 # Getting Started
 
@@ -63,7 +64,7 @@ Your development environment is critical. Here are some tools and resources to h
 - **Package Manager**: [npm](https://www.npmjs.com/) is the package manager we use for JavaScript projects. Install it to manage project dependencies.
 
 - **[Style Dictionary](https://styledictionary.com/)**: Conversion tool to manage and convert design tokens into usable code formats.
--
+
 - **[Chromatic](https://www.chromatic.com/)**: Is used for visual testing and review of our UI components. It integrates with Storybook to provide a seamless experience.
 
 ### Repository Commands
@@ -90,6 +91,7 @@ npm run build-tokens
 Various test scripts are available to ensure the quality and reliability of the design system components.
 
 You can run these tests using the following commands:
+
 ```bash
 # Install dependencies.
 npm install

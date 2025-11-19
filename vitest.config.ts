@@ -1,57 +1,67 @@
-/// <reference types="vitest" />
-// Vitest config for Storybook interaction & accessibility tests within the Storybook UI.
+import { defineConfig } from 'vitest/config';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'vitest/config';
 
 const dirname =
   typeof __dirname !== 'undefined'
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
+const isStorybook = process.env.VITEST_STORYBOOK === 'true';
+
 export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react/jsx-dev-runtime'],
   },
+  plugins: isStorybook
+    ? [
+      storybookTest({
+        configDir: path.resolve(dirname, '.storybook'),
+        tags: {
+          include: ['test'],
+          exclude: ['experimental'],
+        },
+      }),
+    ]
+    : [],
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./setupTests.ts'],
-    include: ['**/*.stories.*', '.storybook/**', '**/.storybook/**'],
-    exclude: ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-    projects: [
-      {
-        plugins: [
-          storybookTest({
-            configDir: path.join(dirname, '.storybook'),
-            tags: {
-              include: ['test'],
-              exclude: ['experimental'],
-            },
-          }),
-        ],
-        test: {
-          name: 'storybook',
-          browser: {
-            enabled: true,
-            headless: true,
-            provider: playwright({}),
-            instances: [{ browser: 'chromium' }],
-          },
-          setupFiles: ['.storybook/vitest.setup.ts'],
-        },
-      },
-    ],
+    setupFiles: isStorybook
+      ? ['.storybook/vitest.setup.ts']
+      : ['./setupTests.ts'],
+    include: !isStorybook
+      ? ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}']
+      : undefined,
+    exclude: isStorybook
+      ? ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}']
+      : ['**/*.stories.*', '.storybook/**', '**/.storybook/**'],
+    browser: isStorybook
+      ? {
+        enabled: true,
+        headless: true,
+        provider: playwright({}),
+        instances: [{ browser: 'chromium' }],
+      }
+      : undefined,
     coverage: {
       provider: 'istanbul',
-      include: ['components/src/**/*.{ts,tsx,js,jsx}'],
-      exclude: ['**/*.stories.*', '.storybook/**', '**/.storybook/**', 'components/src/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-      watermarks: {
-        statements: [50, 80],
-      },
+      include: !isStorybook
+        ? ['components/src/**/*.{ts,tsx,js,jsx}']
+        : undefined,
+      exclude: [
+        '**/*.stories.*',
+        '.storybook/**',
+        '**/.storybook/**',
+        'components/src/**/*.{test,spec}.{js,ts,jsx,tsx}',
+      ],
+      watermarks: !isStorybook
+        ? {
+          statements: [50, 80],
+        }
+        : undefined,
     },
   },
 });

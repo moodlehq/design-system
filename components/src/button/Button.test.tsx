@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { composeStories } from '@storybook/react-vite';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import * as stories from './Button.stories';
 
 const { Primary, Secondary, Large, Small } = composeStories(stories);

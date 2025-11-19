@@ -1,5 +1,4 @@
 name: Storybook & Accessibility test
-#on: deployment_status
 on: pull_request
 jobs:
   test:

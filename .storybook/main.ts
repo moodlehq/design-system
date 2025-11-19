@@ -20,7 +20,7 @@ export default {
       name: '@storybook/addon-coverage',
       options: coverageConfig,
     },
-    '@storybook/addon-themes'
+    '@storybook/addon-themes',
   ],
   framework: {
     name: '@storybook/react-vite',

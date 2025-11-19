@@ -20,10 +20,5 @@
     "noUnusedParameters": true, // Flags unused function parameters.
     "noFallthroughCasesInSwitch": true, // Requires handling all cases in a switch statement.
     "declaration": true // Generates declaration files for TypeScript.
-  },
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  }
 }
