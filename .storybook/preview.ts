@@ -1,5 +1,20 @@
 /** @type { import('@storybook/react-vite').Preview } */
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Only import this if you want to use Bootstrap's
+// JQuery helpers
+// import 'bootstrap/dist/js/bootstrap.bundle';
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import 'react-bootstrap/dist/react-bootstrap.min.js';
 const preview = {
+  controls: {
+    expanded: true,
+    hideNoControlsWarning: true,
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/,
+    },
+  },
   parameters: {
     controls: {
       matchers: {
@@ -7,14 +22,13 @@ const preview = {
         date: /Date$/i,
       },
     },
-
     a11y: {
       /*
        * Axe's context parameter
        * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#context-parameter
        * to learn more. Typically, this is the CSS selector for the part of the DOM you want to analyze.
        */
-      context: 'div#storybook-root',
+      context: 'body',
       /*
        * Axe's configuration
        * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#api-name-axeconfigure
@@ -37,6 +51,7 @@ const preview = {
          */
         test: 'error',
       },
+      test: 'error',
     },
     docs: {
       canvas: {
@@ -47,3 +62,13 @@ const preview = {
 };
 
 export default preview;
+
+export const decorators = [
+  withThemeByDataAttribute({
+    themes: {
+      light: 'light',
+    },
+    defaultTheme: 'light',
+    attributeName: 'data-bs-theme',
+  }),
+];
