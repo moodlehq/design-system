@@ -20,8 +20,3 @@ jobs:
 
       - name: Run tests
         run: npm run test-storybook
-        continue-on-error: true # Megahack to build Storybook and have React happy.
-
-      - name: Run tests again
-        run: npm run test-storybook
-        if: always() # Megahack to make the test run in a stable environment.

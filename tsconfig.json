@@ -20,5 +20,7 @@
     "noUnusedParameters": true, // Flags unused function parameters.
     "noFallthroughCasesInSwitch": true, // Requires handling all cases in a switch statement.
     "declaration": true // Generates declaration files for TypeScript.
-  }
+  },
+  "include": ["components"], // Specifies the directory to include when searching for TypeScript files.
+  "exclude": ["components/**/*.stories.tsx", "components/**/*.test.tsx"]
 }

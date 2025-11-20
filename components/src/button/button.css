@@ -1,6 +1,5 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
 @import '/tokens/css/index.css';
 
-.mds-btn {
+.mds-btn.btn-sm {
   background-color: var(--theme-primary);
 }
