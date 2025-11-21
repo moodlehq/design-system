@@ -1,0 +1,10 @@
+{
+  "containerwidth": {
+    "$type": "number",
+    "$value": 768
+  },
+  "display": {
+    "$type": "string",
+    "$value": "Hug"
+  }
+}
