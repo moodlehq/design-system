@@ -1,116 +1,120 @@
 {
   "Background colors": {
     "Primary": {
-      "$type": "color",
-      "$value": "{Body.Background.default}"
+      "type": "color",
+      "value": "{Body.Background.default}"
     },
     "Secondary": {
-      "$type": "color",
-      "$value": "{Body.Background.secondary}"
+      "type": "color",
+      "value": "{Body.Background.secondary}"
     },
     "Tertiary": {
-      "$type": "color",
-      "$value": "{Body.Background.tertiary}"
+      "type": "color",
+      "value": "{Body.Background.tertiary}"
     }
   },
   "Corner radius": {
     "lg": {
-      "$type": "number",
-      "$value": "{Border radius.lg}"
+      "type": "number",
+      "value": "{Border radius.lg}"
     },
     "md (default)": {
-      "$type": "number",
-      "$value": "{Border radius.md (default)}"
+      "type": "number",
+      "value": "{Border radius.md (default)}"
     },
     "pill": {
-      "$type": "number",
-      "$value": "{Border radius.pill}"
+      "type": "number",
+      "value": "{Border radius.pill}"
     },
     "sm": {
-      "$type": "number",
-      "$value": "{Border radius.sm}"
+      "type": "number",
+      "value": "{Border radius.sm}"
     },
     "xl": {
-      "$type": "number",
-      "$value": "{Border radius.xl}"
+      "type": "number",
+      "value": "{Border radius.xl}"
     },
     "xxl": {
-      "$type": "number",
-      "$value": "{Border radius.xxl}"
+      "type": "number",
+      "value": "{Border radius.xxl}"
     }
   },
   "Paddings and gap": {
     "lg": {
-      "$type": "number",
-      "$value": "{Spacers.4}"
+      "type": "number",
+      "value": "{Spacers.5}"
     },
     "md (base)": {
-      "$type": "number",
-      "$value": "{Spacers.3 (base)}"
+      "type": "number",
+      "value": "{Spacers.4 (base)}"
     },
     "sm": {
-      "$type": "number",
-      "$value": "{Spacers.2}"
+      "type": "number",
+      "value": "{Spacers.3}"
     },
     "xl": {
-      "$type": "number",
-      "$value": "{Spacers.5}"
+      "type": "number",
+      "value": "{Spacers.6}"
     },
     "xs": {
-      "$type": "number",
-      "$value": "{Spacers.1}"
+      "type": "number",
+      "value": "{Spacers.2}"
     },
     "xxl": {
-      "$type": "number",
-      "$value": "{Spacers.6}"
+      "type": "number",
+      "value": "{Spacers.7}"
+    },
+    "xxs": {
+      "type": "number",
+      "value": "{Spacers.1}"
     }
   },
   "Stroke Weight": {
     "lg": {
-      "$type": "number",
-      "$value": "{Border width.3}"
+      "type": "number",
+      "value": "{Border width.3}"
     },
     "md": {
-      "$type": "number",
-      "$value": "{Border width.2}"
+      "type": "number",
+      "value": "{Border width.2}"
     },
     "sm (default)": {
-      "$type": "number",
-      "$value": "{Border width.1 (default)}"
+      "type": "number",
+      "value": "{Border width.1 (default)}"
     },
     "xl": {
-      "$type": "number",
-      "$value": "{Border width.4}"
+      "type": "number",
+      "value": "{Border width.4}"
     },
     "xxl": {
-      "$type": "number",
-      "$value": "{Border width.5}"
+      "type": "number",
+      "value": "{Border width.5}"
     }
   },
   "Text colors": {
     "Emphasis": {
-      "$type": "color",
-      "$value": "{Body.Text.emphasis}"
+      "type": "color",
+      "value": "{Body.Text.emphasis}"
     },
     "Link": {
-      "$type": "color",
-      "$value": "{Link.default}"
+      "type": "color",
+      "value": "{Link.default}"
     },
     "Link hover": {
-      "$type": "color",
-      "$value": "{Link.hover}"
+      "type": "color",
+      "value": "{Link.hover}"
     },
     "Primary": {
-      "$type": "color",
-      "$value": "{Body.Text.default}"
+      "type": "color",
+      "value": "{Body.Text.default}"
     },
     "Secondary": {
-      "$type": "color",
-      "$value": "{Body.Text.secondary}"
+      "type": "color",
+      "value": "{Body.Text.secondary}"
     },
     "Tertiary": {
-      "$type": "color",
-      "$value": "{Body.Text.tertiary}"
+      "type": "color",
+      "value": "{Body.Text.tertiary}"
     }
   }
 }
