@@ -1,8 +1,8 @@
-import { defineConfig } from 'vitest/config';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitest/config';
 
 const dirname =
   typeof __dirname !== 'undefined'
@@ -17,14 +17,14 @@ export default defineConfig({
   },
   plugins: isStorybook
     ? [
-      storybookTest({
-        configDir: path.resolve(dirname, '.storybook'),
-        tags: {
-          include: ['test'],
-          exclude: ['experimental'],
-        },
-      }),
-    ]
+        storybookTest({
+          configDir: path.resolve(dirname, '.storybook'),
+          tags: {
+            include: ['test'],
+            exclude: ['experimental'],
+          },
+        }),
+      ]
     : [],
   test: {
     globals: true,
@@ -40,11 +40,11 @@ export default defineConfig({
       : ['**/*.stories.*', '.storybook/**', '**/.storybook/**'],
     browser: isStorybook
       ? {
-        enabled: true,
-        headless: true,
-        provider: playwright({}),
-        instances: [{ browser: 'chromium' }],
-      }
+          enabled: true,
+          headless: true,
+          provider: playwright({}),
+          instances: [{ browser: 'chromium' }],
+        }
       : undefined,
     coverage: {
       provider: 'istanbul',
@@ -59,8 +59,8 @@ export default defineConfig({
       ],
       watermarks: !isStorybook
         ? {
-          statements: [50, 80],
-        }
+            statements: [50, 80],
+          }
         : undefined,
     },
   },
