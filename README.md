@@ -22,7 +22,6 @@ Welcome! Whether you're a designer or a developer, this guide will help you get 
 - [Repository Commands](#repository-commands)
 - [Build the Design System](#build-the-design-system)
 - [Convert tokens from ZeroHeight to CSS variables](#convert-tokens-from-zeroheight-to-css-variables)
-- [Publishing the Library](#publishing-the-library)
 - [Running unit tests](#running-unit-tests)
 - [Viewing the components within Storybook locally](#viewing-the-components-within-storybook-locally)
 
@@ -71,7 +70,16 @@ Your development environment is critical. Here are some tools and resources to h
 
 #### Build the Design System
 
-@TODO
+To build the design system, run the following commands in your terminal:
+
+```bash
+npm install
+npm run build
+```
+
+The built files will be located in the `dist/` directory.
+
+Github Actions are set up to automatically build the design system on each push to the main branch that has been tagged with a version number.
 
 #### Convert tokens from ZeroHeight to CSS variables
 
@@ -81,10 +89,6 @@ We make use of [Style Dictionary](https://styledictionary.com/) to convert desig
 npm install
 npm run build-tokens
 ```
-
-#### Publishing the Library
-
-@TODO
 
 ### Running unit tests
 
