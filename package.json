@@ -40,7 +40,9 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-storybook": "^10.0.7",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
     "jsdom": "^27.1.0",
+    "lint-staged": "^16.2.7",
     "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
@@ -65,7 +67,14 @@
     "build-storybook": "storybook build",
     "build-tokens": "tsx scripts/tokens.ts",
     "format": "prettier --write . '**/*.{ts,tsx,js,jsx,yml}'",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "repository": {
     "type": "git",
