@@ -1,14 +1,14 @@
 {
   "blur": {
-    "$type": "number",
-    "$value": 0
+    "type": "number",
+    "value": 0
   },
   "opacity": {
-    "$type": "number",
-    "$value": 0.75
+    "type": "number",
+    "value": 0.75
   },
   "width": {
-    "$type": "number",
-    "$value": "{utilities.rem.0,25}"
+    "type": "number",
+    "value": "{utilities.rem.0,25}"
   }
 }
