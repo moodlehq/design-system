@@ -13,10 +13,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 22.12.0
+          node-version: 22.13.0
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Run tests
         run: npm run test-storybook
