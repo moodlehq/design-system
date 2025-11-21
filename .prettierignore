@@ -1,1 +1,2 @@
-assets/scss/**/*.scss
+tokens/css/*
+tokens/dtcg/*

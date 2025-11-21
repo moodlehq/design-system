@@ -21,7 +21,7 @@ Welcome! Whether you're a designer or a developer, this guide will help you get 
 - [Development Tools](#development-tools)
 - [Repository Commands](#repository-commands)
 - [Build the Design System](#build-the-design-system)
-- [Convert tokens from ZeroHeight to SCSS variables](#convert-tokens-from-zeroheight-to-scss-variables)
+- [Convert tokens from ZeroHeight to CSS variables](#convert-tokens-from-zeroheight-to-css-variables)
 - [Publishing the Library](#publishing-the-library)
 - [Running unit tests](#running-unit-tests)
 - [Viewing the components within Storybook locally](#viewing-the-components-within-storybook-locally)
@@ -73,9 +73,9 @@ Your development environment is critical. Here are some tools and resources to h
 
 @TODO
 
-#### Convert tokens from ZeroHeight to SCSS variables
+#### Convert tokens from ZeroHeight to CSS variables
 
-We make use of [Style Dictionary](https://styledictionary.com/) to convert design tokens exported from ZeroHeight into SCSS variables that can be used throughout the design system and its' consumers.
+We make use of [Style Dictionary](https://styledictionary.com/) to convert design tokens exported from ZeroHeight into CSS variables that can be used throughout the design system and its' consumers.
 
 ```bash
 npm install

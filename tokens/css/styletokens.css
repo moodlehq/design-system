@@ -1,0 +1,30 @@
+/** THIS FILE IS AUTO-GENERATED — DO NOT EDIT DIRECTLY. **/
+
+:root {
+  --background-colors-primary: var(--body-background-default);
+  --background-colors-secondary: var(--body-background-secondary);
+  --background-colors-tertiary: var(--body-background-tertiary);
+  --corner-radius-lg: var(--border-radius-lg);
+  --corner-radius-md-default: var(--border-radius-md-default);
+  --corner-radius-pill: var(--border-radius-pill);
+  --corner-radius-sm: var(--border-radius-sm);
+  --corner-radius-xl: var(--border-radius-xl);
+  --corner-radius-xxl: var(--border-radius-xxl);
+  --paddings-and-gap-lg: var(--spacers-4);
+  --paddings-and-gap-md-base: var(--spacers-3-base);
+  --paddings-and-gap-sm: var(--spacers-2);
+  --paddings-and-gap-xl: var(--spacers-5);
+  --paddings-and-gap-xs: var(--spacers-1);
+  --paddings-and-gap-xxl: var(--spacers-6);
+  --stroke-weight-lg: var(--border-width-3);
+  --stroke-weight-md: var(--border-width-2);
+  --stroke-weight-sm-default: var(--border-width-1-default);
+  --stroke-weight-xl: var(--border-width-4);
+  --stroke-weight-xxl: var(--border-width-5);
+  --text-colors-emphasis: var(--body-text-emphasis);
+  --text-colors-link: var(--link-default);
+  --text-colors-link-hover: var(--link-hover);
+  --text-colors-primary: var(--body-text-default);
+  --text-colors-secondary: var(--body-text-secondary);
+  --text-colors-tertiary: var(--body-text-tertiary);
+}

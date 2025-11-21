@@ -3,7 +3,7 @@ import {
   ButtonProps as RBButtonProps,
 } from 'react-bootstrap';
 
-import './button.scss';
+import './button.css';
 
 export interface ButtonProps extends RBButtonProps {
   label: string;
