@@ -1,1 +1,7 @@
+#!/bin/sh
+
 npx lint-staged
+
+# Rebuild design tokens using Style Dictionary and add any changes to the commit
+npm run build-tokens
+git add tokens/css
