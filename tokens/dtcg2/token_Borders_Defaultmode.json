@@ -1,0 +1,58 @@
+{
+  "Border radius": {
+    "lg": {
+      "type": "number",
+      "value": "{utilities.rem.0,5}"
+    },
+    "md (default)": {
+      "type": "number",
+      "value": "{utilities.rem.0,375}"
+    },
+    "none": {
+      "type": "number",
+      "value": "{utilities.rem.0}"
+    },
+    "pill": {
+      "type": "number",
+      "value": "{utilities.rem.50}"
+    },
+    "sm": {
+      "type": "number",
+      "value": "{utilities.rem.0,25}"
+    },
+    "xl": {
+      "type": "number",
+      "value": "{utilities.rem.1}"
+    },
+    "xxl": {
+      "type": "number",
+      "value": "{utilities.rem.2}"
+    }
+  },
+  "Border width": {
+    "0": {
+      "type": "number",
+      "value": 0
+    },
+    "1 (default)": {
+      "type": "number",
+      "value": 1
+    },
+    "2": {
+      "type": "number",
+      "value": 2
+    },
+    "3": {
+      "type": "number",
+      "value": 3
+    },
+    "4": {
+      "type": "number",
+      "value": 4
+    },
+    "5": {
+      "type": "number",
+      "value": 5
+    }
+  }
+}
