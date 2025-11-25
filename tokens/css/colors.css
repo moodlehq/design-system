@@ -6,10 +6,10 @@
   --body-background-tertiary: var(--mds-color-gray-100);
   --body-text-default: var(--mds-color-gray-900);
   --body-text-emphasis: var(--mds-color-gray-black);
-  --body-text-secondary: #1d2125bf;
-  --body-text-tertiary: #1d212580;
+  --body-text-secondary: rgba(29, 33, 37, 0.75);
+  --body-text-tertiary: rgba(29, 33, 37, 0.5);
   --border-default: var(--mds-color-gray-300);
-  --border-translucent: #00000000;
+  --border-translucent: rgba(0, 0, 0, 0);
   --brand-primary-moodle-black: var(--mds-brand-grey-300);
   --brand-primary-moodle-blue: var(--mds-brand-blue-300);
   --brand-primary-moodle-orange: var(--mds-brand-orange-400);
