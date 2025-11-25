@@ -530,31 +530,31 @@
         },
         "0,875": {
           "$type": "number",
-          "$value": 13.13
+          "$value": 14
         },
         "1": {
           "$type": "number",
-          "$value": 15
+          "$value": 16
         },
         "1,25": {
           "$type": "number",
-          "$value": 18.75
+          "$value": 20
         },
         "1,5": {
           "$type": "number",
-          "$value": 22.5
+          "$value": 24
         },
         "1,75": {
           "$type": "number",
-          "$value": 26.25
+          "$value": 28
         },
         "2": {
           "$type": "number",
-          "$value": 30
+          "$value": 32
         },
         "2,5": {
           "$type": "number",
-          "$value": 37.5
+          "$value": 40
         }
       }
     },
@@ -675,41 +675,41 @@
       "headings": {
         "h1": {
           "$type": "number",
-          "$value": 45
+          "$value": 48
         },
         "h2": {
           "$type": "number",
-          "$value": 36
+          "$value": 38.4
         },
         "h3": {
           "$type": "number",
-          "$value": 31.5
+          "$value": 33.6
         },
         "h4": {
           "$type": "number",
-          "$value": 27
+          "$value": 28.8
         },
         "h5": {
           "$type": "number",
-          "$value": 22.5
+          "$value": 24
         },
         "h6": {
           "$type": "number",
-          "$value": 18
+          "$value": 19.2
         }
       },
       "paragraph": {
         "base": {
           "$type": "number",
-          "$value": 22.5
+          "$value": 24
         },
         "lg": {
           "$type": "number",
-          "$value": 37.5
+          "$value": 40
         },
         "sm": {
           "$type": "number",
-          "$value": 16.41
+          "$value": 17.4
         }
       }
     }

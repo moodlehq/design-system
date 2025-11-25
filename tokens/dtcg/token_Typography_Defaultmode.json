@@ -242,7 +242,7 @@
     },
     "paragraph": {
       "$type": "number",
-      "$value": "{Spacers.3 (base)}",
+      "$value": "{Spacers.4 (base)}",
       "$description": "Default margin below a paragraph."
     }
   }
