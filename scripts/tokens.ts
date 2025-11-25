@@ -86,7 +86,7 @@ StyleDictionary.registerFormat({
     return (
       getFileHeader() +
       options.files.map((file: string) => `@import "./${file}";`).join('\n') +
-      '\n'
+      '\n@import "./fonts.css"\n'
     );
   },
 });
