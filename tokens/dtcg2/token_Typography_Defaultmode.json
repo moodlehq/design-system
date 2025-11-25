@@ -1,0 +1,249 @@
+{
+  "Font family": {
+    "base": {
+      "comment": "Default typeface for all UI text. Ensures global consistency.",
+      "type": "string",
+      "value": "{typography.font-family.sans-serif}"
+    },
+    "code": {
+      "comment": "Typeface for code, preformatted text, or monospace contexts.",
+      "type": "string",
+      "value": "{typography.font-family.monospace}"
+    }
+  },
+  "Font size": {
+    "Displays": {
+      "1": {
+        "comment": "Display style, largest.",
+        "type": "number",
+        "value": "{utilities.rem.5}"
+      },
+      "2": {
+        "comment": "Display style, extra-large.",
+        "type": "number",
+        "value": "{utilities.rem.4,5}"
+      },
+      "3": {
+        "comment": "Display style, large.",
+        "type": "number",
+        "value": "{utilities.rem.4}"
+      },
+      "4": {
+        "comment": "Display style, medium-large.",
+        "type": "number",
+        "value": "{utilities.rem.3,5}"
+      },
+      "5": {
+        "comment": "Display style, medium.",
+        "type": "number",
+        "value": "{utilities.rem.3}"
+      },
+      "6": {
+        "comment": "Display style, smaller display.",
+        "type": "number",
+        "value": "{utilities.rem.2,5}"
+      }
+    },
+    "Headings": {
+      "1": {
+        "comment": "Font size for H1 headings.",
+        "type": "number",
+        "value": "{typography.font-size.base.2,5}"
+      },
+      "2": {
+        "comment": "Font size for H2 headings.",
+        "type": "number",
+        "value": "{typography.font-size.base.2}"
+      },
+      "3": {
+        "comment": "Font size for H3 headings.",
+        "type": "number",
+        "value": "{typography.font-size.base.1,75}"
+      },
+      "4": {
+        "comment": "Font size for H4 headings.",
+        "type": "number",
+        "value": "{typography.font-size.base.1,5}"
+      },
+      "5": {
+        "comment": "Font size for H5 headings.",
+        "type": "number",
+        "value": "{typography.font-size.base.1,25}"
+      },
+      "6": {
+        "comment": "Font size for H6 headings.",
+        "type": "number",
+        "value": "{typography.font-size.base.1}"
+      }
+    },
+    "Paragraph": {
+      "base text": {
+        "comment": "Base size for body text.",
+        "type": "number",
+        "value": "{typography.font-size.base.1}"
+      },
+      "lead": {
+        "comment": "Slightly larger body text, for lead paragraphs.",
+        "type": "number",
+        "value": "{typography.font-size.base.1,25}"
+      },
+      "small": {
+        "comment": "Reduced size for secondary text.",
+        "type": "number",
+        "value": "{typography.font-size.base.0,875}"
+      }
+    }
+  },
+  "Font weight": {
+    "Italic": {
+      "bold": {
+        "type": "string",
+        "value": "{typography.font-weight.italic.bold-700}"
+      },
+      "light": {
+        "type": "string",
+        "value": "{typography.font-weight.italic.light-300}"
+      },
+      "medium": {
+        "type": "string",
+        "value": "{typography.font-weight.italic.medium-500}"
+      },
+      "normal (base)": {
+        "type": "string",
+        "value": "{typography.font-weight.italic.regular-400}"
+      },
+      "semibold": {
+        "type": "string",
+        "value": "{typography.font-weight.italic.semibold-600}"
+      }
+    },
+    "Normal": {
+      "bold": {
+        "comment": "High emphasis, primary headings or highlights.",
+        "type": "number",
+        "value": "{typography.font-weight.normal.bold-700}"
+      },
+      "light": {
+        "comment": "Light weight for headings or emphasis.",
+        "type": "number",
+        "value": "{typography.font-weight.normal.light-300}"
+      },
+      "medium": {
+        "comment": "Slightly heavier than normal, often for subheadings.",
+        "type": "number",
+        "value": "{typography.font-weight.normal.medium-500}"
+      },
+      "normal (base)": {
+        "comment": "Standard weight for body text.",
+        "type": "number",
+        "value": "{typography.font-weight.normal.regular-400}"
+      },
+      "semibold": {
+        "comment": "Stronger emphasis, used for UI labels.",
+        "type": "number",
+        "value": "{typography.font-weight.normal.semibold-600}"
+      }
+    }
+  },
+  "Letter spacing": {
+    "default": {
+      "comment": "Standard tracking for all texts.",
+      "type": "number",
+      "value": "{typography.letter-spacing.none}"
+    }
+  },
+  "Line height": {
+    "Displays": {
+      "1": {
+        "type": "number",
+        "value": "{typography.line-height.displays.d1}"
+      },
+      "2": {
+        "type": "number",
+        "value": "{typography.line-height.displays.d2}"
+      },
+      "3": {
+        "type": "number",
+        "value": "{typography.line-height.displays.d3}"
+      },
+      "4": {
+        "type": "number",
+        "value": "{typography.line-height.displays.d4}"
+      },
+      "5": {
+        "type": "number",
+        "value": "{typography.line-height.displays.d5}"
+      },
+      "6": {
+        "type": "number",
+        "value": "{typography.line-height.displays.d6}"
+      }
+    },
+    "Headings": {
+      "1": {
+        "comment": "Tight line height for headings.",
+        "type": "number",
+        "value": "{typography.line-height.headings.h1}"
+      },
+      "2": {
+        "comment": "Tight line height for headings.",
+        "type": "number",
+        "value": "{typography.line-height.headings.h2}"
+      },
+      "3": {
+        "comment": "Tight line height for headings.",
+        "type": "number",
+        "value": "{typography.line-height.headings.h3}"
+      },
+      "4": {
+        "comment": "Tight line height for headings.",
+        "type": "number",
+        "value": "{typography.line-height.headings.h4}"
+      },
+      "5": {
+        "comment": "Tight line height for headings.",
+        "type": "number",
+        "value": "{typography.line-height.headings.h5}"
+      },
+      "6": {
+        "comment": "Tight line height for headings.",
+        "type": "number",
+        "value": "{typography.line-height.headings.h6}"
+      }
+    },
+    "Paragraph": {
+      "base text": {
+        "comment": "Comfortable line height for paragraphs.",
+        "type": "number",
+        "value": "{typography.line-height.paragraph.base}"
+      },
+      "lead": {
+        "comment": "Extended line height for large body text.",
+        "type": "number",
+        "value": "{typography.line-height.paragraph.lg}"
+      },
+      "small": {
+        "comment": "Compact line height for small text.",
+        "type": "number",
+        "value": "{typography.line-height.paragraph.sm}"
+      }
+    }
+  },
+  "Margin bottom": {
+    "display": {
+      "comment": "Default margin below a Displays.",
+      "type": "number",
+      "value": "{Spacers.0}"
+    },
+    "heading": {
+      "comment": "Default margin below a Headings.",
+      "type": "number",
+      "value": "{Spacers.2}"
+    },
+    "paragraph": {
+      "comment": "Default margin below a paragraph.",
+      "type": "number",
+      "value": "{Spacers.4 (base)}"
+    }
+  }
+}
