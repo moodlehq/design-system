@@ -1,0 +1,44 @@
+{
+  "Blur": {
+    "lg": {
+      "type": "number",
+      "value": "{utilities.rem.3}"
+    },
+    "md (base)": {
+      "type": "number",
+      "value": "{utilities.rem.1}"
+    },
+    "sm": {
+      "type": "number",
+      "value": "{utilities.rem.0,25}"
+    }
+  },
+  "Color": {
+    "lg": {
+      "type": "color",
+      "value": "{shadows.lg}"
+    },
+    "md (base)": {
+      "type": "color",
+      "value": "{shadows.md}"
+    },
+    "sm": {
+      "type": "color",
+      "value": "{shadows.sm}"
+    }
+  },
+  "Offset": {
+    "lg": {
+      "type": "number",
+      "value": "{utilities.rem.1}"
+    },
+    "md (base)": {
+      "type": "number",
+      "value": "{utilities.rem.0,5}"
+    },
+    "sm": {
+      "type": "number",
+      "value": "{utilities.rem.0,125}"
+    }
+  }
+}
