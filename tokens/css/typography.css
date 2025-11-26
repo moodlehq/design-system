@@ -46,5 +46,5 @@
   --line-height-paragraph-small: var(--mds-typography-line-height-paragraph-sm);
   --margin-bottom-display: var(--spacers-0);
   --margin-bottom-heading: var(--spacers-2);
-  --margin-bottom-paragraph: var(--spacers-3-base);
+  --margin-bottom-paragraph: var(--spacers-4-base);
 }

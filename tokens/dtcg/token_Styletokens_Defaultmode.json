@@ -42,27 +42,31 @@
   "Paddings and gap": {
     "lg": {
       "$type": "number",
-      "$value": "{Spacers.4}"
+      "$value": "{Spacers.5}"
     },
     "md (base)": {
       "$type": "number",
-      "$value": "{Spacers.3 (base)}"
+      "$value": "{Spacers.4 (base)}"
     },
     "sm": {
       "$type": "number",
-      "$value": "{Spacers.2}"
+      "$value": "{Spacers.3}"
     },
     "xl": {
       "$type": "number",
-      "$value": "{Spacers.5}"
+      "$value": "{Spacers.6}"
     },
     "xs": {
       "$type": "number",
-      "$value": "{Spacers.1}"
+      "$value": "{Spacers.2}"
     },
     "xxl": {
       "$type": "number",
-      "$value": "{Spacers.6}"
+      "$value": "{Spacers.7}"
+    },
+    "xxs": {
+      "$type": "number",
+      "$value": "{Spacers.1}"
     }
   },
   "Stroke Weight": {
@@ -91,6 +95,10 @@
     "Emphasis": {
       "$type": "color",
       "$value": "{Body.Text.emphasis}"
+    },
+    "Light": {
+      "$type": "color",
+      "$value": "{Theme.light}"
     },
     "Link": {
       "$type": "color",

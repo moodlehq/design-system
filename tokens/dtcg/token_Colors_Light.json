@@ -89,16 +89,6 @@
       }
     }
   },
-  "Component active": {
-    "background": {
-      "$type": "color",
-      "$value": "{Theme.primary}"
-    },
-    "text": {
-      "$type": "color",
-      "$value": "{color.gray.white}"
-    }
-  },
   "Contrast": {
     "contrast dark": {
       "$type": "color",
@@ -133,6 +123,106 @@
     "hover": {
       "$type": "color",
       "$value": "{color.blue.600}"
+    }
+  },
+  "State": {
+    "Outline": {
+      "danger": {
+        "$type": "color",
+        "$value": "{Theme.danger}"
+      },
+      "danger active": {
+        "$type": "color",
+        "$value": "{color.red.600}"
+      },
+      "danger disabled": {
+        "$type": "color",
+        "$value": "{color.red.300}"
+      },
+      "danger hover": {
+        "$type": "color",
+        "$value": "{Theme.danger}"
+      },
+      "primary": {
+        "$type": "color",
+        "$value": "{Theme.primary}"
+      },
+      "primary active": {
+        "$type": "color",
+        "$value": "{color.blue.600}"
+      },
+      "primary disabled": {
+        "$type": "color",
+        "$value": "{color.blue.300}"
+      },
+      "primary hover": {
+        "$type": "color",
+        "$value": "{Theme.primary}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.600}"
+      },
+      "secondary active": {
+        "$type": "color",
+        "$value": "{color.gray.700}"
+      },
+      "secondary disabled": {
+        "$type": "color",
+        "$value": "{color.gray.500}"
+      },
+      "secondary hover": {
+        "$type": "color",
+        "$value": "{color.gray.600}"
+      }
+    },
+    "danger": {
+      "$type": "color",
+      "$value": "{Theme.danger}"
+    },
+    "danger active": {
+      "$type": "color",
+      "$value": "{color.red.700}"
+    },
+    "danger disabled": {
+      "$type": "color",
+      "$value": "{color.red.300}"
+    },
+    "danger hover": {
+      "$type": "color",
+      "$value": "{color.red.600}"
+    },
+    "primary": {
+      "$type": "color",
+      "$value": "{Theme.primary}"
+    },
+    "primary active": {
+      "$type": "color",
+      "$value": "{color.blue.700}"
+    },
+    "primary disabled": {
+      "$type": "color",
+      "$value": "{color.blue.300}"
+    },
+    "primary hover": {
+      "$type": "color",
+      "$value": "{color.blue.600}"
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "{Theme.secondary}"
+    },
+    "secondary active": {
+      "$type": "color",
+      "$value": "{Theme.secondary}"
+    },
+    "secondary disabled": {
+      "$type": "color",
+      "$value": "{color.gray.200}"
+    },
+    "secondary hover": {
+      "$type": "color",
+      "$value": "{color.gray.300}"
     }
   },
   "Theme": {
@@ -181,7 +271,7 @@
       },
       "info": {
         "$type": "color",
-        "$value": "{color.green.200}"
+        "$value": "{color.cyan.200}"
       },
       "light": {
         "$type": "color",
