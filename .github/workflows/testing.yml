@@ -1,7 +1,7 @@
-name: Storybook & Accessibility test
+name: Run Storybook, Accessibility & JSUnit tests.
 on: pull_request
 jobs:
-  test:
+  storybook-accessibility:
     runs-on: ubuntu-latest
     container:
       # Make sure to grab the latest version of the Playwright image
@@ -22,3 +22,23 @@ jobs:
 
       - name: Run tests
         run: npm run test-storybook
+
+  jsunit-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.13.0
+
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
+
+      - name: Run tests
+        run: npm run test-unit-coverage
+        env:
+          SB_URL: '${{ github.event.deployment_status.environment_url }}'
