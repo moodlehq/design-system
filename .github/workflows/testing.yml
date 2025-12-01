@@ -48,6 +48,7 @@ jobs:
           SB_URL: '${{ github.event.deployment_status.environment_url }}'
 
   chromatic:
+    if: ${{ !startsWith(github.head_ref, 'dependabot/') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

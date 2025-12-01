@@ -4,6 +4,8 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
+    commit-message:
+      prefix: ci
     groups:
       dev-dependencies:
         patterns:
@@ -15,6 +17,8 @@ updates:
     directory: '/'
     schedule:
       interval: weekly
+    commit-message:
+      prefix: ci
     groups:
       actions-deps:
         patterns:
