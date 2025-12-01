@@ -1,5 +1,9 @@
-name: Run Storybook, Accessibility & JSUnit tests.
+name: Storybook, Accessibility & Chromatic
 on: pull_request
+
+env:
+  NODE_VERSION: 22.13.0
+
 jobs:
   storybook-accessibility:
     runs-on: ubuntu-latest
@@ -13,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 22.13.0
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Clean install
         run: |
@@ -31,7 +35,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: 22.13.0
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Clean install
         run: |
@@ -42,3 +46,35 @@ jobs:
         run: npm run test-unit-coverage
         env:
           SB_URL: '${{ github.event.deployment_status.environment_url }}'
+
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+        env:
+          CHROMATIC_BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          CHROMATIC_SHA: ${{ github.event.pull_request.head.sha || github.ref }}
+          CHROMATIC_SLUG: ${{ github.repository }}
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          onlyChanged: true
+          skip: "dependabot/**"
+          autoAcceptChanges: "main"
+          externals: |
+            fonts/**
+            tokens/**
