@@ -62,4 +62,5 @@ UPGRADING-CURRENT.md
 
 /dist/
 /storybook-static/
+build-storybook.log
 /coverage/

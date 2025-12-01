@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { act } from 'react';
 import { ThemeProvider } from 'react-bootstrap';
-import { expect, fireEvent, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 import { Button } from './Button';
 
 const meta = {
@@ -17,14 +16,11 @@ const meta = {
       </ThemeProvider>
     ),
   ],
-  play: async ({ canvasElement }) => {
-    await act(async () => {
-      const canvas = within(canvasElement);
-      await fireEvent.click(canvas.getByText('Button'));
-      // Wait for any updates to complete
-      await new Promise((resolve) => setTimeout(resolve, 0));
-      await expect(canvas.getByText('Button')).toBeVisible();
-    });
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { label: 'Button' }));
+    // Wait for any updates to complete
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await expect(canvas.getByText('Button')).toBeVisible();
   },
   tags: ['autodocs', 'test', 'stable'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -131,6 +127,10 @@ export const Disabled = {
     label: 'Button',
     disabled: true,
   },
+  play: async ({ canvas }) => {
+    const button = canvas.getByRole('button', { label: 'Button' });
+    await expect(button).toBeDisabled();
+  },
 } satisfies Story;
 
 export const Large = {
@@ -145,28 +145,4 @@ export const Small = {
     size: 'sm',
     label: 'Button',
   },
-} satisfies Story;
-
-// Storybook’s test runner always runs tests in sequence for each story:
-// first the interaction test (play function), then the accessibility test (a11y).
-
-// // It appears that if any tests fail, coverage report is not generated after the run.
-// export const FailingInteractionButton = {
-//   args: {
-//     primary: true,
-//     label: '',
-//   },
-// } satisfies Story;
-//
-export const FailingAccessibilityButton = {
-  args: {
-    label: '',
-  },
-  parameters: {
-    a11y: {
-      // Turning off the check for now so CI can complete.
-      test: 'todo',
-    },
-  },
-  play: async () => {},
 } satisfies Story;
