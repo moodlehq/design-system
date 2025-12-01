@@ -146,27 +146,3 @@ export const Small = {
     label: 'Button',
   },
 } satisfies Story;
-
-// Storybook’s test runner always runs tests in sequence for each story:
-// first the interaction test (play function), then the accessibility test (a11y).
-
-// // It appears that if any tests fail, coverage report is not generated after the run.
-// export const FailingInteractionButton = {
-//   args: {
-//     primary: true,
-//     label: '',
-//   },
-// } satisfies Story;
-//
-export const FailingAccessibilityButton = {
-  args: {
-    label: '',
-  },
-  parameters: {
-    a11y: {
-      // Turning off the check for now so CI can complete.
-      test: 'todo',
-    },
-  },
-  play: async () => {},
-} satisfies Story;
