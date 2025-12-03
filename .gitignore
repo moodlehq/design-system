@@ -1,3 +1,15 @@
+# This file specifies intentionally untracked files that all Moodle git
+# repositories should ignore. It is recommended not to modify this file in your
+# local clone. Instead, use .git/info/exclude and add new records there as
+# needed.
+#
+# Example: if you deploy a contributed plugin mod/foobar into your site, put
+# the following line into .git/info/exclude file in your Moodle clone:
+# /mod/foobar/
+#
+# See gitignore(5) man page for more details
+#
+
 # Swap files (vim)
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
@@ -6,7 +18,35 @@
 [._]sw[a-p]
 # Temporary files including undo
 *~
+#
+/cscope.*
+/.patches/
+.phpstorm.*
+!/.phpstorm.meta.php/
+/.phpstorm.meta.php/*
+!/.phpstorm.meta.php/di.php
+/nbproject/
+CVS
 .DS_Store
+/.settings/
+/.project
+/.buildpath
+/.cache
+.phpunit.result.cache
+phpunit.xml
+# Composer support. Do not ignore composer.json, or composer.lock. These should be shipped by us.
+composer.phar
+/vendor/
+atlassian-ide-plugin.xml
+/node_modules/
+.eslintignore
+.stylelintignore
+/jsdoc
+.hugo_build.lock
+phpcs.xml
+jsconfig.json
+UPGRADING-CURRENT.md
+.phpunit.cache
 
 # JetBrains
 .idea/*
@@ -15,19 +55,12 @@
 .idea/jsLinters/*
 !.idea/jsLinters/eslint.xml
 
-# PHPStorm
-.phpstorm.*
-!/.phpstorm.meta.php/
-/.phpstorm.meta.php/*
-!/.phpstorm.meta.php/di.php
-
 # VSCode
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
 
 /dist/
-/node_modules/
 /storybook-static/
 build-storybook.log
 /coverage/
