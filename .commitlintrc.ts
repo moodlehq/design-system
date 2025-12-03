@@ -1,4 +1,7 @@
 module.exports = {
+  ignores: [
+    (commit) => /^chore(\(main\))?: release \d+\.\d+\.\d+/.test(commit),
+  ],
   extends: ['@commitlint/config-conventional'],
   rules: {
     'type-enum': [
