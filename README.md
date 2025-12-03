@@ -131,7 +131,6 @@ You can run these tests using the following commands:
 ```bash
 # Install dependencies.
 npm install
-npx playwright install
 # Run unit tests.
 npm run test-unit
 # Run unit tests with coverage report.
@@ -151,13 +150,13 @@ npm run build
 
 The built files will be located in the `dist/` directory.
 
-A [CHANGELOG](CHANGELOG.md) is automatically generated for each release using [Release Please](https://github.com/googleapis/release-please)
+A [CHANGELOG](CHANGELOG) is automatically generated for each release using [Release Please](https://github.com/googleapis/release-please)
 
 GitHub Actions are set up to automatically build the design system on each push to the main branch that has been tagged with a version number.
 
 ## CHANGELOG
 
-See [CHANGELOG](CHANGELOG.md) for release history and updates.
+See [CHANGELOG](CHANGELOG) for release history and updates.
 
 ## Contributing & Support
 

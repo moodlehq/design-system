@@ -1,5 +1,5 @@
 {
-  "name": "@moodlehq/design-system",
+  "name": "design-system",
   "version": "0.0.1",
   "description": "The Moodle Design System",
   "main": "dist/index.cjs.js",
@@ -91,17 +91,7 @@
     "type": "git",
     "url": "git+https://github.com/moodlehq/design-system.git"
   },
-  "keywords": [
-    "moodle",
-    "design-system",
-    "ui-library",
-    "react",
-    "typescript",
-    "storybook",
-    "vite",
-    "components"
-  ],
-  "author": "Moodle HQ",
+  "author": "",
   "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/moodlehq/design-system/issues"
