@@ -19,6 +19,7 @@
 }
 .mds-btn.btn:active {
   background-color: var(--state-primary-active);
+  border: var(--border-width-1-default) solid var(--border-translucent);
 }
 .mds-btn.btn:disabled {
   background-color: var(--state-primary-disabled);
