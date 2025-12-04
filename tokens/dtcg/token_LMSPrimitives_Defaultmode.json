@@ -744,10 +744,6 @@
         "$type": "number",
         "$value": 14
       },
-      "1": {
-        "$type": "number",
-        "$value": 16
-      },
       "1,25": {
         "$type": "number",
         "$value": 20
@@ -795,6 +791,10 @@
       "6": {
         "$type": "number",
         "$value": 96
+      },
+      "standard": {
+        "$type": "number",
+        "$value": 16
       }
     }
   }
