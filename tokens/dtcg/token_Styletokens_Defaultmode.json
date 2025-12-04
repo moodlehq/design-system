@@ -58,7 +58,7 @@
     },
     "xs": {
       "$type": "number",
-      "$value": "{Spacers.2}"
+      "$value": 8
     },
     "xxl": {
       "$type": "number",
