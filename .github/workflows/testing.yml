@@ -4,6 +4,9 @@ on: pull_request
 env:
   NODE_VERSION: 22.13.0
 
+permissions:
+  contents: read
+
 jobs:
   storybook-accessibility:
     runs-on: ubuntu-latest
@@ -74,8 +77,8 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
-          skip: "dependabot/**"
-          autoAcceptChanges: "main"
+          skip: 'dependabot/**'
+          autoAcceptChanges: 'main'
           externals: |
             fonts/**
             tokens/**
