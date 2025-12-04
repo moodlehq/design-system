@@ -1,0 +1,10 @@
+{
+  "containerwidth": {
+    "$type": "number",
+    "$value": 375
+  },
+  "display": {
+    "$type": "string",
+    "$value": "Fill"
+  }
+}
