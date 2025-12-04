@@ -18,7 +18,7 @@
     },
     "4 (base)": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{utilities.rem.standard}"
     },
     "5": {
       "$type": "number",
