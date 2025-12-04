@@ -69,7 +69,7 @@ Maintaining a consistent code style is essential for collaborative development. 
   - Lint-staged is used to run linters on staged files, ensuring that only the relevant files are checked before committing.
   - Pre-commit and pre-push hooks are set up to run tests and linters automatically.
 - Testing is done using Vitest and Storybook\'s built-in testing capabilities.
-- Storybook is configured to run components against accessibility standards using the [axe](https://www.npmjs.com/package/@storybook/addon-a11y) addon with WCAG 2.1 AA standards.
+- Storybook is configured to run components against accessibility standards using the [axe](https://www.npmjs.com/package/@storybook/addon-a11y) addon with WCAG 2.2 AA standards.
 
 ### Development Tools
 
