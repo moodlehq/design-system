@@ -6,7 +6,7 @@
     },
     "md (base)": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{utilities.rem.standard}"
     },
     "sm": {
       "$type": "number",
@@ -30,7 +30,7 @@
   "Offset": {
     "lg": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{utilities.rem.standard}"
     },
     "md (base)": {
       "$type": "number",
