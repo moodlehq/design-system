@@ -1,9 +1,12 @@
 # [Moodle Design System](https://github.com/moodlehq/design-system)
 
+![NPM Version](https://img.shields.io/npm/v/%40moodlehq%2Fdesign-system)
+![npm bundle size](https://img.shields.io/bundlephobia/min/%40moodlehq%2Fdesign-system)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Tests](https://github.com/moodlehq/design-system/actions/workflows/testing.yml/badge.svg)](https://github.com/moodlehq/design-system/actions/workflows/testing.yml)
 
-[//]: # (![GitHub package.json version]&#40;https://img.shields.io/github/package-json/v/moodlehq/design-system&#41;)
+[![Test suite](https://github.com/moodlehq/design-system/actions/workflows/testing.yml/badge.svg)](https://github.com/moodlehq/design-system/actions/workflows/testing.yml)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/11543/badge)](https://www.bestpractices.dev/projects/11543)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/moodlehq/design-system/badge)](https://scorecard.dev/viewer/?uri=github.com/moodlehq/design-system)
 
 Welcome! Whether you\'re a designer or a developer, this guide will help you get started and connect you to the essential resources you need.
 
@@ -59,6 +62,8 @@ All design assets and guidelines are centralized in the following resource:
 Maintaining a consistent code style is essential for collaborative development. Below are the coding standards we follow and tooling used in this repository:
 
 - ESLint and Prettier configurations are included in the repository to help maintain code quality and consistency.
+- OpenSSF Best Practices is enabled to ensure adherence to open source best practices.
+- OpenSSF Scorecard is enabled to ensure best practices in open source security.
 - Commit messages should follow the [Conventional Commits@1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
 - Husky is used to manage Git hooks, ensuring that code quality checks are run before commits and pushes.
   - Lint-staged is used to run linters on staged files, ensuring that only the relevant files are checked before committing.
@@ -106,10 +111,7 @@ Storybook will provide detailed documentation and interactive examples of all co
 import { Button } from '@moodlehq/design-system';
 
 export default function App() {
-  return <Button
-    label="Button"
-    variant="primary"
-  />;
+  return <Button label="Button" variant="primary" />;
 }
 ```
 
@@ -162,6 +164,7 @@ See [CHANGELOG](CHANGELOG.md) for release history and updates.
 ## Contributing & Support
 
 For any contributions, issues, or support, please reach out to the Moodle HQ Design System team through the following channels:
+
 - Submit a ticket on the [MDS project on Moodle Tracker](https://tracker.moodle.org/browse/MDS)
 - Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link)
 - Join the [Moodle Design System PAG course](https://moodle.org/course/view.php?id=17258)
@@ -180,4 +183,5 @@ Pull requests are our suggested method for contributing to the design system. Pl
 **A:** No, Moodle core and plugins need to explicitly integrate the design system to use it.
 
 ## License
+
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.

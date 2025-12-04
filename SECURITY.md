@@ -13,6 +13,7 @@ This policy applies to vulnerabilities in the Moodle Design System codebase and 
 Instead, please report security issues by creating an issue at [Moodle Design System tracker](https://moodle.atlassian.net/browse/MDS).
 
 When reporting, please include:
+
 - A clear description of the vulnerability
 - Steps to reproduce the issue
 - The impact and potential risk

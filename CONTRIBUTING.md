@@ -3,6 +3,7 @@
 Thank you for your interest in contributing to the Moodle Design System! This project is driven by MoodleHQ, but we welcome suggestions and contributions from everyone.
 
 ## Table of Contents
+
 - [Getting Started](#getting-started)
 - [Prerequisites](#prerequisites)
 - [Development Setup](#development-setup)
@@ -89,6 +90,7 @@ Improvements to documentation are welcome! Please update relevant markdown files
 ## Getting Help
 
 For any contributions, issues, or support, please reach out to the Moodle HQ Design System team through the following channels:
+
 - Submit a ticket on the [MDS project on Moodle Tracker](https://tracker.moodle.org/browse/MDS)
 - Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link)
 - Join the [Moodle Design System PAG course](https://moodle.org/course/view.php?id=17258)
