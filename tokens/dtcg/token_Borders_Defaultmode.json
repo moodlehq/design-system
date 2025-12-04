@@ -22,7 +22,7 @@
     },
     "xl": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{utilities.rem.standard}"
     },
     "xxl": {
       "$type": "number",
