@@ -29,7 +29,7 @@ trim_trailing_whitespace = true
 # UTF-8 encoding
 charset = utf-8
 
-# Use spaces for all indents with a width of 4 characters.
+# Use spaces for all indents with a width of 2 characters.
 indent_style = space
 indent_size = 2
 
@@ -39,3 +39,4 @@ ij_typescript_use_double_quotes = false
 
 [package*.json]
 indent_size = 2
+
