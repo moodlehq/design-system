@@ -21,8 +21,9 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         with:
+          config-file: .github/release-please/release-please-config.json
+          manifest-file: .github/release-please/.release-please-manifest.json
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-          release-type: node
 
   deploy-storybook:
     permissions:
