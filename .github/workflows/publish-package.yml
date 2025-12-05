@@ -4,10 +4,12 @@ on:
     tags:
       - 'v*'
 permissions:
-  id-token: write # Required for OIDC
-  contents: read
+  contents: read # Set top-level permissions to read only
 jobs:
   publish:
+    permissions:
+      id-token: write # Required for OIDC
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -22,9 +24,14 @@ jobs:
           npm install -g npm@latest
           npm ci
 
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
       - name: Build & test the package
         run: |
           npm run test-storybook
           npm run test-unit
           npm run build --if-present
-          npm publish
+
+      - name: Publish package
+        run: npm publish

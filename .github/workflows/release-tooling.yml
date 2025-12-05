@@ -8,14 +8,15 @@ env:
   NODE_VERSION: 22.13.0
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-  pages: write
-  id-token: write
+  contents: read # Restrict top-level permissions to read only
 
 jobs:
   release-please:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
@@ -23,8 +24,10 @@ jobs:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: node
 
-# This could likely be shifted to publish-package if we only want to update SB with release versions
   deploy-storybook:
+    permissions:
+      pages: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

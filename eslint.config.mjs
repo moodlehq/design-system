@@ -50,7 +50,12 @@ export default defineConfig([
       parser: tsParser,
     },
 
-    ignores: ['eslint.config.mjs', 'vitest.config.js', '**/vendor/*.js'],
+    ignores: [
+      'eslint.config.mjs',
+      'vitest.config.js',
+      '**/vendor/*.js',
+      'CHANGELOG.md',
+    ],
 
     rules: {
       'react/react-in-jsx-scope': 'off',

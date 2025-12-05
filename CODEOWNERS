@@ -1,0 +1,16 @@
+# CODEOWNERS
+
+# All files in the repository
+* @moodlehq/design-system
+
+# Components directory
+/components/ @moodlehq/design-system-developers
+
+# Tokens (design tokens)
+/tokens/ @moodlehq/design-system-designers
+
+# Scripts (tooling)
+/scripts/ @moodlehq/design-system-developers
+
+# Tests
+/tests/ @moodlehq/design-system-developers

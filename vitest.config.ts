@@ -31,7 +31,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: isStorybook
       ? ['.storybook/vitest.setup.ts']
-      : ['./setupTests.ts'],
+      : ['./tests/setupTests.ts'],
     include: !isStorybook
       ? ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}']
       : undefined,
