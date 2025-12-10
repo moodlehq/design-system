@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.0](https://github.com/moodlehq/design-system/compare/v0.0.2...v0.1.0) (2025-12-09)
+
+
+### Features
+
+* **button:** Improve variant restriction and tidy up unit tests ([#56](https://github.com/moodlehq/design-system/issues/56)) ([465cb7b](https://github.com/moodlehq/design-system/commit/465cb7be3d37e9db2ba3727713a8e8f1ecdbadb8))
+* **Security:** Improvements suggested by OSSF Scorecard ([#55](https://github.com/moodlehq/design-system/issues/55)) ([89b3d37](https://github.com/moodlehq/design-system/commit/89b3d37e236aa8b89981d2fb31b6d30fcc51bb70))
+
+
+### Bug Fixes
+
+* **GHA:** Add id-token permission to the StoryBook deploy ([#63](https://github.com/moodlehq/design-system/issues/63)) ([0655a78](https://github.com/moodlehq/design-system/commit/0655a78feb35adb884091cf8329bce76625ee8b1))
+
 ## [0.0.2](https://github.com/moodlehq/design-system/compare/v0.0.1...v0.0.2) (2025-12-03)
 
 
