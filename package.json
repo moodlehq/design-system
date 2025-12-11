@@ -78,14 +78,14 @@
     "build": "tsc && vite build",
     "build-storybook": "storybook build",
     "build-tokens": "tsx scripts/tokens.ts",
-    "format": "prettier --write . '**/*.{ts,tsx,js,jsx,yml}'",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "format": "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write . '**/*.{ts,tsx,js,jsx,yml}'",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix --config .github/linters/eslint.config.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
+    "*{js,jsx,ts,tsx}": [
+      "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write",
+      "eslint --fix --config .github/linters/eslint.config.mjs"
     ]
   },
   "repository": {
