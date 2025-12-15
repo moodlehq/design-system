@@ -8,5 +8,7 @@
     "javascript",
     "javascriptreact"
   ],
-  "eslint.workingDirectories": [{ "mode": "auto" }]
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "prettier.configPath": ".github/linters/.prettierrc",
+  "prettier.ignorePath": ".github/linters/.prettierignore"
 }

@@ -1,1 +1,2 @@
-npx commitlint -e $1 -g .commitlintrc.ts
+npx commitlint -e $1 -g .github/linters/.commitlintrc.ts
+
