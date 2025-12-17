@@ -1,36 +1,16 @@
 {
-  "Body": {
-    "Background": {
-      "default": {
-        "$type": "color",
-        "$value": "{color.gray.white}"
-      },
-      "secondary": {
-        "$type": "color",
-        "$value": "{color.gray.200}"
-      },
-      "tertiary": {
-        "$type": "color",
-        "$value": "{color.gray.100}"
-      }
+  "Background": {
+    "default": {
+      "$type": "color",
+      "$value": "{color.gray.white}"
     },
-    "Text": {
-      "default": {
-        "$type": "color",
-        "$value": "{color.gray.900}"
-      },
-      "emphasis": {
-        "$type": "color",
-        "$value": "{color.gray.black}"
-      },
-      "secondary": {
-        "$type": "color",
-        "$value": "#1d2125bf"
-      },
-      "tertiary": {
-        "$type": "color",
-        "$value": "#1d212580"
-      }
+    "secondary": {
+      "$type": "color",
+      "$value": "{color.gray.200}"
+    },
+    "tertiary": {
+      "$type": "color",
+      "$value": "{color.gray.100}"
     }
   },
   "Border": {
@@ -47,82 +27,52 @@
     "Primary": {
       "moodle black": {
         "$type": "color",
-        "$value": "{brand.grey.300}"
+        "$value": "{color.brand.gray.300}"
       },
       "moodle blue": {
         "$type": "color",
-        "$value": "{brand.blue.300}"
+        "$value": "{color.brand.blue.300}"
       },
       "moodle orange": {
         "$type": "color",
-        "$value": "{brand.orange.400}"
+        "$value": "{color.brand.orange.400}"
       }
     },
     "Secondary": {
       "bright blue": {
         "$type": "color",
-        "$value": "{brand.blue.100}"
+        "$value": "{color.brand.blue.100}"
       },
       "dark grey": {
         "$type": "color",
-        "$value": "{brand.grey.200}"
+        "$value": "{color.brand.gray.200}"
       },
       "light blue": {
         "$type": "color",
-        "$value": "{brand.blue.200}"
+        "$value": "{color.brand.blue.200}"
       },
       "light grey": {
         "$type": "color",
-        "$value": "{brand.grey.100}"
+        "$value": "{color.brand.gray.100}"
       },
       "light peach": {
         "$type": "color",
-        "$value": "{brand.orange.100}"
+        "$value": "{color.brand.orange.100}"
       },
       "medium peach": {
         "$type": "color",
-        "$value": "{brand.orange.200}"
+        "$value": "{color.brand.orange.200}"
       },
       "peach": {
         "$type": "color",
-        "$value": "{brand.orange.300}"
+        "$value": "{color.brand.orange.300}"
       }
-    }
-  },
-  "Contrast": {
-    "contrast dark": {
-      "$type": "color",
-      "$value": "{color.gray.black}"
-    },
-    "contrast light": {
-      "$type": "color",
-      "$value": "{color.gray.white}"
     }
   },
   "Focus ring": {
     "default": {
       "$type": "color",
       "$value": "{Theme.primary}"
-    }
-  },
-  "Icon": {
-    "fa border color": {
-      "$type": "color",
-      "$value": "#eeeeee"
-    },
-    "fa inverse": {
-      "$type": "color",
-      "$value": "{color.gray.white}"
-    }
-  },
-  "Link": {
-    "default": {
-      "$type": "color",
-      "$value": "{Theme.primary}"
-    },
-    "hover": {
-      "$type": "color",
-      "$value": "{color.blue.600}"
     }
   },
   "State": {
@@ -223,6 +173,40 @@
     "secondary hover": {
       "$type": "color",
       "$value": "{color.gray.300}"
+    }
+  },
+  "Text": {
+    "Body": {
+      "Light": {
+        "$type": "color",
+        "$value": "{Theme.light}"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.gray.900}"
+      },
+      "emphasis": {
+        "$type": "color",
+        "$value": "{color.gray.black}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.gray.700}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.gray.600}"
+      }
+    },
+    "Link": {
+      "default": {
+        "$type": "color",
+        "$value": "{Theme.primary}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.blue.600}"
+      }
     }
   },
   "Theme": {
