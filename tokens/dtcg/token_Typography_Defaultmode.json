@@ -15,32 +15,32 @@
     "Displays": {
       "1": {
         "$type": "number",
-        "$value": "{utilities.rem.5}",
+        "$value": "{scale.1600}",
         "$description": "Display style, largest."
       },
       "2": {
         "$type": "number",
-        "$value": "{utilities.rem.4,5}",
+        "$value": "{scale.1500}",
         "$description": "Display style, extra-large."
       },
       "3": {
         "$type": "number",
-        "$value": "{utilities.rem.4}",
+        "$value": "{scale.1400}",
         "$description": "Display style, large."
       },
       "4": {
         "$type": "number",
-        "$value": "{utilities.rem.3,5}",
+        "$value": "{scale.1300}",
         "$description": "Display style, medium-large."
       },
       "5": {
         "$type": "number",
-        "$value": "{utilities.rem.3}",
+        "$value": "{scale.1200}",
         "$description": "Display style, medium."
       },
       "6": {
         "$type": "number",
-        "$value": "{utilities.rem.2,5}",
+        "$value": "{scale.1100}",
         "$description": "Display style, smaller display."
       }
     },
@@ -119,29 +119,24 @@
     },
     "Normal": {
       "bold": {
-        "$type": "number",
-        "$value": "{typography.font-weight.normal.bold-700}",
-        "$description": "High emphasis, primary headings or highlights."
+        "$type": "string",
+        "$value": "{typography.font-weight.normal.bold-700}"
       },
       "light": {
-        "$type": "number",
-        "$value": "{typography.font-weight.normal.light-300}",
-        "$description": "Light weight for headings or emphasis."
+        "$type": "string",
+        "$value": "{typography.font-weight.normal.light-300}"
       },
       "medium": {
-        "$type": "number",
-        "$value": "{typography.font-weight.normal.medium-500}",
-        "$description": "Slightly heavier than normal, often for subheadings."
+        "$type": "string",
+        "$value": "{typography.font-weight.normal.medium-500}"
       },
       "normal (base)": {
-        "$type": "number",
-        "$value": "{typography.font-weight.normal.regular-400}",
-        "$description": "Standard weight for body text."
+        "$type": "string",
+        "$value": "{typography.font-weight.normal.regular-400}"
       },
       "semibold": {
-        "$type": "number",
-        "$value": "{typography.font-weight.normal.semibold-600}",
-        "$description": "Stronger emphasis, used for UI labels."
+        "$type": "string",
+        "$value": "{typography.font-weight.normal.semibold-600}"
       }
     }
   },
@@ -232,17 +227,17 @@
   "Margin bottom": {
     "display": {
       "$type": "number",
-      "$value": "{Spacers.0}",
+      "$value": "{spacing.none}",
       "$description": "Default margin below a Displays."
     },
     "heading": {
       "$type": "number",
-      "$value": "{Spacers.2}",
+      "$value": "{spacing.xs}",
       "$description": "Default margin below a Headings."
     },
     "paragraph": {
       "$type": "number",
-      "$value": "{Spacers.4 (base)}",
+      "$value": "{spacing.md (base)}",
       "$description": "Default margin below a paragraph."
     }
   }
