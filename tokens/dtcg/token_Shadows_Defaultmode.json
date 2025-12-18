@@ -2,43 +2,43 @@
   "Blur": {
     "lg": {
       "$type": "number",
-      "$value": "{utilities.rem.3}"
+      "$value": "{scale.1200}"
     },
     "md (base)": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{scale.600}"
     },
     "sm": {
       "$type": "number",
-      "$value": "{utilities.rem.0,25}"
+      "$value": "{scale.100}"
     }
   },
   "Color": {
     "lg": {
       "$type": "color",
-      "$value": "{shadows.lg}"
+      "$value": "#0000002d"
     },
     "md (base)": {
       "$type": "color",
-      "$value": "{shadows.md}"
+      "$value": "#00000026"
     },
     "sm": {
       "$type": "color",
-      "$value": "{shadows.sm}"
+      "$value": "#00000013"
     }
   },
   "Offset": {
     "lg": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{scale.600}"
     },
     "md (base)": {
       "$type": "number",
-      "$value": "{utilities.rem.0,5}"
+      "$value": "{scale.300}"
     },
     "sm": {
       "$type": "number",
-      "$value": "{utilities.rem.0,125}"
+      "$value": "{scale.50}"
     }
   }
 }
