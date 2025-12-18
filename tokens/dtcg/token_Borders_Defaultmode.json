@@ -2,55 +2,51 @@
   "Border radius": {
     "lg": {
       "$type": "number",
-      "$value": "{utilities.rem.0,5}"
+      "$value": "{scale.300}"
     },
     "md (default)": {
       "$type": "number",
-      "$value": "{utilities.rem.0,375}"
+      "$value": "{scale.200}"
     },
     "none": {
       "$type": "number",
-      "$value": "{utilities.rem.0}"
+      "$value": "{scale.0}"
     },
     "pill": {
       "$type": "number",
-      "$value": "{utilities.rem.50}"
+      "$value": "{scale.1800}"
     },
     "sm": {
       "$type": "number",
-      "$value": "{utilities.rem.0,25}"
+      "$value": "{scale.100}"
     },
     "xl": {
       "$type": "number",
-      "$value": "{utilities.rem.1}"
+      "$value": "{scale.600}"
     },
     "xxl": {
       "$type": "number",
-      "$value": "{utilities.rem.2}"
+      "$value": "{scale.1000}"
     }
   },
-  "Border width": {
-    "0": {
-      "$type": "number",
-      "$value": 0
-    },
-    "1 (default)": {
-      "$type": "number",
-      "$value": 1
-    },
-    "2": {
-      "$type": "number",
-      "$value": 2
-    },
-    "3": {
+  "Stroke weight": {
+    "lg": {
       "$type": "number",
       "$value": 3
     },
-    "4": {
+    "md": {
+      "$type": "number",
+      "$value": 2
+    },
+    "sm (default)": {
+      "$type": "number",
+      "$value": 1
+    },
+    "xl": {
       "$type": "number",
       "$value": 4
     },
-    "5": {
+    "xxl": {
       "$type": "number",
       "$value": 5
     }
