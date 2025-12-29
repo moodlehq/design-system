@@ -18,6 +18,7 @@ import StyleDictionary, {
   Dictionary,
   TransformedToken,
 } from 'style-dictionary';
+import { getReferences, usesReferences } from 'style-dictionary/utils';
 
 const tokenFiles = fs
   .readdirSync('tokens/dtcg')
@@ -29,17 +30,21 @@ const tokenFiles = fs
  * and semantic tokens referencing the primitives (or referencing another semantic token).
  *
  * Why custom formatter?
- * - Built-in formatter couldn't handle multi-layer semantic uppercased first letter condition.
- * - Built-in formatter couldn't handle variables referencing to prefixed mds- primitives
  * - Built-in formatter couldn't handle names with brackets i.e. (default) and (base)
+ * - Built-in formatter couldn't handle descriptions with multi-line block comments (/* ... *\/)
+ * - Built-in formatter couldn’t apply the 'mds-' prefix selectively to primitive tokens only.
  */
 StyleDictionary.registerFormat({
   name: 'css/mds-variables',
   format: ({ dictionary }: { dictionary: Dictionary }) => {
-    const getTokenName = (token: TransformedToken): string => {
-      const prefix = token.filePath.includes('Primitives') ? 'mds-' : '';
-      return `${prefix}${token.name}`;
-    };
+    const isPrimitive = (token: TransformedToken) =>
+      token.filePath.includes('primitives');
+
+    const getPrefix = (token: TransformedToken) =>
+      isPrimitive(token) ? 'mds-' : '';
+
+    const getTokenName = (token: TransformedToken) =>
+      `${getPrefix(token)}${token.name}`;
 
     const getTokenValue = (token: TransformedToken): string => {
       /*
@@ -48,24 +53,17 @@ StyleDictionary.registerFormat({
         - semantic token -> the variable reference (not the resolved/transformed value)
        */
       const originalValue = String(token.original.$value);
+      if (!usesReferences(originalValue)) {
+        return token.$value; // if primitive, return the transformed value
+      }
 
-      // curly brackets -> it is a reference to another token
-      const varMatch = originalValue.match(/^\{(.+)\}$/);
-      if (!varMatch) return token.$value; // if primitive, return the transformed value instead of the original
-      const varReference = varMatch[1];
+      // if semantic, use the target token being referenced
+      const [targetToken] = getReferences(
+        originalValue,
+        dictionary.unfilteredTokens ?? dictionary.tokens,
+      );
 
-      /*
-        first letter:
-        - uppercase -> reference to semantic token (no prefix)
-        - lowercase -> reference to primitive token (mds- prefix).
-       */
-      const prefix = /^[A-Z]/.test(varReference) ? '' : 'mds-';
-      const cssVar = varReference
-        .toLowerCase()
-        .replace(/[.,\s(]+/g, '-')
-        .replace(/\)+$/, '');
-
-      return `var(--${prefix}${cssVar})`;
+      return `var(--${getTokenName(targetToken)})`;
     };
 
     const tokenVariables = dictionary.allTokens.map((token) => {
@@ -98,15 +96,15 @@ StyleDictionary.registerFormat({
  * Why custom transform?
  * - Built-in transform needs the type to be 'dimension', but our tokens solely use 'number' type.
  * - The exported values in DTCG JSON from ZeroHeight would not have the units (ie. 1rem) for dimension-related tokens
+ *
+ * Rules & Assumptions:
+ * - Any flat numerical tokens with $type 'number' are considered dimension-related tokens and will be transformed from px to rem.
  */
 StyleDictionary.registerTransform({
   name: 'css/dimension-px-to-rem',
   type: 'value',
   filter: (token) => {
-    return (
-      token.$type === 'number' &&
-      /rem|font-size|line-height|border-width/i.test(token.name)
-    );
+    return token.$type === 'number';
   },
   transform: (token) => `${token.$value / 16}rem`,
 });

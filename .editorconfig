@@ -39,3 +39,6 @@ ij_typescript_use_double_quotes = false
 
 [package*.json]
 indent_size = 2
+
+[tokens/**]
+insert_final_newline = unset

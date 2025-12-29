@@ -1,17 +1,16 @@
 /** THIS FILE IS AUTO-GENERATED — DO NOT EDIT DIRECTLY. **/
 
 :root {
-  --border-radius-lg: var(--mds-utilities-rem-0-5);
-  --border-radius-md-default: var(--mds-utilities-rem-0-375);
-  --border-radius-none: var(--mds-utilities-rem-0);
-  --border-radius-pill: var(--mds-utilities-rem-50);
-  --border-radius-sm: var(--mds-utilities-rem-0-25);
-  --border-radius-xl: var(--mds-utilities-rem-1);
-  --border-radius-xxl: var(--mds-utilities-rem-2);
-  --border-width-0: 0rem;
-  --border-width-2: 0.125rem;
-  --border-width-3: 0.1875rem;
-  --border-width-4: 0.25rem;
-  --border-width-5: 0.3125rem;
-  --border-width-1-default: 0.0625rem;
+  --border-radius-lg: var(--mds-scale-300);
+  --border-radius-md-default: var(--mds-scale-200);
+  --border-radius-none: var(--mds-scale-0);
+  --border-radius-pill: var(--mds-scale-1800);
+  --border-radius-sm: var(--mds-scale-100);
+  --border-radius-xl: var(--mds-scale-600);
+  --border-radius-xxl: var(--mds-scale-1000);
+  --stroke-weight-lg: 0.1875rem;
+  --stroke-weight-md: 0.125rem;
+  --stroke-weight-sm-default: 0.0625rem;
+  --stroke-weight-xl: 0.25rem;
+  --stroke-weight-xxl: 0.3125rem;
 }
