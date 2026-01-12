@@ -1,0 +1,54 @@
+{
+  "border radius": {
+    "lg": {
+      "$type": "number",
+      "$value": "{scale.300}"
+    },
+    "md (default)": {
+      "$type": "number",
+      "$value": "{scale.200}"
+    },
+    "none": {
+      "$type": "number",
+      "$value": "{scale.0}"
+    },
+    "pill": {
+      "$type": "number",
+      "$value": "{scale.1800}"
+    },
+    "sm": {
+      "$type": "number",
+      "$value": "{scale.100}"
+    },
+    "xl": {
+      "$type": "number",
+      "$value": "{scale.600}"
+    },
+    "xxl": {
+      "$type": "number",
+      "$value": "{scale.1000}"
+    }
+  },
+  "stroke weight": {
+    "lg": {
+      "$type": "number",
+      "$value": 3
+    },
+    "md": {
+      "$type": "number",
+      "$value": 2
+    },
+    "sm (default)": {
+      "$type": "number",
+      "$value": 1
+    },
+    "xl": {
+      "$type": "number",
+      "$value": 4
+    },
+    "xxl": {
+      "$type": "number",
+      "$value": 5
+    }
+  }
+}
