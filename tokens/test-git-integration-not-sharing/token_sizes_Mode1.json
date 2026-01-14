@@ -1,0 +1,28 @@
+{
+  "icon": {
+    "lg": {
+      "type": "number",
+      "value": "{scale.700}"
+    },
+    "md (default)": {
+      "type": "number",
+      "value": "{scale.600}"
+    },
+    "sm": {
+      "type": "number",
+      "value": "{scale.400}"
+    },
+    "xl": {
+      "type": "number",
+      "value": "{scale.800}"
+    },
+    "xs": {
+      "type": "number",
+      "value": "{scale.300}"
+    },
+    "xxl": {
+      "type": "number",
+      "value": "{scale.1000}"
+    }
+  }
+}
