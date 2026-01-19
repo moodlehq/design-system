@@ -1,61 +1,60 @@
 @import '/tokens/css/index.css';
 
 .mds-btn.btn {
-  background-color: var(--state-primary);
-  border: var(--border-width-1-default) solid var(--border-translucent);
-  border-radius: var(--corner-radius-lg);
-  padding: var(--paddings-and-gap-xs) var(--paddings-and-gap-sm);
+  background-color: var(--bg-interactive-primary-default);
+  border: var(--stroke-weight-sm-default) solid var(--border-translucent);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xs) var(--spacing-sm);
 
-  color: var(--body-background-default);
+  color: var(--text-inverse);
   font-family: var(--font-family-base);
-  font-weight: var(--font-weight-normal-normal-base);
-  font-style: normal;
+  font-weight: var(--font-weight-normal-regular);
   font-size: var(--font-size-paragraph-base-text);
   line-height: var(--line-height-paragraph-small);
   letter-spacing: var(--letter-spacing-default);
 }
 .mds-btn.btn:hover {
-  background-color: var(--state-primary-hover);
+  background-color: var(--bg-interactive-primary-hover);
 }
 .mds-btn.btn:active {
-  background-color: var(--state-primary-active);
-  border: var(--border-width-1-default) solid var(--border-translucent);
+  background-color: var(--bg-interactive-primary-active);
+  border: var(--stroke-weight-sm-default) solid var(--border-translucent);
 }
 .mds-btn.btn:disabled {
-  background-color: var(--state-primary-disabled);
+  background-color: var(--bg-interactive-primary-disabled);
 }
 
 /**
   * Secondary variants
   */
 .mds-btn.btn.btn-secondary {
-  background-color: var(--state-secondary);
-  color: var(--body-text-emphasis);
+  background-color: var(--bg-interactive-secondary-default);
+  color: var(--text-default);
 }
 .mds-btn.btn.btn-secondary:hover {
-  background-color: var(--state-secondary-hover);
+  background-color: var(--bg-interactive-secondary-hover);
 }
 .mds-btn.btn.btn-secondary:active {
-  background-color: var(--state-secondary-active);
+  background-color: var(--bg-interactive-secondary-active);
 }
 .mds-btn.btn.btn-secondary:disabled {
-  background-color: var(--state-secondary-disabled);
+  background-color: var(--bg-interactive-secondary-disabled);
 }
 
 /**
   * Danger variants
   */
 .mds-btn.btn-danger {
-  background-color: var(--state-danger);
+  background-color: var(--bg-interactive-danger-default);
 }
 .mds-btn.btn-danger:hover {
-  background-color: var(--state-danger-hover);
+  background-color: var(--bg-interactive-danger-hover);
 }
 .mds-btn.btn-danger:active {
-  background-color: var(--state-danger-active);
+  background-color: var(--bg-interactive-danger-active);
 }
 .mds-btn.btn.btn-danger:disabled {
-  background-color: var(--state-danger-disabled);
+  background-color: var(--bg-interactive-danger-disabled);
 }
 
 /**
@@ -63,20 +62,23 @@
   */
 .mds-btn.btn-outline-primary {
   background-color: transparent;
-  border: var(--border-width-1-default) solid var(--state-outline-primary);
-  color: var(--theme-primary);
+  border: var(--stroke-weight-sm-default) solid
+    var(--border-interactive-primary-default);
+  color: var(--text-link-primary-default);
 }
 .mds-btn.btn-outline-primary:hover {
-  background-color: var(--state-outline-primary-hover);
-  color: var(--body-background-default);
+  background-color: var(--bg-interactive-primary-hover);
+  color: var(--text-inverse);
 }
 .mds-btn.btn-outline-primary:active {
-  background-color: var(--state-outline-primary-active);
-  color: var(--body-background-default);
+  background-color: var(--bg-interactive-primary-active);
+  color: var(--text-inverse);
 }
 .mds-btn.btn.btn-outline-primary:disabled {
   background-color: transparent;
-  color: var(--state-outline-primary-disabled);
+  border: var(--stroke-weight-sm-default) solid
+    var(--border-interactive-primary-disabled);
+  color: var(--mds-color-blue-300);
 }
 
 /**
@@ -84,20 +86,23 @@
   */
 .mds-btn.btn-outline-secondary {
   background-color: transparent;
-  border: var(--border-width-1-default) solid var(--state-outline-secondary);
-  color: var(--state-outline-secondary);
+  border: var(--stroke-weight-sm-default) solid
+    var(--border-interactive-secondary-default);
+  color: var(--text-muted);
 }
 .mds-btn.btn-outline-secondary:hover {
-  background-color: var(--state-outline-secondary-hover);
-  color: var(--body-background-default);
+  background-color: var(--border-interactive-secondary-hover);
+  color: var(--text-inverse);
 }
 .mds-btn.btn-outline-secondary:active {
-  background-color: var(--state-outline-secondary-active);
-  color: var(--body-background-default);
+  background-color: var(--border-interactive-secondary-active);
+  color: var(--text-inverse);
 }
 .mds-btn.btn.btn-outline-secondary:disabled {
   background-color: transparent;
-  color: var(--state-outline-secondary-disabled);
+  border: var(--stroke-weight-sm-default) solid
+    var(--border-interactive-secondary-disabled);
+  color: var(--mds-color-gray-500);
 }
 
 /**
@@ -105,32 +110,35 @@
   */
 .mds-btn.btn-outline-danger {
   background-color: transparent;
-  border: var(--border-width-1-default) solid var(--state-outline-danger);
-  color: var(--state-danger);
+  border: var(--stroke-weight-sm-default) solid
+    var(--border-interactive-danger-default);
+  color: var(--text-danger);
 }
 .mds-btn.btn-outline-danger:hover {
-  background-color: var(--state-outline-danger-hover);
-  color: var(--body-background-default);
+  background-color: var(--bg-interactive-danger-default);
+  color: var(--text-inverse);
 }
 .mds-btn.btn-outline-danger:active {
-  background-color: var(--state-outline-danger-active);
-  color: var(--mds-color-gray-white);
+  background-color: var(--bg-interactive-danger-hover);
+  color: var(--text-inverse);
 }
 .mds-btn.btn.btn-outline-danger:disabled {
   background-color: transparent;
-  color: var(--state-outline-danger-disabled);
+  border: var(--stroke-weight-sm-default) solid
+    var(--border-interactive-danger-disabled);
+  color: var(--mds-color-red-300);
 }
 
 /**
   * Size variants
   */
 .mds-btn.btn-sm {
-  padding: var(--paddings-and-gap-xxs) var(--paddings-and-gap-xs);
+  padding: var(--spacing-xxs) var(--spacing-xs);
   font-size: var(--font-size-paragraph-small);
   line-height: var(--line-height-paragraph-small);
 }
 .mds-btn.btn-lg {
-  padding: var(--paddings-and-gap-xs) var(--paddings-and-gap-md-base);
+  padding: var(--spacing-xs) var(--spacing-md-default);
   font-size: var(--font-size-paragraph-lead);
   line-height: var(--line-height-paragraph-base-text);
 }
