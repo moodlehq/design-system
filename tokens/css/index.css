@@ -2,10 +2,9 @@
 
 @import "./borders.css";
 @import "./colors.css";
-@import "./focusring.css";
-@import "./lmsprimitives.css";
+@import "./primitives.css";
 @import "./shadows.css";
-@import "./spacers.css";
-@import "./styletokens.css";
-@import "./typography.css";
+@import "./sizes.css";
+@import "./spacing.css";
+@import "./typograhy.css";
 @import "./fonts.css"

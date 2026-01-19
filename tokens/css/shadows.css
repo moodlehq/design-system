@@ -1,13 +1,13 @@
 /** THIS FILE IS AUTO-GENERATED — DO NOT EDIT DIRECTLY. **/
 
 :root {
-  --blur-lg: var(--mds-utilities-rem-3);
-  --blur-md-base: var(--mds-utilities-rem-1);
-  --blur-sm: var(--mds-utilities-rem-0-25);
-  --color-lg: var(--mds-shadows-lg);
-  --color-md-base: var(--mds-shadows-md);
-  --color-sm: var(--mds-shadows-sm);
-  --offset-lg: var(--mds-utilities-rem-1);
-  --offset-md-base: var(--mds-utilities-rem-0-5);
-  --offset-sm: var(--mds-utilities-rem-0-125);
+  --color-lg: rgba(0, 0, 0, 0.18);
+  --color-md-default: rgba(0, 0, 0, 0.15);
+  --color-sm: rgba(0, 0, 0, 0.07);
+  --blur-lg: var(--mds-scale-1200);
+  --blur-md-default: var(--mds-scale-600);
+  --blur-sm: var(--mds-scale-100);
+  --offset-lg: var(--mds-scale-600);
+  --offset-md-default: var(--mds-scale-300);
+  --offset-sm: var(--mds-scale-50);
 }
