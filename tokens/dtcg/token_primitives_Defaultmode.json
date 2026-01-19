@@ -1,52 +1,4 @@
 {
-  "brand": {
-    "blue": {
-      "100": {
-        "$type": "color",
-        "$value": "#69e0ff"
-      },
-      "200": {
-        "$type": "color",
-        "$value": "#65a1b3"
-      },
-      "300": {
-        "$type": "color",
-        "$value": "#194866"
-      }
-    },
-    "grey": {
-      "100": {
-        "$type": "color",
-        "$value": "#8a8a8e"
-      },
-      "200": {
-        "$type": "color",
-        "$value": "#545454"
-      },
-      "300": {
-        "$type": "color",
-        "$value": "#282828"
-      }
-    },
-    "orange": {
-      "100": {
-        "$type": "color",
-        "$value": "#fff8f1"
-      },
-      "200": {
-        "$type": "color",
-        "$value": "#ffecdb"
-      },
-      "300": {
-        "$type": "color",
-        "$value": "#fedec3"
-      },
-      "400": {
-        "$type": "color",
-        "$value": "#f98012"
-      }
-    }
-  },
   "color": {
     "blue": {
       "100": {
@@ -84,6 +36,54 @@
       "900": {
         "$type": "color",
         "$value": "#031626"
+      }
+    },
+    "brand": {
+      "blue": {
+        "100": {
+          "$type": "color",
+          "$value": "#69e0ff"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#65a1b3"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#194866"
+        }
+      },
+      "gray": {
+        "100": {
+          "$type": "color",
+          "$value": "#8a8a8e"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#545454"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#282828"
+        }
+      },
+      "orange": {
+        "100": {
+          "$type": "color",
+          "$value": "#fff8f1"
+        },
+        "200": {
+          "$type": "color",
+          "$value": "#ffecdb"
+        },
+        "300": {
+          "$type": "color",
+          "$value": "#fedec3"
+        },
+        "400": {
+          "$type": "color",
+          "$value": "#f98012"
+        }
       }
     },
     "cyan": {
@@ -475,40 +475,86 @@
       }
     }
   },
-  "opacity": {
+  "scale": {
     "0": {
       "$type": "number",
       "$value": 0
     },
-    "20": {
+    "100": {
       "$type": "number",
-      "$value": 20
+      "$value": 4
     },
-    "40": {
+    "1000": {
+      "$type": "number",
+      "$value": 32
+    },
+    "1100": {
       "$type": "number",
       "$value": 40
     },
-    "60": {
+    "1200": {
       "$type": "number",
-      "$value": 60
+      "$value": 48
     },
-    "80": {
+    "1300": {
+      "$type": "number",
+      "$value": 56
+    },
+    "1400": {
+      "$type": "number",
+      "$value": 64
+    },
+    "1500": {
+      "$type": "number",
+      "$value": 72
+    },
+    "1600": {
       "$type": "number",
       "$value": 80
-    }
-  },
-  "shadows": {
-    "lg": {
-      "$type": "color",
-      "$value": "#0000002d"
     },
-    "md": {
-      "$type": "color",
-      "$value": "#00000026"
+    "1700": {
+      "$type": "number",
+      "$value": 96
     },
-    "sm": {
-      "$type": "color",
-      "$value": "#00000013"
+    "1800": {
+      "$type": "number",
+      "$value": 800
+    },
+    "200": {
+      "$type": "number",
+      "$value": 6
+    },
+    "300": {
+      "$type": "number",
+      "$value": 8
+    },
+    "400": {
+      "$type": "number",
+      "$value": 12
+    },
+    "50": {
+      "$type": "number",
+      "$value": 2
+    },
+    "500": {
+      "$type": "number",
+      "$value": 14
+    },
+    "600": {
+      "$type": "number",
+      "$value": 16
+    },
+    "700": {
+      "$type": "number",
+      "$value": 20
+    },
+    "800": {
+      "$type": "number",
+      "$value": 24
+    },
+    "900": {
+      "$type": "number",
+      "$value": 28
     }
   },
   "typography": {
@@ -599,42 +645,40 @@
       },
       "normal": {
         "black-900": {
-          "$type": "number",
-          "$value": 900
+          "$type": "string",
+          "$value": "Black"
         },
         "bold-700": {
-          "$type": "number",
-          "$value": 700,
-          "$description": "/* bold */"
+          "$type": "string",
+          "$value": "Bold"
         },
         "extrabold-800": {
-          "$type": "number",
-          "$value": 800
+          "$type": "string",
+          "$value": "Extrabold"
         },
         "extralight-200": {
-          "$type": "number",
-          "$value": 200
+          "$type": "string",
+          "$value": "Extra light"
         },
         "light-300": {
-          "$type": "number",
-          "$value": 300
+          "$type": "string",
+          "$value": "Light"
         },
         "medium-500": {
-          "$type": "number",
-          "$value": 500
+          "$type": "string",
+          "$value": "Medium"
         },
         "regular-400": {
-          "$type": "number",
-          "$value": 400,
-          "$description": "/* normal */"
+          "$type": "string",
+          "$value": "Regular"
         },
         "semibold-600": {
-          "$type": "number",
-          "$value": 600
+          "$type": "string",
+          "$value": "Semibold"
         },
         "thin-100": {
-          "$type": "number",
-          "$value": 100
+          "$type": "string",
+          "$value": "Thin"
         }
       }
     },
@@ -711,90 +755,6 @@
           "$type": "number",
           "$value": 17.4
         }
-      }
-    }
-  },
-  "utilities": {
-    "rem": {
-      "0": {
-        "$type": "number",
-        "$value": 0
-      },
-      "0,125": {
-        "$type": "number",
-        "$value": 2
-      },
-      "0,25": {
-        "$type": "number",
-        "$value": 4
-      },
-      "0,375": {
-        "$type": "number",
-        "$value": 6
-      },
-      "0,5": {
-        "$type": "number",
-        "$value": 8
-      },
-      "0,75": {
-        "$type": "number",
-        "$value": 12
-      },
-      "0,875": {
-        "$type": "number",
-        "$value": 14
-      },
-      "1": {
-        "$type": "number",
-        "$value": 16
-      },
-      "1,25": {
-        "$type": "number",
-        "$value": 20
-      },
-      "1,5": {
-        "$type": "number",
-        "$value": 24
-      },
-      "1,75": {
-        "$type": "number",
-        "$value": 28
-      },
-      "2": {
-        "$type": "number",
-        "$value": 32
-      },
-      "2,5": {
-        "$type": "number",
-        "$value": 40
-      },
-      "3": {
-        "$type": "number",
-        "$value": 48
-      },
-      "3,5": {
-        "$type": "number",
-        "$value": 56
-      },
-      "4": {
-        "$type": "number",
-        "$value": 64
-      },
-      "4,5": {
-        "$type": "number",
-        "$value": 72
-      },
-      "5": {
-        "$type": "number",
-        "$value": 80
-      },
-      "50": {
-        "$type": "number",
-        "$value": 800
-      },
-      "6": {
-        "$type": "number",
-        "$value": 96
       }
     }
   }

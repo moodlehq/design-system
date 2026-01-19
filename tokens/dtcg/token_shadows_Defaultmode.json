@@ -1,0 +1,44 @@
+{
+  "blur": {
+    "lg": {
+      "$type": "number",
+      "$value": "{scale.1200}"
+    },
+    "md (default)": {
+      "$type": "number",
+      "$value": "{scale.600}"
+    },
+    "sm": {
+      "$type": "number",
+      "$value": "{scale.100}"
+    }
+  },
+  "color": {
+    "lg": {
+      "$type": "color",
+      "$value": "#0000002d"
+    },
+    "md (default)": {
+      "$type": "color",
+      "$value": "#00000026"
+    },
+    "sm": {
+      "$type": "color",
+      "$value": "#00000013"
+    }
+  },
+  "offset": {
+    "lg": {
+      "$type": "number",
+      "$value": "{scale.600}"
+    },
+    "md (default)": {
+      "$type": "number",
+      "$value": "{scale.300}"
+    },
+    "sm": {
+      "$type": "number",
+      "$value": "{scale.50}"
+    }
+  }
+}

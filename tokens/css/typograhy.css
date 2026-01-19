@@ -3,12 +3,12 @@
 :root {
   --font-family-base: var(--mds-typography-font-family-sans-serif);
   --font-family-code: var(--mds-typography-font-family-monospace);
-  --font-size-displays-1: var(--mds-utilities-rem-5);
-  --font-size-displays-2: var(--mds-utilities-rem-4-5);
-  --font-size-displays-3: var(--mds-utilities-rem-4);
-  --font-size-displays-4: var(--mds-utilities-rem-3-5);
-  --font-size-displays-5: var(--mds-utilities-rem-3);
-  --font-size-displays-6: var(--mds-utilities-rem-2-5);
+  --font-size-displays-1: var(--mds-scale-1600);
+  --font-size-displays-2: var(--mds-scale-1500);
+  --font-size-displays-3: var(--mds-scale-1400);
+  --font-size-displays-4: var(--mds-scale-1300);
+  --font-size-displays-5: var(--mds-scale-1200);
+  --font-size-displays-6: var(--mds-scale-1100);
   --font-size-headings-1: var(--mds-typography-font-size-base-2-5);
   --font-size-headings-2: var(--mds-typography-font-size-base-2);
   --font-size-headings-3: var(--mds-typography-font-size-base-1-75);
@@ -21,12 +21,12 @@
   --font-weight-italic-bold: var(--mds-typography-font-weight-italic-bold-700);
   --font-weight-italic-light: var(--mds-typography-font-weight-italic-light-300);
   --font-weight-italic-medium: var(--mds-typography-font-weight-italic-medium-500);
-  --font-weight-italic-normal-base: var(--mds-typography-font-weight-italic-regular-400);
+  --font-weight-italic-regular: var(--mds-typography-font-weight-italic-regular-400);
   --font-weight-italic-semibold: var(--mds-typography-font-weight-italic-semibold-600);
   --font-weight-normal-bold: var(--mds-typography-font-weight-normal-bold-700);
   --font-weight-normal-light: var(--mds-typography-font-weight-normal-light-300);
   --font-weight-normal-medium: var(--mds-typography-font-weight-normal-medium-500);
-  --font-weight-normal-normal-base: var(--mds-typography-font-weight-normal-regular-400);
+  --font-weight-normal-regular: var(--mds-typography-font-weight-normal-regular-400);
   --font-weight-normal-semibold: var(--mds-typography-font-weight-normal-semibold-600);
   --letter-spacing-default: var(--mds-typography-letter-spacing-none);
   --line-height-displays-1: var(--mds-typography-line-height-displays-d1);
@@ -44,7 +44,7 @@
   --line-height-paragraph-base-text: var(--mds-typography-line-height-paragraph-base);
   --line-height-paragraph-lead: var(--mds-typography-line-height-paragraph-lg);
   --line-height-paragraph-small: var(--mds-typography-line-height-paragraph-sm);
-  --margin-bottom-display: var(--spacers-0);
-  --margin-bottom-heading: var(--spacers-2);
-  --margin-bottom-paragraph: var(--spacers-4-base);
+  --margin-bottom-display: var(--spacing-none);
+  --margin-bottom-heading: var(--spacing-xs);
+  --margin-bottom-paragraph: var(--spacing-md-default);
 }
