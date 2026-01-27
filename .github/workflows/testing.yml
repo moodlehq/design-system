@@ -13,9 +13,9 @@ jobs:
     container:
       # Make sure to grab the latest version of the Playwright image
       # https://playwright.dev/docs/docker#pull-the-image
-      image: mcr.microsoft.com/playwright:v1.57.0-noble
+      image: mcr.microsoft.com/playwright:v1.58.0-noble
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -33,7 +33,7 @@ jobs:
   jsunit-coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -54,7 +54,7 @@ jobs:
     if: ${{ !startsWith(github.head_ref, 'dependabot/') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
