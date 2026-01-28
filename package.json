@@ -18,7 +18,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^4.1.2",
+    "@chromatic-com/storybook": "^5.0.0",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/compat": "^2.0.0",
@@ -49,7 +49,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "eslint-plugin-storybook": "^10.1.2",
     "fast-check": "^3.23.2",
-    "globals": "^16.5.0",
+    "globals": "^17.1.0",
     "husky": "^9.1.7",
     "jsdom": "^27.1.0",
     "lint-staged": "^16.2.7",
