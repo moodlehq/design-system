@@ -26,25 +26,17 @@ const tokenFiles = fs
 
 /**
  * Custom formatter: css/mds-variables
- * Generates CSS custom properties with 'mds-' prefix for primitives
+ * Generates CSS custom properties with 'mds-' prefix
  * and semantic tokens referencing the primitives (or referencing another semantic token).
  *
  * Why custom formatter?
  * - Built-in formatter couldn't handle names with brackets i.e. (default) and (base)
  * - Built-in formatter couldn't handle descriptions with multi-line block comments (/* ... *\/)
- * - Built-in formatter couldn’t apply the 'mds-' prefix selectively to primitive tokens only.
  */
 StyleDictionary.registerFormat({
   name: 'css/mds-variables',
   format: ({ dictionary }: { dictionary: Dictionary }) => {
-    const isPrimitive = (token: TransformedToken) =>
-      token.filePath.includes('primitives');
-
-    const getPrefix = (token: TransformedToken) =>
-      isPrimitive(token) ? 'mds-' : '';
-
-    const getTokenName = (token: TransformedToken) =>
-      `${getPrefix(token)}${token.name}`;
+    const getTokenName = (token: TransformedToken) => `mds-${token.name}`;
 
     const getTokenValue = (token: TransformedToken): string => {
       /*

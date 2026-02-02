@@ -1,60 +1,62 @@
 @import '/tokens/css/index.css';
 
 .mds-btn.btn {
-  background-color: var(--bg-interactive-primary-default);
-  border: var(--stroke-weight-sm-default) solid var(--border-translucent);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--mds-bg-interactive-primary-default);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-translucent);
+  border-radius: var(--mds-border-radius-lg);
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
 
-  color: var(--text-inverse);
-  font-family: var(--font-family-base);
-  font-weight: var(--font-weight-normal-regular);
-  font-size: var(--font-size-paragraph-base-text);
-  line-height: var(--line-height-paragraph-small);
-  letter-spacing: var(--letter-spacing-default);
+  color: var(--mds-text-inverse);
+  font-family: var(--mds-font-family-base);
+  font-weight: var(--mds-font-weight-normal-regular);
+  font-size: var(--mds-font-size-paragraph-base-text);
+  line-height: var(--mds-line-height-paragraph-small);
+  letter-spacing: var(--mds-letter-spacing-default);
 }
 .mds-btn.btn:hover {
-  background-color: var(--bg-interactive-primary-hover);
+  background-color: var(--mds-bg-interactive-primary-hover);
 }
 .mds-btn.btn:active {
-  background-color: var(--bg-interactive-primary-active);
-  border: var(--stroke-weight-sm-default) solid var(--border-translucent);
+  background-color: var(--mds-bg-interactive-primary-active);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-translucent);
 }
 .mds-btn.btn:disabled {
-  background-color: var(--bg-interactive-primary-disabled);
+  background-color: var(--mds-bg-interactive-primary-disabled);
 }
 
 /**
   * Secondary variants
   */
 .mds-btn.btn.btn-secondary {
-  background-color: var(--bg-interactive-secondary-default);
-  color: var(--text-default);
+  background-color: var(--mds-bg-interactive-secondary-default);
+  color: var(--mds-text-default);
 }
 .mds-btn.btn.btn-secondary:hover {
-  background-color: var(--bg-interactive-secondary-hover);
+  background-color: var(--mds-bg-interactive-secondary-hover);
 }
 .mds-btn.btn.btn-secondary:active {
-  background-color: var(--bg-interactive-secondary-active);
+  background-color: var(--mds-bg-interactive-secondary-active);
 }
 .mds-btn.btn.btn-secondary:disabled {
-  background-color: var(--bg-interactive-secondary-disabled);
+  background-color: var(--mds-bg-interactive-secondary-disabled);
 }
 
 /**
   * Danger variants
   */
 .mds-btn.btn-danger {
-  background-color: var(--bg-interactive-danger-default);
+  background-color: var(--mds-bg-interactive-danger-default);
 }
 .mds-btn.btn-danger:hover {
-  background-color: var(--bg-interactive-danger-hover);
+  background-color: var(--mds-bg-interactive-danger-hover);
 }
 .mds-btn.btn-danger:active {
-  background-color: var(--bg-interactive-danger-active);
+  background-color: var(--mds-bg-interactive-danger-active);
 }
 .mds-btn.btn.btn-danger:disabled {
-  background-color: var(--bg-interactive-danger-disabled);
+  background-color: var(--mds-bg-interactive-danger-disabled);
 }
 
 /**
@@ -62,22 +64,22 @@
   */
 .mds-btn.btn-outline-primary {
   background-color: transparent;
-  border: var(--stroke-weight-sm-default) solid
-    var(--border-interactive-primary-default);
-  color: var(--text-link-primary-default);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-interactive-primary-default);
+  color: var(--mds-text-link-primary-default);
 }
 .mds-btn.btn-outline-primary:hover {
-  background-color: var(--bg-interactive-primary-hover);
-  color: var(--text-inverse);
+  background-color: var(--mds-bg-interactive-primary-hover);
+  color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-primary:active {
-  background-color: var(--bg-interactive-primary-active);
-  color: var(--text-inverse);
+  background-color: var(--mds-bg-interactive-primary-active);
+  color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-primary:disabled {
   background-color: transparent;
-  border: var(--stroke-weight-sm-default) solid
-    var(--border-interactive-primary-disabled);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-interactive-primary-disabled);
   color: var(--mds-color-blue-300);
 }
 
@@ -86,22 +88,22 @@
   */
 .mds-btn.btn-outline-secondary {
   background-color: transparent;
-  border: var(--stroke-weight-sm-default) solid
-    var(--border-interactive-secondary-default);
-  color: var(--text-muted);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-interactive-secondary-default);
+  color: var(--mds-text-muted);
 }
 .mds-btn.btn-outline-secondary:hover {
-  background-color: var(--border-interactive-secondary-hover);
-  color: var(--text-inverse);
+  background-color: var(--mds-border-interactive-secondary-hover);
+  color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-secondary:active {
-  background-color: var(--border-interactive-secondary-active);
-  color: var(--text-inverse);
+  background-color: var(--mds-border-interactive-secondary-active);
+  color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-secondary:disabled {
   background-color: transparent;
-  border: var(--stroke-weight-sm-default) solid
-    var(--border-interactive-secondary-disabled);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-interactive-secondary-disabled);
   color: var(--mds-color-gray-500);
 }
 
@@ -110,22 +112,22 @@
   */
 .mds-btn.btn-outline-danger {
   background-color: transparent;
-  border: var(--stroke-weight-sm-default) solid
-    var(--border-interactive-danger-default);
-  color: var(--text-danger);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-interactive-danger-default);
+  color: var(--mds-text-danger);
 }
 .mds-btn.btn-outline-danger:hover {
-  background-color: var(--bg-interactive-danger-default);
-  color: var(--text-inverse);
+  background-color: var(--mds-bg-interactive-danger-default);
+  color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-danger:active {
-  background-color: var(--bg-interactive-danger-hover);
-  color: var(--text-inverse);
+  background-color: var(--mds-bg-interactive-danger-hover);
+  color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-danger:disabled {
   background-color: transparent;
-  border: var(--stroke-weight-sm-default) solid
-    var(--border-interactive-danger-disabled);
+  border: var(--mds-stroke-weight-sm-default) solid
+    var(--mds-border-interactive-danger-disabled);
   color: var(--mds-color-red-300);
 }
 
@@ -133,12 +135,12 @@
   * Size variants
   */
 .mds-btn.btn-sm {
-  padding: var(--spacing-xxs) var(--spacing-xs);
-  font-size: var(--font-size-paragraph-small);
-  line-height: var(--line-height-paragraph-small);
+  padding: var(--mds-spacing-xxs) var(--mds-spacing-xs);
+  font-size: var(--mds-font-size-paragraph-small);
+  line-height: var(--mds-line-height-paragraph-small);
 }
 .mds-btn.btn-lg {
-  padding: var(--spacing-xs) var(--spacing-md-default);
-  font-size: var(--font-size-paragraph-lead);
-  line-height: var(--line-height-paragraph-base-text);
+  padding: var(--mds-spacing-xs) var(--mds-spacing-md-default);
+  font-size: var(--mds-font-size-paragraph-lead);
+  line-height: var(--mds-line-height-paragraph-base-text);
 }
