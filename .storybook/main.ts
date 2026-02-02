@@ -1,16 +1,15 @@
 import type { AddonOptionsVite } from '@storybook/addon-coverage';
-// @ts-ignore Suppressing type error until types are fixed in react-vite package.
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const coverageConfig: AddonOptionsVite = {
   istanbul: {
-    include: ['../components/src/**'],
+    include: ['../components/**'],
     exclude: ['../.storybook/**'],
   },
 };
 
 export default {
-  stories: ['../components/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../components/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@chromatic-com/storybook',
     '@storybook/addon-docs',

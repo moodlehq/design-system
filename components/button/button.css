@@ -1,5 +1,3 @@
-@import '/tokens/css/index.css';
-
 .mds-btn.btn {
   background-color: var(--mds-bg-interactive-primary-default);
   border: var(--mds-stroke-weight-sm-default) solid

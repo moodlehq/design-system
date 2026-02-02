@@ -1,5 +1,6 @@
 /** @type { import('@storybook/react-vite').Preview } */
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+import '../index';
 
 // Only import this if you want to use Bootstrap's
 // JQuery helpers
