@@ -2,18 +2,29 @@
   "name": "@moodlehq/design-system",
   "version": "0.1.0",
   "description": "The Moodle Design System",
-  "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "/dist",
+    "/tokens/css",
+    "/tokens/scss"
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js"
+    },
+    "./css": {
+      "default": "./dist/index.css"
+    },
+    "./tokens/css": {
+      "default": "./tokens/css/index.css"
+    },
+    "./tokens/scss": {
+      "default": "./tokens/scss/_index.scss"
     }
   },
   "type": "module",
-  "peerDependencies": {
+  "dependencies": {
     "bootstrap": "^5.3.8",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.10",

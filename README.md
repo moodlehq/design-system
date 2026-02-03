@@ -108,6 +108,8 @@ npm run storybook
 Storybook will provide detailed documentation and interactive examples of all components in the design system however, a quick example is shown below:
 
 ```js
+import '@moodlehq/design-system/css';
+
 import { Button } from '@moodlehq/design-system';
 
 export default function App() {
@@ -115,7 +117,21 @@ export default function App() {
 }
 ```
 
-### Convert tokens from ZeroHeight to CSS variables
+### Consuming Tokens Only
+
+The design system supports standalone token integration without components. Tokens are available in both CSS and SCSS formats:
+
+```js
+// CSS tokens
+import '@moodlehq/design-system/tokens/css';
+
+// SCSS tokens
+import '@moodlehq/design-system/tokens/scss';
+```
+
+> **Note:** SCSS tokens use flat values rather than variable references. This is an intentional design decision due to limitations in Style Dictionary's built-in `scssVariables` formatter, which does not support `@use` imports for cross-file variable references. While a custom formatter could address this, it would also need to handle proper variable hoisting and sorting, requiring significant ongoing maintenance.
+
+### Convert Tokens From ZeroHeight to CSS Variables
 
 We make use of [Style Dictionary](https://styledictionary.com/) to convert design tokens exported from ZeroHeight into CSS variables that can be used throughout the design system and its consumers.
 

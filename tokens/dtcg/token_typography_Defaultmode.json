@@ -77,7 +77,7 @@
       }
     },
     "paragraph": {
-      "base text": {
+      "default": {
         "$type": "number",
         "$value": "{typography.font-size.base.1}",
         "$description": "Base size for body text."
@@ -207,7 +207,7 @@
       }
     },
     "paragraph": {
-      "base text": {
+      "default": {
         "$type": "number",
         "$value": "{typography.line-height.paragraph.base}",
         "$description": "Comfortable line height for paragraphs."
@@ -237,7 +237,7 @@
     },
     "paragraph": {
       "$type": "number",
-      "$value": "{spacing.md (default)}",
+      "$value": "{spacing.md}",
       "$description": "Default margin below a paragraph."
     }
   }

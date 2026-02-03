@@ -14,67 +14,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 import fs from 'fs';
-import StyleDictionary, {
-  Dictionary,
-  TransformedToken,
-} from 'style-dictionary';
-import { getReferences, usesReferences } from 'style-dictionary/utils';
+import StyleDictionary, { TransformedToken } from 'style-dictionary';
 
 const tokenFiles = fs
   .readdirSync('tokens/dtcg')
   .filter((file) => file.endsWith('.json'));
 
 /**
- * Custom formatter: css/mds-variables
- * Generates CSS custom properties with 'mds-' prefix
- * and semantic tokens referencing the primitives (or referencing another semantic token).
- *
- * Why custom formatter?
- * - Built-in formatter couldn't handle names with brackets i.e. (default) and (base)
- * - Built-in formatter couldn't handle descriptions with multi-line block comments (/* ... *\/)
- */
-StyleDictionary.registerFormat({
-  name: 'css/mds-variables',
-  format: ({ dictionary }: { dictionary: Dictionary }) => {
-    const getTokenName = (token: TransformedToken) => `mds-${token.name}`;
-
-    const getTokenValue = (token: TransformedToken): string => {
-      /*
-        original value:
-        - primitive token -> the value before transformation
-        - semantic token -> the variable reference (not the resolved/transformed value)
-       */
-      const originalValue = String(token.original.$value);
-      if (!usesReferences(originalValue)) {
-        return token.$value; // if primitive, return the transformed value
-      }
-
-      // if semantic, use the target token being referenced
-      const [targetToken] = getReferences(
-        originalValue,
-        dictionary.unfilteredTokens ?? dictionary.tokens,
-      );
-
-      return `var(--${getTokenName(targetToken)})`;
-    };
-
-    const tokenVariables = dictionary.allTokens.map((token) => {
-      return `  --${getTokenName(token)}: ${getTokenValue(token)};`;
-    });
-
-    return `${getFileHeader()}:root {\n${tokenVariables.join('\n')}\n}\n`;
-  },
-});
-
-/**
  * Custom formatter: css/aggregator
- * Aggregator format to create a single CSS file that imports all other generated CSS files.
+ * Aggregator to create a single CSS file that imports all other generated CSS files.
  */
 StyleDictionary.registerFormat({
   name: 'css/aggregator',
-  format: ({ options }) => {
+  format: async ({ options }) => {
     return (
-      getFileHeader() +
+      `/**\n * ${getFileHeaderContent()}\n */\n\n` + // made to match Style Dictionary file header format for CSS
       options.files.map((file: string) => `@import "./${file}";`).join('\n') +
       '\n@import "./fonts.css"\n'
     );
@@ -82,7 +36,27 @@ StyleDictionary.registerFormat({
 });
 
 /**
- * Custom transform: css/dimension-px-to-rem
+ * Custom formatter: scss/aggregator
+ * Aggregator to create a single SCSS file that imports all other generated SCSS files.
+ */
+StyleDictionary.registerFormat({
+  name: 'scss/aggregator',
+  format: async ({ options }) => {
+    return (
+      `\n// ${getFileHeaderContent()}\n\n` + // made to match Style Dictionary file header format for SCSS
+      options.files
+        .map(
+          (file: string) =>
+            `@forward "${file.replace(/(\.scss$)/, '').replace(/^_/, '')}";`,
+        )
+        .join('\n') +
+      '\n@forward "fonts";\n'
+    );
+  },
+});
+
+/**
+ * Custom transform: dimension-px-to-rem
  * Transforms px values to rem for tokens related to dimensions.
  *
  * Why custom transform?
@@ -93,32 +67,47 @@ StyleDictionary.registerFormat({
  * - Any flat numerical tokens with $type 'number' are considered dimension-related tokens and will be transformed from px to rem.
  */
 StyleDictionary.registerTransform({
-  name: 'css/dimension-px-to-rem',
+  name: 'dimension-px-to-rem',
   type: 'value',
-  filter: (token) => {
-    return token.$type === 'number';
-  },
+  filter: (token) => token.$type === 'number',
   transform: (token) => `${token.$value / 16}rem`,
+});
+
+/**
+ * Custom file header: mdsTokensFileHeader
+ * Purpose is to customise the content of the file header.
+ * While the formatting must remain to be handled by Style Dictionary due to configuration limitations,
+ */
+StyleDictionary.registerFileHeader({
+  name: 'mdsTokensFileHeader',
+  fileHeader: function () {
+    return [getFileHeaderContent()];
+  },
 });
 
 /**
  * Build Style Dictionary
  */
 new StyleDictionary({
+  log: {
+    warnings: 'disabled', // Suppress warnings about filtered references
+  },
   source: tokenFiles.map((file) => `tokens/dtcg/${file}`),
   platforms: {
     css: {
       transformGroup: 'css',
-      transforms: ['css/dimension-px-to-rem'],
+      transforms: ['dimension-px-to-rem'],
+      prefix: 'mds',
       buildPath: 'tokens/css',
       files: [
         ...tokenFiles.map((fileName) => ({
-          destination: convertJsonFileNameToCssFileName(fileName),
-          format: 'css/mds-variables',
+          destination: convertJsonFileName(fileName, '', 'css'),
+          format: 'css/variables',
           filter: (token: TransformedToken) =>
             token.filePath.endsWith(fileName),
           options: {
             outputReferences: true,
+            fileHeader: 'mdsTokensFileHeader',
           },
         })),
         {
@@ -126,7 +115,34 @@ new StyleDictionary({
           format: 'css/aggregator',
           options: {
             files: tokenFiles.map((fileName) =>
-              convertJsonFileNameToCssFileName(fileName),
+              convertJsonFileName(fileName, '', 'css'),
+            ),
+          },
+        },
+      ],
+    },
+    scss: {
+      transformGroup: 'scss',
+      transforms: ['dimension-px-to-rem'],
+      prefix: 'mds',
+      buildPath: 'tokens/scss',
+      files: [
+        ...tokenFiles.map((fileName) => ({
+          destination: convertJsonFileName(fileName, '_', 'scss'),
+          format: 'scss/variables',
+          filter: (token: TransformedToken) =>
+            token.filePath.endsWith(fileName),
+          options: {
+            fileHeader: 'mdsTokensFileHeader',
+          },
+        })),
+
+        {
+          destination: '_index.scss',
+          format: 'scss/aggregator',
+          options: {
+            files: tokenFiles.map((fileName) =>
+              convertJsonFileName(fileName, '_', 'scss'),
             ),
           },
         },
@@ -136,19 +152,26 @@ new StyleDictionary({
 }).buildAllPlatforms();
 
 /**
- * Helper function to convert JSON file name to CSS file name.
+ * Helper function to convert JSON file name to a target file name (CSS/SCSS).
  * @param jsonFileName
+ * @param prefix - e.g. '' for CSS, '_' for SCSS
+ * @param extension - e.g. 'css' or 'scss'
  * @returns
  */
-function convertJsonFileNameToCssFileName(jsonFileName: string) {
-  return jsonFileName.replace(/^.*_(.+?)_.*\.json$/, '$1.css').toLowerCase();
+function convertJsonFileName(
+  jsonFileName: string,
+  prefix: string,
+  extension: string,
+) {
+  return jsonFileName
+    .replace(/^.*_(.+?)_.*\.json$/, `${prefix}$1.${extension}`)
+    .toLowerCase();
 }
-
 /**
  * Helper function to get file header comment.
  * @param jsonFileName
  * @returns
  */
-function getFileHeader(): string {
-  return `/** THIS FILE IS AUTO-GENERATED — DO NOT EDIT DIRECTLY. **/\n\n`;
+function getFileHeaderContent(): string {
+  return `THIS FILE IS AUTO-GENERATED BY STYLE DICTIONARY — DO NOT EDIT DIRECTLY.`;
 }

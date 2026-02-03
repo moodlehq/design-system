@@ -2,7 +2,7 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { peerDependencies } from './package.json';
+import { dependencies } from './package.json';
 
 // https://vite.dev/config/
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -25,7 +25,7 @@ export default defineConfig({
     },
     cssCodeSplit: false, // bundle all CSS into a single file
     rollupOptions: {
-      external: [...Object.keys(peerDependencies)], // Defines external dependencies for Rollup bundling.
+      external: [...Object.keys(dependencies)], // Defines external dependencies for Rollup bundling.
       output: {
         assetFileNames: 'index.css', // name the CSS file
       },
