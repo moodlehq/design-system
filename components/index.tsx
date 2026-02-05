@@ -1,2 +1,2 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-export * from './src'; // This will export all components from the 'src' folder
+export { Button } from './button';
+export type { ButtonProps } from './button';

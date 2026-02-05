@@ -33,10 +33,10 @@ export default defineConfig({
       ? ['.storybook/vitest.setup.ts']
       : ['./tests/setupTests.ts'],
     include: !isStorybook
-      ? ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}']
+      ? ['components/**/*.{test,spec}.{js,ts,jsx,tsx}']
       : undefined,
     exclude: isStorybook
-      ? ['components/src/**/*.{test,spec}.{js,ts,jsx,tsx}']
+      ? ['components/**/*.{test,spec}.{js,ts,jsx,tsx}']
       : ['**/*.stories.*', '.storybook/**', '**/.storybook/**'],
     browser: isStorybook
       ? {
@@ -48,14 +48,12 @@ export default defineConfig({
       : undefined,
     coverage: {
       provider: 'istanbul',
-      include: !isStorybook
-        ? ['components/src/**/*.{ts,tsx,js,jsx}']
-        : undefined,
+      include: !isStorybook ? ['components/**/*.{ts,tsx,js,jsx}'] : undefined,
       exclude: [
         '**/*.stories.*',
         '.storybook/**',
         '**/.storybook/**',
-        'components/src/**/*.{test,spec}.{js,ts,jsx,tsx}',
+        'components/**/*.{test,spec}.{js,ts,jsx,tsx}',
       ],
       watermarks: !isStorybook
         ? {

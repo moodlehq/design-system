@@ -4,7 +4,7 @@
       "$type": "number",
       "$value": "{scale.300}"
     },
-    "md (default)": {
+    "md": {
       "$type": "number",
       "$value": "{scale.200}"
     },
@@ -38,7 +38,7 @@
       "$type": "number",
       "$value": 2
     },
-    "sm (default)": {
+    "sm": {
       "$type": "number",
       "$value": 1
     },

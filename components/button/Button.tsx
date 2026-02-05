@@ -3,8 +3,6 @@ import {
   ButtonProps as RBButtonProps,
 } from 'react-bootstrap';
 
-import './button.css';
-
 export interface ButtonProps extends RBButtonProps {
   label: string;
   variant?: string;

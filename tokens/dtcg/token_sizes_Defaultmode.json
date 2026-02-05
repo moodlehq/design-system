@@ -1,10 +1,10 @@
 {
-  "icon": {
+  "icons": {
     "lg": {
       "$type": "number",
       "$value": "{scale.700}"
     },
-    "md (default)": {
+    "md": {
       "$type": "number",
       "$value": "{scale.600}"
     },
@@ -23,6 +23,10 @@
     "xxl": {
       "$type": "number",
       "$value": "{scale.1000}"
+    },
+    "xxxl": {
+      "$type": "number",
+      "$value": "{scale.1200}"
     }
   }
 }
