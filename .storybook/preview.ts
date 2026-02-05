@@ -1,12 +1,7 @@
 /** @type { import('@storybook/react-vite').Preview } */
 
-import '../index';
-
-// Only import this if you want to use Bootstrap's
-// JQuery helpers
-// import 'bootstrap/dist/js/bootstrap.bundle';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import 'react-bootstrap/dist/react-bootstrap.min.js';
+import '../index';
 const preview = {
   controls: {
     expanded: true,
