@@ -225,52 +225,6 @@
       "$value": "#00000000"
     }
   },
-  "brand": {
-    "Secondary": {
-      "bright blue": {
-        "$type": "color",
-        "$value": "{color.brand.blue.100}"
-      },
-      "dark grey": {
-        "$type": "color",
-        "$value": "{color.brand.gray.200}"
-      },
-      "light blue": {
-        "$type": "color",
-        "$value": "{color.brand.blue.200}"
-      },
-      "light grey": {
-        "$type": "color",
-        "$value": "{color.brand.gray.100}"
-      },
-      "light peach": {
-        "$type": "color",
-        "$value": "{color.brand.orange.100}"
-      },
-      "medium peach": {
-        "$type": "color",
-        "$value": "{color.brand.orange.200}"
-      },
-      "peach": {
-        "$type": "color",
-        "$value": "{color.brand.orange.300}"
-      }
-    },
-    "primary": {
-      "moodle black": {
-        "$type": "color",
-        "$value": "{color.brand.gray.300}"
-      },
-      "moodle blue": {
-        "$type": "color",
-        "$value": "{color.brand.blue.300}"
-      },
-      "orange": {
-        "$type": "color",
-        "$value": "{color.brand.orange.400}"
-      }
-    }
-  },
   "focus": {
     "default": {
       "$type": "color",
