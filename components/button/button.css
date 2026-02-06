@@ -7,7 +7,7 @@
   color: var(--mds-text-inverse);
   font-family: var(--mds-font-family-base);
   font-weight: var(--mds-font-weight-normal-regular);
-  font-size: var(--mds-font-size-paragraph-base-text);
+  font-size: var(--mds-font-size-paragraph-default);
   line-height: var(--mds-line-height-paragraph-small);
   letter-spacing: var(--mds-letter-spacing-default);
 }
@@ -138,5 +138,5 @@
 .mds-btn.btn-lg {
   padding: var(--mds-spacing-xs) var(--mds-spacing-md);
   font-size: var(--mds-font-size-paragraph-lead);
-  line-height: var(--mds-line-height-paragraph-base-text);
+  line-height: var(--mds-line-height-paragraph-default);
 }
