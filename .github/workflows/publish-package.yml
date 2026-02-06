@@ -2,7 +2,7 @@ name: Publish Package
 on:
   push:
     tags:
-      - 'v*'
+      - 'design-system-v*'
 permissions:
   contents: read # Set top-level permissions to read only
 jobs:
