@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.0.0](https://github.com/moodlehq/design-system/compare/design-system-v0.1.0...design-system-v1.0.0) (2026-02-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** brand colors tokens no longer exists
+
+### Features
+
+* **tokens:** First release of tokens for standalone consumptions ([#103](https://github.com/moodlehq/design-system/issues/103)) ([6f48a7c](https://github.com/moodlehq/design-system/commit/6f48a7cf46da980eee26ed6bb18d93bb10c1cbc8))
+
+
+### Bug Fixes
+
+* **button:** Adjust css to the renamed tokens ([#108](https://github.com/moodlehq/design-system/issues/108)) ([870b421](https://github.com/moodlehq/design-system/commit/870b421416e06cdccbd61b95803c7d526f7d90e7))
+* **tokens:** Typo fix on a token group name ([#101](https://github.com/moodlehq/design-system/issues/101)) ([31e81da](https://github.com/moodlehq/design-system/commit/31e81da242af3a36b3db0fe2da24a7fa88491f41))
+
+
+### Miscellaneous Chores
+
+* **tokens:** Removed brand colors from tokens ([#111](https://github.com/moodlehq/design-system/issues/111)) ([74f34f0](https://github.com/moodlehq/design-system/commit/74f34f0ef3b3c333a8431940bd421f8258f9d471))
+
 ## [0.1.0](https://github.com/moodlehq/design-system/compare/design-system-v0.0.2...design-system-v0.1.0) (2025-12-22)
 
 
