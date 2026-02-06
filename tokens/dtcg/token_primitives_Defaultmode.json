@@ -38,54 +38,6 @@
         "$value": "#031626"
       }
     },
-    "brand": {
-      "blue": {
-        "100": {
-          "$type": "color",
-          "$value": "#69e0ff"
-        },
-        "200": {
-          "$type": "color",
-          "$value": "#65a1b3"
-        },
-        "300": {
-          "$type": "color",
-          "$value": "#194866"
-        }
-      },
-      "gray": {
-        "100": {
-          "$type": "color",
-          "$value": "#8a8a8e"
-        },
-        "200": {
-          "$type": "color",
-          "$value": "#545454"
-        },
-        "300": {
-          "$type": "color",
-          "$value": "#282828"
-        }
-      },
-      "orange": {
-        "100": {
-          "$type": "color",
-          "$value": "#fff8f1"
-        },
-        "200": {
-          "$type": "color",
-          "$value": "#ffecdb"
-        },
-        "300": {
-          "$type": "color",
-          "$value": "#fedec3"
-        },
-        "400": {
-          "$type": "color",
-          "$value": "#f98012"
-        }
-      }
-    },
     "cyan": {
       "100": {
         "$type": "color",
