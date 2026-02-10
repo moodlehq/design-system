@@ -7,12 +7,27 @@ updates:
     commit-message:
       prefix: ci
     groups:
-      dev-dependencies:
+      minor-and-patch:
         patterns:
           - '*'
-      storybook:
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: quarterly
+    commit-message:
+      prefix: ci
+    groups:
+      major:
         patterns:
-          - '@storybook/*'
+          - '*'
+        update-types:
+          - "major"
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
