@@ -1,14 +1,13 @@
 # [Moodle Design System](https://github.com/moodlehq/design-system)
 
 ![NPM Version](https://img.shields.io/npm/v/%40moodlehq%2Fdesign-system)
-![npm bundle size](https://img.shields.io/bundlephobia/min/%40moodlehq%2Fdesign-system)
 [![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 [![Test suite](https://github.com/moodlehq/design-system/actions/workflows/testing.yml/badge.svg)](https://github.com/moodlehq/design-system/actions/workflows/testing.yml)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/11543/badge)](https://www.bestpractices.dev/projects/11543)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/moodlehq/design-system/badge)](https://scorecard.dev/viewer/?uri=github.com/moodlehq/design-system)
 
-Welcome! Whether you\'re a designer or a developer, this guide will help you get started and connect you to the essential resources you need.
+Welcome! Whether you're a designer or a developer, this guide will help you get started and connect you to the essential resources you need.
 
 The Moodle Design System (MDS) is a comprehensive collection of design and development resources aimed at creating a consistent and efficient user experience across all Moodle products starting with the Core LMS.
 It includes design assets, guidelines, UI components, and code standards to help teams build cohesive and accessible interfaces.
@@ -21,14 +20,14 @@ The MDS is a collaborative effort between designers and developers at Moodle HQ 
   - [Design Tools](#design-tools)
   - [Design Assets & Guidelines](#design-assets--guidelines)
 - [Development Resources](#development-resources)
-  - [Prerequisites](#prerequisites)
-  - [Coding Standards](#coding-standards)
   - [Development Tools](#development-tools)
+  - [Coding Standards](#coding-standards)
 - [Installation & Usage](#installation--usage)
+  - [Prerequisites](#prerequisites)
   - [Quick Start](#quick-start)
-  - [Convert Tokens From ZeroHeight To CSS Variables](#convert-tokens-from-zeroheight-to-css-variables)
-  - [Testing The Design System](#testing-the-design-system)
-  - [Build The Design System](#build-the-design-system)
+  - [Convert Tokens From ZeroHeight to CSS Variables](#convert-tokens-from-zeroheight-to-css-variables)
+  - [Testing the Design System](#testing-the-design-system)
+  - [Build the Design System](#build-the-design-system)
 - [CHANGELOG](#changelog)
 - [Contributing & Support](#contributing--support)
 - [FAQ](#faq)
@@ -40,7 +39,7 @@ The MDS is a collaborative effort between designers and developers at Moodle HQ 
 
 To create and manage our design assets, we use the following tools:
 
-- **[Figma](https://www.figma.com/)**: A collaborative design and prototyping tool. It\'s the heart of the design process, allowing designers to work together seamlessly.
+- **[Figma](https://www.figma.com/)**: A collaborative design and prototyping tool. It's the heart of the design process, allowing designers to work together seamlessly.
 - **[ZeroHeight](https://zeroheight.com/)**: A platform for creating and maintaining design systems. It helps document design guidelines and components for easy access by the team.
 
 ### Design Assets & Guidelines
@@ -51,50 +50,34 @@ All design assets and guidelines are centralized in the following resource:
 
 ## Development Resources
 
+### Development Tools
+
+Key tools for contributing to the design system:
+
+- **Code Editor**: Any modern editor supporting JavaScript/TypeScript. [VSCode](https://code.visualstudio.com/) is recommended with pre-configured settings in `.vscode/` directory. [EditorConfig](https://editorconfig.org/) ensures consistent styles across all editors.
+- **[Storybook](https://storybook.js.org/)**: Interactive component development and documentation environment.
+- **[Chromatic](https://www.chromatic.com/)**: Visual regression testing and UI review platform.
+- **[Style Dictionary](https://styledictionary.com/)**: Design token management and transformation.
+- **[GitHub Actions](https://github.com/features/actions)**: CI/CD pipeline for automated testing and deployment.
+
+### Coding Standards
+
+This repository follows these standards:
+
+- **Code Quality**: [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) for consistent code style.
+- **Security**: [OpenSSF Best Practices](https://www.bestpractices.dev/) and [OpenSSF Scorecard](https://scorecard.dev/) compliance.
+- **Commits**: [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
+- **Git Hooks**: [Husky](https://typicode.github.io/husky/) with [lint-staged](https://github.com/lint-staged/lint-staged), pre-commit, and pre-push hooks.
+- **Testing**: [Vitest](https://vitest.dev/) for unit tests, [Storybook](https://storybook.js.org/) for component development and interaction testing.
+- **Accessibility**: [WCAG 2.2 AA](https://www.w3.org/WAI/WCAG22/quickref/) compliance via [axe accessibility addon](https://www.npmjs.com/package/@storybook/addon-a11y).
+
+## Installation & Usage
+
 ### Prerequisites
 
 - Node.js v22.13.0 or higher
 - npm
 - Git
-
-### Coding Standards
-
-Maintaining a consistent code style is essential for collaborative development. Below are the coding standards we follow and tooling used in this repository:
-
-- ESLint and Prettier configurations are included in the repository to help maintain code quality and consistency.
-- OpenSSF Best Practices is enabled to ensure adherence to open source best practices.
-- OpenSSF Scorecard is enabled to ensure best practices in open source security.
-- Commit messages should follow the [Conventional Commits@1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
-- Husky is used to manage Git hooks, ensuring that code quality checks are run before commits and pushes.
-  - Lint-staged is used to run linters on staged files, ensuring that only the relevant files are checked before committing.
-  - Pre-commit and pre-push hooks are set up to run tests and linters automatically.
-- Testing is done using Vitest and Storybook\'s built-in testing capabilities.
-- Storybook is configured to run components against accessibility standards using the [axe](https://www.npmjs.com/package/@storybook/addon-a11y) addon with WCAG 2.2 AA standards.
-
-### Development Tools
-
-Your development environment is critical. Here are some tools and resources to help you set up your workspace:
-
-- **Code Editor**:
-  We recommend using VSCode or any other modern code editor that supports JavaScript/TypeScript development.
-  - `.editorconfig` is included to ensure consistent coding styles across different editors and IDEs.
-  - Editor configurations for VSCode are provided in the `.vscode/` directory.
-- **[Node.js](https://nodejs.org/)**:
-  Ensure you have version `22.13.0` or higher installed.
-- **[NPM](https://www.npmjs.com/)**:
-  Used to manage project dependencies.
-- **[Storybook](https://storybook.js.org/)**:
-  A tool for developing and showcasing UI components in isolation.
-- **[Chromatic](https://www.chromatic.com/)**:
-  Used for visual testing and review of UI components.
-- **[Style Dictionary](https://styledictionary.com/)**:
-  Used to manage and convert design tokens.
-- **Git**:
-  Make sure you have Git installed and are familiar with its basics.
-- **Continuous Integration (CI)**:
-  Configured with GitHub Actions to automate testing and deployment.
-
-## Installation & Usage
 
 ### Quick Start
 
@@ -105,7 +88,7 @@ npm install
 npm run storybook
 ```
 
-Storybook will provide detailed documentation and interactive examples of all components in the design system however, a quick example is shown below:
+Storybook will provide detailed documentation and interactive examples of all components in the design system. However, a quick example is shown below:
 
 ```js
 import '@moodlehq/design-system/css';
@@ -154,7 +137,7 @@ npx playwright install
 npm run test-unit
 # Run unit tests with coverage report.
 npm run test-unit-coverage
-# Run Storybook interaction & accessibility tests .
+# Run Storybook interaction & accessibility tests.
 npm run test-storybook
 ```
 
@@ -181,22 +164,22 @@ See [CHANGELOG](CHANGELOG.md) for release history and updates.
 
 For any contributions, issues, or support, please reach out to the Moodle HQ Design System team through the following channels:
 
-- Submit a ticket on the [MDS project on Moodle Tracker](https://tracker.moodle.org/browse/MDS)
+- Submit a [GitHub Issue](https://github.com/moodlehq/design-system/issues)
 - Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link)
 - Join the [Moodle Design System PAG course](https://moodle.org/course/view.php?id=17258)
 
-Pull requests are our suggested method for contributing to the design system. Please ensure that your contributions adhere to our contribution guidelines, see [CONTRIBUTING](CONTRIBUTING).
+Pull requests are our suggested method for contributing to the design system. Please ensure that your contributions adhere to our contribution guidelines. See [CONTRIBUTING](CONTRIBUTING) for more information.
 
 ## FAQ
 
 **Q:** Does this work with Moodle LMS 5.x?<br>
-**A:** Not yet but soon!.
+**A:** We are aiming for integration with Moodle LMS 5.2.
 
 **Q:** How do I report a bug or request a feature?<br>
-**A:** Please use the [MDS project on Moodle Tracker](https://tracker.moodle.org/browse/MDS) to report bugs or request features.
+**A:** Please use [GitHub Issues](https://github.com/moodlehq/design-system/issues) to report bugs or request features.
 
 **Q:** Will my Moodle instance automatically use the latest Design System release?<br>
-**A:** No, Moodle core and plugins need to explicitly integrate the design system to use it.
+**A:** This will depend on the upcoming integration we are looking into. You will likely need to update your Moodle instance once we integrate into LMS.
 
 ## License
 

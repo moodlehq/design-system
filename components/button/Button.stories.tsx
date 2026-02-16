@@ -8,6 +8,13 @@ const meta = {
   component: Button,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component: `
+⚠️ **This component is under development and not production ready.** API may change without notice.
+        `,
+      },
+    },
   },
   decorators: [
     (Story) => (

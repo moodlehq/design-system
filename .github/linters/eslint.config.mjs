@@ -62,6 +62,17 @@ export default defineConfig(
       rules: {
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
+        'prettier/prettier': [
+          'error',
+          {
+            // This is a duplicate copy of the Prettier config in .github/linters/.prettierrc
+            // but we need it here to ensure that ESLint applies the same formatting rules when using the --fix option.
+            singleQuote: true,
+            printWidth: 80,
+            tabWidth: 2,
+            plugins: ['prettier-plugin-organize-imports'],
+          },
+        ],
       },
     },
   ],
