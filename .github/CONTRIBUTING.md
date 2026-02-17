@@ -1,6 +1,6 @@
 # Contributing to the Moodle Design System
 
-Thank you for your interest in contributing to the Moodle Design System! This project is driven by MoodleHQ, but we welcome suggestions and contributions from everyone.
+Thank you for your interest in contributing to the Moodle Design System! This project is driven by Moodle HQ, but we welcome suggestions and contributions from everyone.
 
 ## Table of Contents
 
@@ -47,7 +47,8 @@ To set up a local development environment:
 
 ## How to Contribute
 
-- **Report bugs or request features:** Please post them to [Moodle Design System Jira (MDS)](https://moodle.atlassian.net/browse/MDS).
+- **Report bugs or request features:** Please post them to [GitHub Issues](https://github.com/moodlehq/design-system/issues).
+- **Report security vulnerabilities:** Please **do not** use GitHub Issues. Instead, report them privately via [GitHub Security Advisories](https://github.com/moodlehq/design-system/security/advisories).
 - **Work on an issue:** Comment on the issue to let others know you are working on it.
 - **Submit a pull request:**
   - Fork the repository and create a new branch for your changes (e.g., `feat/your-feature` or `fix/your-bug`).
@@ -57,7 +58,7 @@ To set up a local development environment:
 ## Code Style, Linting & Commit Messages
 
 - Follow the existing code style. Run `npm run lint` to check for linting errors.
-- Commit messages should follow the [Conventional Commits@1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
+- Commit messages should follow the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
 - Husky and lint-staged are used to run linters and tests on staged files before commits and pushes.
 - Add or update tests as appropriate.
 - See the [Coding Standards](README.md#coding-standards) section in the README for more details.
@@ -91,7 +92,7 @@ Improvements to documentation are welcome! Please update relevant markdown files
 
 For any contributions, issues, or support, please reach out to the Moodle HQ Design System team through the following channels:
 
-- Submit a ticket on the [MDS project on Moodle Tracker](https://tracker.moodle.org/browse/MDS)
+- Submit an issue on [GitHub Issues](https://github.com/moodlehq/design-system/issues)
 - Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link)
 - Join the [Moodle Design System PAG course](https://moodle.org/course/view.php?id=17258)
 

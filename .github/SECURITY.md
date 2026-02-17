@@ -10,7 +10,7 @@ This policy applies to vulnerabilities in the Moodle Design System codebase and 
 
 **Do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report security issues by creating an issue at [Moodle Design System tracker](https://moodle.atlassian.net/browse/MDS).
+Instead, please report security issues using [GitHub's private security advisory feature](https://github.com/moodlehq/design-system/security/advisories/new) or by emailing designsystem@moodle.com with details of the vulnerability.
 
 When reporting, please include:
 
