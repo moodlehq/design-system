@@ -47,97 +47,73 @@
     "headings": {
       "1": {
         "$type": "number",
-        "$value": "{typography.font-size.base.2,5}",
+        "$value": "{typography.font-size.2,5}",
         "$description": "Font size for H1 headings."
       },
       "2": {
         "$type": "number",
-        "$value": "{typography.font-size.base.2}",
+        "$value": "{typography.font-size.2}",
         "$description": "Font size for H2 headings."
       },
       "3": {
         "$type": "number",
-        "$value": "{typography.font-size.base.1,75}",
+        "$value": "{typography.font-size.1,75}",
         "$description": "Font size for H3 headings."
       },
       "4": {
         "$type": "number",
-        "$value": "{typography.font-size.base.1,5}",
+        "$value": "{typography.font-size.1,5}",
         "$description": "Font size for H4 headings."
       },
       "5": {
         "$type": "number",
-        "$value": "{typography.font-size.base.1,25}",
+        "$value": "{typography.font-size.1,25}",
         "$description": "Font size for H5 headings."
       },
       "6": {
         "$type": "number",
-        "$value": "{typography.font-size.base.1}",
+        "$value": "{typography.font-size.1}",
         "$description": "Font size for H6 headings."
       }
     },
     "paragraph": {
       "default": {
         "$type": "number",
-        "$value": "{typography.font-size.base.1}",
+        "$value": "{typography.font-size.1}",
         "$description": "Base size for body text."
       },
       "lead": {
         "$type": "number",
-        "$value": "{typography.font-size.base.1,25}",
+        "$value": "{typography.font-size.1,25}",
         "$description": "Slightly larger body text, for lead paragraphs."
       },
       "small": {
         "$type": "number",
-        "$value": "{typography.font-size.base.0,875}",
+        "$value": "{typography.font-size.0,875}",
         "$description": "Reduced size for secondary text."
       }
     }
   },
   "font weight": {
-    "italic": {
-      "bold": {
-        "$type": "string",
-        "$value": "{typography.font-weight.italic.bold-700}"
-      },
-      "light": {
-        "$type": "string",
-        "$value": "{typography.font-weight.italic.light-300}"
-      },
-      "medium": {
-        "$type": "string",
-        "$value": "{typography.font-weight.italic.medium-500}"
-      },
-      "regular": {
-        "$type": "string",
-        "$value": "{typography.font-weight.italic.regular-400}"
-      },
-      "semibold": {
-        "$type": "string",
-        "$value": "{typography.font-weight.italic.semibold-600}"
-      }
+    "bold": {
+      "$type": "number",
+      "$value": "{typography.font-weight.bold}"
     },
-    "normal": {
-      "bold": {
-        "$type": "string",
-        "$value": "{typography.font-weight.normal.bold-700}"
-      },
-      "light": {
-        "$type": "string",
-        "$value": "{typography.font-weight.normal.light-300}"
-      },
-      "medium": {
-        "$type": "string",
-        "$value": "{typography.font-weight.normal.medium-500}"
-      },
-      "regular": {
-        "$type": "string",
-        "$value": "{typography.font-weight.normal.regular-400}"
-      },
-      "semibold": {
-        "$type": "string",
-        "$value": "{typography.font-weight.normal.semibold-600}"
-      }
+    "light": {
+      "$type": "number",
+      "$value": "{typography.font-weight.light}"
+    },
+    "medium": {
+      "$type": "number",
+      "$value": "{typography.font-weight.medium}"
+    },
+    "regular": {
+      "$type": "number",
+      "$value": "{typography.font-weight.regular}"
+    },
+    "semibold": {
+      "$type": "number",
+      "$value": "{typography.font-weight.semibold}"
     }
   },
   "letter spacing": {

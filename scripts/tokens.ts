@@ -30,7 +30,7 @@ StyleDictionary.registerFormat({
     return (
       `/**\n * ${getFileHeaderContent()}\n */\n\n` + // made to match Style Dictionary file header format for CSS
       options.files.map((file: string) => `@import "./${file}";`).join('\n') +
-      '\n@import "./fonts.css"\n'
+      '\n'
     );
   },
 });
@@ -50,7 +50,7 @@ StyleDictionary.registerFormat({
             `@forward "${file.replace(/(\.scss$)/, '').replace(/^_/, '')}";`,
         )
         .join('\n') +
-      '\n@forward "fonts";\n'
+      '\n'
     );
   },
 });
@@ -65,11 +65,13 @@ StyleDictionary.registerFormat({
  *
  * Rules & Assumptions:
  * - Any flat numerical tokens with $type 'number' are considered dimension-related tokens and will be transformed from px to rem.
+ * - Font weight tokens are excluded from this transformation as they are also of type 'number' but should remain unitless.
  */
 StyleDictionary.registerTransform({
   name: 'dimension-px-to-rem',
   type: 'value',
-  filter: (token) => token.$type === 'number',
+  filter: (token) =>
+    token.$type === 'number' && !/font-weight/i.test(token.name),
   transform: (token) => `${token.$value / 16}rem`,
 });
 
