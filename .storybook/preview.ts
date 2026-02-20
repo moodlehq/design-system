@@ -2,6 +2,8 @@
 
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '../index';
+import './preview.css';
+
 const preview = {
   controls: {
     expanded: true,
