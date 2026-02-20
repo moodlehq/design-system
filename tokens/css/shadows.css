@@ -3,9 +3,9 @@
  */
 
 :root {
-  --mds-color-lg: rgba(0, 0, 0, 0.18);
-  --mds-color-md: rgba(0, 0, 0, 0.15);
-  --mds-color-sm: rgba(0, 0, 0, 0.07);
+  --mds-color-lg: rgba(0, 0, 0, 0.2);
+  --mds-color-md: rgba(0, 0, 0, 0.2);
+  --mds-color-sm: rgba(0, 0, 0, 0.1);
   --mds-blur-lg: var(--mds-scale-1200);
   --mds-blur-md: var(--mds-scale-600);
   --mds-blur-sm: var(--mds-scale-100);
