@@ -11,6 +11,7 @@ const coverageConfig: AddonOptionsVite = {
 export default {
   stories: ['../components/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
+    '@storybook/addon-designs',
     '@chromatic-com/storybook',
     '@storybook/addon-docs',
     '@storybook/addon-a11y',

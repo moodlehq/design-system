@@ -37,8 +37,10 @@
     "@eslint/compat": "^2.0.0",
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.1",
+    "@figma/code-connect": "^1.4.1",
     "@storybook/addon-a11y": "^10.1.2",
     "@storybook/addon-coverage": "^3.0.0",
+    "@storybook/addon-designs": "^11.1.2",
     "@storybook/addon-docs": "^10.1.2",
     "@storybook/addon-themes": "^10.1.2",
     "@storybook/addon-vitest": "^10.1.2",
@@ -93,7 +95,8 @@
     "build-tokens": "tsx scripts/tokens.ts",
     "format": "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write . '**/*.{ts,tsx,js,jsx,yml}'",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix --config .github/linters/eslint.config.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "cc": "npx figma connect publish"
   },
   "lint-staged": {
     "*{js,jsx,ts,tsx}": [

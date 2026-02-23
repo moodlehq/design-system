@@ -1,0 +1,10 @@
+{
+  "codeConnect": {
+    "include": [
+      "components/**/*.stories.{tsx,jsx}",
+      "components/**/*.{ts,tsx,jsx}"
+    ],
+    "label": "React",
+    "interactiveSetupFigmaFileUrl": "https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA"
+  }
+}
