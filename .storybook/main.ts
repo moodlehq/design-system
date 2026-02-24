@@ -21,7 +21,11 @@ export default {
       options: coverageConfig,
     },
     '@storybook/addon-themes',
+    '@storybook/addon-mcp',
   ],
+  features: {
+    experimentalComponentsManifest: true, // Enable manifest generation for the docs toolset, only supported in React-based setups.
+  },
   framework: {
     name: '@storybook/react-vite',
     options: {},
