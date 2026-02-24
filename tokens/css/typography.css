@@ -11,25 +11,20 @@
   --mds-font-size-displays-4: var(--mds-scale-1300); /** Display style, medium-large. */
   --mds-font-size-displays-5: var(--mds-scale-1200); /** Display style, medium. */
   --mds-font-size-displays-6: var(--mds-scale-1100); /** Display style, smaller display. */
-  --mds-font-size-headings-1: var(--mds-typography-font-size-base-2-5); /** Font size for H1 headings. */
-  --mds-font-size-headings-2: var(--mds-typography-font-size-base-2); /** Font size for H2 headings. */
-  --mds-font-size-headings-3: var(--mds-typography-font-size-base-1-75); /** Font size for H3 headings. */
-  --mds-font-size-headings-4: var(--mds-typography-font-size-base-1-5); /** Font size for H4 headings. */
-  --mds-font-size-headings-5: var(--mds-typography-font-size-base-1-25); /** Font size for H5 headings. */
-  --mds-font-size-headings-6: var(--mds-typography-font-size-base-1); /** Font size for H6 headings. */
-  --mds-font-size-paragraph-default: var(--mds-typography-font-size-base-1); /** Base size for body text. */
-  --mds-font-size-paragraph-lead: var(--mds-typography-font-size-base-1-25); /** Slightly larger body text, for lead paragraphs. */
-  --mds-font-size-paragraph-small: var(--mds-typography-font-size-base-0-875); /** Reduced size for secondary text. */
-  --mds-font-weight-italic-bold: var(--mds-typography-font-weight-italic-bold-700);
-  --mds-font-weight-italic-light: var(--mds-typography-font-weight-italic-light-300);
-  --mds-font-weight-italic-medium: var(--mds-typography-font-weight-italic-medium-500);
-  --mds-font-weight-italic-regular: var(--mds-typography-font-weight-italic-regular-400);
-  --mds-font-weight-italic-semibold: var(--mds-typography-font-weight-italic-semibold-600);
-  --mds-font-weight-normal-bold: var(--mds-typography-font-weight-normal-bold-700);
-  --mds-font-weight-normal-light: var(--mds-typography-font-weight-normal-light-300);
-  --mds-font-weight-normal-medium: var(--mds-typography-font-weight-normal-medium-500);
-  --mds-font-weight-normal-regular: var(--mds-typography-font-weight-normal-regular-400);
-  --mds-font-weight-normal-semibold: var(--mds-typography-font-weight-normal-semibold-600);
+  --mds-font-size-headings-1: var(--mds-typography-font-size-2-5); /** Font size for H1 headings. */
+  --mds-font-size-headings-2: var(--mds-typography-font-size-2); /** Font size for H2 headings. */
+  --mds-font-size-headings-3: var(--mds-typography-font-size-1-75); /** Font size for H3 headings. */
+  --mds-font-size-headings-4: var(--mds-typography-font-size-1-5); /** Font size for H4 headings. */
+  --mds-font-size-headings-5: var(--mds-typography-font-size-1-25); /** Font size for H5 headings. */
+  --mds-font-size-headings-6: var(--mds-typography-font-size-1); /** Font size for H6 headings. */
+  --mds-font-size-paragraph-default: var(--mds-typography-font-size-1); /** Base size for body text. */
+  --mds-font-size-paragraph-lead: var(--mds-typography-font-size-1-25); /** Slightly larger body text, for lead paragraphs. */
+  --mds-font-size-paragraph-small: var(--mds-typography-font-size-0-875); /** Reduced size for secondary text. */
+  --mds-font-weight-bold: var(--mds-typography-font-weight-bold);
+  --mds-font-weight-light: var(--mds-typography-font-weight-light);
+  --mds-font-weight-medium: var(--mds-typography-font-weight-medium);
+  --mds-font-weight-regular: var(--mds-typography-font-weight-regular);
+  --mds-font-weight-semibold: var(--mds-typography-font-weight-semibold);
   --mds-letter-spacing-default: var(--mds-typography-letter-spacing-none); /** Standard tracking for all texts. */
   --mds-line-height-displays-1: var(--mds-typography-line-height-displays-d1);
   --mds-line-height-displays-2: var(--mds-typography-line-height-displays-d2);
