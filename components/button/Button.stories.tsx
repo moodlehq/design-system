@@ -27,6 +27,7 @@ interface CodeConnectExampleProps {
   disabled?: boolean;
   size?: 'sm' | 'lg';
   active?: boolean;
+  type?: 'primary' | 'secondary' | 'danger';
 }
 
 function PrimaryCodeConnectExample(props: CodeConnectExampleProps) {
@@ -36,7 +37,7 @@ function PrimaryCodeConnectExample(props: CodeConnectExampleProps) {
       disabled={props.disabled}
       size={props.size}
       active={props.active}
-      variant="primary"
+      variant={props.type ?? 'primary'}
     />
   );
 }
@@ -48,7 +49,7 @@ function SecondaryCodeConnectExample(props: CodeConnectExampleProps) {
       disabled={props.disabled}
       size={props.size}
       active={props.active}
-      variant="secondary"
+      variant={props.type ?? 'secondary'}
     />
   );
 }
@@ -60,7 +61,7 @@ function DangerCodeConnectExample(props: CodeConnectExampleProps) {
       disabled={props.disabled}
       size={props.size}
       active={props.active}
-      variant="danger"
+      variant={props.type ?? 'danger'}
     />
   );
 }
@@ -174,6 +175,11 @@ const meta = {
         },
       ],
       props: {
+        type: figma.enum('Type', {
+          primary: 'primary',
+          secondary: 'secondary',
+          danger: 'danger',
+        }),
         disabled: figma.enum('State', {
           disabled: true,
         }),
