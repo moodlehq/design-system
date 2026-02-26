@@ -1,3 +1,10 @@
+import {
+  faCircleCheck,
+  faCircleExclamation,
+  faCircleInfo,
+  faCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fc from 'fast-check';
@@ -22,8 +29,15 @@ describe('Alert: Unit Test', () => {
   });
 
   it('renders with icon', () => {
-    render(<Alert heading="Test" icon="⚠️" />);
-    expect(screen.getByText('⚠️')).toBeInTheDocument();
+    const { container } = render(
+      <Alert
+        heading="Test"
+        icon={<FontAwesomeIcon icon={faCircleExclamation} />}
+      />,
+    );
+    expect(
+      container.querySelector('[data-icon="circle-exclamation"]'),
+    ).toBeInTheDocument();
   });
 
   it('applies success variant', () => {
@@ -265,9 +279,17 @@ describe('Alert: Unit Test', () => {
             'warning',
             'danger',
           ) as unknown as fc.Arbitrary<AlertProps['variant']>,
-          icon: fc.option(fc.constantFrom('⚠️', 'ℹ️', '✓', '✗'), {
-            nil: undefined,
-          }),
+          icon: fc.option(
+            fc.constantFrom<AlertProps['icon']>(
+              <FontAwesomeIcon icon={faCircleExclamation} />,
+              <FontAwesomeIcon icon={faCircleInfo} />,
+              <FontAwesomeIcon icon={faCircleCheck} />,
+              <FontAwesomeIcon icon={faCircleXmark} />,
+            ),
+            {
+              nil: undefined,
+            },
+          ) as unknown as fc.Arbitrary<AlertProps['icon']>,
           children: fc.option(
             fc.stringOf(
               fc.constantFrom(
@@ -283,13 +305,12 @@ describe('Alert: Unit Test', () => {
         })
         .filter((props) => {
           // Ensure at least one visible content is present
-          return !!(props.heading || props.children || props.icon);
+          return !!(props.heading || props.children);
         }),
       (props: AlertProps) => {
         // Return any text content that should be visible
         if (props.heading) return props.heading;
         if (props.children) return props.children.toString();
-        if (props.icon) return props.icon;
         return ''; // Should never reach here due to filter
       },
       { numRuns: 100 },

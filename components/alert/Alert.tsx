@@ -10,7 +10,7 @@ export interface AlertProps extends Omit<RBAlertProps, 'variant'> {
   variant?: 'success' | 'info' | 'warning' | 'danger';
   heading?: string;
   children?: React.ReactNode;
-  icon?: string;
+  icon?: React.ReactNode;
   actionLabel?: string;
   onActionClick?: () => void;
   actionButtonProps?: AlertActionButtonProps;

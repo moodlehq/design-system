@@ -1,3 +1,10 @@
+import {
+  faCircleCheck,
+  faCircleExclamation,
+  faCircleInfo,
+  faCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ThemeProvider } from 'react-bootstrap';
 import { expect, fn } from 'storybook/test';
@@ -58,10 +65,10 @@ It supports optional icons, headings, body content, and action buttons.
       },
     },
     icon: {
-      control: { type: 'text' },
+      control: false,
       description: 'Optional icon to display before the heading.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'React.ReactNode' },
       },
     },
     actionLabel: {
@@ -120,7 +127,7 @@ type Story = StoryObj<typeof meta>;
 export const Success = {
   args: {
     variant: 'success',
-    icon: '✓',
+    icon: <FontAwesomeIcon icon={faCircleCheck} />,
     heading: 'Success!',
     children: 'Your action was completed successfully.',
     actionLabel: 'View Details',
@@ -135,7 +142,7 @@ export const Success = {
 export const Info = {
   args: {
     variant: 'info',
-    icon: 'ℹ️',
+    icon: <FontAwesomeIcon icon={faCircleInfo} />,
     heading: 'Information',
     children: 'Here is some important information you should know.',
   },
@@ -148,7 +155,7 @@ export const Info = {
 export const Warning = {
   args: {
     variant: 'warning',
-    icon: '⚠️',
+    icon: <FontAwesomeIcon icon={faCircleExclamation} />,
     heading: 'Warning',
     children: 'Please review this warning before proceeding.',
     actionLabel: 'Acknowledge',
@@ -163,7 +170,7 @@ export const Warning = {
 export const Danger = {
   args: {
     variant: 'danger',
-    icon: '✗',
+    icon: <FontAwesomeIcon icon={faCircleXmark} />,
     heading: 'Error',
     children: 'An error occurred while processing your request.',
     actionLabel: 'Retry',
@@ -193,7 +200,7 @@ export const WithoutHeading = {
 export const WithAction = {
   args: {
     variant: 'info',
-    icon: 'ℹ️',
+    icon: <FontAwesomeIcon icon={faCircleInfo} />,
     heading: 'Action Required',
     children: 'Please complete the required action.',
     actionLabel: 'Complete Action',
@@ -209,7 +216,7 @@ export const WithAction = {
 export const WithConfigurableDesignSystemButton = {
   args: {
     variant: 'info',
-    icon: 'ℹ️',
+    icon: <FontAwesomeIcon icon={faCircleInfo} />,
     heading: 'Custom Action Button',
     children: 'This uses explicit Button variant and size props.',
     actionButtonProps: {
@@ -228,7 +235,7 @@ export const WithConfigurableDesignSystemButton = {
 export const Dismissible = {
   args: {
     variant: 'warning',
-    icon: '⚠️',
+    icon: <FontAwesomeIcon icon={faCircleExclamation} />,
     heading: 'Dismissible Alert',
     children: 'This alert can be dismissed by clicking the close button.',
     dismissible: true,
@@ -244,7 +251,7 @@ export const Dismissible = {
 export const LongContent = {
   args: {
     variant: 'info',
-    icon: 'ℹ️',
+    icon: <FontAwesomeIcon icon={faCircleInfo} />,
     heading: 'Detailed Information',
     children:
       'This is a longer alert message that contains more detailed information. It demonstrates how the alert component handles multiple lines of text and maintains proper spacing and readability even with extensive content.',

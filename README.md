@@ -25,6 +25,7 @@ The MDS is a collaborative effort between designers and developers at Moodle HQ 
 - [Installation & Usage](#installation--usage)
   - [Prerequisites](#prerequisites)
   - [Quick Start](#quick-start)
+  - [Font Awesome Icons](#font-awesome-icons)
   - [Convert Tokens From ZeroHeight to CSS Variables](#convert-tokens-from-zeroheight-to-css-variables)
   - [Testing the Design System](#testing-the-design-system)
   - [Build the Design System](#build-the-design-system)
@@ -97,6 +98,32 @@ import { Button } from '@moodlehq/design-system';
 
 export default function App() {
   return <Button label="Button" variant="primary" />;
+}
+```
+
+### Font Awesome Icons
+
+`Button` supports optional Font Awesome icons via the `icon` and `iconPosition` props.
+
+```bash
+npm install @fortawesome/free-solid-svg-icons
+```
+
+```js
+import '@moodlehq/design-system/css';
+
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@moodlehq/design-system';
+
+export default function App() {
+  return (
+    <Button
+      label="Continue"
+      variant="primary"
+      icon={faArrowRight}
+      iconPosition="end"
+    />
+  );
 }
 ```
 

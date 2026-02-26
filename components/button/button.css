@@ -11,6 +11,18 @@
   line-height: var(--mds-line-height-paragraph-small);
   letter-spacing: var(--mds-letter-spacing-default);
 }
+
+.mds-btn .mds-btn__content {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-btn .mds-btn__icon {
+  height: var(--mds-font-size-paragraph-default);
+  width: var(--mds-font-size-paragraph-default);
+}
+
 .mds-btn.btn:hover {
   background-color: var(--mds-bg-interactive-primary-hover);
 }

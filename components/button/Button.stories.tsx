@@ -1,4 +1,5 @@
 import figma from '@figma/code-connect';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ThemeProvider } from 'react-bootstrap';
 import { expect } from 'storybook/test';
@@ -111,6 +112,21 @@ const meta = {
       description: {
         component: `
 ⚠️ **This component is under development and not production ready.** API may change without notice.
+
+Use Font Awesome icons by passing an \`IconDefinition\` to the \`icon\` prop.
+
+Example:
+
+\`\`\`tsx
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
+<Button
+  label="Continue"
+  variant="primary"
+  icon={faArrowRight}
+  iconPosition="end"
+/>;
+\`\`\`
         `,
       },
     },
@@ -246,6 +262,26 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
+    icon: {
+      control: false,
+      description: 'Optional Font Awesome icon definition.',
+      table: {
+        type: {
+          summary: 'IconDefinition',
+        },
+      },
+    },
+    iconPosition: {
+      control: { type: 'radio' },
+      options: ['start', 'end'],
+      description: 'Icon placement relative to the label.',
+      table: {
+        type: {
+          summary: 'start | end',
+        },
+        defaultValue: { summary: 'start' },
+      },
+    },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: {
@@ -321,5 +357,21 @@ export const Small = {
   args: {
     size: 'sm',
     label: buttonLabel,
+  },
+} satisfies Story;
+
+export const WithLeadingIcon = {
+  args: {
+    label: buttonLabel,
+    icon: faArrowLeft,
+    iconPosition: 'start',
+  },
+} satisfies Story;
+
+export const WithTrailingIcon = {
+  args: {
+    label: buttonLabel,
+    icon: faArrowRight,
+    iconPosition: 'end',
   },
 } satisfies Story;
