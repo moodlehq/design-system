@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/moodlehq/design-system/compare/design-system-v1.0.0...design-system-v2.0.0) (2026-02-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **fonts:** Several font tokens are removed and replaced. Consumers must update their consumption on typography tokens. New guides added in the README of how to setup fonts properly
+
+### Bug Fixes
+
+* **fonts:** Rework font tokens to be usable for css attributes ([#130](https://github.com/moodlehq/design-system/issues/130)) ([196f245](https://github.com/moodlehq/design-system/commit/196f2450f91becd62909e64b480ada2323a3a98a))
+
 ## [1.0.0](https://github.com/moodlehq/design-system/compare/design-system-v0.1.0...design-system-v1.0.0) (2026-02-06)
 
 
