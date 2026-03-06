@@ -20,6 +20,9 @@
     },
     "./tokens/scss": {
       "default": "./tokens/scss/_index.scss"
+    },
+    "./tokens/scss/legacy": {
+      "default": "./tokens/scss/_index.legacy.scss"
     }
   },
   "type": "module",

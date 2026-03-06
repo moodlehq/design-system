@@ -144,6 +144,9 @@ import '@moodlehq/design-system/tokens/css';
 
 // SCSS tokens
 import '@moodlehq/design-system/tokens/scss';
+
+// SCSS tokens (legacy Sass @import syntax)
+import '@moodlehq/design-system/tokens/scss/legacy';
 ```
 
 > **Note:** SCSS tokens use flat values rather than variable references. This is an intentional design decision due to limitations in Style Dictionary's built-in `scssVariables` formatter, which does not support `@use` imports for cross-file variable references. While a custom formatter could address this, it would also need to handle proper variable hoisting and sorting, requiring significant ongoing maintenance.

@@ -56,6 +56,21 @@ StyleDictionary.registerFormat({
 });
 
 /**
+ * Custom formatter: scss/aggregator-legacy
+ * Aggregator to create a single SCSS file that imports all other generated SCSS files using legacy @import syntax.
+ */
+StyleDictionary.registerFormat({
+  name: 'scss/aggregator-legacy',
+  format: async ({ options }) => {
+    return (
+      `\n// ${getFileHeaderContent()}\n\n` +
+      options.files.map((file: string) => `@import "${file}";`).join('\n') +
+      '\n'
+    );
+  },
+});
+
+/**
  * Custom transform: dimension-px-to-rem
  * Transforms px values to rem for tokens related to dimensions.
  *
@@ -142,6 +157,15 @@ new StyleDictionary({
         {
           destination: '_index.scss',
           format: 'scss/aggregator',
+          options: {
+            files: tokenFiles.map((fileName) =>
+              convertJsonFileName(fileName, '_', 'scss'),
+            ),
+          },
+        },
+        {
+          destination: '_index.legacy.scss',
+          format: 'scss/aggregator-legacy',
           options: {
             files: tokenFiles.map((fileName) =>
               convertJsonFileName(fileName, '_', 'scss'),
