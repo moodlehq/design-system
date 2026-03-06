@@ -58,12 +58,14 @@ StyleDictionary.registerFormat({
 /**
  * Custom formatter: scss/aggregator-legacy
  * Aggregator to create a single SCSS file that imports all other generated SCSS files using legacy @import syntax.
+ * Tags: [MDS_LEGACY_SCSSPHP_COMPAT]
  */
 StyleDictionary.registerFormat({
   name: 'scss/aggregator-legacy',
   format: async ({ options }) => {
     return (
-      `\n// ${getFileHeaderContent()}\n\n` +
+      // Keep the legacy compatibility tag in generated output for fast discovery via grep.
+      `\n// ${getFileHeaderContent()}\n// Tags: [MDS_LEGACY_SCSSPHP_COMPAT]\n\n` +
       options.files.map((file: string) => `@import "${file}";`).join('\n') +
       '\n'
     );
@@ -164,6 +166,7 @@ new StyleDictionary({
           },
         },
         {
+          // Tags: [MDS_LEGACY_SCSSPHP_COMPAT]
           destination: '_index.legacy.scss',
           format: 'scss/aggregator-legacy',
           options: {

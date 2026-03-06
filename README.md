@@ -149,6 +149,17 @@ import '@moodlehq/design-system/tokens/scss';
 import '@moodlehq/design-system/tokens/scss/legacy';
 ```
 
+#### Legacy SCSS compatibility for Moodle Core LMS
+
+Tag: `MDS_LEGACY_SCSSPHP_COMPAT`
+
+MDS now ships an optional legacy SCSS entrypoint (`@moodlehq/design-system/tokens/scss/legacy`) that uses Sass `@import` syntax.
+
+- Use `@moodlehq/design-system/tokens/scss` (default) for modern Sass module syntax (`@use` / `@forward`).
+- Use `@moodlehq/design-system/tokens/scss/legacy` when integrating with Moodle Core LMS environments that still rely on older `scssphp` behavior.
+
+This legacy entrypoint is intended as a compatibility bridge until Core LMS completes a major `scssphp` library upgrade.
+
 > **Note:** SCSS tokens use flat values rather than variable references. This is an intentional design decision due to limitations in Style Dictionary's built-in `scssVariables` formatter, which does not support `@use` imports for cross-file variable references. While a custom formatter could address this, it would also need to handle proper variable hoisting and sorting, requiring significant ongoing maintenance.
 
 ### Convert Tokens From ZeroHeight to CSS Variables
