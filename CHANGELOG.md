@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/moodlehq/design-system/compare/design-system-v1.0.0...design-system-v2.0.0) (2026-03-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Build:** Core LMS compatibility improvements ([#141](https://github.com/moodlehq/design-system/issues/141))
+* **fonts:** Several font tokens are removed and replaced. Consumers must update their consumption on typography tokens. New guides added in the README of how to setup fonts properly
+
+### Bug Fixes
+
+* **fonts:** Rework font tokens to be usable for css attributes ([#130](https://github.com/moodlehq/design-system/issues/130)) ([196f245](https://github.com/moodlehq/design-system/commit/196f2450f91becd62909e64b480ada2323a3a98a))
+
+
+### Miscellaneous Chores
+
+* **Build:** Core LMS compatibility improvements ([#141](https://github.com/moodlehq/design-system/issues/141)) ([a024d30](https://github.com/moodlehq/design-system/commit/a024d30d39e577ec17710736e3f756bb413ad8f1))
+
 ## [1.0.0](https://github.com/moodlehq/design-system/compare/design-system-v0.1.0...design-system-v1.0.0) (2026-02-06)
 
 
