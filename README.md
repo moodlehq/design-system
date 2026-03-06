@@ -100,6 +100,8 @@ export default function App() {
 }
 ```
 
+> **Note:** Subpath imports such as `@moodlehq/design-system/button` are not currently supported. Please import components from `@moodlehq/design-system`.
+
 ### Fonts
 
 The recommended typeface for Moodle Design System is **[Roboto](https://fonts.google.com/specimen/Roboto)**. The package does not bundle font files. Provide Roboto in your application:
@@ -212,6 +214,9 @@ Pull requests are our suggested method for contributing to the design system. Pl
 
 **Q:** Will my Moodle instance automatically use the latest Design System release?<br>
 **A:** This will depend on the upcoming integration we are looking into. You will likely need to update your Moodle instance once we integrate into LMS.
+
+**Q:** Can I import components via subpaths like `@moodlehq/design-system/button`?<br>
+**A:** Not currently. Please import components from `@moodlehq/design-system`.
 
 ## License
 
