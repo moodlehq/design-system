@@ -2,7 +2,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { dependencies } from './package.json';
 
 // https://vite.dev/config/
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -16,16 +15,25 @@ const dirname =
 
 export default defineConfig({
   plugins: [react(), dts()], // Uses the 'vite-plugin-dts' plugin for generating TypeScript declaration files (d.ts).
+  define: {
+    'process.env.NODE_ENV': '"production"',
+  },
   build: {
     lib: {
       entry: './index.ts', // Specifies the entry point for building the library.
       name: 'moodle-design-system', // Sets the name of the generated library.
-      fileName: (format) => `index.${format}.js`, // Generates the output file name based on the format.
-      formats: ['cjs', 'es'], // Specifies the output formats (CommonJS and ES modules).
+      fileName: () => 'index.js', // Generates a format-agnostic output file name.
+      formats: ['es'], // Specifies the output format (ES modules only).
     },
     cssCodeSplit: false, // bundle all CSS into a single file
     rollupOptions: {
-      external: [...Object.keys(dependencies)], // Defines external dependencies for Rollup bundling.
+      external: [
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react/jsx-runtime',
+        'react-bootstrap',
+      ],
       output: {
         assetFileNames: 'index.css', // name the CSS file
       },
