@@ -153,6 +153,7 @@ new StyleDictionary({
             token.filePath.endsWith(fileName),
           options: {
             fileHeader: 'mdsTokensFileHeader',
+            themeable: true,
           },
         })),
 
