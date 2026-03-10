@@ -27,13 +27,7 @@ export default defineConfig({
     },
     cssCodeSplit: false, // bundle all CSS into a single file
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'react-dom/client',
-        'react/jsx-runtime',
-        'react-bootstrap',
-      ],
+      external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
       output: {
         assetFileNames: 'index.css', // name the CSS file
       },

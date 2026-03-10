@@ -1,16 +1,20 @@
-import {
-  Button as RBButton,
-  ButtonProps as RBButtonProps,
-} from 'react-bootstrap';
+import type { ButtonHTMLAttributes } from 'react';
 
-export interface ButtonProps extends RBButtonProps {
+type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'danger'
+  | 'outline-primary'
+  | 'outline-secondary'
+  | 'outline-danger';
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   variant?: string;
-  disabled?: boolean;
   size?: 'sm' | 'lg';
 }
 
-const allowedVariants = [
+const allowedVariants: ButtonVariant[] = [
   'primary',
   'secondary',
   'danger',
@@ -19,14 +23,30 @@ const allowedVariants = [
   'outline-danger',
 ];
 
-export const Button: React.FC<ButtonProps> = ({ label, variant, ...props }) => {
-  const resolvedVariant = allowedVariants.includes(variant ?? '')
-    ? variant
-    : 'primary';
+export const Button = ({
+  label,
+  variant,
+  size,
+  className,
+  type = 'button',
+  ...props
+}: ButtonProps) => {
+  const resolvedVariant =
+    variant && allowedVariants.includes(variant as ButtonVariant)
+      ? variant
+      : 'primary';
+
+  const classes = ['mds-btn', 'btn', `btn-${resolvedVariant}`];
+  if (size) {
+    classes.push(`btn-${size}`);
+  }
+  if (className) {
+    classes.push(className);
+  }
 
   return (
-    <RBButton className="mds-btn" variant={resolvedVariant} {...props}>
+    <button className={classes.join(' ')} type={type} {...props}>
       {label}
-    </RBButton>
+    </button>
   );
 };

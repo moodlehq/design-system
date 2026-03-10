@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ThemeProvider } from 'react-bootstrap';
 import { expect } from 'storybook/test';
 import { Button } from './Button';
 
@@ -16,13 +15,6 @@ const meta = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole('button', { label: 'Button' }));
     // Wait for any updates to complete
@@ -74,6 +66,17 @@ const meta = {
           summary: 'true | false',
         },
         defaultValue: { summary: 'false' },
+      },
+    },
+    type: {
+      control: { type: 'select' },
+      options: ['button', 'submit', 'reset'],
+      description: 'Native button type.',
+      table: {
+        type: {
+          summary: 'button | submit | reset',
+        },
+        defaultValue: { summary: 'button' },
       },
     },
   },

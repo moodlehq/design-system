@@ -31,7 +31,6 @@
   },
   "peerDependencies": {
     "react": "^19.2.4",
-    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
@@ -74,7 +73,6 @@
     "prettier": "^3.7.3",
     "prettier-plugin-organize-imports": "^4.3.0",
     "react": "^19.2.4",
-    "react-bootstrap": "^2.10.10",
     "react-docgen": "^8.0.2",
     "react-docgen-typescript": "^2.4.0",
     "react-dom": "^19.2.4",

@@ -27,12 +27,12 @@ describe('Button: Unit Test', () => {
 
   it('applies variant prop', () => {
     render(<Button label="Button" variant="secondary" />);
-    expect(screen.getByRole('button')).toHaveClass('btn-secondary'); // the class applied by react-bootstrap
+    expect(screen.getByRole('button')).toHaveClass('btn-secondary');
   });
 
   it('handles invalid variant prop as default variant', () => {
     render(<Button label="Button" variant="invalid" />);
-    expect(screen.getByRole('button')).toHaveClass('btn-primary'); // the class applied by react-bootstrap
+    expect(screen.getByRole('button')).toHaveClass('btn-primary');
   });
 
   it('applies the size classes', () => {
