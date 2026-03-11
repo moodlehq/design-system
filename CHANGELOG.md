@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/moodlehq/design-system/compare/design-system-v2.0.0...design-system-v2.1.0) (2026-03-11)
+
+
+### Features
+
+* **Button:** Update example component no longer need React-BS ([#145](https://github.com/moodlehq/design-system/issues/145)) ([670a1f3](https://github.com/moodlehq/design-system/commit/670a1f3dea47bd48d0e6c1828d91cafcbf08465c))
+* **tokens:** SCSS tokens are now themeable with the !default feature ([#144](https://github.com/moodlehq/design-system/issues/144)) ([759e34b](https://github.com/moodlehq/design-system/commit/759e34b12b4b015c4fd857746129f55d693b75da))
+
 ## [2.0.0](https://github.com/moodlehq/design-system/compare/design-system-v1.0.0...design-system-v2.0.0) (2026-03-06)
 
 
