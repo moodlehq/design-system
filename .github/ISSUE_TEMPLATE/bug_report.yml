@@ -1,0 +1,114 @@
+name: Bug report
+description: Report a defect in components, tokens, docs, or build tooling.
+title: 'fix: '
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an issue in the Moodle Design System.
+        Please include enough detail for us to reproduce and verify a fix.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      description: Pick the area most impacted by this bug.
+      options:
+        - Component
+        - Design token
+        - Documentation
+        - Storybook
+        - Build or tooling
+        - Accessibility
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: component
+    attributes:
+      label: Component or token name
+      description: e.g. Button, Dropdown, token-color-action-primary
+      placeholder: Enter component or token name
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Which version of @moodlehq/design-system are you using?
+      placeholder: e.g. 0.8.2
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, framework, and rendering mode details.
+      placeholder: e.g. Chrome 123 on macOS 15, React 19, Vite
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include a minimal reproducible example.
+      placeholder: |
+        1. Install package version...
+        2. Render component with props...
+        3. Observe behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: Describe what should happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: Describe what happens instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links and evidence
+      description: Storybook URL, screenshots, logs, or failing test output.
+      placeholder: Add links or paste relevant output.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: a11y-impact
+    attributes:
+      label: Accessibility impact
+      description: Does this issue affect WCAG conformance or assistive tech usage?
+      options:
+        - No impact
+        - Unknown
+        - Minor
+        - Major
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I can reproduce this issue with the information provided above.
+          required: true
