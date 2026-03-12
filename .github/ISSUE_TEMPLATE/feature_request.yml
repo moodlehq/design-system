@@ -1,0 +1,94 @@
+name: Feature request
+description: Propose a new component, token, pattern, or platform capability.
+title: 'feat: '
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement.
+        Please describe user value, expected API, and adoption impact.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Request type
+      options:
+        - New component
+        - Component enhancement
+        - New token
+        - Token update
+        - Documentation improvement
+        - Tooling or developer experience
+        - Accessibility enhancement
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What is hard today, and who is affected?
+      placeholder: Describe the current limitation and context.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe behavior, API shape, and expected usage.
+      placeholder: Include examples of props, tokens, or docs changes.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: Describe any workarounds or alternatives.
+    validations:
+      required: false
+
+  - type: textarea
+    id: design
+    attributes:
+      label: Design references
+      description: Add Figma, Zeroheight, screenshots, or related links.
+      placeholder: Paste links here.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: breaking
+    attributes:
+      label: Breaking change risk
+      options:
+        - 'No'
+        - Unsure
+        - 'Yes'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Suggested priority
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+        - label: I explained the user impact and expected outcome.
+          required: true
