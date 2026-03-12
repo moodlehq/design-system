@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/moodlehq/design-system/compare/design-system-v2.1.0...design-system-v2.1.1) (2026-03-12)
+
+
+### Bug Fixes
+
+* **Build:** Publish the correct build ([#148](https://github.com/moodlehq/design-system/issues/148)) ([0c0dc44](https://github.com/moodlehq/design-system/commit/0c0dc44912cbf08ce1a1811d2765dcfef37a17bd))
+
 ## [2.1.0](https://github.com/moodlehq/design-system/compare/design-system-v2.0.0...design-system-v2.1.0) (2026-03-11)
 
 
