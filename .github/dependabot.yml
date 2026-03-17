@@ -11,13 +11,13 @@ updates:
         patterns:
           - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       major:
         patterns:
           - '*'
         update-types:
-          - "major"
+          - 'major'
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
