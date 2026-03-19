@@ -79,6 +79,15 @@ const preview = {
         sourceState: 'shown',
       },
     },
+    options: {
+      storySort: {
+        order: [
+          'Documentation',
+          ['Getting Started', 'Changelog', 'Contributing', 'Releases'],
+          '*',
+        ],
+      },
+    },
   },
 };
 
