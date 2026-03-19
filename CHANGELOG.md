@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/moodlehq/design-system/compare/design-system-v2.1.1...design-system-v2.2.0) (2026-03-19)
+
+
+### Features
+
+* **AI:** Add AI agent tooling for streamlined co-working  ([#154](https://github.com/moodlehq/design-system/issues/154)) ([a8b10f5](https://github.com/moodlehq/design-system/commit/a8b10f52937c3f969a08d097c32626dd5f819000))
+
 ## [2.1.1](https://github.com/moodlehq/design-system/compare/design-system-v2.1.0...design-system-v2.1.1) (2026-03-12)
 
 
