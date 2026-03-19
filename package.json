@@ -57,6 +57,7 @@
     }
   },
   "devDependencies": {
+    "@atlaskit/editor-markdown-transformer": "^5.20.5",
     "@chromatic-com/storybook": "^5.0.0",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.2.0",
