@@ -38,6 +38,24 @@ Default for new stories: `tags: ['autodocs', 'test', 'stable']`.
 
 Every story tagged `test` is automatically scanned by Axe against WCAG 2.x AA and best-practice rules (configured in `.storybook/preview.ts`). Violations are reported as errors. Do not disable a11y checks without a documented reason.
 
+### RTL
+
+For any component that has directional layout (padding, margin, alignment, positioning, icons with a side), add an RTL story that wraps the component in a `dir="rtl"` container. This verifies that CSS logical properties are in use and the layout mirrors correctly.
+
+```tsx
+export const RightToLeft: Story = {
+  decorators: [
+    (Story) => (
+      <div dir="rtl">
+        <Story />
+      </div>
+    ),
+  ],
+};
+```
+
+Tag RTL stories with `['test', 'stable']` (omit `autodocs` — they are structural tests, not API documentation).
+
 ## Unit tests (Vitest + jsdom)
 
 Run with `npm run test-unit`. Tests live in `ComponentName.test.tsx` alongside the component.
