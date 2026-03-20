@@ -92,6 +92,36 @@ return <button className={classes.join(' ')} type={type} {...props}>{label}</but
 
 Spread `...props` last so consumers can pass `aria-*`, `data-*`, event handlers, and other native attributes through without explicit forwarding.
 
+## Internationalisation
+
+Moodle is available in 100+ languages and supports RTL scripts (Arabic, Hebrew, Farsi, etc.). All components must be i18n-ready without coupling to any i18n library.
+
+**Strings:** Never hardcode user-facing text inside a component. Every visible string — labels, accessible names, placeholders, tooltips — must be accepted as a prop. The caller is responsible for translation.
+
+```tsx
+// ✅ correct
+<Button label={t('core:save')} />
+
+// ❌ wrong
+return <button>Save</button>;
+```
+
+**CSS logical properties:** Use logical properties instead of physical directional ones so layout mirrors correctly under RTL without extra CSS.
+
+| Avoid | Use instead |
+|---|---|
+| `margin-left` / `margin-right` | `margin-inline-start` / `margin-inline-end` |
+| `padding-left` / `padding-right` | `padding-inline-start` / `padding-inline-end` |
+| `left` / `right` (positioning) | `inset-inline-start` / `inset-inline-end` |
+| `border-left` / `border-right` | `border-inline-start` / `border-inline-end` |
+| `text-align: left` / `text-align: right` | `text-align: start` / `text-align: end` |
+
+Direction-neutral properties (`top`, `bottom`, `height`, `width`, `margin-top`, `padding-top`, etc.) do not need changing.
+
+**`dir` attribute:** No explicit forwarding needed — writing direction is inherited from the document or nearest ancestor. Because `...props` is always spread on the root element, consumers can pass `dir` directly if needed.
+
+**Locale-aware formatting:** This library is presentation-only and does not format dates, numbers, or currency. Components accept pre-formatted strings; locale-aware formatting is the consumer's responsibility.
+
 ## Agent guardrails
 
 **Do not remove or rename exports from `components/index.tsx`.** Every named export is part of the public API — removing one is a breaking change with no compile-time error in the library build (story/test files are excluded from `tsconfig.json`). Only add exports; never remove or rename without an explicit breaking-change task.
