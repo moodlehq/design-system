@@ -9,12 +9,12 @@
 
 Published package exports:
 
-| Import | Resolves to |
-|---|---|
-| `@moodlehq/design-system` | `dist/index.js` |
-| `@moodlehq/design-system/css` | `dist/index.css` |
-| `@moodlehq/design-system/tokens/css` | `tokens/css/index.css` |
-| `@moodlehq/design-system/tokens/scss` | `tokens/scss/_index.scss` |
+| Import                                       | Resolves to                      |
+| -------------------------------------------- | -------------------------------- |
+| `@moodlehq/design-system`                    | `dist/index.js`                  |
+| `@moodlehq/design-system/css`                | `dist/index.css`                 |
+| `@moodlehq/design-system/tokens/css`         | `tokens/css/index.css`           |
+| `@moodlehq/design-system/tokens/scss`        | `tokens/scss/_index.scss`        |
 | `@moodlehq/design-system/tokens/scss/legacy` | `tokens/scss/_index.legacy.scss` |
 
 ## Path-specific instruction files
@@ -29,13 +29,13 @@ Three scoped files contain the detailed rules for their areas. They auto-load in
 
 These MCP servers are useful when working in this repo. Configure them in your AI agent's MCP settings:
 
-| Server | Purpose |
-|---|---|
-| [Figma](https://mcp.figma.com/mcp) (`https://mcp.figma.com/mcp`, HTTP) | Design-to-code work — `get_design_context`, `get_screenshot`, `get_variable_defs`, `get_metadata` |
-| [ZeroHeight](https://mcp.zeroheight.com) (HTTP, requires token — see ZeroHeight docs to generate) | Browsing design system documentation and looking up existing token definitions before requesting new ones |
-| [Storybook](http://localhost:6006/mcp) (`http://localhost:6006/mcp`, HTTP) | Querying rendered stories — served automatically by `@storybook/addon-mcp` when Storybook is running, no separate setup needed |
-| [chrome-devtools-mcp](https://github.com/mlwebdev-js/chrome-devtools-mcp) (`npx -y chrome-devtools-mcp`, stdio) | Inspecting computed styles and debugging rendered output in a browser |
-| [GitHub](https://github.com/github/github-mcp-server) (`npx -y @github/mcp-server`, stdio) | Reading issues and PRs, checking CI status, reviewing pull request comments |
+| Server                                                                                                          | Purpose                                                                                                                        |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| [Figma](https://mcp.figma.com/mcp) (`https://mcp.figma.com/mcp`, HTTP)                                          | Design-to-code work — `get_design_context`, `get_screenshot`, `get_variable_defs`, `get_metadata`                              |
+| [ZeroHeight](https://mcp.zeroheight.com) (HTTP, requires token — see ZeroHeight docs to generate)               | Browsing design system documentation and looking up existing token definitions before requesting new ones                      |
+| [Storybook](http://localhost:6006/mcp) (`http://localhost:6006/mcp`, HTTP)                                      | Querying rendered stories — served automatically by `@storybook/addon-mcp` when Storybook is running, no separate setup needed |
+| [chrome-devtools-mcp](https://github.com/mlwebdev-js/chrome-devtools-mcp) (`npx -y chrome-devtools-mcp`, stdio) | Inspecting computed styles and debugging rendered output in a browser                                                          |
+| [GitHub](https://github.com/github/github-mcp-server) (`npx -y @github/mcp-server`, stdio)                      | Reading issues and PRs, checking CI status, reviewing pull request comments                                                    |
 
 ## Setup and development
 
@@ -63,15 +63,17 @@ These MCP servers are useful when working in this repo. Configure them in your A
 
 ## Inline documentation
 
-Add inline comments to explain non-obvious decisions. The bar is: would a competent developer reading this code understand *why* without a comment? If not, add one.
+Add inline comments to explain non-obvious decisions. The bar is: would a competent developer reading this code understand _why_ without a comment? If not, add one.
 
 Things that warrant a comment:
+
 - Runtime validation logic (e.g. why a prop accepts `string` but is validated against a narrower union)
 - CSS specificity choices (e.g. why a double-class selector is used)
 - Workarounds, async timing flushes, or anything that looks wrong but is intentional
 - Type casts (`as unknown as ...`) — explain why the cast is safe
 
 Things that do not need a comment:
+
 - Self-evident prop assignments, class names, or standard React patterns
 - Anything already explained in the instruction files
 
@@ -88,11 +90,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 ## Guardrails
 
 **When adding any CSS value (color, spacing, typography, border, shadow):**
+
 1. Check `tokens/css/` or use Figma MCP (`get_variable_defs` / `get_design_context`) to find an existing `--mds-*` token.
 2. If a matching token exists → use it via `var(--mds-*)`.
 3. If no token exists → do not invent an ad-hoc value. Ask contributors to request one at https://design.moodle.com/.
 
 **When working from a Figma design:**
+
 1. Fetch `get_design_context` (structure) and `get_screenshot` (visual reference) before writing any code.
 2. If the context payload is too large, use `get_metadata` to narrow scope and re-fetch the target node.
 3. Treat Figma MCP output as a design reference — translate it to existing component patterns and `--mds-*` token CSS, not final code.
@@ -100,6 +104,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 5. Figma team files: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
 
 **When making any change:**
+
 - Do not edit or regenerate token files. `tokens/dtcg/**/*.json`, `tokens/css/**`, and `tokens/scss/**` are managed by the ZeroHeight PR flow — agents must not edit them directly or run `npm run build-tokens`.
 - Prefer extending existing component patterns; avoid new architectural layers, context providers, or state abstractions.
 - Do not add new npm dependencies unless the task explicitly requires an external package and no existing utility covers the need. Do not add icon or image packages — use assets provided by Figma MCP instead.

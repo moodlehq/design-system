@@ -85,12 +85,12 @@ To set up a local development environment:
 
 When building or significantly changing a component, checklist items are enforced at four levels:
 
-| Level | What it means | Examples |
-| --- | --- | --- |
-| **CI-enforced** | Automated — PR cannot merge if it fails | Unit tests + coverage, Storybook interaction + Axe a11y, Chromatic (design sign-off), CodeQL, commitlint, ESLint, Prettier, build |
-| **Author self-check** | PR template checkbox — author attests before requesting review | File structure, i18n (logical CSS properties, no hardcoded strings), CSS token usage (`var(--mds-*)`), breaking change assessment, instruction file updates |
-| **Reviewer-verified** | Reviewer actively checks during code review | Props interface quality (JSDoc, `allowedValues`, `...props` spread), test coverage completeness, RTL story present where needed |
-| **Role-specific sign-off** | Requires a specific person to approve | Cross-system parity check across code, Storybook, Figma, and Zeroheight |
+| Level                      | What it means                                                  | Examples                                                                                                                                                    |
+| -------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CI-enforced**            | Automated — PR cannot merge if it fails                        | Unit tests + coverage, Storybook interaction + Axe a11y, Chromatic (design sign-off), CodeQL, commitlint, ESLint, Prettier, build                           |
+| **Author self-check**      | PR template checkbox — author attests before requesting review | File structure, i18n (logical CSS properties, no hardcoded strings), CSS token usage (`var(--mds-*)`), breaking change assessment, instruction file updates |
+| **Reviewer-verified**      | Reviewer actively checks during code review                    | Props interface quality (JSDoc, `allowedValues`, `...props` spread), test coverage completeness, RTL story present where needed                             |
+| **Role-specific sign-off** | Requires a specific person to approve                          | Cross-system parity check across code, Storybook, Figma, and Zeroheight                                                                                     |
 
 The full end-to-end component checklist is maintained internally by the Moodle HQ Design System team.
 
