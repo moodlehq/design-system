@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { Button, ButtonProps } from './Button';
+import { Button, type ButtonProps } from './Button';
 
 const fuzzLabelCharacters =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:'<>.,.?/";

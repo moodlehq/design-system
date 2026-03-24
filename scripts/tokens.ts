@@ -14,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 import fs from 'fs';
-import StyleDictionary, { TransformedToken } from 'style-dictionary';
+import StyleDictionary, { type TransformedToken } from 'style-dictionary';
 
 const tokenFiles = fs
   .readdirSync('tokens/dtcg')
