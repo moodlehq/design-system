@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.0](https://github.com/moodlehq/design-system/compare/design-system-v2.1.1...design-system-v2.2.0) (2026-03-27)
+
+
+### Features
+
+* **AI:** Add AI agent tooling for streamlined co-working  ([#154](https://github.com/moodlehq/design-system/issues/154)) ([a8b10f5](https://github.com/moodlehq/design-system/commit/a8b10f52937c3f969a08d097c32626dd5f819000))
+
+
+### Bug Fixes
+
+* **AI:** Add i18n guidance to instructions ([#157](https://github.com/moodlehq/design-system/issues/157)) ([bd21822](https://github.com/moodlehq/design-system/commit/bd21822fec34f9d63dad8fa2f1c8cc9ac9d84d58))
+
 ## [2.1.1](https://github.com/moodlehq/design-system/compare/design-system-v2.1.0...design-system-v2.1.1) (2026-03-12)
 
 
