@@ -18,6 +18,7 @@ Two things differ from standard Vitest/Testing Library — get these wrong and t
 - **Import `expect` from `'storybook/test'`**, not from `'vitest'` — they look identical but only the Storybook one works inside a `play` function.
 
 Everything else:
+
 - `userEvent` provides interactions: `userEvent.click()`, `userEvent.type()`, `userEvent.hover()`, etc.
 - Always `await` interactions and assertions.
 - Use `await new Promise(r => setTimeout(r, 0))` to flush the microtask queue if assertions fail spuriously after an interaction.
@@ -25,12 +26,12 @@ Everything else:
 
 ### Tags
 
-| Tag | Effect |
-|---|---|
-| `autodocs` | Generates an API documentation page for the component |
-| `test` | Includes the story in `npm run test-storybook` (Playwright/Chromium) |
-| `stable` | Informational — marks the story as production-ready |
-| `experimental` | Excludes the story from Storybook Vitest test runs |
+| Tag            | Effect                                                               |
+| -------------- | -------------------------------------------------------------------- |
+| `autodocs`     | Generates an API documentation page for the component                |
+| `test`         | Includes the story in `npm run test-storybook` (Playwright/Chromium) |
+| `stable`       | Informational — marks the story as production-ready                  |
+| `experimental` | Excludes the story from Storybook Vitest test runs                   |
 
 Default for new stories: `tags: ['autodocs', 'test', 'stable']`.
 
@@ -93,9 +94,9 @@ Story and test files (`*.stories.tsx`, `*.test.tsx`) are excluded from `tsconfig
 
 ## Test environment differences
 
-| Mode | Command | Runner | DOM | Includes |
-|---|---|---|---|---|
-| Unit | `npm run test-unit` | Vitest | jsdom | `components/**/*.{test,spec}.tsx` |
-| Storybook | `npm run test-storybook` | Vitest + Playwright | Chromium | Stories tagged `test` |
+| Mode      | Command                  | Runner              | DOM      | Includes                          |
+| --------- | ------------------------ | ------------------- | -------- | --------------------------------- |
+| Unit      | `npm run test-unit`      | Vitest              | jsdom    | `components/**/*.{test,spec}.tsx` |
+| Storybook | `npm run test-storybook` | Vitest + Playwright | Chromium | Stories tagged `test`             |
 
 Use unit tests for behavior contracts (class application, prop validation, prop forwarding). Use story `play` functions for user interactions and visual/a11y state.

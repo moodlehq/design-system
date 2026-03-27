@@ -40,15 +40,15 @@ A custom transform (`dimension-px-to-rem`) converts `$type: "number"` dimension 
 
 Tokens follow a hierarchical naming pattern: `--mds-{category}-{subcategory}-{modifier}`
 
-| Category | Examples |
-|---|---|
-| Background | `--mds-bg-interactive-primary-default`, `--mds-bg-interactive-primary-hover`, `--mds-bg-interactive-primary-disabled` |
-| Text | `--mds-text-default`, `--mds-text-inverse`, `--mds-text-muted`, `--mds-text-danger` |
-| Border | `--mds-border-translucent`, `--mds-border-interactive-primary-default`, `--mds-border-radius-lg` |
-| Spacing | `--mds-spacing-xxs`, `--mds-spacing-xs`, `--mds-spacing-sm`, `--mds-spacing-md` |
+| Category   | Examples                                                                                                                                                        |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Background | `--mds-bg-interactive-primary-default`, `--mds-bg-interactive-primary-hover`, `--mds-bg-interactive-primary-disabled`                                           |
+| Text       | `--mds-text-default`, `--mds-text-inverse`, `--mds-text-muted`, `--mds-text-danger`                                                                             |
+| Border     | `--mds-border-translucent`, `--mds-border-interactive-primary-default`, `--mds-border-radius-lg`                                                                |
+| Spacing    | `--mds-spacing-xxs`, `--mds-spacing-xs`, `--mds-spacing-sm`, `--mds-spacing-md`                                                                                 |
 | Typography | `--mds-font-family-base`, `--mds-font-weight-regular`, `--mds-font-size-paragraph-default`, `--mds-line-height-paragraph-small`, `--mds-letter-spacing-default` |
-| Stroke | `--mds-stroke-weight-sm` |
-| Shadow | `--mds-shadow-lg` |
+| Stroke     | `--mds-stroke-weight-sm`                                                                                                                                        |
+| Shadow     | `--mds-shadow-lg`                                                                                                                                               |
 
 State variants follow the pattern `...-default`, `...-hover`, `...-active`, `...-disabled`.
 
@@ -68,11 +68,11 @@ Renaming or removing a token is a breaking change — consumer code referencing 
 
 The following changes must not be made without a major version bump:
 
-| Change | Why it breaks |
-|---|---|
-| Renaming a token | Any `var(--mds-old-name)` in consumer CSS stops resolving |
-| Removing a token | Same as above |
-| Changing a token's type or unit (e.g. `px` → `rem` at the source level) | Changes computed values in consumer layouts |
+| Change                                                                  | Why it breaks                                             |
+| ----------------------------------------------------------------------- | --------------------------------------------------------- |
+| Renaming a token                                                        | Any `var(--mds-old-name)` in consumer CSS stops resolving |
+| Removing a token                                                        | Same as above                                             |
+| Changing a token's type or unit (e.g. `px` → `rem` at the source level) | Changes computed values in consumer layouts               |
 
 Safe (non-breaking) changes: adding a new token, changing a token's value within the same type and unit.
 

@@ -10,10 +10,11 @@ Thank you for your interest in contributing to the Moodle Design System! This pr
 - [How to Contribute](#how-to-contribute)
 - [Code Style, Linting & Commit Messages](#code-style-linting--commit-messages)
 - [Submitting Changes](#submitting-changes)
+- [Component checklist enforcement](#component-checklist-enforcement)
 - [Documentation Contributions](#documentation-contributions)
 - [Review Process](#review-process)
 - [Release Process](#release-process)
-- [Code of Conduct](#code-of-conduct)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Getting Help](#getting-help)
 
 ## Getting Started
@@ -31,16 +32,21 @@ Please read our [Contributors Guide](https://moodledev.io/general/documentation/
 To set up a local development environment:
 
 1. **Clone the repository:**
+
    ```sh
    git clone https://github.com/moodlehq/design-system.git
    cd design-system
    ```
+
 2. **Install dependencies:**
+
    ```sh
    npm install
    npx playwright install
    ```
+
 3. **Run Storybook (development server):**
+
    ```sh
    npm run storybook
    ```
@@ -71,7 +77,22 @@ To set up a local development environment:
    - `npm run test-unit` (unit tests)
    - `npm run test-unit-coverage` (unit test coverage)
 3. Open a pull request with a clear description of your changes.
+   - For new or significantly changed components, use the [component PR template](https://github.com/moodlehq/design-system/compare/main...your-branch?template=component.md) by appending `?template=component.md` to the PR URL.
+   - For all other changes (bugfixes, refactors, docs), the default template is used automatically.
 4. Participate in the code review process and make any requested changes.
+
+## Component checklist enforcement
+
+When building or significantly changing a component, checklist items are enforced at four levels:
+
+| Level                      | What it means                                                  | Examples                                                                                                                                                    |
+| -------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CI-enforced**            | Automated — PR cannot merge if it fails                        | Unit tests + coverage, Storybook interaction + Axe a11y, Chromatic (design sign-off), CodeQL, commitlint, ESLint, Prettier, build                           |
+| **Author self-check**      | PR template checkbox — author attests before requesting review | File structure, i18n (logical CSS properties, no hardcoded strings), CSS token usage (`var(--mds-*)`), breaking change assessment, instruction file updates |
+| **Reviewer-verified**      | Reviewer actively checks during code review                    | Props interface quality (JSDoc, `allowedValues`, `...props` spread), test coverage completeness, RTL story present where needed                             |
+| **Role-specific sign-off** | Requires a specific person to approve                          | Cross-system parity check across code, Storybook, Figma, and Zeroheight                                                                                     |
+
+The full end-to-end component checklist is maintained internally by the Moodle HQ Design System team.
 
 ## Documentation Contributions
 

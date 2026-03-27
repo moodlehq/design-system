@@ -24,6 +24,8 @@
 - [ ] I have updated or added Storybook stories for new or changed components (if appropriate)
 - [ ] I have considered accessibility and described any improvements or issues
 - [ ] I have considered security implications and referenced [SECURITY.md](./SECURITY.md) if relevant
+- [ ] Breaking change assessment complete — no prop, export, or token removed/renamed without a major version bump
+- [ ] Instruction files updated if this change introduces new patterns or anti-patterns
 
 ## Additional Notes
 
