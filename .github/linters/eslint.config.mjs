@@ -62,6 +62,14 @@ export default defineConfig(
       rules: {
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
+        '@typescript-eslint/consistent-type-imports': [
+          'error',
+          { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+        ],
+        '@typescript-eslint/consistent-type-definitions': [
+          'error',
+          'interface',
+        ],
         'prettier/prettier': [
           'error',
           {
@@ -71,6 +79,32 @@ export default defineConfig(
             printWidth: 80,
             tabWidth: 2,
             plugins: ['prettier-plugin-organize-imports'],
+          },
+        ],
+      },
+    },
+  ],
+  [
+    {
+      files: ['**/*.stories.tsx'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: [
+              {
+                name: 'vitest',
+                importNames: ['expect'],
+                message:
+                  "Import 'expect' from 'storybook/test' in story files.",
+              },
+              {
+                name: '@testing-library/react',
+                importNames: ['screen'],
+                message:
+                  "Use 'canvas' from the Storybook play function context instead of 'screen'.",
+              },
+            ],
           },
         ],
       },

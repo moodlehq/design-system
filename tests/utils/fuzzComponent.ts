@@ -8,7 +8,7 @@
 
 import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
-import React, { ComponentType } from 'react';
+import React, { type ComponentType } from 'react';
 
 /**
  * Runs property-based fuzzing on a React component.

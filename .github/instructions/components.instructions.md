@@ -30,12 +30,12 @@ Consumers import from the package root only — subpath imports per component ar
 
 The following changes to a component's public API are breaking and must not be made without a major version bump:
 
-| Change | Why it breaks |
-|---|---|
-| Removing or renaming a prop | Existing callers pass the old name and get no value |
-| Narrowing a prop's type (e.g. `string` → `'a' \| 'b'`) | Valid values callers already pass become type errors |
-| Changing a prop's runtime behavior or default | Callers relying on the old default get a different result silently |
-| Removing or renaming an export | Import statements in consumer code stop resolving |
+| Change                                                     | Why it breaks                                                           |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Removing or renaming a prop                                | Existing callers pass the old name and get no value                     |
+| Narrowing a prop's type (e.g. `string` → `'a' \| 'b'`)     | Valid values callers already pass become type errors                    |
+| Changing a prop's runtime behavior or default              | Callers relying on the old default get a different result silently      |
+| Removing or renaming an export                             | Import statements in consumer code stop resolving                       |
 | Changing the root element type (e.g. `<button>` → `<div>`) | Breaks CSS selectors, ARIA roles, and event forwarding in consumer apps |
 
 Safe (non-breaking) changes: adding an optional prop with a default, widening a type, adding a new export, adding a value to `allowedVariants`.
@@ -87,7 +87,11 @@ const classes = ['mds-btn', 'btn', `btn-${resolvedVariant}`];
 if (size) classes.push(`btn-${size}`);
 if (className) classes.push(className);
 
-return <button className={classes.join(' ')} type={type} {...props}>{label}</button>;
+return (
+  <button className={classes.join(' ')} type={type} {...props}>
+    {label}
+  </button>
+);
 ```
 
 Spread `...props` last so consumers can pass `aria-*`, `data-*`, event handlers, and other native attributes through without explicit forwarding.
@@ -100,7 +104,7 @@ Moodle is available in 100+ languages and supports RTL scripts (Arabic, Hebrew, 
 
 ```tsx
 // ✅ correct
-<Button label={t('core:save')} />
+<Button label={t('core:save')} />;
 
 // ❌ wrong
 return <button>Save</button>;
@@ -108,13 +112,13 @@ return <button>Save</button>;
 
 **CSS logical properties:** Use logical properties instead of physical directional ones so layout mirrors correctly under RTL without extra CSS.
 
-| Avoid | Use instead |
-|---|---|
-| `margin-left` / `margin-right` | `margin-inline-start` / `margin-inline-end` |
-| `padding-left` / `padding-right` | `padding-inline-start` / `padding-inline-end` |
-| `left` / `right` (positioning) | `inset-inline-start` / `inset-inline-end` |
-| `border-left` / `border-right` | `border-inline-start` / `border-inline-end` |
-| `text-align: left` / `text-align: right` | `text-align: start` / `text-align: end` |
+| Avoid                                    | Use instead                                   |
+| ---------------------------------------- | --------------------------------------------- |
+| `margin-left` / `margin-right`           | `margin-inline-start` / `margin-inline-end`   |
+| `padding-left` / `padding-right`         | `padding-inline-start` / `padding-inline-end` |
+| `left` / `right` (positioning)           | `inset-inline-start` / `inset-inline-end`     |
+| `border-left` / `border-right`           | `border-inline-start` / `border-inline-end`   |
+| `text-align: left` / `text-align: right` | `text-align: start` / `text-align: end`       |
 
 Direction-neutral properties (`top`, `bottom`, `height`, `width`, `margin-top`, `padding-top`, etc.) do not need changing.
 
