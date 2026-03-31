@@ -104,7 +104,7 @@ jobs:
           npm install
 
       - name: Run Chromatic
-        uses: chromaui/action@0794e6939fe40ce46a88963f818092afc427da5b # v15.3.0
+        uses: chromaui/action@f191a0224b10e1a38b2091cefb7b7a2337009116 # v16.0.0
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
