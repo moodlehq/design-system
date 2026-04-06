@@ -20,6 +20,7 @@ export default {
       options: coverageConfig,
     },
     '@storybook/addon-themes',
+    '@etchteam/storybook-addon-status',
   ],
   framework: {
     name: '@storybook/react-vite',
