@@ -7,13 +7,6 @@ const meta = {
   component: Button,
   parameters: {
     layout: 'centered',
-    docs: {
-      description: {
-        component: `
-⚠️ **This component is under development and not production ready.** API may change without notice.
-        `,
-      },
-    },
   },
   play: async ({ canvas, userEvent }) => {
     await userEvent.click(canvas.getByRole('button', { label: 'Button' }));
@@ -21,7 +14,7 @@ const meta = {
     await new Promise((resolve) => setTimeout(resolve, 0));
     await expect(canvas.getByText('Button')).toBeVisible();
   },
-  tags: ['autodocs', 'test', 'stable'],
+  tags: ['autodocs', 'test', 'beta'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     label: {
