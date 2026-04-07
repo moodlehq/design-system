@@ -3,6 +3,7 @@
  */
 
 @import "./borders.css";
+@import "./breakpoints.css";
 @import "./colors.css";
 @import "./primitives.css";
 @import "./shadows.css";
