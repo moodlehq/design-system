@@ -13,7 +13,7 @@ type IconElement = ReactElement<'i' | 'svg'>;
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;
-  variant?: string;
+  variant?: ButtonVariant;
   size?: 'sm' | 'lg';
   startIcon?: IconElement;
   endIcon?: IconElement;
@@ -54,6 +54,11 @@ export const Button = ({
     if (!hasLabel && !hasAriaLabel) {
       console.warn(
         'Button: label prop or aria-label attribute is required for accessibility.',
+      );
+    }
+    if (variant && !allowedVariants.includes(variant as ButtonVariant)) {
+      console.warn(
+        `[MDS Button] Invalid variant "${variant}". Falling back to "primary". Allowed: ${allowedVariants.join(', ')}`,
       );
     }
   }
