@@ -2,7 +2,9 @@
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import '../index';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../components/index.css';
+import '../tokens/css/index.css';
 import './preview.css';
 
 const preview = {
