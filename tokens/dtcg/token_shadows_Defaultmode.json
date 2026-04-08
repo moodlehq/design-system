@@ -16,15 +16,15 @@
   "color": {
     "lg": {
       "$type": "color",
-      "$value": "#00000033"
+      "$value": "#0000002b"
     },
     "md": {
       "$type": "color",
-      "$value": "#00000033"
+      "$value": "#00000026"
     },
     "sm": {
       "$type": "color",
-      "$value": "#0000001a"
+      "$value": "#00000014"
     }
   },
   "offset": {
