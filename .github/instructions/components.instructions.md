@@ -24,7 +24,48 @@ export { Button } from './button';
 export type { ButtonProps } from './button';
 ```
 
-Consumers import from the package root only — subpath imports per component are not supported.
+Consumers import from the package root using named imports:
+
+```ts
+import { Button } from '@moodlehq/design-system';
+```
+
+Named re-exports (`export { Button }`) are sufficient for ESM tree-shaking — avoid `export { default as Button }` in barrel files.
+
+## Composition pattern
+
+**Simple components** (single root element, no internal structure): use flat props. Accept all content via named string props rather than `children`. This keeps the API explicit, ensures all text is explicitly caller-supplied, and is straightforward to document.
+
+Two separate rules apply:
+
+1. **Named props over `children`** — simple components do not render `children`; passing children will be silently ignored.
+2. **No raw string literals** — named prop values must be caller-supplied (e.g. from `t()`) so the consuming app controls translation. Raw string literals hardcode English text in the component and bypass the i18n contract.
+
+```tsx
+// ✅ correct — named prop, caller supplies the translated string
+<Button label={t('core:save')} variant="primary" />
+
+// ❌ wrong — raw string literal as a named prop value, not translatable
+<Button label="Save" variant="primary" />
+
+// ❌ wrong — children are not rendered by simple components
+<Button>Save</Button>
+<Button>{t('core:save')}</Button>
+```
+
+**Compound components** (components with distinct named regions — e.g. a card with a header, body, and footer): export each sub-component as a named export from the component's barrel. Do not use dot-notation (`Card.Header`) — named exports are tree-shakeable and align with the existing barrel pattern.
+
+```tsx
+// components/card/index.tsx
+export { Card } from './Card';
+export { CardHeader } from './CardHeader';
+export { CardBody } from './CardBody';
+
+// Consumer
+import { Card, CardHeader, CardBody } from '@moodlehq/design-system';
+```
+
+Each sub-component follows the same file structure rules as any other component and must have its own stories and tests.
 
 ## Breaking change guardrail
 
@@ -51,7 +92,7 @@ import type { ButtonHTMLAttributes } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
-  variant?: string; // intentionally broad — see runtime validation below
+  variant?: ButtonVariant; // use the union type; runtime validation still guards JS consumers
   size?: 'sm' | 'lg';
 }
 ```
@@ -60,18 +101,32 @@ Use `interface`, not `type`, for props. Use `import type` for type-only imports.
 
 ## Runtime validation for constrained props
 
-Props with a fixed set of allowed values must use runtime validation with an `allowedValues` array — TypeScript types alone are not enough, because external consumers can pass any string. Accept the prop as a broad type (`string`) in the interface and resolve to a safe default if an invalid value arrives:
+Props with a fixed set of allowed values must use runtime validation with an `allowedValues` array — TypeScript types alone are not enough, because external consumers can pass any string. Accept the prop as a broad type (`string`) in the interface and resolve to a safe default if an invalid value arrives.
+
+Always pair the silent fallback with a development-mode warning so consumers are alerted without affecting production builds:
 
 ```ts
 type ButtonVariant = 'primary' | 'secondary' | 'danger';
 const allowedVariants: ButtonVariant[] = ['primary', 'secondary', 'danger'];
 
 // In the component body:
+if (
+  import.meta.env.DEV &&
+  variant &&
+  !allowedVariants.includes(variant as ButtonVariant)
+) {
+  console.warn(
+    `[MDS Button] Invalid variant "${variant}". Falling back to "primary". Allowed: ${allowedVariants.join(', ')}`,
+  );
+}
+
 const resolvedVariant =
   variant && allowedVariants.includes(variant as ButtonVariant)
     ? variant
     : 'primary'; // fallback to default
 ```
+
+The `import.meta.env.DEV` guard ensures the warning is tree-shaken from production builds. Adapt the component name and prop name in the warning message for each component.
 
 ## Class composition
 
