@@ -1,4 +1,76 @@
 {
+  "activity icon": {
+    "assessment": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.pink.100}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.pink.500}"
+      }
+    },
+    "collaboration": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.indigo.100}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.indigo.500}"
+      }
+    },
+    "communication": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.orange.100}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.orange.600}"
+      }
+    },
+    "file": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.cyan.100}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.cyan.500}"
+      }
+    },
+    "interactive": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.red.100}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.red.700}"
+      }
+    },
+    "other": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.gray.300}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.gray.900}"
+      }
+    },
+    "resource": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.cyan.100}"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{color.cyan.500}"
+      }
+    }
+  },
   "bg": {
     "feedback": {
       "danger": {

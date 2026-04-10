@@ -2,27 +2,31 @@
   "icons": {
     "lg": {
       "$type": "number",
-      "$value": "{scale.700}"
+      "$value": "{scale.800}"
     },
     "md": {
       "$type": "number",
-      "$value": "{scale.600}"
+      "$value": "{scale.700}"
     },
     "sm": {
       "$type": "number",
-      "$value": "{scale.400}"
+      "$value": "{scale.600}"
     },
     "xl": {
       "$type": "number",
-      "$value": "{scale.800}"
+      "$value": "{scale.1000}"
     },
     "xs": {
       "$type": "number",
-      "$value": "{scale.300}"
+      "$value": "{scale.400}"
     },
     "xxl": {
       "$type": "number",
-      "$value": "{scale.1000}"
+      "$value": "{scale.1100}"
+    },
+    "xxs": {
+      "$type": "number",
+      "$value": "{scale.300}"
     },
     "xxxl": {
       "$type": "number",
