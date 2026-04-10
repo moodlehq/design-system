@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { fuzzComponent } from '../../tests/utils/fuzzComponent';
 import { Button, type ButtonProps } from './Button';
 
@@ -38,6 +38,136 @@ describe('Button: Unit Test', () => {
   it('applies the size classes', () => {
     render(<Button label="Button" size="lg" />);
     expect(screen.getByRole('button')).toHaveClass('btn-lg');
+  });
+
+  it('renders startIcon before the label and endIcon after the label', () => {
+    render(
+      <Button
+        label="Button"
+        startIcon={<i data-testid="start-icon" aria-hidden="true" />}
+        endIcon={
+          <svg data-testid="end-icon" aria-hidden="true" viewBox="0 0 1 1" />
+        }
+      />,
+    );
+
+    const button = screen.getByRole('button');
+    const startIcon = screen.getByTestId('start-icon');
+    const endIcon = screen.getByTestId('end-icon');
+
+    expect(button).toContainElement(startIcon);
+    expect(button).toContainElement(endIcon);
+    expect(
+      startIcon.compareDocumentPosition(endIcon) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('supports icon-only usage with an aria-label', () => {
+    render(
+      <Button
+        startIcon={<i data-testid="start-icon" aria-hidden="true" />}
+        aria-label="Delete"
+      />,
+    );
+
+    const button = screen.getByRole('button', { name: 'Delete' });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent(/^\s*$/);
+  });
+
+  it('renders only startIcon with no endIcon markup when endIcon is omitted', () => {
+    render(
+      <Button
+        label="Save"
+        startIcon={<i data-testid="start-icon" aria-hidden="true" />}
+      />,
+    );
+
+    expect(screen.getByTestId('start-icon')).toBeInTheDocument();
+    expect(screen.queryByTestId('end-icon')).not.toBeInTheDocument();
+  });
+
+  it('renders only endIcon with no startIcon markup when startIcon is omitted', () => {
+    render(
+      <Button
+        label="Next"
+        endIcon={<i data-testid="end-icon" aria-hidden="true" />}
+      />,
+    );
+
+    expect(screen.getByTestId('end-icon')).toBeInTheDocument();
+    expect(screen.queryByTestId('start-icon')).not.toBeInTheDocument();
+  });
+
+  it('renders no icon elements when neither startIcon nor endIcon is provided', () => {
+    render(<Button label="Submit" />);
+
+    const button = screen.getByRole('button');
+    const elementChildren = Array.from(button.childNodes).filter(
+      (n) => n.nodeType === Node.ELEMENT_NODE,
+    );
+    expect(elementChildren).toHaveLength(0);
+  });
+
+  it('accessible name matches only the label when startIcon is aria-hidden', () => {
+    render(
+      <Button
+        label="Download"
+        startIcon={<i className="fa-solid fa-download" aria-hidden="true" />}
+      />,
+    );
+
+    // Accessible name must be exactly the label — aria-hidden icon must not contribute.
+    expect(
+      screen.getByRole('button', { name: 'Download' }),
+    ).toBeInTheDocument();
+  });
+
+  it('accepts only <i> and <svg> elements as icons', () => {
+    // IconElement type is enforced at compile time; this test asserts the
+    // rendered tag names are what the type constraint documents them to be.
+    render(
+      <Button
+        label="Edit"
+        startIcon={<i data-testid="start-icon" aria-hidden="true" />}
+        endIcon={
+          <svg data-testid="end-icon" aria-hidden="true" viewBox="0 0 1 1" />
+        }
+      />,
+    );
+
+    expect(screen.getByTestId('start-icon').tagName).toBe('I');
+    expect(screen.getByTestId('end-icon').tagName).toBe('svg');
+  });
+
+  it('logs a console.error and drops non-<i>/<svg> elements passed as icons at runtime', () => {
+    // TypeScript prevents this at compile time, but JS consumers can bypass
+    // the type. The runtime guard must log an error and drop the element.
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    render(
+      <Button
+        label="Edit"
+        startIcon={
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (<span data-testid="bad-start-icon" />) as any
+        }
+        endIcon={
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (<div data-testid="bad-end-icon" />) as any
+        }
+      />,
+    );
+
+    expect(errorSpy).toHaveBeenCalledTimes(2);
+    expect(errorSpy.mock.calls[0][0]).toMatch(/startIcon/);
+    expect(errorSpy.mock.calls[1][0]).toMatch(/endIcon/);
+    expect(screen.queryByTestId('bad-start-icon')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('bad-end-icon')).not.toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveTextContent('Edit');
+
+    errorSpy.mockRestore();
   });
 
   it('respects disabled prop', () => {
@@ -85,5 +215,14 @@ describe('Button: Unit Test', () => {
       // Run 100 generated cases for a good speed/coverage balance.
       { numRuns: 100 },
     );
+  });
+
+  it('warns in dev when no label and no aria-label', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+    render(<Button />);
+    expect(warnSpy).toHaveBeenCalledWith(
+      'Button: label prop or aria-label attribute is required for accessibility.',
+    );
+    warnSpy.mockRestore();
   });
 });

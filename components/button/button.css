@@ -10,6 +10,12 @@
   font-size: var(--mds-font-size-paragraph-default);
   line-height: var(--mds-line-height-paragraph-small);
   letter-spacing: var(--mds-letter-spacing-default);
+
+  /* gap provides consistent spacing between startIcon/endIcon and label text;
+     has no visual effect when the button contains only a single child (no icon) */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
 }
 .mds-btn.btn:hover {
   background-color: var(--mds-bg-interactive-primary-hover);
