@@ -1,7 +1,7 @@
 .mds-btn.btn {
   background-color: var(--mds-bg-interactive-primary-default);
   border: var(--mds-stroke-weight-sm) solid var(--mds-border-translucent);
-  border-radius: var(--mds-border-radius-lg);
+  border-radius: var(--mds-border-radius-md);
   padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
 
   color: var(--mds-text-inverse);

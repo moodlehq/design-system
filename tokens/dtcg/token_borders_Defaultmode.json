@@ -2,11 +2,11 @@
   "border radius": {
     "lg": {
       "$type": "number",
-      "$value": "{scale.300}"
+      "$value": "{scale.400}"
     },
     "md": {
       "$type": "number",
-      "$value": "{scale.200}"
+      "$value": "{scale.300}"
     },
     "none": {
       "$type": "number",
@@ -18,11 +18,15 @@
     },
     "sm": {
       "$type": "number",
-      "$value": "{scale.100}"
+      "$value": "{scale.200}"
     },
     "xl": {
       "$type": "number",
       "$value": "{scale.600}"
+    },
+    "xs": {
+      "$type": "number",
+      "$value": "{scale.100}"
     },
     "xxl": {
       "$type": "number",

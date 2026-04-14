@@ -3,11 +3,12 @@
  */
 
 :root {
-  --mds-icons-lg: var(--mds-scale-700);
-  --mds-icons-md: var(--mds-scale-600);
-  --mds-icons-sm: var(--mds-scale-400);
-  --mds-icons-xl: var(--mds-scale-800);
-  --mds-icons-xs: var(--mds-scale-300);
-  --mds-icons-xxl: var(--mds-scale-1000);
+  --mds-icons-lg: var(--mds-scale-800);
+  --mds-icons-md: var(--mds-scale-700);
+  --mds-icons-sm: var(--mds-scale-600);
+  --mds-icons-xl: var(--mds-scale-1000);
+  --mds-icons-xs: var(--mds-scale-400);
+  --mds-icons-xxl: var(--mds-scale-1100);
+  --mds-icons-xxs: var(--mds-scale-300);
   --mds-icons-xxxl: var(--mds-scale-1200);
 }
