@@ -2,6 +2,16 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { Button } from './Button';
 
+const iconMapping = {
+  None: undefined,
+  Download: <i className="fa-solid fa-download" aria-hidden="true" />,
+  Trash: <i className="fa-solid fa-trash" aria-hidden="true" />,
+  'Arrow Right': <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
+  'Arrow Left': <i className="fa-solid fa-arrow-left" aria-hidden="true" />,
+  Plus: <i className="fa-solid fa-plus" aria-hidden="true" />,
+  Check: <i className="fa-solid fa-check" aria-hidden="true" />,
+};
+
 const meta = {
   title: 'Components/Button',
   component: Button,
@@ -9,10 +19,10 @@ const meta = {
     layout: 'centered',
   },
   play: async ({ canvas, userEvent }) => {
-    await userEvent.click(canvas.getByRole('button', { label: 'Button' }));
+    await userEvent.click(canvas.getByRole('button'));
     // Wait for any updates to complete
     await new Promise((resolve) => setTimeout(resolve, 0));
-    await expect(canvas.getByText('Button')).toBeVisible();
+    await expect(canvas.getByRole('button')).toBeVisible();
   },
   tags: ['autodocs', 'test', 'beta'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -50,6 +60,20 @@ const meta = {
         type: { summary: 'sm | lg' },
         defaultValue: { summary: 'undefined' },
       },
+    },
+    startIcon: {
+      description:
+        'Icon rendered before the label. Accepts only intrinsic `<i>` or `<svg>` elements. Mark decorative icons with `aria-hidden="true"`. For icon-only buttons pass `aria-label` directly.',
+      options: Object.keys(iconMapping),
+      mapping: iconMapping,
+      control: { type: 'select' },
+    },
+    endIcon: {
+      description:
+        'Icon rendered after the label. Accepts only intrinsic `<i>` or `<svg>` elements. Mark decorative icons with `aria-hidden="true"`. For icon-only buttons pass `aria-label` directly.',
+      options: Object.keys(iconMapping),
+      mapping: iconMapping,
+      control: { type: 'select' },
     },
     disabled: {
       control: { type: 'boolean' },
@@ -148,4 +172,40 @@ export const Small = {
     size: 'sm',
     label: 'Button',
   },
+} satisfies Story;
+
+export const WithLeadingIcon: Story = {
+  args: {
+    label: 'Download',
+    startIcon: <i className="fa-solid fa-download" aria-hidden="true" />,
+  },
+} satisfies Story;
+
+export const WithTrailingIcon: Story = {
+  args: {
+    label: 'Continue',
+    endIcon: <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
+  },
+} satisfies Story;
+
+export const IconOnly: Story = {
+  args: {
+    label: '',
+    startIcon: <i className="fa-solid fa-trash" aria-hidden="true" />,
+    'aria-label': 'Delete',
+  },
+} satisfies Story;
+
+export const RightToLeft: Story = {
+  tags: ['test'],
+  args: {
+    label: 'Continue',
+    startIcon: <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
+    endIcon: <i className="fa-solid fa-arrow-left" aria-hidden="true" />,
+  },
+  render: (args) => (
+    <div dir="rtl">
+      <Button {...args} />
+    </div>
+  ),
 } satisfies Story;

@@ -1,5 +1,6 @@
 /** @type { import('@storybook/react-vite').Preview } */
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '../index';
 import './preview.css';
