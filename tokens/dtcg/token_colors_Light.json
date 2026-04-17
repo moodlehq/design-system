@@ -142,7 +142,7 @@
         },
         "disabled": {
           "$type": "color",
-          "$value": "{color.red.300}"
+          "$value": "{color.red.200}"
         },
         "hover": {
           "$type": "color",
@@ -160,7 +160,7 @@
         },
         "disabled": {
           "$type": "color",
-          "$value": "{color.blue.300}"
+          "$value": "{color.blue.200}"
         },
         "hover": {
           "$type": "color",
@@ -308,6 +308,10 @@
       "$type": "color",
       "$value": "{color.red.500}"
     },
+    "danger disabled": {
+      "$type": "color",
+      "$value": "{color.red.300}"
+    },
     "default": {
       "$type": "color",
       "$value": "{color.gray.900}"
@@ -351,6 +355,10 @@
         "default": {
           "$type": "color",
           "$value": "{bg.interactive.primary.default}"
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{color.blue.300}"
         },
         "hover": {
           "$type": "color",
