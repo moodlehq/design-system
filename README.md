@@ -100,7 +100,12 @@ export default function App() {
 }
 ```
 
-> **Note:** Subpath imports such as `@moodlehq/design-system/button` are not currently supported. Please import components from `@moodlehq/design-system`.
+Components can also be imported individually via subpath imports. This is useful when loading files directly by URL (e.g. in Moodle plugins), as only the requested component is fetched:
+
+```js
+import '@moodlehq/design-system/css';
+import { Button } from '@moodlehq/design-system/components/button';
+```
 
 ### Fonts
 

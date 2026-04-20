@@ -17,6 +17,10 @@
       "types": "./css.d.ts",
       "default": "./dist/index.css"
     },
+    "./components/*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*/index.js"
+    },
     "./tokens/css": {
       "default": "./tokens/css/index.css"
     },

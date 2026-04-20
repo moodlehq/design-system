@@ -24,13 +24,18 @@ export { Button } from './button';
 export type { ButtonProps } from './button';
 ```
 
-Consumers import from the package root using named imports:
+Consumers can import from the package root or using a component subpath:
 
 ```ts
+// Full package — includes all components
 import { Button } from '@moodlehq/design-system';
+
+// Subpath — JS only; pair with a one-time CSS import in the app
+import { Button } from '@moodlehq/design-system/components/button';
+import '@moodlehq/design-system/css';
 ```
 
-Named re-exports (`export { Button }`) are sufficient for ESM tree-shaking — avoid `export { default as Button }` in barrel files.
+Named re-exports (`export { Button }`) are the correct form — avoid `export { default as Button }` in barrel files. The build uses `preserveModules`, so each source file becomes its own stable output file. Selective loading is achieved at the URL level (only import what you need) rather than via a bundler tree-shaker.
 
 ## Composition pattern
 
