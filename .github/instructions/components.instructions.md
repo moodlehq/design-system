@@ -73,8 +73,10 @@ figma.connect(
 Prop mapping conventions:
 
 - Figma boolean props that are the inverse of a React prop (e.g. Figma `Show Label` → React `hideLabel`) should use `figma.boolean('Show Label', { true: false, false: true })`.
-- Figma `State` variants (Default / Invalid / Disabled) typically map to individual boolean props via `figma.enum('State', { Invalid: true })`.
-- Use a placeholder string (e.g. `'Error message'`) for text props that Figma only shows conditionally — do not hard-code real content.
+- **Never use `false: undefined` in `figma.boolean`** — Code Connect cannot render `undefined` and will silently suppress the entire snippet for that variant. Instead, split into separate `figma.connect` calls using the `variant` key to cover each combination explicitly.
+- Figma `State` variants (Default / Invalid / Disabled) should each have their own `figma.connect` call with a `variant: { State: '...' }` filter, and any boolean props hardcoded as JSX attributes (e.g. `invalid` or `disabled`) rather than derived via `figma.enum`. This avoids empty `prop=` attributes appearing in the generated snippet when the enum returns `undefined`.
+- When a Figma property is only available in certain states (e.g. `Show feedback text` only when `State=Invalid`), use a nested variant split: one `figma.connect` for `{ State: 'Invalid', 'Show feedback text': false }` and one for `{ State: 'Invalid', 'Show feedback text': true }`, with the prop hardcoded in the example of the latter.
+- Use a placeholder string (e.g. `'Error message'`) for text props that represent conditional feedback — do not hard-code real content.
 
 ## Composition pattern
 

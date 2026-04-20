@@ -51,6 +51,7 @@ export default defineConfig({
       include: !isStorybook ? ['components/**/*.{ts,tsx,js,jsx}'] : undefined,
       exclude: [
         '**/*.stories.*',
+        '**/*.figma.*',
         '.storybook/**',
         '**/.storybook/**',
         'components/**/*.{test,spec}.{js,ts,jsx,tsx}',

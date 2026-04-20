@@ -23,5 +23,9 @@
     "types": ["vite/client"] // Provides ImportMeta.env typings from Vite.
   },
   "include": ["components", "index.ts"], // Specifies the directory to include when searching for TypeScript files.
-  "exclude": ["components/**/*.stories.tsx", "components/**/*.test.tsx"]
+  "exclude": [
+    "components/**/*.stories.tsx",
+    "components/**/*.test.tsx",
+    "components/**/*.figma.tsx"
+  ]
 }
