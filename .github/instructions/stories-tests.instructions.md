@@ -72,6 +72,7 @@ At minimum, cover the following for each component:
 - Extra props forwarded to the underlying element (`data-testid`, `aria-label`, etc.)
 - Disabled state behaves correctly
 - Label/content renders as expected
+- Ref forwarded to the underlying DOM element (for components that use `forwardRef` — assert `ref.current` is the expected element type)
 
 These are a baseline — add additional cases for edge cases and interactions specific to the component. See `components/button/Button.test.tsx` for an example of the test file structure and assertion patterns.
 
