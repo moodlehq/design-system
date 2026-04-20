@@ -6,7 +6,7 @@ applyTo: 'components/**/*.{ts,tsx,css}'
 
 ## File structure
 
-Each component lives in its own folder and must contain all five files:
+Each component lives in its own folder and must contain all six files:
 
 ```
 components/<name>/
@@ -14,6 +14,7 @@ components/<name>/
   component-name.css        # component-scoped styles using --mds-* tokens
   ComponentName.test.tsx    # Vitest unit tests
   ComponentName.stories.tsx # Storybook stories (also used for interaction/a11y tests)
+  ComponentName.figma.tsx   # Figma Code Connect mapping (see Code Connect section below)
   index.tsx                 # local barrel: export * from './ComponentName';
 ```
 
@@ -36,6 +37,44 @@ import '@moodlehq/design-system/css';
 ```
 
 Named re-exports (`export { Button }`) are the correct form — avoid `export { default as Button }` in barrel files. The build uses `preserveModules`, so each source file becomes its own stable output file. Selective loading is achieved at the URL level (only import what you need) rather than via a bundler tree-shaker.
+
+## Code Connect
+
+Every component must have a `ComponentName.figma.tsx` file that links the Figma component to the React implementation using [`@figma/code-connect`](https://github.com/figma/code-connect). This file is not shipped in the package build — it exists only to publish prop mappings to Figma's Dev Mode.
+
+Workflow for a new component:
+
+1. Locate the Figma component node URL from the Moodle Design System file: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
+2. Call the Figma MCP `get_context_for_code_connect` tool with the node URL to get the Figma property structure.
+3. Create `ComponentName.figma.tsx` mapping Figma properties to React props:
+
+```tsx
+import figma from '@figma/code-connect';
+import { ComponentName } from './ComponentName';
+
+figma.connect(
+  ComponentName,
+  'https://www.figma.com/design/<fileKey>/...?node-id=<nodeId>',
+  {
+    props: {
+      // Map Figma properties to React props using figma.string(), figma.boolean(), figma.enum(), etc.
+      label: figma.string('Label'),
+      disabled: figma.enum('State', { Disabled: true }),
+    },
+    example: ({ label, disabled }) => (
+      <ComponentName label={label} disabled={disabled} />
+    ),
+  },
+);
+```
+
+4. Publish the mapping using the Figma MCP `add_code_connect_map` tool (or run `npx figma connect publish` manually).
+
+Prop mapping conventions:
+
+- Figma boolean props that are the inverse of a React prop (e.g. Figma `Show Label` → React `hideLabel`) should use `figma.boolean('Show Label', { true: false, false: true })`.
+- Figma `State` variants (Default / Invalid / Disabled) typically map to individual boolean props via `figma.enum('State', { Invalid: true })`.
+- Use a placeholder string (e.g. `'Error message'`) for text props that Figma only shows conditionally — do not hard-code real content.
 
 ## Composition pattern
 
@@ -166,9 +205,7 @@ Any component that renders a native focusable element (`<input>`, `<button>`, `<
 import { forwardRef } from 'react';
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
-  ({ label, ...props }, ref) => (
-    <input ref={ref} type="radio" {...props} />
-  ),
+  ({ label, ...props }, ref) => <input ref={ref} type="radio" {...props} />,
 );
 Radio.displayName = 'Radio'; // required — forwardRef components lose their inferred name
 ```

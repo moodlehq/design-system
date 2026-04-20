@@ -51,6 +51,7 @@
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^10.0.1",
     "@etchteam/storybook-addon-status": "^8.0.0",
+    "@figma/code-connect": "^1.4.4",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@storybook/addon-a11y": "^10.1.2",
     "@storybook/addon-coverage": "^3.0.0",
@@ -138,5 +139,8 @@
   "bugs": {
     "url": "https://github.com/moodlehq/design-system/issues"
   },
-  "homepage": "https://github.com/moodlehq/design-system#readme"
+  "homepage": "https://github.com/moodlehq/design-system#readme",
+  "overrides": {
+    "zod-validation-error": "4.0.2"
+  }
 }
