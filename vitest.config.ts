@@ -29,9 +29,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: isStorybook
-      ? ['.storybook/vitest.setup.ts']
-      : ['./tests/setupTests.ts'],
+    setupFiles: isStorybook ? [] : ['./tests/setupTests.ts'],
     include: !isStorybook
       ? ['components/**/*.{test,spec}.{js,ts,jsx,tsx}']
       : undefined,
