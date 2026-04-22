@@ -3,19 +3,23 @@
 ## Project shape (read first)
 
 - This is a React + TypeScript component library built with Vite library mode; public entrypoint is `index.ts` and package exports are defined in `package.json`.
+- The build uses Rollup's `preserveModules` mode: every source file is transpiled in isolation into its own stable, hash-free output file. This is intentional — Moodle loads files directly by URL without a consumer-side build step, so output paths must be predictable across releases.
 - Runtime styling flow is: `index.ts` imports Bootstrap base CSS, generated design tokens (`tokens/css/index.css`), then component styles (`components/index.css`). Keep this order.
 - Components apply Bootstrap CSS classes directly in JSX (no `react-bootstrap` dependency). Each component adds a stable `mds-*` class hook and is styled via `--mds-*` CSS custom properties in a colocated CSS file.
 - Token sources are DTCG JSON in `tokens/dtcg/`; generated outputs in `tokens/css/` and `tokens/scss/` are produced by `scripts/tokens.ts` via Style Dictionary.
 
 Published package exports:
 
-| Import                                       | Resolves to                      |
-| -------------------------------------------- | -------------------------------- |
-| `@moodlehq/design-system`                    | `dist/index.js`                  |
-| `@moodlehq/design-system/css`                | `dist/index.css`                 |
-| `@moodlehq/design-system/tokens/css`         | `tokens/css/index.css`           |
-| `@moodlehq/design-system/tokens/scss`        | `tokens/scss/_index.scss`        |
-| `@moodlehq/design-system/tokens/scss/legacy` | `tokens/scss/_index.legacy.scss` |
+| Import                                       | Resolves to                       |
+| -------------------------------------------- | --------------------------------- |
+| `@moodlehq/design-system`                    | `dist/index.js`                   |
+| `@moodlehq/design-system/css`                | `dist/index.css`                  |
+| `@moodlehq/design-system/components/<name>`  | `dist/components/<name>/index.js` |
+| `@moodlehq/design-system/tokens/css`         | `tokens/css/index.css`            |
+| `@moodlehq/design-system/tokens/scss`        | `tokens/scss/_index.scss`         |
+| `@moodlehq/design-system/tokens/scss/legacy` | `tokens/scss/_index.legacy.scss`  |
+
+Component subpath imports are auto-discovered at build time — adding a new folder under `components/` is sufficient; no changes to `package.json` or `vite.config.ts` are needed.
 
 ## Path-specific instruction files
 

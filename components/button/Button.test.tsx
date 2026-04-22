@@ -31,8 +31,19 @@ describe('Button: Unit Test', () => {
   });
 
   it('handles invalid variant prop as default variant', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
     render(<Button label="Button" variant="invalid" />);
     expect(screen.getByRole('button')).toHaveClass('btn-primary');
+    vi.restoreAllMocks();
+  });
+
+  it('warns in development when an invalid variant is passed', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<Button label="Button" variant="invalid" />);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining('[MDS Button] Invalid variant "invalid"'),
+    );
+    vi.restoreAllMocks();
   });
 
   it('applies the size classes', () => {

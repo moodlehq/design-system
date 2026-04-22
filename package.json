@@ -5,7 +5,8 @@
   "files": [
     "/dist",
     "/tokens/css",
-    "/tokens/scss"
+    "/tokens/scss",
+    "/css.d.ts"
   ],
   "exports": {
     ".": {
@@ -13,7 +14,12 @@
       "import": "./dist/index.js"
     },
     "./css": {
+      "types": "./css.d.ts",
       "default": "./dist/index.css"
+    },
+    "./components/*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*/index.js"
     },
     "./tokens/css": {
       "default": "./tokens/css/index.css"
@@ -26,6 +32,9 @@
     }
   },
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "dependencies": {
     "bootstrap": "^5.3.8"
   },

@@ -6,12 +6,25 @@ import dts from 'vite-plugin-dts';
 // https://vite.dev/config/
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const dirname =
   typeof __dirname !== 'undefined'
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url));
+
+// Automatically discover one entry per component directory so new components
+// are included in the build without any manual configuration changes.
+const componentEntries = Object.fromEntries(
+  fs
+    .readdirSync(path.join(dirname, 'components'), { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => [
+      `components/${d.name}/index`,
+      `./components/${d.name}/index.tsx`,
+    ]),
+);
 
 export default defineConfig({
   plugins: [react(), dts()], // Uses the 'vite-plugin-dts' plugin for generating TypeScript declaration files (d.ts).
@@ -20,9 +33,14 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: './index.ts', // Specifies the entry point for building the library.
-      name: 'moodle-design-system', // Sets the name of the generated library.
-      fileName: () => 'index.js', // Generates a format-agnostic output file name.
+      // Multiple entry points: one for the full package, one per component subpath.
+      // Each key becomes the output file path under dist/ (e.g. dist/components/button/index.js).
+      entry: {
+        index: './index.ts',
+        ...componentEntries,
+      },
+      name: 'moodle-design-system',
+      fileName: (_, entryName) => `${entryName}.js`, // Preserve entry path as output filename.
       formats: ['es'], // Specifies the output format (ES modules only).
     },
     cssCodeSplit: false, // bundle all CSS into a single file
@@ -30,6 +48,12 @@ export default defineConfig({
       external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
       output: {
         assetFileNames: 'index.css', // name the CSS file
+        // Transpile every source file into its own output file with a stable, predictable
+        // path — no chunk splitting, no content hashes. This matches Moodle's loading model
+        // where files are served directly by URL without a consumer-side build step.
+        preserveModules: true,
+        preserveModulesRoot: '.',
+        entryFileNames: '[name].js',
       },
     },
     sourcemap: true, // Generates source maps for debugging.
