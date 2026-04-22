@@ -66,7 +66,7 @@ Run with `npm run test-unit`. Tests live in `ComponentName.test.tsx` alongside t
 
 At minimum, cover the following for each component:
 
-- `mds-*` class applied to root element
+- `mds-*` class applied to host element
 - Correct classes applied for each variant and size
 - Invalid variant prop falls back to the default
 - Extra props forwarded to the underlying element (`data-testid`, `aria-label`, etc.)
