@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/compat": "^2.0.0",
@@ -106,6 +107,7 @@
     "storybook": "storybook dev -p 6006",
     "build": "tsc && vite build",
     "build-storybook": "storybook build",
+    "build-docs": "tsx scripts/build-docs.ts",
     "build-tokens": "tsx scripts/tokens.ts",
     "format": "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write . '**/*.{ts,tsx,js,jsx,yml}'",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix --config .github/linters/eslint.config.mjs",
