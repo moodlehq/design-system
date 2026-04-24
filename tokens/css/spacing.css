@@ -3,6 +3,7 @@
  */
 
 :root {
+  --mds-spacing-offset: 0.0625rem;
   --mds-spacing-lg: var(--mds-scale-700);
   --mds-spacing-md: var(--mds-scale-600);
   --mds-spacing-none: var(--mds-scale-0);
