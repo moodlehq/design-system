@@ -23,6 +23,7 @@
   --mds-bg-feedback-info-subtle: var(--mds-color-cyan-100);
   --mds-bg-feedback-primary-default: var(--mds-color-blue-500);
   --mds-bg-feedback-primary-subtle: var(--mds-color-blue-100);
+  --mds-bg-feedback-secondary-default: var(--mds-color-gray-400);
   --mds-bg-feedback-secondary-subtle: var(--mds-color-gray-100);
   --mds-bg-feedback-success-default: var(--mds-color-green-500);
   --mds-bg-feedback-success-subtle: var(--mds-color-green-100);
@@ -30,11 +31,11 @@
   --mds-bg-feedback-warning-subtle: var(--mds-color-yellow-100);
   --mds-bg-interactive-danger-active: var(--mds-color-red-700);
   --mds-bg-interactive-danger-default: var(--mds-color-red-500);
-  --mds-bg-interactive-danger-disabled: var(--mds-color-red-300);
+  --mds-bg-interactive-danger-disabled: var(--mds-color-red-200);
   --mds-bg-interactive-danger-hover: var(--mds-color-red-600);
   --mds-bg-interactive-primary-active: var(--mds-color-blue-700);
   --mds-bg-interactive-primary-default: var(--mds-color-blue-500);
-  --mds-bg-interactive-primary-disabled: var(--mds-color-blue-300);
+  --mds-bg-interactive-primary-disabled: var(--mds-color-blue-200);
   --mds-bg-interactive-primary-hover: var(--mds-color-blue-600);
   --mds-bg-interactive-secondary-default: var(--mds-color-gray-400);
   --mds-bg-interactive-secondary-disabled: var(--mds-color-gray-200);
@@ -58,7 +59,9 @@
   --mds-border-interactive-secondary-disabled: var(--mds-color-gray-500);
   --mds-border-interactive-secondary-hover: var(--mds-color-gray-600);
   --mds-border-subtle: var(--mds-color-gray-200);
+  --mds-focus-danger: var(--mds-color-red-200);
   --mds-text-danger: var(--mds-color-red-500);
+  --mds-text-danger-disabled: var(--mds-color-red-300);
   --mds-text-default: var(--mds-color-gray-900);
   --mds-text-emphasis: var(--mds-color-gray-black);
   --mds-text-feedback-danger: var(--mds-color-red-800);
@@ -68,6 +71,7 @@
   --mds-text-feedback-success: var(--mds-color-green-800);
   --mds-text-feedback-warning: var(--mds-color-yellow-800);
   --mds-text-inverse: var(--mds-color-gray-100);
+  --mds-text-link-primary-disabled: var(--mds-color-blue-300);
   --mds-text-muted: var(--mds-color-gray-600);
   --mds-text-subtle: var(--mds-color-gray-700);
   --mds-bg-feedback-danger-default: var(--mds-bg-interactive-danger-default);
