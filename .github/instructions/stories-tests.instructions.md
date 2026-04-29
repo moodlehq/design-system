@@ -31,9 +31,10 @@ Everything else:
 | `autodocs`     | Generates an API documentation page for the component                |
 | `test`         | Includes the story in `npm run test-storybook` (Playwright/Chromium) |
 | `stable`       | Informational — marks the story as production-ready                  |
+| `beta`         | Informational — marks the component as in-development/pre-release    |
 | `experimental` | Excludes the story from Storybook Vitest test runs                   |
 
-Default for new stories: `tags: ['autodocs', 'test', 'stable']`.
+Default for new stories: `tags: ['autodocs', 'test', 'stable']`. Use `'beta'` in place of `'stable'` when the component has not yet been released (i.e. it is still in active development or under design review). Replace `'beta'` with `'stable'` when the component is promoted to a production release.
 
 ### a11y
 
@@ -55,7 +56,7 @@ export const RightToLeft: Story = {
 };
 ```
 
-Tag RTL stories with `['test', 'stable']` (omit `autodocs` — they are structural tests, not API documentation).
+Tag RTL stories with `['test', 'stable']` (omit `autodocs` — they are structural tests, not API documentation). If the component itself uses `'beta'`, use `['test', 'beta']` for the RTL story instead.
 
 ## Unit tests (Vitest + jsdom)
 
@@ -71,6 +72,7 @@ At minimum, cover the following for each component:
 - Extra props forwarded to the underlying element (`data-testid`, `aria-label`, etc.)
 - Disabled state behaves correctly
 - Label/content renders as expected
+- Ref forwarded to the underlying DOM element (for components that use `forwardRef` — assert `ref.current` is the expected element type)
 
 These are a baseline — add additional cases for edge cases and interactions specific to the component. See `components/button/Button.test.tsx` for an example of the test file structure and assertion patterns.
 

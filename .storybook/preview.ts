@@ -54,6 +54,10 @@ const preview = {
           'wcag22aa',
           'best-practice',
         ],
+        // Disable `region` at the run level as well — belt-and-suspenders with
+        // the config.rules disable above. The rule is never applicable to
+        // isolated component stories which have no landmark wrapper.
+        rules: { region: { enabled: false } },
         /**
          * If there is a failure, it will be reported as an error.
          */

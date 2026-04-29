@@ -6,7 +6,7 @@ applyTo: 'components/**/*.{ts,tsx,css}'
 
 ## File structure
 
-Each component lives in its own folder and must contain all five files:
+Each component lives in its own folder and must contain all six files:
 
 ```
 components/<name>/
@@ -14,6 +14,7 @@ components/<name>/
   component-name.css        # component-scoped styles using --mds-* tokens
   ComponentName.test.tsx    # Vitest unit tests
   ComponentName.stories.tsx # Storybook stories (also used for interaction/a11y tests)
+  ComponentName.figma.tsx   # Figma Code Connect mapping (see Code Connect section below)
   index.tsx                 # local barrel: export * from './ComponentName';
 ```
 
@@ -36,6 +37,46 @@ import '@moodlehq/design-system/css';
 ```
 
 Named re-exports (`export { Button }`) are the correct form — avoid `export { default as Button }` in barrel files. The build uses `preserveModules`, so each source file becomes its own stable output file. Selective loading is achieved at the URL level (only import what you need) rather than via a bundler tree-shaker.
+
+## Code Connect
+
+Every component must have a `ComponentName.figma.tsx` file that links the Figma component to the React implementation using [`@figma/code-connect`](https://github.com/figma/code-connect). This file is not shipped in the package build — it exists only to publish prop mappings to Figma's Dev Mode.
+
+Workflow for a new component:
+
+1. Locate the Figma component node URL from the Moodle Design System file: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
+2. Call the Figma MCP `get_context_for_code_connect` tool with the node URL to get the Figma property structure.
+3. Create `ComponentName.figma.tsx` mapping Figma properties to React props:
+
+```tsx
+import figma from '@figma/code-connect';
+import { ComponentName } from './ComponentName';
+
+figma.connect(
+  ComponentName,
+  'https://www.figma.com/design/<fileKey>/...?node-id=<nodeId>',
+  {
+    props: {
+      // Map Figma properties to React props using figma.string(), figma.boolean(), figma.enum(), etc.
+      label: figma.string('Label'),
+      disabled: figma.enum('State', { Disabled: true }),
+    },
+    example: ({ label, disabled }) => (
+      <ComponentName label={label} disabled={disabled} />
+    ),
+  },
+);
+```
+
+4. Publish the mapping using the Figma MCP `add_code_connect_map` tool (or run `npx figma connect publish` manually).
+
+Prop mapping conventions:
+
+- Figma boolean props that are the inverse of a React prop (e.g. Figma `Show Label` → React `hideLabel`) should use `figma.boolean('Show Label', { true: false, false: true })`.
+- **Never use `false: undefined` in `figma.boolean`** — Code Connect cannot render `undefined` and will silently suppress the entire snippet for that variant. Instead, split into separate `figma.connect` calls using the `variant` key to cover each combination explicitly.
+- Figma `State` variants (Default / Invalid / Disabled) should each have their own `figma.connect` call with a `variant: { State: '...' }` filter, and any boolean props hardcoded as JSX attributes (e.g. `invalid` or `disabled`) rather than derived via `figma.enum`. This avoids empty `prop=` attributes appearing in the generated snippet when the enum returns `undefined`.
+- When a Figma property is only available in certain states (e.g. `Show feedback text` only when `State=Invalid`), use a nested variant split: one `figma.connect` for `{ State: 'Invalid', 'Show feedback text': false }` and one for `{ State: 'Invalid', 'Show feedback text': true }`, with the prop hardcoded in the example of the latter.
+- Use a placeholder string (e.g. `'Error message'`) for text props that represent conditional feedback — do not hard-code real content.
 
 ## Composition pattern
 
@@ -141,6 +182,8 @@ For components built on a Bootstrap base class (e.g. `btn`): include the Bootstr
 
 For components not built on Bootstrap: the `mds-*` hook is still required; omit Bootstrap classes entirely.
 
+**Apply an `mds-*` hook class to every element that has component-scoped CSS rules**, not just the root. This allows consumers and the CSS to target any element directly without relying on descendant selectors alone. For example, a component with a wrapper, an input, a label, and a feedback element should apply `mds-form-check`, `mds-form-check-input`, `mds-form-check-label`, and `mds-form-check-feedback` respectively. Bootstrap classes are applied alongside the `mds-*` hooks where needed for base styling.
+
 ```tsx
 // Example: component with Bootstrap base
 const classes = ['mds-btn', 'btn', `btn-${resolvedVariant}`];
@@ -155,6 +198,21 @@ return (
 ```
 
 Spread `...props` last so consumers can pass `aria-*`, `data-*`, event handlers, and other native attributes through without explicit forwarding.
+
+## Ref forwarding
+
+Any component that renders a native focusable element (`<input>`, `<button>`, `<textarea>`, `<select>`, `<a>`) must use `forwardRef` so that form libraries (React Hook Form, Formik) and consumers that need programmatic focus management can access the underlying DOM node.
+
+```tsx
+import { forwardRef } from 'react';
+
+export const Radio = forwardRef<HTMLInputElement, RadioProps>(
+  ({ label, ...props }, ref) => <input ref={ref} type="radio" {...props} />,
+);
+Radio.displayName = 'Radio'; // required — forwardRef components lose their inferred name
+```
+
+Always set `ComponentName.displayName` explicitly. Without it the component appears as `ForwardRef` in React DevTools and error messages.
 
 ## Internationalisation
 
@@ -185,6 +243,23 @@ Direction-neutral properties (`top`, `bottom`, `height`, `width`, `margin-top`, 
 **`dir` attribute:** No explicit forwarding needed — writing direction is inherited from the document or nearest ancestor. Because `...props` is always spread on the root element, consumers can pass `dir` directly if needed.
 
 **Locale-aware formatting:** This library is presentation-only and does not format dates, numbers, or currency. Components accept pre-formatted strings; locale-aware formatting is the consumer's responsibility.
+
+## Accessibility wiring for feedback/description elements
+
+When a component renders a visible helper or error message alongside an input, link them with `aria-describedby` so screen readers announce the message when the field receives focus.
+
+- Generate a stable ID for the message element derived from the input's ID (e.g. `${id}-feedback`).
+- Set `aria-describedby` on the input pointing to that ID.
+- Only generate the feedback ID and render the element when the message will actually be displayed — do not leave empty elements with IDs in the DOM.
+
+```tsx
+const feedbackId = invalid && invalidFeedback ? `${id}-feedback` : undefined;
+
+<input aria-describedby={feedbackId} ... />
+{feedbackId && (
+  <div id={feedbackId}>{invalidFeedback}</div>
+)}
+```
 
 ## Agent guardrails
 
@@ -226,3 +301,45 @@ Component styles layer on top of Bootstrap CSS classes. The JSX applies both the
 Never use `!important` — always resolve conflicts through specificity or cascade order.
 
 Token naming follows `--mds-{category}-{subcategory}-{modifier}` — for example `--mds-bg-interactive-primary-default`, `--mds-spacing-xs`, `--mds-font-size-paragraph-default`. See `tokens/css/` for the full set.
+
+## Focus ring pattern
+
+All MDS components must use `outline` + `outline-offset` for focus rings — **not** `box-shadow` or `border**`. This is a deliberate, documented divergence from Bootstrap's default focus ring pattern and Figma handoff data.
+
+**Do not use `box-shadow` or `border` to implement focus rings. Only `outline` + `outline-offset` are permitted.**
+
+**Why:** `box-shadow` and `border` are suppressed or recolored inconsistently by browsers in Windows Forced Colors / High Contrast mode — the ring can vanish or become invisible, which is a direct WCAG 2.4.11 (Focus Appearance, AA) and 1.4.11 (Non-text Contrast) failure. `outline` is preserved by the browser and automatically recoloured to the system `Highlight` colour, so compliance is achieved with no extra `@media` block.
+
+**Required pattern for every component:**
+
+```css
+.mds-component:focus {
+  /* Reset Bootstrap's :focus box-shadow */
+  box-shadow: none;
+  outline: none;
+}
+.mds-component:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(
+    --mds-stroke-weight-sm
+  ); /* replace with --mds-focus-ring-offset once token is created */
+  box-shadow: none;
+}
+```
+
+For components with an error/invalid state, use the danger border token for the ring colour:
+
+```css
+.mds-component.is-invalid:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-border-feedback-danger);
+  outline-offset: var(--mds-stroke-weight-sm);
+  box-shadow: none;
+}
+```
+
+**Guardrails:**
+
+- Do not use `box-shadow` or `border` to implement focus rings. The double-layer shadow pattern (`0 0 0 Xpx surface-colour, 0 0 0 Ypx focus-colour`) is Bootstrap's approach and must not be reintroduced. Figma handoff data may also suggest border-based focus rings — these must not be used.
+- Do not suppress `outline` on `:focus-visible` — setting `outline: none` on this selector removes the ring entirely.
+- The `box-shadow: none` reset on `:focus-visible` is required to neutralise any Bootstrap shadow that may be applied by the `:focus` cascade.
+- Once `--mds-focus-ring-offset` is added to the token library, replace all interim `var(--mds-stroke-weight-sm)` usages in `outline-offset` with it.

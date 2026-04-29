@@ -27,7 +27,13 @@ const componentEntries = Object.fromEntries(
 );
 
 export default defineConfig({
-  plugins: [react(), dts()], // Uses the 'vite-plugin-dts' plugin for generating TypeScript declaration files (d.ts).
+  plugins: [
+    react(),
+    dts({
+      // Exclude dev-only files from the generated type declarations, matching tsconfig.json.
+      exclude: ['**/*.stories.tsx', '**/*.test.tsx', '**/*.figma.tsx'],
+    }),
+  ],
   define: {
     'process.env.NODE_ENV': '"production"',
   },
@@ -83,7 +89,7 @@ export default defineConfig({
               },
             ],
           },
-          setupFiles: ['.storybook/vitest.setup.ts'],
+          setupFiles: [],
         },
       },
     ],

@@ -110,6 +110,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 4. Use any SVG/image assets Figma MCP provides directly; do not add new icon or image packages.
 5. Figma team files: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
 
+**When adding a new component:**
+
+Every component requires a `ComponentName.figma.tsx` Code Connect file alongside the implementation. See `.github/instructions/components.instructions.md` for the full workflow. In brief:
+
+1. Get the Figma node URL for the component from the design team.
+2. Use Figma MCP `get_context_for_code_connect` to fetch the Figma property structure.
+3. Create `ComponentName.figma.tsx` in the component folder mapping Figma props to React props.
+4. Publish via Figma MCP `add_code_connect_map` or `npx figma connect publish`.
+
 **When making any change:**
 
 - Do not edit or regenerate token files. `tokens/dtcg/**/*.json`, `tokens/css/**`, and `tokens/scss/**` are managed by the ZeroHeight PR flow — agents must not edit them directly or run `npm run build-tokens`.
