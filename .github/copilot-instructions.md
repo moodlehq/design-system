@@ -25,9 +25,12 @@ Component subpath imports are auto-discovered at build time — adding a new fol
 
 Three scoped files contain the detailed rules for their areas. They auto-load in VS Code/Copilot when a matching file is open. Other agents should read the relevant file proactively before starting work in that area:
 
+- **All work:** `.github/instructions/design-system.instructions.md` — design system tokens, spacing, colour, typography, and icons (auto-generated from ZeroHeight; do not edit manually)
 - **`components/**`** → `.github/instructions/components.instructions.md`
 - **`*.stories.tsx`, `*.test.tsx`, `tests/**`** → `.github/instructions/stories-tests.instructions.md`
 - **`tokens/**`, `scripts/tokens.ts`** → `.github/instructions/tokens.instructions.md`
+
+> When adding a new instruction file, add a pointer entry to both this list and to `.claude/CLAUDE.md` so all agent entry points stay in sync.
 
 ## Recommended MCP servers
 
