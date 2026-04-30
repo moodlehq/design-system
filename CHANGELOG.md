@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.0.0](https://github.com/moodlehq/design-system/compare/design-system-v2.1.1...design-system-v3.0.0) (2026-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **components:** ButtonProps.variant is now typed as ButtonVariant instead of string. Consumers passing an arbitrary string will get a type error. Runtime behaviour is unchanged — invalid values still fall back to "primary".
+
+### Features
+
+* Add automated ZeroHeight design system docs sync ([#194](https://github.com/moodlehq/design-system/issues/194)) ([1e6196f](https://github.com/moodlehq/design-system/commit/1e6196f806c16f2f49d04a6af4d0a7ad0032808c))
+* Add status marker for components on storybook ([#169](https://github.com/moodlehq/design-system/issues/169)) ([53ff6c3](https://github.com/moodlehq/design-system/commit/53ff6c31d7ce9218367f1ce243122385f8737a9a))
+* **AI:** Add AI agent tooling for streamlined co-working  ([#154](https://github.com/moodlehq/design-system/issues/154)) ([a8b10f5](https://github.com/moodlehq/design-system/commit/a8b10f52937c3f969a08d097c32626dd5f819000))
+* **components:** Component library foundations — build, Button API, and authoring guidelines ([#177](https://github.com/moodlehq/design-system/issues/177)) ([42322f7](https://github.com/moodlehq/design-system/commit/42322f721414937d13bef9cc21287cfbfdd5a8a3))
+* **icons:** Add fontawesome for storybook ([#178](https://github.com/moodlehq/design-system/issues/178)) ([fd8b04e](https://github.com/moodlehq/design-system/commit/fd8b04e9d368a3fc5802af15d4ae5a837b2da927))
+* **Radio:** Include new Radio input component ([#185](https://github.com/moodlehq/design-system/issues/185)) ([c4c3750](https://github.com/moodlehq/design-system/commit/c4c3750eef692e1da92b2789932212859c82e77a))
+* **tokens:** Add breakpoints and adjust shadow colour opacities ([#171](https://github.com/moodlehq/design-system/issues/171)) ([584be7f](https://github.com/moodlehq/design-system/commit/584be7fa6c95f5fad5506efc3cb03dbeb7c70d0b))
+* **Tokens:** Add color tokens & spacing tokens ([#193](https://github.com/moodlehq/design-system/issues/193)) ([b7a86a6](https://github.com/moodlehq/design-system/commit/b7a86a62162b94f840942eba273c43b831b9fa93))
+* **Tokens:** Add new activity icon tokens and modify sizing values ([#179](https://github.com/moodlehq/design-system/issues/179)) ([713a63f](https://github.com/moodlehq/design-system/commit/713a63f0f3c3233fcd9e0b93092207e71d55d361))
+
+
+### Bug Fixes
+
+* **AI:** Add i18n guidance to instructions ([#157](https://github.com/moodlehq/design-system/issues/157)) ([bd21822](https://github.com/moodlehq/design-system/commit/bd21822fec34f9d63dad8fa2f1c8cc9ac9d84d58))
+
 ## [2.1.1](https://github.com/moodlehq/design-system/compare/design-system-v2.1.0...design-system-v2.1.1) (2026-03-12)
 
 
