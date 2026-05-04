@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs', 'test', 'beta'],
+  tags: ['autodocs', 'test', 'stable'],
   argTypes: {
     'aria-label': {
       control: { type: 'text' },

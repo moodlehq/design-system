@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs', 'test', 'beta'],
+  tags: ['autodocs', 'test', 'stable'],
   argTypes: {
     id: {
       description:
@@ -337,7 +337,7 @@ export const InputOnly = {
  * No specific Figma design for RTL, but this story ensures that the component can be used in RTL contexts without layout or functionality issues. The label and feedback text are provided in Arabic to reflect a common RTL language scenario.
  */
 export const RightToLeft: Story = {
-  tags: ['test', 'beta'],
+  tags: ['test', 'stable'],
   parameters: {
     // The render function contains a dir="rtl" wrapper that isn't representative of component usage — suppress the code block in docs.
     docs: { source: { code: null } },
