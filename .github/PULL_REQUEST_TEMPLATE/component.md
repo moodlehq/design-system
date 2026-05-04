@@ -23,7 +23,7 @@
 - [ ] Props interface extends the correct React HTML element interface (e.g. `ButtonHTMLAttributes<HTMLButtonElement>`)
 - [ ] JSDoc comment on each prop
 - [ ] Constrained props use `allowedValues` runtime validation with a graceful fallback to a documented default
-- [ ] `...props` spread last on the root element
+- [ ] `...props` spread last on the host element
 
 ### Internationalisation
 

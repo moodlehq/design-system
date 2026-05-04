@@ -80,7 +80,7 @@ Prop mapping conventions:
 
 ## Composition pattern
 
-**Simple components** (single root element, no internal structure): use flat props. Accept all content via named string props rather than `children`. This keeps the API explicit, ensures all text is explicitly caller-supplied, and is straightforward to document.
+**Simple components** (single host element, no internal structure): use flat props. Accept all content via named string props rather than `children`. This keeps the API explicit, ensures all text is explicitly caller-supplied, and is straightforward to document.
 
 Two separate rules apply:
 
@@ -240,7 +240,7 @@ return <button>Save</button>;
 
 Direction-neutral properties (`top`, `bottom`, `height`, `width`, `margin-top`, `padding-top`, etc.) do not need changing.
 
-**`dir` attribute:** No explicit forwarding needed — writing direction is inherited from the document or nearest ancestor. Because `...props` is always spread on the root element, consumers can pass `dir` directly if needed.
+**`dir` attribute:** No explicit forwarding needed — writing direction is inherited from the document or nearest ancestor. Because `...props` is always spread on the host element, consumers can pass `dir` directly if needed.
 
 **Locale-aware formatting:** This library is presentation-only and does not format dates, numbers, or currency. Components accept pre-formatted strings; locale-aware formatting is the consumer's responsibility.
 
