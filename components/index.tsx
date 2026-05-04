@@ -1,3 +1,6 @@
+export { ActivityIcon } from './activity-icon';
+export type { ActivityIconProps } from './activity-icon';
+
 export { Button } from './button';
 export type { ButtonProps } from './button';
 
