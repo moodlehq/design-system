@@ -1,6 +1,9 @@
 export { Button } from './button';
 export type { ButtonProps } from './button';
 
+export { Checkbox } from './checkbox';
+export type { CheckboxProps } from './checkbox';
+
 export { CloseButton } from './close-button';
 export type { CloseButtonProps } from './close-button';
 
