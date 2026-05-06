@@ -1,5 +1,3 @@
-// Import the component's CSS for local styles. This ensures styles are included when using subpath imports.
-// This matches the pattern for tree-shaking and consistency across components.
-import './radio.css';
-
+// CSS is aggregated via components/index.css and imported by the package root entry (index.ts).
+// It is intentionally omitted here so per-component subpath imports remain side-effect-free for JS consumers.
 export * from './Radio';
