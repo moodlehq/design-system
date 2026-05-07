@@ -5,6 +5,7 @@ import { Button } from './Button';
 const iconMapping = {
   None: undefined,
   Download: <i className="fa-solid fa-download" aria-hidden="true" />,
+  Sort: <i className="fa-solid fa-sort" aria-hidden="true" />,
   Trash: <i className="fa-solid fa-trash" aria-hidden="true" />,
   'Arrow Right': <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
   'Arrow Left': <i className="fa-solid fa-arrow-left" aria-hidden="true" />,
@@ -19,12 +20,13 @@ const meta = {
     layout: 'centered',
   },
   play: async ({ canvas, userEvent }) => {
-    await userEvent.click(canvas.getByRole('button'));
+    const buttons = canvas.getAllByRole('button');
+    await userEvent.click(buttons[0]);
     // Wait for any updates to complete
     await new Promise((resolve) => setTimeout(resolve, 0));
-    await expect(canvas.getByRole('button')).toBeVisible();
+    await expect(buttons[0]).toBeVisible();
   },
-  tags: ['autodocs', 'test', 'beta'],
+  tags: ['autodocs', 'test', 'stable'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     label: {
@@ -39,6 +41,7 @@ const meta = {
         'primary',
         'secondary',
         'danger',
+        'ghost',
         'outline-primary',
         'outline-secondary',
         'outline-danger',
@@ -47,18 +50,18 @@ const meta = {
       table: {
         type: {
           summary:
-            'primary | secondary | danger | outline-primary | outline-secondary | outline-danger',
+            'primary | secondary | danger | ghost | outline-primary | outline-secondary | outline-danger',
         },
         defaultValue: { summary: 'primary' },
       },
     },
     size: {
       control: { type: 'select' },
-      options: [undefined, 'sm', 'lg'],
-      description: 'Button size. Default is "md" if not set.',
+      options: ['sm', 'md', 'lg'],
+      description: 'Button size. Defaults to "md" when not set.',
       table: {
-        type: { summary: 'sm | lg' },
-        defaultValue: { summary: 'undefined' },
+        type: { summary: 'sm | md | lg' },
+        defaultValue: { summary: 'md' },
       },
     },
     startIcon: {
@@ -100,112 +103,115 @@ const meta = {
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: {
     label: 'Button',
-    variant: 'primary',
+    variant: undefined,
     disabled: false,
   },
 } satisfies Meta<typeof Button>;
 export default meta;
 
+const showcaseInlineStyle = {
+  display: 'flex' as const,
+  gap: 'var(--mds-spacing-sm)',
+  flexWrap: 'wrap' as const,
+  alignItems: 'center' as const,
+};
+
+const showcaseParameters = {
+  controls: {
+    disable: true,
+  },
+  docs: {
+    canvas: { sourceState: 'none' },
+  },
+} as const;
+
 type Story = StoryObj<typeof meta>;
 
-export const Primary = {
-  args: {
-    label: 'Button',
-  },
-} satisfies Story;
+export const DefaultPrimary: Story = {};
 
-export const Secondary = {
-  args: {
-    variant: 'secondary',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const Danger = {
-  args: {
-    variant: 'danger',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const OutlinePrimary = {
-  args: {
-    variant: 'outline-primary',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const OutlineSecondary = {
-  args: {
-    variant: 'outline-secondary',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const OutlineDanger = {
-  args: {
-    variant: 'outline-danger',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const Disabled = {
-  args: {
-    label: 'Button',
-    disabled: true,
-  },
-  play: async ({ canvas }) => {
-    const button = canvas.getByRole('button', { label: 'Button' });
-    await expect(button).toBeDisabled();
-  },
-} satisfies Story;
-
-export const Large = {
-  args: {
-    size: 'lg',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const Small = {
-  args: {
-    size: 'sm',
-    label: 'Button',
-  },
-} satisfies Story;
-
-export const WithLeadingIcon: Story = {
-  args: {
-    label: 'Download',
-    startIcon: <i className="fa-solid fa-download" aria-hidden="true" />,
-  },
-} satisfies Story;
-
-export const WithTrailingIcon: Story = {
-  args: {
-    label: 'Continue',
-    endIcon: <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
-  },
-} satisfies Story;
-
-export const IconOnly: Story = {
-  args: {
-    label: '',
-    startIcon: <i className="fa-solid fa-trash" aria-hidden="true" />,
-    'aria-label': 'Delete',
-  },
-} satisfies Story;
-
-export const RightToLeft: Story = {
-  tags: ['test'],
-  args: {
-    label: 'Continue',
-    startIcon: <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
-    endIcon: <i className="fa-solid fa-arrow-left" aria-hidden="true" />,
-  },
-  render: (args) => (
-    <div dir="rtl">
-      <Button {...args} />
+export const Variants: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={showcaseInlineStyle}>
+      <Button variant="primary" label="Primary" />
+      <Button variant="secondary" label="Secondary" />
+      <Button variant="danger" label="Danger" />
+      <Button variant="outline-primary" label="Outline Primary" />
+      <Button variant="outline-secondary" label="Outline Secondary" />
+      <Button variant="outline-danger" label="Outline Danger" />
+      <Button variant="ghost" label="Ghost" />
     </div>
   ),
-} satisfies Story;
+};
+
+export const Sizes: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={showcaseInlineStyle}>
+      <Button size="sm" label="Small" />
+      <Button size="md" label="Medium" />
+      <Button size="lg" label="Large" />
+    </div>
+  ),
+};
+
+export const States: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={showcaseInlineStyle}>
+      <Button label="Default" />
+      <Button label="Disabled" disabled />
+    </div>
+  ),
+};
+
+export const WithIcons: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={showcaseInlineStyle}>
+      <Button label="Download" startIcon={iconMapping.Download} />
+      <Button label="Continue" endIcon={iconMapping['Arrow Right']} />
+    </div>
+  ),
+};
+
+export const IconOnly: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={showcaseInlineStyle}>
+      <Button
+        size="sm"
+        label=""
+        startIcon={iconMapping.Trash}
+        aria-label="Delete small"
+      />
+      <Button
+        size="md"
+        label=""
+        startIcon={iconMapping.Trash}
+        aria-label="Delete medium"
+      />
+      <Button
+        size="lg"
+        label=""
+        startIcon={iconMapping.Trash}
+        aria-label="Delete large"
+      />
+    </div>
+  ),
+};
+
+export const RightToLeft: Story = {
+  args: {
+    label: 'حالة',
+    startIcon: iconMapping['Arrow Right'],
+  },
+  decorators: [
+    (Story) => (
+      <div dir="rtl">
+        <Story />
+      </div>
+    ),
+  ],
+  tags: ['test'],
+};
