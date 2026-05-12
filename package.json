@@ -97,7 +97,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.1",
     "vite": "^8.0.0",
-    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-dts": "^5.0.0",
     "vite-tsconfig-paths": "^6.0.1",
     "vitest": "^4.0.4"
   },
