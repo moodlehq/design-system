@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/moodlehq/design-system/compare/design-system-v3.0.0...design-system-v3.1.0) (2026-05-13)
+
+
+### Features
+
+* **activity-icon:** Add new ActivityIcon component ([#205](https://github.com/moodlehq/design-system/issues/205)) ([197e55f](https://github.com/moodlehq/design-system/commit/197e55fbb53d79cb7b374a77e875a90186533989))
+
 ## [3.0.0](https://github.com/moodlehq/design-system/compare/design-system-v2.1.1...design-system-v3.0.0) (2026-05-06)
 
 
