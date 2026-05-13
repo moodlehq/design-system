@@ -16,7 +16,6 @@ const meta = {
         'Required accessible name for the close button. Pass a translated string from the consuming application.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: '(required)' },
       },
     },
     size: {
