@@ -78,6 +78,10 @@
           "$type": "color",
           "$value": "{bg.interactive.danger.default}"
         },
+        "light": {
+          "$type": "color",
+          "$value": "{color.red.50}"
+        },
         "subtle": {
           "$type": "color",
           "$value": "{color.red.100}"
@@ -88,6 +92,10 @@
           "$type": "color",
           "$value": "{color.cyan.500}"
         },
+        "light": {
+          "$type": "color",
+          "$value": "{color.cyan.50}"
+        },
         "subtle": {
           "$type": "color",
           "$value": "{color.cyan.100}"
@@ -97,6 +105,10 @@
         "default": {
           "$type": "color",
           "$value": "{color.blue.500}"
+        },
+        "light": {
+          "$type": "color",
+          "$value": "{color.blue.50}"
         },
         "subtle": {
           "$type": "color",
@@ -118,6 +130,10 @@
           "$type": "color",
           "$value": "{color.green.500}"
         },
+        "light": {
+          "$type": "color",
+          "$value": "{color.green.50}"
+        },
         "subtle": {
           "$type": "color",
           "$value": "{color.green.100}"
@@ -127,6 +143,10 @@
         "default": {
           "$type": "color",
           "$value": "{color.yellow.500}"
+        },
+        "light": {
+          "$type": "color",
+          "$value": "{color.yellow.50}"
         },
         "subtle": {
           "$type": "color",
@@ -143,6 +163,10 @@
         "default": {
           "$type": "color",
           "$value": "{color.red.500}"
+        },
+        "default-light": {
+          "$type": "color",
+          "$value": "{color.red.50}"
         },
         "disabled": {
           "$type": "color",
@@ -161,6 +185,10 @@
         "default": {
           "$type": "color",
           "$value": "{color.blue.500}"
+        },
+        "default-light": {
+          "$type": "color",
+          "$value": "{color.blue.50}"
         },
         "disabled": {
           "$type": "color",
