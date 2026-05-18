@@ -24,7 +24,7 @@ const meta = {
     await new Promise((resolve) => setTimeout(resolve, 0));
     await expect(canvas.getByRole('button')).toBeVisible();
   },
-  tags: ['autodocs', 'test', 'beta'],
+  tags: ['autodocs', 'test', 'stable'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     label: {
@@ -39,6 +39,7 @@ const meta = {
         'primary',
         'secondary',
         'danger',
+        'ghost',
         'outline-primary',
         'outline-secondary',
         'outline-danger',
@@ -47,18 +48,18 @@ const meta = {
       table: {
         type: {
           summary:
-            'primary | secondary | danger | outline-primary | outline-secondary | outline-danger',
+            'primary | secondary | danger | ghost | outline-primary | outline-secondary | outline-danger',
         },
         defaultValue: { summary: 'primary' },
       },
     },
     size: {
       control: { type: 'select' },
-      options: [undefined, 'sm', 'lg'],
-      description: 'Button size. Default is "md" if not set.',
+      options: ['sm', 'md', 'lg'],
+      description: 'Button size. Defaults to "md" when not set.',
       table: {
-        type: { summary: 'sm | lg' },
-        defaultValue: { summary: 'undefined' },
+        type: { summary: 'sm | md | lg' },
+        defaultValue: { summary: 'md' },
       },
     },
     startIcon: {
@@ -128,6 +129,13 @@ export const Danger = {
   },
 } satisfies Story;
 
+export const Ghost = {
+  args: {
+    variant: 'ghost',
+    label: 'Button',
+  },
+} satisfies Story;
+
 export const OutlinePrimary = {
   args: {
     variant: 'outline-primary',
@@ -155,7 +163,7 @@ export const Disabled = {
     disabled: true,
   },
   play: async ({ canvas }) => {
-    const button = canvas.getByRole('button', { label: 'Button' });
+    const button = canvas.getByRole('button', { name: 'Button' });
     await expect(button).toBeDisabled();
   },
 } satisfies Story;
@@ -174,14 +182,14 @@ export const Small = {
   },
 } satisfies Story;
 
-export const WithLeadingIcon: Story = {
+export const WithPrefixIcon: Story = {
   args: {
     label: 'Download',
     startIcon: <i className="fa-solid fa-download" aria-hidden="true" />,
   },
 } satisfies Story;
 
-export const WithTrailingIcon: Story = {
+export const WithSuffixIcon: Story = {
   args: {
     label: 'Continue',
     endIcon: <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
@@ -201,7 +209,6 @@ export const RightToLeft: Story = {
   args: {
     label: 'Continue',
     startIcon: <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
-    endIcon: <i className="fa-solid fa-arrow-left" aria-hidden="true" />,
   },
   render: (args) => (
     <div dir="rtl">

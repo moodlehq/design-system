@@ -1,7 +1,7 @@
 .mds-btn.btn {
   background-color: var(--mds-bg-interactive-primary-default);
   border: var(--mds-stroke-weight-sm) solid var(--mds-border-translucent);
-  border-radius: var(--mds-border-radius-md);
+  border-radius: var(--mds-border-radius-sm);
   padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
 
   color: var(--mds-text-inverse);
@@ -11,11 +11,83 @@
   line-height: var(--mds-line-height-paragraph-small);
   letter-spacing: var(--mds-letter-spacing-default);
 
-  /* gap provides consistent spacing between startIcon/endIcon and label text;
-     has no visual effect when the button contains only a single child (no icon) */
+  /* Keep icon/text spacing consistent with icon variants from the design matrix. */
   display: inline-flex;
   align-items: center;
-  gap: var(--mds-spacing-xxs);
+  gap: var(--mds-spacing-xs);
+}
+
+/* Icon-only sizing in Figma is not derived from text button size classes. */
+.mds-btn.btn.mds-btn--icon-only {
+  padding: var(--mds-spacing-xs);
+  border-radius: var(--mds-border-radius-xl);
+}
+
+.mds-btn.btn.mds-btn--icon-only .mds-btn-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--mds-icons-xs) + (var(--mds-spacing-offset) * 2));
+  block-size: calc(var(--mds-icons-xs) + (var(--mds-spacing-offset) * 2));
+  padding: var(--mds-spacing-offset);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-sm {
+  padding: var(--mds-spacing-xxs);
+}
+
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-sm .mds-btn-icon-box {
+  inline-size: calc(var(--mds-icons-xxs) + (var(--mds-spacing-offset) * 2));
+  block-size: calc(var(--mds-icons-xxs) + (var(--mds-spacing-offset) * 2));
+}
+
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-lg {
+  padding: var(--mds-spacing-xs);
+  border-radius: var(--mds-border-radius-sm);
+}
+
+/* lg icon-only has no icon-box inset — Figma specifies 28×28, not 30×30. */
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-lg .mds-btn-icon-box {
+  inline-size: var(--mds-icons-xs);
+  block-size: var(--mds-icons-xs);
+  padding: 0;
+}
+
+.mds-btn.btn.mds-btn--size-sm i,
+.mds-btn.btn.mds-btn--size-sm svg {
+  width: var(--mds-icons-xxs);
+  height: var(--mds-icons-xxs);
+  font-size: var(--mds-icons-xxs);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mds-btn.btn.mds-btn--size-md i,
+.mds-btn.btn.mds-btn--size-md svg,
+.mds-btn.btn.mds-btn--size-lg i,
+.mds-btn.btn.mds-btn--size-lg svg {
+  width: var(--mds-icons-xs);
+  height: var(--mds-icons-xs);
+  font-size: var(--mds-icons-xs);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mds-btn.btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+.mds-btn.btn:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  /* Keep focus variants at +2px overall (e.g., 28->30, 30->32, 18->20). */
+  outline-offset: calc(var(--mds-stroke-weight-sm) * -1);
+  box-shadow: none;
+}
+.mds-btn.btn.btn-danger:focus-visible,
+.mds-btn.btn.btn-outline-danger:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-danger);
 }
 .mds-btn.btn:hover {
   background-color: var(--mds-bg-interactive-primary-hover);
@@ -33,7 +105,7 @@
   */
 .mds-btn.btn.btn-secondary {
   background-color: var(--mds-bg-interactive-secondary-default);
-  color: var(--mds-text-default);
+  color: var(--mds-text-subtle);
 }
 .mds-btn.btn.btn-secondary:hover {
   background-color: var(--mds-bg-interactive-secondary-hover);
@@ -43,6 +115,7 @@
 }
 .mds-btn.btn.btn-secondary:disabled {
   background-color: var(--mds-bg-interactive-secondary-disabled);
+  color: var(--mds-text-muted);
 }
 
 /**
@@ -59,6 +132,26 @@
 }
 .mds-btn.btn.btn-danger:disabled {
   background-color: var(--mds-bg-interactive-danger-disabled);
+}
+
+/**
+  * Ghost variants
+  */
+.mds-btn.btn.btn-ghost {
+  background-color: transparent;
+  color: var(--mds-text-subtle);
+}
+.mds-btn.btn.btn-ghost:hover {
+  background-color: var(--mds-bg-interactive-secondary-hover);
+  color: var(--mds-text-subtle);
+}
+.mds-btn.btn.btn-ghost:active {
+  background-color: var(--mds-bg-interactive-secondary-active);
+  color: var(--mds-text-subtle);
+}
+.mds-btn.btn.btn-ghost:disabled {
+  background-color: transparent;
+  color: var(--mds-text-muted);
 }
 
 /**
@@ -82,7 +175,7 @@
   background-color: transparent;
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-primary-disabled);
-  color: var(--mds-color-blue-300);
+  color: var(--mds-text-link-primary-disabled);
 }
 
 /**
@@ -92,7 +185,7 @@
   background-color: transparent;
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-secondary-default);
-  color: var(--mds-text-muted);
+  color: var(--mds-text-subtle);
 }
 .mds-btn.btn-outline-secondary:hover {
   background-color: var(--mds-border-interactive-secondary-hover);
@@ -106,7 +199,7 @@
   background-color: transparent;
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-secondary-disabled);
-  color: var(--mds-color-gray-500);
+  color: var(--mds-text-muted);
 }
 
 /**
@@ -119,30 +212,37 @@
   color: var(--mds-text-danger);
 }
 .mds-btn.btn-outline-danger:hover {
-  background-color: var(--mds-bg-interactive-danger-default);
+  background-color: var(--mds-bg-interactive-danger-hover);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-danger:active {
-  background-color: var(--mds-bg-interactive-danger-hover);
+  background-color: var(--mds-bg-interactive-danger-active);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-danger:disabled {
   background-color: transparent;
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-danger-disabled);
-  color: var(--mds-color-red-300);
+  color: var(--mds-text-danger-disabled);
 }
 
 /**
   * Size variants
   */
-.mds-btn.btn-sm {
+.mds-btn.mds-btn--size-sm {
   padding: var(--mds-spacing-xxs) var(--mds-spacing-xs);
+  border-radius: var(--mds-border-radius-xs);
+  font-weight: var(--mds-font-weight-medium);
   font-size: var(--mds-font-size-paragraph-small);
   line-height: var(--mds-line-height-paragraph-small);
 }
-.mds-btn.btn-lg {
-  padding: var(--mds-spacing-xs) var(--mds-spacing-md);
-  font-size: var(--mds-font-size-paragraph-lead);
-  line-height: var(--mds-line-height-paragraph-default);
+.mds-btn.mds-btn--size-md {
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+  font-size: var(--mds-font-size-paragraph-default);
+  line-height: var(--mds-line-height-paragraph-small);
+}
+.mds-btn.mds-btn--size-lg {
+  padding: var(--mds-spacing-sm) var(--mds-spacing-md);
+  font-size: var(--mds-font-size-paragraph-default);
+  line-height: var(--mds-line-height-paragraph-small);
 }
