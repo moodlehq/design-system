@@ -72,6 +72,21 @@ StyleDictionary.registerFormat({
   },
 });
 
+StyleDictionary.registerFormat({
+  name: 'scss/css-variables-map',
+  format: function ({ dictionary }) {
+    // Generate the :root block referencing the SCSS variables
+    const rootLines = dictionary.allTokens
+      .map((token) => {
+        // SCSS interpolation syntax is #{$variable}
+        return `  --${token.name}: #{$${token.name}};`;
+      })
+      .join('\n');
+
+    return `root {\n${rootLines}\n}`;
+  },
+});
+
 /**
  * Custom transform: dimension-px-to-rem
  * Transforms px values to rem for tokens related to dimensions.
@@ -160,6 +175,15 @@ new StyleDictionary({
         {
           destination: '_index.scss',
           format: 'scss/aggregator',
+          options: {
+            files: tokenFiles.map((fileName) =>
+              convertJsonFileName(fileName, '_', 'scss'),
+            ),
+          },
+        },
+        {
+          destination: '_index_css_vars.scss',
+          format: 'scss/css-variables-map',
           options: {
             files: tokenFiles.map((fileName) =>
               convertJsonFileName(fileName, '_', 'scss'),
