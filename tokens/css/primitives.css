@@ -3,6 +3,7 @@
  */
 
 :root {
+  --mds-color-blue-50: #e7f0f9;
   --mds-color-blue-100: #cfe2f2;
   --mds-color-blue-200: #9fc4e5;
   --mds-color-blue-300: #6fa7d9;
@@ -12,6 +13,7 @@
   --mds-color-blue-700: #094173;
   --mds-color-blue-800: #062b4c;
   --mds-color-blue-900: #031626;
+  --mds-color-cyan-50: #e5f2f4;
   --mds-color-cyan-100: #cce6ea;
   --mds-color-cyan-200: #99cdd5;
   --mds-color-cyan-300: #66b3c0;
@@ -32,6 +34,7 @@
   --mds-color-gray-900: #1d2125;
   --mds-color-gray-black: #000000;
   --mds-color-gray-white: #ffffff;
+  --mds-color-green-50: #ebf2ea;
   --mds-color-green-100: #d7e4d6;
   --mds-color-green-200: #aecaad;
   --mds-color-green-300: #86af84;
@@ -77,6 +80,7 @@
   --mds-color-purple-700: #3a254a;
   --mds-color-purple-800: #271832;
   --mds-color-purple-900: #130c19;
+  --mds-color-red-50: #faeae9;
   --mds-color-red-100: #f4d6d2;
   --mds-color-red-200: #eaada6;
   --mds-color-red-300: #df8379;
@@ -95,6 +99,7 @@
   --mds-color-teal-700: #13795b;
   --mds-color-teal-800: #0d503c;
   --mds-color-teal-900: #06281e;
+  --mds-color-yellow-50: #fdf7ed;
   --mds-color-yellow-100: #fcefdc;
   --mds-color-yellow-200: #f9deb8;
   --mds-color-yellow-300: #f6ce95;
