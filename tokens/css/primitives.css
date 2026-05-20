@@ -164,4 +164,5 @@
   --mds-typography-line-height-paragraph-base: 1.5rem;
   --mds-typography-line-height-paragraph-lg: 2.5rem;
   --mds-typography-line-height-paragraph-sm: 1.0875rem;
+  --mds-typography-line-height-paragraph-xs: 0.75rem;
 }

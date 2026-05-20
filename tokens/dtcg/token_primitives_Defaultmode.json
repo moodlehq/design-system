@@ -684,6 +684,10 @@
         "sm": {
           "$type": "number",
           "$value": 17.4
+        },
+        "xs": {
+          "$type": "number",
+          "$value": 12
         }
       }
     }

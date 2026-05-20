@@ -197,6 +197,10 @@
         "$type": "number",
         "$value": "{typography.line-height.paragraph.sm}",
         "$description": "Compact line height for small text."
+      },
+      "xs": {
+        "$type": "number",
+        "$value": "{typography.line-height.paragraph.xs}"
       }
     }
   },
