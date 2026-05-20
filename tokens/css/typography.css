@@ -41,6 +41,7 @@
   --mds-line-height-paragraph-default: var(--mds-typography-line-height-paragraph-base); /** Comfortable line height for paragraphs. */
   --mds-line-height-paragraph-lead: var(--mds-typography-line-height-paragraph-lg); /** Extended line height for large body text. */
   --mds-line-height-paragraph-small: var(--mds-typography-line-height-paragraph-sm); /** Compact line height for small text. */
+  --mds-line-height-paragraph-xs: var(--mds-typography-line-height-paragraph-xs);
   --mds-margin-bottom-display: var(--mds-spacing-none); /** Default margin below a Displays. */
   --mds-margin-bottom-heading: var(--mds-spacing-xs); /** Default margin below a Headings. */
   --mds-margin-bottom-paragraph: var(--mds-spacing-md); /** Default margin below a paragraph. */
