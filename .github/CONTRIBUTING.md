@@ -23,7 +23,7 @@ Please read our [Contributors Guide](https://moodledev.io/general/documentation/
 
 ## Prerequisites
 
-- **Node.js** v22.13.0 or higher
+- **Node.js** v22.22.1 or higher
 - **npm**
 - **Git**
 

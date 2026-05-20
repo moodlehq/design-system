@@ -5,7 +5,7 @@ on:
       - main
 
 env:
-  NODE_VERSION: 22.13.0
+  NODE_VERSION: 22.22.1
 
 permissions:
   contents: read # Restrict top-level permissions to read only
