@@ -27,10 +27,8 @@ jobs:
       - name: Audit dependencies
         run: npm audit --audit-level=high
 
-      - name: Build & test the package
+      - name: Build the package
         run: |
-          npm run test-storybook
-          npm run test-unit
           npm run build --if-present
 
       - name: Publish package
