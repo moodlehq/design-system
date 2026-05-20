@@ -75,7 +75,7 @@ This repository follows these standards:
 
 ### Prerequisites
 
-- Node.js v22.13.0 or higher
+- Node.js v22.22.1 or higher
 - npm
 - Git
 
