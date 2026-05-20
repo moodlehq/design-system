@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.0](https://github.com/moodlehq/design-system/compare/design-system-v3.1.0...design-system-v3.2.0) (2026-05-20)
+
+
+### Features
+
+* **Tokens:** Add new typography tokens for extra-small line heights ([#229](https://github.com/moodlehq/design-system/issues/229)) ([4d4a4df](https://github.com/moodlehq/design-system/commit/4d4a4df9d6ea25c90473f4cabfb0d34bd86d94ed))
+* **Tokens:** Update primitives & color tokens ([#220](https://github.com/moodlehq/design-system/issues/220)) ([1c62a0b](https://github.com/moodlehq/design-system/commit/1c62a0b0546e2734ee0c873b45fb91461be0df25))
+
 ## [3.1.0](https://github.com/moodlehq/design-system/compare/design-system-v3.0.0...design-system-v3.1.0) (2026-05-13)
 
 
