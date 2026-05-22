@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { ActivityIconSize, ActivityIconVariant } from './ActivityIcon';
+import type { ActivityIconContainer, ActivityIconSize } from './ActivityIcon';
 import { ActivityIcon } from './ActivityIcon';
 
 describe('ActivityIcon: Unit Test', () => {
@@ -20,7 +20,7 @@ describe('ActivityIcon: Unit Test', () => {
     });
   });
 
-  it('applies default variant by default', () => {
+  it('applies default container by default', () => {
     render(<ActivityIcon data-testid="icon" icon="assignment" />);
     expect(
       screen
@@ -70,18 +70,18 @@ describe('ActivityIcon: Unit Test', () => {
     ).toBe(true);
   });
 
-  it('applies none background variant', () => {
+  it('applies none container', () => {
     render(
-      <ActivityIcon data-testid="icon" icon="assignment" variant="none" />,
+      <ActivityIcon data-testid="icon" icon="assignment" container="none" />,
     );
     expect(
       screen.getByTestId('icon').classList.contains('mds-activity-icon--none'),
     ).toBe(true);
   });
 
-  it('applies default background variant', () => {
+  it('applies default container', () => {
     render(
-      <ActivityIcon data-testid="icon" icon="assignment" variant="default" />,
+      <ActivityIcon data-testid="icon" icon="assignment" container="default" />,
     );
     expect(
       screen
@@ -90,9 +90,9 @@ describe('ActivityIcon: Unit Test', () => {
     ).toBe(true);
   });
 
-  it('applies large background variant', () => {
+  it('applies large container', () => {
     render(
-      <ActivityIcon data-testid="icon" icon="assignment" variant="large" />,
+      <ActivityIcon data-testid="icon" icon="assignment" container="large" />,
     );
     expect(
       screen.getByTestId('icon').classList.contains('mds-activity-icon--large'),
@@ -132,14 +132,14 @@ describe('ActivityIcon: Unit Test', () => {
     error.mockRestore();
   });
 
-  it('falls back to default for an invalid variant', () => {
+  it('falls back to default for an invalid container', () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     render(
       <ActivityIcon
         data-testid="icon"
         icon="assignment"
-        variant={'invalid' as unknown as ActivityIconVariant}
+        container={'invalid' as unknown as ActivityIconContainer}
       />,
     );
 
@@ -151,18 +151,18 @@ describe('ActivityIcon: Unit Test', () => {
     vi.restoreAllMocks();
   });
 
-  it('warns in development when an invalid variant is passed', () => {
+  it('warns in development when an invalid container is passed', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     render(
       <ActivityIcon
         icon="assignment"
-        variant={'invalid' as unknown as ActivityIconVariant}
+        container={'invalid' as unknown as ActivityIconContainer}
       />,
     );
 
     expect(warn).toHaveBeenCalledWith(
-      expect.stringContaining('[MDS ActivityIcon] Invalid variant "invalid"'),
+      expect.stringContaining('[MDS ActivityIcon] Invalid container "invalid"'),
     );
     warn.mockRestore();
   });

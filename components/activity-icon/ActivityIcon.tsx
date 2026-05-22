@@ -25,8 +25,8 @@ function loadIconSrc(fileName: string): Promise<string> {
   return loader().then((mod) => mod.default);
 }
 
-export type ActivityIconVariant = 'none' | 'default' | 'large';
-const allowedVariants: ActivityIconVariant[] = ['none', 'default', 'large'];
+export type ActivityIconContainer = 'none' | 'default' | 'large';
+const allowedContainers: ActivityIconContainer[] = ['none', 'default', 'large'];
 
 export type ActivityIconSize = 'sm' | 'md' | 'lg' | 'xl';
 const allowedSizes: ActivityIconSize[] = ['sm', 'md', 'lg', 'xl'];
@@ -44,7 +44,7 @@ export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Visual container style around the icon.
    */
-  variant?: ActivityIconVariant;
+  container?: ActivityIconContainer;
   /**
    * Icon size token.
    */
@@ -54,7 +54,7 @@ export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
 export const ActivityIcon = ({
   icon,
   alt = '',
-  variant,
+  container,
   size,
   className,
   ...props
@@ -71,9 +71,13 @@ export const ActivityIcon = ({
     );
   }
 
-  if (import.meta.env.DEV && variant && !allowedVariants.includes(variant)) {
+  if (
+    import.meta.env.DEV &&
+    container &&
+    !allowedContainers.includes(container)
+  ) {
     console.warn(
-      `[MDS ActivityIcon] Invalid variant "${variant}". Falling back to "default". Allowed: ${allowedVariants.join(', ')}`,
+      `[MDS ActivityIcon] Invalid container "${container}". Falling back to "default". Allowed: ${allowedContainers.join(', ')}`,
     );
   }
 
@@ -86,8 +90,8 @@ export const ActivityIcon = ({
   const resolvedIcon: ActivityIconName = hasValidIcon
     ? (normalizedIcon as ActivityIconName)
     : iconLookupFallback;
-  const resolvedVariant =
-    variant && allowedVariants.includes(variant) ? variant : 'default';
+  const resolvedContainer =
+    container && allowedContainers.includes(container) ? container : 'default';
   const resolvedSize = size && allowedSizes.includes(size) ? size : 'md';
   const resolvedCategory = activityIconRegistry[resolvedIcon].category;
   const [iconSrc, setIconSrc] = useState<string | undefined>(undefined);
@@ -115,7 +119,7 @@ export const ActivityIcon = ({
 
   const classes = [
     'mds-activity-icon',
-    `mds-activity-icon--${resolvedVariant}`,
+    `mds-activity-icon--${resolvedContainer}`,
     `mds-activity-icon--size-${resolvedSize}`,
     `mds-activity-icon--category-${resolvedCategory}`,
   ];
