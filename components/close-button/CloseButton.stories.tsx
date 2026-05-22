@@ -46,7 +46,7 @@ const meta = {
   },
   args: {
     'aria-label': 'Close',
-    size: 'md',
+    size: undefined,
     disabled: false,
   },
   play: async ({ args, canvas, userEvent }) => {
@@ -63,17 +63,85 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const showcaseParameters = {
+  controls: { disable: true },
+  docs: {
+    canvas: { sourceState: 'none' as const },
+  },
+};
+
+const showcaseInlineStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 'var(--mds-spacing-sm)',
+};
+
 export const Default = {} satisfies Story;
 
-export const Small = {
-  args: {
-    size: 'sm',
+export const Sizes = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={showcaseInlineStyle}>
+      <CloseButton
+        {...args}
+        size="sm"
+        aria-label={`${args['aria-label']} small`}
+      />
+      <CloseButton
+        {...args}
+        size="md"
+        aria-label={`${args['aria-label']} medium`}
+      />
+      <CloseButton
+        {...args}
+        size="lg"
+        aria-label={`${args['aria-label']} large`}
+      />
+    </div>
+  ),
+  play: async ({ args, canvas }) => {
+    const smallButton = canvas.getByRole('button', {
+      name: `${args['aria-label']} small`,
+    });
+    const mediumButton = canvas.getByRole('button', {
+      name: `${args['aria-label']} medium`,
+    });
+    const largeButton = canvas.getByRole('button', {
+      name: `${args['aria-label']} large`,
+    });
+
+    await expect(smallButton).toBeVisible();
+    await expect(mediumButton).toBeVisible();
+    await expect(largeButton).toBeVisible();
   },
 } satisfies Story;
 
-export const Large = {
-  args: {
-    size: 'lg',
+export const Disabled = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={showcaseInlineStyle}>
+      <CloseButton
+        {...args}
+        disabled={false}
+        aria-label={`${args['aria-label']} default`}
+      />
+      <CloseButton
+        {...args}
+        disabled
+        aria-label={`${args['aria-label']} disabled`}
+      />
+    </div>
+  ),
+  play: async ({ args, canvas }) => {
+    const defaultButton = canvas.getByRole('button', {
+      name: `${args['aria-label']} default`,
+    });
+    const disabledButton = canvas.getByRole('button', {
+      name: `${args['aria-label']} disabled`,
+    });
+
+    await expect(defaultButton).toBeEnabled();
+    await expect(disabledButton).toBeDisabled();
   },
 } satisfies Story;
 
@@ -94,17 +162,5 @@ export const Focus = {
     await userEvent.click(document.body);
     await userEvent.tab();
     await expect(button).toHaveFocus();
-  },
-} satisfies Story;
-
-export const Disabled = {
-  args: {
-    disabled: true,
-  },
-  play: async ({ args, canvas }) => {
-    const button = canvas.getByRole('button', {
-      name: args['aria-label'] as string,
-    });
-    await expect(button).toBeDisabled();
   },
 } satisfies Story;
