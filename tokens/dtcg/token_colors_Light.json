@@ -90,7 +90,7 @@
       "info": {
         "default": {
           "$type": "color",
-          "$value": "{color.cyan.500}"
+          "$value": "{color.cyan.600}"
         },
         "light": {
           "$type": "color",
