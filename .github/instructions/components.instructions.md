@@ -271,6 +271,8 @@ const feedbackId = invalid && invalidFeedback ? `${id}-feedback` : undefined;
 
 Colocate styles in `component-name.css` (lowercase kebab-case filename, e.g. `button.css` not `Button.css`). Use `--mds-*` CSS custom properties exclusively — no hardcoded colors, spacing, or typography values.
 
+When a matching `--mds-*` token exists, use the token directly with no fallback literal in `var(...)` (for example, use `var(--mds-spacing-xs)`, not `var(--mds-spacing-xs, 0.5rem)`). Fallback literals are only acceptable when no token exists yet and a temporary value is explicitly approved by maintainers.
+
 Component styles layer on top of Bootstrap CSS classes. The JSX applies both the Bootstrap base class (e.g. `.btn`) and the `mds-*` hook, so CSS rules target both together to control specificity:
 
 **Three selector levels are used — pick the right one for the job:**
