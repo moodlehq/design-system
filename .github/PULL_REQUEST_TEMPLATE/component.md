@@ -35,6 +35,7 @@
 ### CSS and tokens
 
 - [ ] All CSS values use `var(--mds-*)` tokens — no hardcoded colours, spacing, or typography
+- [ ] Where a matching token exists, `var(--mds-*)` is used without fallback literals (for example, `var(--mds-spacing-xs)`, not `var(--mds-spacing-xs, 0.5rem)`)
 
 ### Tests and stories
 

@@ -100,7 +100,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 
 1. Check `tokens/css/` or use Figma MCP (`get_variable_defs` / `get_design_context`) to find an existing `--mds-*` token.
 2. If a matching token exists → use it via `var(--mds-*)`.
-3. If no token exists → do not invent an ad-hoc value. Ask contributors to request one at https://design.moodle.com/.
+3. When using an existing `--mds-*` token, do not add a fallback literal in `var(...)` (for example, avoid `var(--mds-token, 1rem)` and use `var(--mds-token)` instead).
+4. If no token exists → do not invent an ad-hoc value. Ask contributors to request one at https://design.moodle.com/.
 
 **When working from a Figma design:**
 

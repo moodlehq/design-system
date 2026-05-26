@@ -25,7 +25,7 @@
   font-family: var(--mds-font-family-base, Arial, sans-serif);
   font-size: var(--mds-font-size-body, 1rem);
   font-weight: var(--mds-font-weight-regular, 400);
-  line-height: var(--mds-line-height-paragraph-small, 1.0875rem); /* 108.75% */
+  line-height: var(--mds-line-height-paragraph-xs, 0.75rem);
   letter-spacing: var(--mds-letter-spacing, 0);
 }
 
@@ -103,14 +103,11 @@
 .mds-form-check .form-check-label,
 .mds-form-check .mds-form-check-label {
   color: var(--mds-text-default, #1d2125);
-  cursor: pointer;
 }
 /* Use sibling selector so the label reflects the input's disabled/invalid state */
 .mds-form-check .mds-form-check-input:disabled ~ .form-check-label,
 .mds-form-check .mds-form-check-input:disabled ~ .mds-form-check-label {
   color: var(--mds-text-muted);
-  /* Disabled inputs are not interactive — suppress the pointer cursor on the label */
-  cursor: default;
 }
 .mds-form-check .mds-form-check-input.is-invalid ~ .form-check-label,
 .mds-form-check .mds-form-check-input.is-invalid ~ .mds-form-check-label {
@@ -125,6 +122,7 @@
   grid-column: 2;
   font-size: var(--mds-font-size-paragraph-small, 0.875rem);
   font-weight: var(--mds-font-weight-medium, 500);
+  line-height: var(--mds-line-height-paragraph-xs, 0.75rem);
   color: var(--mds-text-danger);
 }
 /* Dim the feedback when the input is disabled to match the reduced visual weight of
