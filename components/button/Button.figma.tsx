@@ -11,7 +11,7 @@ const sizeMap = {
   lg: 'lg',
 } as const;
 
-// Map Figma Type + Style variants to React variant prop
+// Map Figma Variant + Style variants to React variant prop
 const styleVariantMap = {
   primary: {
     fill: 'primary',
@@ -30,7 +30,7 @@ const styleVariantMap = {
   },
 } as const;
 
-const variant = figma.enum('Type', {
+const variant = figma.enum('Variant', {
   primary: figma.enum('Style', styleVariantMap.primary),
   secondary: figma.enum('Style', styleVariantMap.secondary),
   danger: figma.enum('Style', styleVariantMap.danger),
@@ -43,6 +43,33 @@ const iconOnlyAriaLabel = 'Action';
 // Default state (no icon, no focus state visual)
 figma.connect(Button, url, {
   variant: { Icon: 'none', State: 'default', Focus: 'False' },
+  props: { variant: variant, size: size },
+  example: (props) => (
+    <Button label={buttonLabel} variant={props.variant} size={props.size} />
+  ),
+});
+
+// Hover state
+figma.connect(Button, url, {
+  variant: { Icon: 'none', State: 'hover', Focus: 'False' },
+  props: { variant: variant, size: size },
+  example: (props) => (
+    <Button label={buttonLabel} variant={props.variant} size={props.size} />
+  ),
+});
+
+// Pressed state
+figma.connect(Button, url, {
+  variant: { Icon: 'none', State: 'pressed', Focus: 'False' },
+  props: { variant: variant, size: size },
+  example: (props) => (
+    <Button label={buttonLabel} variant={props.variant} size={props.size} />
+  ),
+});
+
+// Focus-visible state
+figma.connect(Button, url, {
+  variant: { Icon: 'none', State: 'default', Focus: 'True' },
   props: { variant: variant, size: size },
   example: (props) => (
     <Button label={buttonLabel} variant={props.variant} size={props.size} />
@@ -63,9 +90,9 @@ figma.connect(Button, url, {
   ),
 });
 
-// With end icon (suffix)
+// With end icon
 figma.connect(Button, url, {
-  variant: { Icon: 'suffix', State: 'default', Focus: 'False' },
+  variant: { Icon: 'endIcon', State: 'default', Focus: 'False' },
   props: { variant: variant, size: size },
   example: (props) => (
     <Button
@@ -77,9 +104,9 @@ figma.connect(Button, url, {
   ),
 });
 
-// With start icon (prefix)
+// With start icon
 figma.connect(Button, url, {
-  variant: { Icon: 'prefix', State: 'default', Focus: 'False' },
+  variant: { Icon: 'startIcon', State: 'default', Focus: 'False' },
   props: { variant: variant, size: size },
   example: (props) => (
     <Button

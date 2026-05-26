@@ -1,6 +1,6 @@
 .mds-btn.btn {
   background-color: var(--mds-bg-interactive-primary-default);
-  border: var(--mds-stroke-weight-sm) solid var(--mds-border-translucent);
+  border: none;
   border-radius: var(--mds-border-radius-sm);
   padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
 
@@ -77,6 +77,9 @@
   outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
 }
+.mds-btn.btn:active:focus-visible {
+  box-shadow: none;
+}
 .mds-btn.btn.btn-danger:focus-visible,
 .mds-btn.btn.btn-outline-danger:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-danger);
@@ -86,7 +89,7 @@
 }
 .mds-btn.btn:active {
   background-color: var(--mds-bg-interactive-primary-active);
-  border: var(--mds-stroke-weight-sm) solid var(--mds-border-translucent);
+  box-shadow: none;
 }
 .mds-btn.btn:disabled {
   background-color: var(--mds-bg-interactive-primary-disabled);
@@ -149,72 +152,75 @@
 /**
   * Outline Primary variants
   */
-.mds-btn.btn-outline-primary {
+.mds-btn.btn:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
   background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid
-    var(--mds-border-interactive-primary-default);
+  border: var(--mds-stroke-weight-sm) solid transparent;
+}
+
+.mds-btn.btn.btn-outline-primary {
+  border-color: var(--mds-border-interactive-primary-default);
   color: var(--mds-text-link-primary-default);
 }
 .mds-btn.btn-outline-primary:hover {
+  border-color: var(--mds-bg-interactive-primary-hover);
   background-color: var(--mds-bg-interactive-primary-hover);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-primary:active {
+  border-color: var(--mds-bg-interactive-primary-active);
   background-color: var(--mds-bg-interactive-primary-active);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-primary:disabled {
-  background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid
-    var(--mds-border-interactive-primary-disabled);
+  border-color: var(--mds-border-interactive-primary-disabled);
   color: var(--mds-text-link-primary-disabled);
 }
 
 /**
   * Outline Secondary variants
   */
-.mds-btn.btn-outline-secondary {
-  background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid
-    var(--mds-border-interactive-secondary-default);
+.mds-btn.btn.btn-outline-secondary {
+  border-color: var(--mds-border-interactive-secondary-default);
   color: var(--mds-text-subtle);
 }
 .mds-btn.btn-outline-secondary:hover {
+  border-color: var(--mds-border-interactive-secondary-hover);
   background-color: var(--mds-border-interactive-secondary-hover);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-secondary:active {
+  border-color: var(--mds-border-interactive-secondary-active);
   background-color: var(--mds-border-interactive-secondary-active);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-secondary:disabled {
-  background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid
-    var(--mds-border-interactive-secondary-disabled);
+  border-color: var(--mds-border-interactive-secondary-disabled);
   color: var(--mds-text-muted);
 }
 
 /**
   * Outline Danger variants
   */
-.mds-btn.btn-outline-danger {
-  background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid
-    var(--mds-border-interactive-danger-default);
+.mds-btn.btn.btn-outline-danger {
+  border-color: var(--mds-border-interactive-danger-default);
   color: var(--mds-text-danger);
 }
 .mds-btn.btn-outline-danger:hover {
+  border-color: var(--mds-bg-interactive-danger-hover);
   background-color: var(--mds-bg-interactive-danger-hover);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn-outline-danger:active {
+  border-color: var(--mds-bg-interactive-danger-active);
   background-color: var(--mds-bg-interactive-danger-active);
   color: var(--mds-text-inverse);
 }
 .mds-btn.btn.btn-outline-danger:disabled {
-  background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid
-    var(--mds-border-interactive-danger-disabled);
+  border-color: var(--mds-border-interactive-danger-disabled);
   color: var(--mds-text-danger-disabled);
 }
 
@@ -234,4 +240,56 @@
 .mds-btn.mds-btn--size-lg {
   padding: var(--mds-spacing-sm) var(--mds-spacing-md);
   font-size: var(--mds-font-size-paragraph-default);
+}
+
+/* Keep outer geometry aligned with filled variants when outline border is present. */
+.mds-btn.mds-btn--size-sm:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
+  padding: calc(var(--mds-spacing-xxs) - var(--mds-stroke-weight-sm))
+    calc(var(--mds-spacing-xs) - var(--mds-stroke-weight-sm));
+}
+
+.mds-btn.mds-btn--size-md:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
+  padding: calc(var(--mds-spacing-xs) - var(--mds-stroke-weight-sm))
+    calc(var(--mds-spacing-sm) - var(--mds-stroke-weight-sm));
+}
+
+.mds-btn.mds-btn--size-lg:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
+  padding: calc(var(--mds-spacing-sm) - var(--mds-stroke-weight-sm))
+    calc(var(--mds-spacing-md) - var(--mds-stroke-weight-sm));
+}
+
+.mds-btn.mds-btn--icon-only:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
+  padding: calc(var(--mds-spacing-xs) - var(--mds-stroke-weight-sm));
+}
+
+.mds-btn.mds-btn--icon-only.mds-btn--size-sm:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
+  padding: calc(var(--mds-spacing-xxs) - var(--mds-stroke-weight-sm));
+}
+
+.mds-btn.mds-btn--icon-only.mds-btn--size-lg:is(
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger
+  ) {
+  padding: calc(var(--mds-spacing-xs) - var(--mds-stroke-weight-sm));
 }
