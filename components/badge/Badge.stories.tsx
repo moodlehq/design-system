@@ -88,7 +88,11 @@ const variants = [
   'info',
 ] as const;
 
-const icon = <i className="fa-solid fa-circle-info" aria-hidden="true" />;
+const startIcon = <i className="fa-solid fa-circle-check" aria-hidden="true" />;
+const endIcon = <i className="fa-solid fa-xmark" aria-hidden="true" />;
+
+const getVariantLabel = (variant: (typeof variants)[number]) =>
+  variant[0].toUpperCase() + variant.slice(1);
 
 const showcaseRowStyle = {
   display: 'flex',
@@ -112,7 +116,7 @@ export const DefaultVariants: Story = {
       {variants.map((variant) => (
         <Badge
           key={variant}
-          label={variant[0].toUpperCase() + variant.slice(1)}
+          label={getVariantLabel(variant)}
           variant={variant}
         />
       ))}
@@ -127,11 +131,69 @@ export const SubtleVariants: Story = {
       {variants.map((variant) => (
         <Badge
           key={variant}
-          label={variant[0].toUpperCase() + variant.slice(1)}
+          label={getVariantLabel(variant)}
           variant={variant}
           subtle
         />
       ))}
+    </div>
+  ),
+};
+
+export const IconDefaultVariants: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--mds-spacing-xs)' }}>
+      <div style={showcaseRowStyle}>
+        {variants.map((variant) => (
+          <Badge
+            key={`${variant}-prefix`}
+            label={getVariantLabel(variant)}
+            variant={variant}
+            startIcon={startIcon}
+          />
+        ))}
+      </div>
+      <div style={showcaseRowStyle}>
+        {variants.map((variant) => (
+          <Badge
+            key={`${variant}-suffix`}
+            label={getVariantLabel(variant)}
+            variant={variant}
+            endIcon={endIcon}
+          />
+        ))}
+      </div>
+    </div>
+  ),
+};
+
+export const IconSubtleVariants: Story = {
+  parameters: showcaseParameters,
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--mds-spacing-xs)' }}>
+      <div style={showcaseRowStyle}>
+        {variants.map((variant) => (
+          <Badge
+            key={`${variant}-subtle-prefix`}
+            label={getVariantLabel(variant)}
+            variant={variant}
+            subtle
+            startIcon={startIcon}
+          />
+        ))}
+      </div>
+      <div style={showcaseRowStyle}>
+        {variants.map((variant) => (
+          <Badge
+            key={`${variant}-subtle-suffix`}
+            label={getVariantLabel(variant)}
+            variant={variant}
+            subtle
+            endIcon={endIcon}
+          />
+        ))}
+      </div>
     </div>
   ),
 };
@@ -149,7 +211,7 @@ export const PillVariants: Story = {
 export const RightToLeft: Story = {
   args: {
     label: 'حالة',
-    startIcon: icon,
+    startIcon: startIcon,
   },
   decorators: [
     (Story) => (
@@ -158,5 +220,5 @@ export const RightToLeft: Story = {
       </div>
     ),
   ],
-  tags: ['test'],
+  tags: ['test', 'stable'],
 };

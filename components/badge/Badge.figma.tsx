@@ -4,7 +4,7 @@ import { Badge } from './Badge';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=7309-410';
 
-const variant = figma.enum('Type', {
+const variant = figma.enum('Variant', {
   Primary: 'primary',
   Secondary: 'secondary',
   Success: 'success',
@@ -30,9 +30,9 @@ figma.connect(Badge, url, {
   ),
 });
 
-// Default contrast, prefix icon
+// Default contrast, start icon
 figma.connect(Badge, url, {
-  variant: { Contrast: 'Default', Icon: 'Prefix' },
+  variant: { Contrast: 'Default', Icon: 'startIcon' },
   props: {
     variant: variant,
     pill: pill,
@@ -47,9 +47,9 @@ figma.connect(Badge, url, {
   ),
 });
 
-// Default contrast, suffix icon
+// Default contrast, end icon
 figma.connect(Badge, url, {
-  variant: { Contrast: 'Default', Icon: 'Suffix' },
+  variant: { Contrast: 'Default', Icon: 'endIcon' },
   props: {
     variant: variant,
     pill: pill,
@@ -76,9 +76,9 @@ figma.connect(Badge, url, {
   ),
 });
 
-// Subtle contrast, prefix icon
+// Subtle contrast, start icon
 figma.connect(Badge, url, {
-  variant: { Contrast: 'Subtle', Icon: 'Prefix' },
+  variant: { Contrast: 'Subtle', Icon: 'startIcon' },
   props: {
     variant: variant,
     pill: pill,
@@ -94,9 +94,9 @@ figma.connect(Badge, url, {
   ),
 });
 
-// Subtle contrast, suffix icon
+// Subtle contrast, end icon
 figma.connect(Badge, url, {
-  variant: { Contrast: 'Subtle', Icon: 'Suffix' },
+  variant: { Contrast: 'Subtle', Icon: 'endIcon' },
   props: {
     variant: variant,
     pill: pill,
