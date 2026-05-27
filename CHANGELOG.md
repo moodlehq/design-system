@@ -1,5 +1,24 @@
 # Changelog
 
+## [4.0.0](https://github.com/moodlehq/design-system/compare/design-system-v3.2.0...design-system-v4.0.0) (2026-05-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Button:** Button icons must be <i> or <svg>; use startIcon or endIcon, not both.
+
+### Features
+
+* **Badge:** Add new Badge component ([#213](https://github.com/moodlehq/design-system/issues/213)) ([d8dba76](https://github.com/moodlehq/design-system/commit/d8dba76b190764694a297287a673b953fb84a670))
+* **Button:** Revamped the Button for production use ([#208](https://github.com/moodlehq/design-system/issues/208)) ([69500f9](https://github.com/moodlehq/design-system/commit/69500f93a3f6a10961ebc17f6a662f6559945ec3))
+* **Checkbox:** Add Checkbox component ([#216](https://github.com/moodlehq/design-system/issues/216)) ([e163e41](https://github.com/moodlehq/design-system/commit/e163e414fded11ef57c4c62059e6417f60d557ee))
+* **Tokens:** Build CSS variables at run-time from SCSS ([#222](https://github.com/moodlehq/design-system/issues/222)) ([a9c5987](https://github.com/moodlehq/design-system/commit/a9c5987a2462a656efdbe7a23dec03048b8758ea))
+
+
+### Bug Fixes
+
+* **Tokens:** Darken info default color for a11y ([#233](https://github.com/moodlehq/design-system/issues/233)) ([d841e56](https://github.com/moodlehq/design-system/commit/d841e5636fad32a340da46bf97de38b22776b904))
+
 ## [3.2.0](https://github.com/moodlehq/design-system/compare/design-system-v3.1.0...design-system-v3.2.0) (2026-05-20)
 
 
