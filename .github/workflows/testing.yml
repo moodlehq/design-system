@@ -16,10 +16,6 @@ permissions:
 jobs:
   storybook-accessibility:
     runs-on: ubuntu-latest
-    container:
-      # Make sure to grab the latest version of the Playwright image
-      # https://playwright.dev/docs/docker#pull-the-image
-      image: mcr.microsoft.com/playwright:v1.60.0-noble
     steps:
       - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
 
@@ -32,6 +28,9 @@ jobs:
         run: |
           rm -rf node_modules package-lock.json
           npm install
+
+      - name: Install Playwright runtime
+        run: npx playwright install --with-deps chromium
 
       - name: Run tests
         run: npm run test-storybook
@@ -100,7 +99,7 @@ jobs:
           npm install
 
       - name: Run Chromatic
-        uses: chromaui/action@1bbb5819252d9782cb7d77122d9becae467def18 # v16.10.1
+        uses: chromaui/action@0b8c883861c1663076150cf1f4592b19d1ff6a54 # v17.0.1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
