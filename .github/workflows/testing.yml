@@ -17,7 +17,7 @@ jobs:
   storybook-accessibility:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
 
       - name: Setup Node
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -38,7 +38,7 @@ jobs:
   jsunit-coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
 
       - name: Setup Node
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -58,7 +58,7 @@ jobs:
   lint-format-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
 
       - name: Setup Node
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -84,7 +84,7 @@ jobs:
     if: ${{ !startsWith(github.head_ref, 'dependabot/') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231
+      - uses: actions/checkout@1cce3390c2bfda521930d01229c073c7ff920824
         with:
           fetch-depth: 0
 
@@ -99,7 +99,7 @@ jobs:
           npm install
 
       - name: Run Chromatic
-        uses: chromaui/action@0b8c883861c1663076150cf1f4592b19d1ff6a54 # v17.0.1
+        uses: chromaui/action@d92ea1ce501f70e8c34745b2c7888648150a368a # v17.2.0
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
