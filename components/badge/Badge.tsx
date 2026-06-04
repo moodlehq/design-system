@@ -1,6 +1,5 @@
 import type { HTMLAttributes, ReactElement } from 'react';
 import { isValidElement } from 'react';
-import './badge.css';
 
 type BadgeVariant =
   | 'primary'
