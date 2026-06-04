@@ -16,5 +16,8 @@ export type { CloseButtonProps } from './close-button';
 export { Pagination } from './pagination';
 export type { PaginationProps } from './pagination';
 
+export { ProgressBar } from './progress-bar';
+export type { ProgressBarProps } from './progress-bar';
+
 export { Radio } from './radio';
 export type { RadioProps } from './radio';
