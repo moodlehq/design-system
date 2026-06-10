@@ -16,6 +16,7 @@ export default {
     '@storybook/addon-docs',
     '@storybook/addon-a11y',
     '@storybook/addon-vitest',
+    '@storybook/addon-mcp',
     {
       name: '@storybook/addon-coverage',
       options: coverageConfig,
