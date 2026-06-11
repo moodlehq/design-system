@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.1.0](https://github.com/moodlehq/design-system/compare/design-system-v4.0.0...design-system-v4.1.0) (2026-06-11)
+
+
+### Features
+
+* **fonts:** Update from Roboto to Noto Sans ([#248](https://github.com/moodlehq/design-system/issues/248)) ([6a621bd](https://github.com/moodlehq/design-system/commit/6a621bdb492261e1e89304ac69b7c1cf0b5ee9f6))
+* **Storybook:** Enable the MCP addon for storybook ([#249](https://github.com/moodlehq/design-system/issues/249)) ([0ed4900](https://github.com/moodlehq/design-system/commit/0ed490069b5f351432b438681d3034d5d5c71bb6))
+
+
+### Bug Fixes
+
+* **Badge:** Remove accidental import of css within component file ([#244](https://github.com/moodlehq/design-system/issues/244)) ([b6a7f89](https://github.com/moodlehq/design-system/commit/b6a7f89d6e48f33f2c53607e968f7cf123ee0e80))
+
 ## [4.0.0](https://github.com/moodlehq/design-system/compare/design-system-v3.2.0...design-system-v4.0.0) (2026-05-27)
 
 
