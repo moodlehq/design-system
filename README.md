@@ -109,13 +109,13 @@ import { Button } from '@moodlehq/design-system/components/button';
 
 ### Fonts
 
-The recommended typeface for Moodle Design System is **[Roboto](https://fonts.google.com/specimen/Roboto)**. The package does not bundle font files. Provide Roboto in your application:
+The recommended typeface for Moodle Design System is **[Noto Sans](https://fonts.google.com/specimen/Noto+Sans)**. The package does not bundle font files. Provide Noto Sans in your application:
 
 **Option 1: Google Fonts CDN**
 
 ```html
 <link
-  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
   rel="stylesheet"
 />
 ```
@@ -125,15 +125,16 @@ Place font files in your project and add `@font-face` declarations:
 
 ```css
 @font-face {
-  font-family: 'Roboto';
-  src: url('./fonts/Roboto-VariableFont_wdth,wght.woff2') format('woff2');
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-VariableFont_wdth,wght.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('./fonts/Roboto-Italic-VariableFont_wdth,wght.woff2') format('woff2');
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Italic-VariableFont_wdth,wght.woff2')
+    format('woff2');
   font-weight: 100 900;
   font-style: italic;
 }

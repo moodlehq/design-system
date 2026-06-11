@@ -537,7 +537,7 @@
       },
       "sans-serif": {
         "$type": "string",
-        "$value": "Roboto"
+        "$value": "Noto sans"
       }
     },
     "font-size": {
