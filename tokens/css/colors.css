@@ -26,7 +26,7 @@
   --mds-bg-feedback-primary-default: var(--mds-color-blue-500);
   --mds-bg-feedback-primary-light: var(--mds-color-blue-50);
   --mds-bg-feedback-primary-subtle: var(--mds-color-blue-100);
-  --mds-bg-feedback-secondary-default: var(--mds-color-gray-400);
+  --mds-bg-feedback-secondary-default: var(--mds-color-gray-300);
   --mds-bg-feedback-secondary-subtle: var(--mds-color-gray-100);
   --mds-bg-feedback-success-default: var(--mds-color-green-500);
   --mds-bg-feedback-success-light: var(--mds-color-green-50);
@@ -44,9 +44,9 @@
   --mds-bg-interactive-primary-default-light: var(--mds-color-blue-50);
   --mds-bg-interactive-primary-disabled: var(--mds-color-blue-200);
   --mds-bg-interactive-primary-hover: var(--mds-color-blue-600);
-  --mds-bg-interactive-secondary-default: var(--mds-color-gray-400);
+  --mds-bg-interactive-secondary-default: var(--mds-color-gray-300);
   --mds-bg-interactive-secondary-disabled: var(--mds-color-gray-200);
-  --mds-bg-interactive-secondary-hover: var(--mds-color-gray-300);
+  --mds-bg-interactive-secondary-hover: var(--mds-color-gray-400);
   --mds-bg-surface-default: var(--mds-color-gray-white);
   --mds-bg-surface-strong: var(--mds-color-gray-200);
   --mds-bg-surface-subtle: var(--mds-color-gray-100);
@@ -62,7 +62,7 @@
   --mds-border-interactive-primary-active: var(--mds-color-blue-600);
   --mds-border-interactive-primary-disabled: var(--mds-color-blue-300);
   --mds-border-interactive-secondary-active: var(--mds-color-gray-700);
-  --mds-border-interactive-secondary-default: var(--mds-color-gray-600);
+  --mds-border-interactive-secondary-default: var(--mds-color-gray-500);
   --mds-border-interactive-secondary-disabled: var(--mds-color-gray-500);
   --mds-border-interactive-secondary-hover: var(--mds-color-gray-600);
   --mds-border-subtle: var(--mds-color-gray-200);

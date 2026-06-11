@@ -118,7 +118,7 @@
       "secondary": {
         "default": {
           "$type": "color",
-          "$value": "{color.gray.400}"
+          "$value": "{color.gray.300}"
         },
         "subtle": {
           "$type": "color",
@@ -206,7 +206,7 @@
         },
         "default": {
           "$type": "color",
-          "$value": "{color.gray.400}"
+          "$value": "{color.gray.300}"
         },
         "disabled": {
           "$type": "color",
@@ -214,7 +214,7 @@
         },
         "hover": {
           "$type": "color",
-          "$value": "{color.gray.300}"
+          "$value": "{color.gray.400}"
         }
       }
     },
@@ -308,7 +308,7 @@
         },
         "default": {
           "$type": "color",
-          "$value": "{color.gray.600}"
+          "$value": "{color.gray.500}"
         },
         "disabled": {
           "$type": "color",

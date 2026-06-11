@@ -1239,7 +1239,7 @@ None. If the icon changes communicate status updates, the parent context should 
 # Design
 ## Anatomy
 
-![](zeroheight://image/8449677/3131977d3aa64de585ad97e1cd1eb3d4e6cc45318291d4f8f0afdfa312d5860d)
+![](zeroheight://image/8449677/e2716e4ad637fa6ea454f5418278d4b68e9a70b00d9d125606823792fbd22efd)
 
 1. **Progress**: The full length background. It represents the total work to be done.
 2. **Progress bar**: The coloured bar inside the progress. It grows from left to right to show how far along the task is.
@@ -1265,7 +1265,7 @@ These are visual states, not interaction states. The progress bar is for display
 # Usage
 ## Overview
 
-![](zeroheight://image/8449677/67ebc87dbff676f216cc7cc70b9bc51a99a64556483936965c3778d06752c110)
+![](zeroheight://image/8449677/ef50f28ebdd039acb1371ea80871d401e3988e6ddb7636b9d2843089612e7902)
 
 The progress bar shows how progress changes over time. It can track a user task, a system process, or anything else that is moving towards completion. It helps users understand what is done and what is left. 
 
@@ -1299,10 +1299,10 @@ The label property controls which text is shown and where it appears. It can be 
 
 | **Variant** | **When to use** |
 | :--- | :--- |
-| ![](zeroheight://image/8449677/c25ba68c602af26df010d9be492fd78c288841a28d987dcb66cd65c4f41eb209) | **Title and count** Use when you need the title and count as separate items for quick scanning.  |
-| ![](zeroheight://image/8449677/8200ffb64965644b24c87ef60bdcbf7d9f1da8ad1dc3da78a7b3a3a57961f478) | **Title** Use when you need one flexible label line that can show a title, a count, or both.   |
-| ![](zeroheight://image/8449677/ee02c5c322f50806fb680cafc68252a1abdf4890d2f037203b8c7ac989056acc) | **Inline** Use when vertical space is tight and you only need a compact count.  |
-| ![](zeroheight://image/8449677/1cca30141578a1786ee764d8882be66699905e2c2bcf2969d02df132adf714ce) | **None** Use only when nearby content already explains what is being measured. |
+| ![](zeroheight://image/8449677/3e901917f3d78080171dda246d9e832b0f3152f8618afc49926a479fc0ddbdd4) | **Title and count** Use when you need the title and count as separate items for quick scanning.  |
+| ![](zeroheight://image/8449677/fcbd614a3fdf2d780a991c0cbc3495bffc15d4f85a88b791aebd3eef4af1f6a5) | **Title** Use when you need one flexible label line that can show a title, a count, or both.   |
+| ![](zeroheight://image/8449677/499881ea8332ca90ff99a10c8efe81d85ff192456f4fac335e8f4ce2bee67ab9) | **Inline** Use when vertical space is tight and you only need a compact count.  |
+| ![](zeroheight://image/8449677/c695432945d148aee507e30071c58587be22efb7e6a1ccbfd0048f6613582e89) | **None** Use only when nearby content already explains what is being measured. |
 
 ---
 
@@ -1395,7 +1395,7 @@ The label property controls which text is shown and where it appears. It can be 
 # Usage
 ## Overview
 
-![](zeroheight://image/8046350/006d88f1969e1ab081056aa1621bc513cd4f2ac807730267b1dbf615f7f73fba)
+![](zeroheight://image/8046350/d3572134e7570cd0720084289a7b82532ff3882f77b44dc5b3ebc86275d63f48)
 
 Use badges to highlight short, scannable information like status, metadata, or counts. Keep them short and easy to read.
 
@@ -1437,34 +1437,34 @@ Badges combine four independent choices:
 
 | **Variant** | **When to use** |
 | :--- | --- |
-| ![](zeroheight://image/8046350/0c203175e8acdbd01580bd7d5154bcc8375d659d1f8eef9789dd5a88cf237311)  | ****Primary**** Use for the default or most prominent label in a set.  |
-| ![](zeroheight://image/8046350/cc408b9bb9f1c78b9cde401e64bc308c679e91c6a1b983353ea6c8024d2dc258)  | ****Secondary**** Use for a supporting, neutral, or less prominent label.  |
-| ![](zeroheight://image/8046350/9f159821c4a025e7535d33464daa7f9962a681016d840ea7aaa58f896d0e23a8)  | ****Success**** Use for a positive outcome, completion, or confirmed good state.  |
-| ![](zeroheight://image/8046350/01adc04167dba479ebf96abcaea9bb491e71f66ec0e07bed0647cd9fdbc19f0c)  | **Danger** Use for risk, failure, destructive state, or negative status.  |
-| ![](zeroheight://image/8046350/c34399e4f20f0dbe6457fce12c4c782ef80e2bfbc64a496c3a6676ec62efb92f)  | **Warning** Use for caution, potential issue, or something that needs attention.  |
-| ![](zeroheight://image/8046350/af22c1d49215d0bbcaf263ab9d08113911938cad5bd20d2cc7181a01fbee8b2c) | **Info** Use for helpful context, extra detail, or a non urgent note. |
+| ![](zeroheight://image/8046350/a80469d8dbecded63db7943368406c962ca3672c6aadc747f17d3941a9f5e4e7)  | ****Primary**** Use for the default or most prominent label in a set.  |
+| ![](zeroheight://image/8046350/eb593164bdc62be579b081bc3d86342e7c5864daac4b06e91c127cdc205ed567)  | ****Secondary**** Use for a supporting, neutral, or less prominent label.  |
+| ![](zeroheight://image/8046350/e3c63b42a8a8d451131ba09637e67c7980722ed0fe8c80cea8a795e25b2be83c)  | ****Success**** Use for a positive outcome, completion, or confirmed good state.  |
+| ![](zeroheight://image/8046350/3e46822d629567864c283d472648863e32bfdf6db39f694ff28f34419004ba02)  | **Danger** Use for risk, failure, destructive state, or negative status.  |
+| ![](zeroheight://image/8046350/03d7ecaf36c921822f226044e8a112d6c9252be95817d1c7f5224390bb8f19a8)  | **Warning** Use for caution, potential issue, or something that needs attention.  |
+| ![](zeroheight://image/8046350/a770131237f96251aa2695c54ceb14ea27a405181453a7703bc3d6c0a5b5be4a) | **Info** Use for helpful context, extra detail, or a non urgent note. |
 
 ### Contrast
 
 | **Variant** | **When to use** |
 | :--- | --- |
-| ![](zeroheight://image/8046350/ffc171c948157bf9bb7bea5c09898070a19954bf9ba7f19656c5ec0193dea155)  | ****Default**** Use when the badges must stand out.  Label: `colors.text.inverse` Exceptions due to low contrast:. Container: `colors.bg.feedback.{type}.default`  |
-| ![](zeroheight://image/8046350/1366dfa04c9ea034a0aee8acddc7a463c16fe9113fd5015fa002d090138ce10e) | ****Subtle**** Use for quieter labels, and for dense layouts like lists and tables.  Label: `colors.text.feedback.{type}` Container: `colors.bg.feedback.{type}.subtle` Border: `colors.border.feedback.{type}` |
+| ![](zeroheight://image/8046350/dcb8b9522c46bc4ddacdb3361b0e23c95da94cbb54af36633eb3a4e122a33bcd)  | ****Default**** Use when the badges must stand out.  Label: `colors.text.inverse` Exceptions due to low contrast:. Container: `colors.bg.feedback.{type}.default`  |
+| ![](zeroheight://image/8046350/e49df5d97c7645171641c031e30aaaa9948532fdd17223bf4b9b4e4a6b1d4c87) | ****Subtle**** Use for quieter labels, and for dense layouts like lists and tables.  Label: `colors.text.feedback.{type}` Container: `colors.bg.feedback.{type}.subtle` Border: `colors.border.feedback.{type}` |
 
 ### Style
 
 | **Variant** | **When to use** |
 | :--- | --- |
-| ![](zeroheight://image/8046350/22dcc3c7de09942a373323abf82644f14899956c8a624d7ad0dbd08c9ad7bf95)  | ****Default**** Use for a neutral badge shape.   Border radius: `borders.border radius.sm`  |
-| ![](zeroheight://image/8046350/a14263bd0ecaa84b5330b2a086582eb644b304562e3da4b04e4a1b81e53b6ead) | ****Pill**** Use for a softer, more prominent badge shape.  Border radius: `borders.border radius.pill` |
+| ![](zeroheight://image/8046350/04521af33ae2ea29353de7a7ec8d6ce3b00aedcbbaa3c29a2b3cb7efd6bfa311)  | ****Default**** Use for a neutral badge shape.   Border radius: `borders.border radius.sm`  |
+| ![](zeroheight://image/8046350/9a1e3dc404abed775b199f9e8df1a00f5d67df6a697972a683845b79656f62fd) | ****Pill**** Use for a softer, more prominent badge shape.  Border radius: `borders.border radius.pill` |
 
 ### Icon
 
 | **Variant** | **When to use** |
 | :--- | --- |
-| ![](zeroheight://image/8046350/2e8a9e69de824c12d963e2282eea04fe4bdfda401bb252f225b272eac0b3a5b8)  | ****None**** Default. Use when the label alone is clear.  |
-| ![](zeroheight://image/8046350/ac7b4e3ba64a9b85ee705e3d5c2f333c2b7746c651dee053b3be0303a01c6ed2)  | ****Prefix**** Use when the icon adds meaning and supports the label.   |
-| ![](zeroheight://image/8046350/681bda1c3cd3832d716d0c2f237d0ae0e059beacb107b8ae9b1b6b25f822a9e5) | ****Suffix**** Use only when there is a clear pattern in the product and it adds meaning |
+| ![](zeroheight://image/8046350/a66bdd9714f18c90adfe36422ddcc3b4e92511c04335c2823f9ee05e4acca5b6)  | ****None**** Default. Use when the label alone is clear.  |
+| ![](zeroheight://image/8046350/5f1121a1f901c488c31d2146c95ffec26c8ef9a659e0cfb6498f801be7fc0175)  | ****Prefix**** Use when the icon adds meaning and supports the label.   |
+| ![](zeroheight://image/8046350/b8c5dcd083d2eb70a491d1bdfc16cf9a22a96235ace689bf53ff6ff1574abc6f) | ****Suffix**** Use only when there is a clear pattern in the product and it adds meaning |
 
 #### Icon rules
 
@@ -1476,7 +1476,7 @@ Badges combine four independent choices:
 
 Badges should match the text size they sit next to.
 
-![](zeroheight://image/8046350/4347dd4d91a87c45f02578410b3c0148da004a523ff0079e61cf5d063a3a997f)
+![](zeroheight://image/8046350/9c7f35569c6e0c50573f51bc129ebce2bf7978088aa60c69bfa7439f2330cffb)
 
 * Badge size follows the text style next to it.
 * Match the badge label text style to the adjacent text style.
@@ -1579,7 +1579,7 @@ Badges should match the text size they sit next to.
 # Design
 ## Anatomy
 
-![](zeroheight://image/8046350/aa7a8b110dea4fe291d6aa0ba860c3fd6354405ac998d52eca1fa0ef645fd4cb)
+![](zeroheight://image/8046350/f6b7ca545e4e2f8c9cb6bb477284a2bf0b8c91c67ae01be73fc12a1c7c858a10)
 
 1. **Label:** Required text that communicates the status.
 2. **Container:** Background shape that sets the badge size and visual weight.
@@ -1595,6 +1595,375 @@ Badges are not interactive, so they have no hover or pressed states.
 Instead of using a badge for a link or a button, use the Link or Button component. 
 
 Do not add custom interactions to badges.
+---
+
+---
+
+# Code
+## Storybook
+
+---
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | Moves focus to the button |
+| `Shift + Tab` | Moves focus to the previous interactive element |
+| `Space` | Presses the button |
+
+### ARIA
+
+* Role: button
+* `aria-pressed: true` when favourited, `false` when not
+* `aria-label`: a label that reflects the current state, e.g. "Add to favourites" or "Remove from favourites"
+
+---
+
+## GitHub
+
+<shortcut_tiles>
+<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/button">
+**GitHub: Button**
+</shortcut_tile>
+</shortcut_tiles>
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/8623878/02c2a32e6fba1bf968d8da12bffdc6cca9d78d86c1b84af57f01f4e154b78e71)
+
+1. **Container**: a circular pill-shaped hit area that holds the icon and surfaces the background for each interaction state.
+2. **Icon**: a star that switches between outlined (unfavourited) and filled (favourited) to communicate the current state.
+
+---
+
+## States
+
+Each interaction state applies to both `Favourite=False` and `Favourite=True`.
+
+### Favourite=False
+
+| **State** | **Styles and tokens** |
+| :--- | --- |
+| ![](zeroheight://image/8623878/56c7962d79f40ee386abd12fbaf621311e3f3909531b1fec5a530be49ced9de7)  | ****Default**** The resting state.   Icon: `colors.text.default` Container: `color.bg.surface.default` |
+| ![](zeroheight://image/8623878/d507cc532d86a85ba3083a18131be61c1abc253909d70e9c37b17de1b37998fd)  | **Focus** Triggered via keyboard navigation.   Icon: `colors.text.default`  Container: `colors.bg.surface.default`Focus ring: `colors.focus.default` |
+| ![](zeroheight://image/8623878/d86d32dfa2e2326e3082a4672460d8ece0f288c33604e0281c84b4151882383c)  | ****Hover**** Triggered when the cursor moves over the button.   Icon: `colors.text.subtle` Container: `colors.bg.surface.subtle` |
+| ![](zeroheight://image/8623878/33379257e432c62cc7cccfe97f2f570a1844c73effe618ef824abba8146da6ba)  | ****Pressed**** Triggered while the button is being pressed.  Icon: `colors.text.default` Container: `colors.bg.surface.strong` |
+| ![](zeroheight://image/8623878/1e87410207f9c4748b544666a48b570e9afc10fc59f5ac2f2c9b52bcba150ebd)  | **Disabled** The button is unavailable. Icon is muted.   Icon: `colors.text.muted` Container: `colors.bg.surface.default` |
+
+### Favourite=True
+
+| **State** | **Styles and tokens** |
+| :--- | --- |
+| ![](zeroheight://image/8623878/1e83062dd02b234a29c067b9449e5cecf458bd7b902131b686cd85f8cd56538b)  | ****Default**** The resting state.  Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/e8f9e64d178ec488a411697fc1fa6fae189062702f7ce9ece0d55e5a18063520)  | **Focus** Triggered via keyboard navigation.  Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default`Focus ring: `colors.focus.default` |
+| ![](zeroheight://image/8623878/7aff31b0de4699f3f3207fcc5ceeddfc35bc106fc69a3ef72f3d50c9f1e373d8)  | ****Hover**** Triggered when the cursor moves over the button.  Icon: `colors.text.link.primary.hover` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/0665610072166c68820f02d66c5bea075c983fe95b4be31f62c823e41fe19e76)  | ****Pressed**** Triggered while the button is being pressed. Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/94f65261c9fd282d9f365b0dd14c5c20318eafdb071dd08b6d7719d6495524cc)  | **Disabled** The button is unavailable. Icon is muted.  Icon: `colors.text.link.primary.disabled` Container: `colors.bg.surface.default` |
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/8623878/7c371d6fbb4460c7826b1b163a88f9a4be949d71a1d7436e161edcc410911d57)
+
+The favourite button lets users save items they want to come back to. It is a toggle: clicking it once marks the item as a favourite; clicking again removes it. The star icon changes between outlined (not favourited) and filled (favourited) to show the current state.
+
+---
+
+## When to use
+
+* Use when users need to save, bookmark, or flag individual items. For example, a course, activity, or resource.
+* Use when the star icon meaning is clear without a label, and space is constrained.
+* Use inside cards, list rows, or toolbars where a compact toggle is needed.
+
+<callout background="4" fullWidth="true">
+
+### **❌ When not to use**
+
+* Don't use when the action needs a text label to be understood. Use a labelled toggle button instead.
+* Don't use for actions that are not a simple saved/unsaved toggle.
+
+</callout>
+
+---
+
+## Variants
+
+The favourite button has one toggle property: `Favourite`.
+
+| **Variant** | **When to use** |
+| :--- | --- |
+| ![](zeroheight://image/8623878/bb39755988f83c65cc8d8530eb309e290030aa3266863cc3f49cca019073a822)  | ****Favourite=False**** The default resting state. The item has not been saved. The star is outlined. |
+| ![](zeroheight://image/8623878/b28c8d2debd9a8c04b7f000fe6876d8421d0bbaaa9dab795a6c1d84bc8a67dac)  | ****Favourite=True**** The item has been marked as a favourite. The star fills to confirm the action. |
+
+---
+
+## Guidelines
+
+### Content design
+
+#### **Labelling**
+
+* The button has no visible label. Always provide an accessible text label via `aria-label`.
+* The label must reflect the current state: "Add to favourites" when not favourited, "Remove from favourites" when favourited.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do |   |   | Use an aria-label that describes what will happen: "Add to favourites". |
+| Don't |   |   | Don't leave the button without an accessible label. |
+
+#### **Copywriting**
+
+* Keep accessible labels short and action-oriented.
+* Use sentence case: "Add to favourites", not "Add To Favourites".
+* Don't use vague labels like "Toggle" or "Star".
+
+---
+
+### Interaction behaviour
+
+* Clicking or tapping toggles the `Favourite` property between True and False.
+* The icon changes immediately on interaction.
+* Cursor: pointer on hover; not-allowed when disabled.
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* Don't rely on icon fill change alone to communicate state. Supplement with `aria-pressed` so screen readers announce the toggled state.
+
+#### **Focus**
+
+* The focus ring must be visible on all background colours used in the layout. Avoid placing the button on backgrounds where the ring becomes invisible.
+
+#### **Labelling**
+
+* Set `aria-labe`l to describe the action.
+* Update `aria-pressed` dynamically: `true` when favourited, `false` when not.
+
+---
+---
+
+---
+
+# Code
+## Storybook
+
+---
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | Moves focus into the Choicebox group. Focus goes to the selected option; if none is selected, focus goes to the first option. |
+| `Tab` | Moves focus out of the group to the next focusable element on the page. |
+| `Arrow Down` / `Arrow Right` | Moves focus to the next option in the group and selects it. |
+| `Arrow Up` / `Arrow Left` | Moves focus to the previous option in the group and selects it. |
+| `Space` | Selects the focused option if it is not already selected. |
+
+### ARIA
+
+* Role: 
+* Required attributes: 
+* Optional attributes: 
+
+### Dynamic announcements *(if applicable)*
+
+`[aria-live, state changes]`
+
+---
+
+## GitHub
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/8608900/5ef30a28212c32653e9e6a00d040949987031ee9ce7eee7ec54c246eceab2ca2)
+
+1. **Card container.** The full-surface interactive area. Clicking or tapping anywhere within this boundary selects the option.
+2. **Label.** The primary text identifying the option. Always required.
+3. **Supporting text (optional).** A secondary text line below the label that adds descriptive context.
+4. **Icon (optional).** An icon placed between the indicator and the label group. Use only when an icon meaningfully reinforces the option's identity.
+5. **Choice indicator.** A circular icon that reflects the current selection state. Displays an empty circle when unselected and a circle-check icon when selected.
+
+---
+
+## States
+
+### Unselected
+
+| **States** | **Styles and tokens** |
+| --- | --- |
+| ![](zeroheight://image/8608900/8ab7c50c2dded32ede8930cfb02276ce1897e5ed9ae97735c55726440e7480c4)  | **Default**The card's resting state. Available for selection. Use this as the starting point for all Choicebox instances before any user interaction.   Card container:. Label:.  Supporting text:. Choice indicator:.  |
+| ![](zeroheight://image/8608900/122e3dc0c51dd198d2a09681279a17762d0bb32902d223af2b2855d7210f0979)  | **Hover**Applied on mouse-over. Confirms the card is interactive before the user commits to a selection.  Card container:. Label:. Supporting text:.  |
+| ![](zeroheight://image/8608900/c669875018fff5e8c73423f5ab0687b1973a2d47b1eb8bc952e7acc34feaa75f)  | **Pressed**Applied on click or tap before the pointer is released. Provides tactile feedback that the interaction has been registered.  Card container:. Choice indicator: no change from Default.  |
+| ![](zeroheight://image/8608900/7a476731883a6e3819399f034f88b47db6d462200a33cda4df6ca2093d1538c3)  | **Disabled**The card is unavailable for interaction. Use when the option is not applicable in the current context, not as a substitute for validation. Always supplement with accessible copy or `aria-disabled`. Don't rely on visual presentation alone.  Card container:. Label:. Supporting text:. Choice indicator:. |
+| ![](zeroheight://image/8608900/4dd65bbabdb3a6c60dbf20bf318a4c6c2ff0fef1f0555a6c9d58549ee2cfb154)  | **Focus**Applied when the card receives keyboard focus via Tab navigation. The focus ring appears on the choice indicator.  Choice indicator: .  |
+
+### Selected
+
+| **States** | **Styles and tokens** |
+| --- | --- |
+| ![](zeroheight://image/8608900/23fc5a6bf0bc68ce8956707173fb9c00e5386e2ad6685281be59f0be757633cd) | **Default**The card has been selected. The indicator switches to a circle-check icon and the card background and border update to reflect the active state.  Card container:. Label:. Supporting text:. Choice indicator:. |
+| ![](zeroheight://image/8608900/93dc45d40cb2e908df00ff431bfa577e2cbb65f5812b2d2bc9a8e7649aff256b) | **Hover**Applied on mouse-over of a selected card. Confirms the card is interactive.  Card container:. Choice indicator: no change from Default.  |
+| ![](zeroheight://image/8608900/34f9397278e127e485f1a9f23f7b0f17e8b0b80cd03ebf2f5d172ac95441c4bf) | **Pressed**Applied on click or tap of a selected card before the pointer is released.  Card container:. Choice indicator: no change from Default. |
+| ![](zeroheight://image/8608900/24a81917766500d592f0454cd8a03fdcf6dfb74f7fade49696a8af818a2587b0) | **Disabled (selected)**The option is pre-selected but interaction is locked.  Card container:. Label:. Supporting text:. Choice indicator:. |
+| ![](zeroheight://image/8608900/ded6525cb6db321761c17d1e76ad9c170644eca279ff2da0ba0685225447c33e) | **Focus**Applied when a selected card receives keyboard focus. The focus ring appears on the choice indicator.  Choice indicator:. |
+
+---
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/8608900/d3ec452e642fe458d02d2f3cf4b36b3dc4198409d9db923b9fc83d52b9616639)
+
+Choicebox is a rich selection control for forms and option-picker interfaces. It combines a label, an optional supporting description, and an optional icon into a full-surface interactive card, giving users more context per option than a standard radio button. Use it when options benefit from additional description or visual cues to aid decision-making.
+
+---
+
+## When to use
+
+* Use when each option needs supporting context, a description, an icon, or both, to help users make an informed choice.
+* Use for feature selection, plan comparison, or preference settings where visual weight improves clarity.
+* Use in settings or configuration flows where users are choosing between meaningfully different options, such as course format or group mode.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use when options are self-explanatory. Use Radio button instead.
+* Don't use for multi-select scenarios. Use Checkbox instead.
+* Don't use for binary on/off settings. Use Switch instead.
+* Don't use when space is constrained and a compact list is more appropriate.
+
+</callout>
+
+---
+
+## Variants
+
+### Content
+
+The Choicebox supports two optional content slots, supporting text and icon, that can be used independently or together.
+
+| **Variant** | **When to use** |
+| :--- | :--- |
+| ![](zeroheight://image/8608900/34fd1cf3b97d3f47d425ff77065ade0611bdf32e654ad89999f67dbcce088943) | **Label only**  Use when the option is clear from the label alone and no additional context is needed. |
+| ![](zeroheight://image/8608900/e6a13acd870fcec793e70d3f0775474b8062fd55a56e7c970648223b5f284676) | **With supporting text**   Use when a short description helps users understand what they're selecting. |
+| ![](zeroheight://image/8608900/c6b33e648a7b6862fc7fe7c43a0263389dd7161054087306ae19d7ca79a6e385)  | **With icon**  Use when an icon reinforces the option's meaning or category. Only use icons that add meaning, not decoration.  |
+
+---
+
+## Guidelines
+
+### Content design
+
+#### **Content structure and constraints**
+
+* The label is always required. Keep it to 1–5 words, enough to identify the option at a glance.
+* Supporting text is optional. Use it to explain the option, not to repeat the label. Aim for 1–2 lines.
+* The icon is optional. Use only when it adds meaning; don't use for visual decoration alone.
+* If supporting text is long, keep the label short. Don't combine a long label with long supporting text.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8608900/6d7563e001aad25cd0b8a2d73ff74df476a075d9ff338765b377dc06e65a6c8a) |   | Keep labels short and direct. 1–5 words is enough to identify the option. |
+| Don't | ![](zeroheight://image/8608900/08c56a837caad655e2dc6ab063da99b363cc025bc4cae7eccf721aa7a2db0585) |   | Don't use labels that wrap to multiple lines. They're hard to scan. |
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8608900/9ef2e6c888c041459d5af34b1804ff74ca2a5af680bd3008bce96c776918be36) |   | Supporting text explains what the option does. Use it to add context the label can't. |
+| Don't | ![](zeroheight://image/8608900/9866d4617e0e82d75ddc29c04000f718cb60afd7c091092ee4c068fdefc3bd1a) |   | Don't repeat the label in supporting text. It adds noise without adding value. |
+
+#### **Content behaviour**
+
+* Label text wraps to a second line if needed. Avoid labels that exceed 2 lines.
+* Supporting text wraps below the label. Avoid copy that wraps beyond 3 lines.
+* The card height expands to fit the content; text is never truncated or clipped.
+
+#### **Copywriting** 
+
+* Write labels in sentence case. Don't use title case.
+* Start supporting text with the most important information. Don't bury the key point at the end.
+* Don't open supporting text by repeating the option name, the label already provides that context.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8608900/43e515d29079895f0b8f8565ef8c85dfd2d0eb3c832c526b62cd05963d2f3f5d) |   | Lead with the most important information. Keep supporting text to 1–2 lines. |
+| Don't | ![](zeroheight://image/8608900/fff6c379a2bcb488cf8af07a3d37d09f7075ec2259637814368d164110800fd2) |   | Don't bury the key point or pad out supporting text unnecessarily. |
+
+---
+
+### Layout and spacing
+
+* The card's width adapts to its container. In wide containers, apply a maximum width at the container level to maintain readability.
+* Vertical stacking is the recommended layout for groups. Horizontal stacking is possible but use it with caution, ensuring available space and context support optimal readability.
+* Don't mix Choicebox with Radio button or Checkbox within the same selection group.
+* Group layout, stacking order, and mutually exclusive selection logic are handled at the pattern or container level, not within the component itself.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8608900/69383d60b1c967e6e054df217cadd52f8aec77886a02355b1512dd7d81be374d) |   | Keep selection groups consistent. Use only one component type per group. |
+| Don't | ![](zeroheight://image/8608900/7c5e9a18e25505a23d971ac0365b9cd7c2216730f11db0ab7d5cb168f2b9f27b) |   | Don't mix Choicebox with Radio button or Checkbox in the same selection group. |
+
+---
+
+### Breakpoints and responsive behaviour
+
+* In narrow viewports, the container or layout pattern is responsible for managing card stacking; the card itself does not change size or shape.
+* Text within the card wraps naturally within the available card width.
+
+---
+
+### Interaction behaviour
+
+* Clicking or tapping anywhere on the card selects the option.
+* Only one Choicebox in a group can be selected at a time (mutually exclusive selection).
+* Cursor: pointer on hover, not-allowed when disabled.
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* Label text must meet 4.5:1 contrast against the card background in all interactive states.
+* The card border in the unselected state must meet 3:1 contrast against the page background.
+* The selected indicator and card border in the selected state must meet 3:1 contrast against the card background.
+* Disabled contrast is intentionally reduced. Don't rely on disabled state alone to communicate unavailability. Supplement with `aria-disabled` or accessible copy.
+
+**Focus**
+
+* The focus ring appears on the choice indicator.
+
+**Labelling**
+
+* Each Choicebox must have a visible label. Never use icon-only without a text label.
+* Supporting text is associated with the card via `aria-describedby` so screen readers announce it after the label.
+* When Choicebox items appear in a selection group, wrap the group in a `role="radiogroup"` with an accessible name via `aria-label` or `aria-labelledby`.
+
+---
+
+## Related
+
+#### **Alternatives**
+
+* **Radio button.** Use when options are simple and a label alone is sufficient. Radio button has a smaller tap target and no support for supporting text or icons.
+* **Checkbox.** Use when users can select more than one option simultaneously.
+* **Switch.** Use for binary on/off settings that take effect immediately without a form submission step.
+
+---
 ---
 
 ---
@@ -1637,7 +2006,7 @@ Do not add custom interactions to badges.
 # Design
 ## Anatomy
 
-![](zeroheight://image/8505350/8f6b30dc214faf5cc7750d828c23590ca000b78076c1f1cdbc13edfe7aa3bf7f)
+![](zeroheight://image/8505350/29c51a635078c9b6eb5d61c206f1915ee81b3f168747e407a07987fd56f0e8b9)
 
 1. **Previous button** — a directional control that moves the user to the preceding page. Always present. Shown in the disabled state when the user is on the first page.
 2. **Page link item** — a numbered item the user can click to navigate directly to that page.
@@ -1696,7 +2065,7 @@ Do not add custom interactions to badges.
 # Usage
 ## Overview
 
-![](zeroheight://image/8505350/b3616c625a06bcadf414ab62f55548b3e101eac3155b4b53d7b5ec1a4fb6f556)
+![](zeroheight://image/8505350/d1dbdac3b49360c8871992b6cef829e09aab846ab45fc8056b93422da16717ba)
 
 Pagination enables users to navigate between content pages, dividing large between pages of content, breaking large sets of content into discrete pages, showing where users are within this set and giving them controls to move to a specific page, or step forward and backward through the sequence. 
 
@@ -1878,7 +2247,7 @@ Pagination always shows previous and next controls, and optionally shows numbere
 # Design
 ## Anatomy
 
-![](zeroheight://image/8332388/e5e82f405dd23ef1f2a6b0dcd8ffc9a0babdc84794166630181e72fb58390a15)
+![](zeroheight://image/8332388/ba22622721dd7f2fe6763d765e653deba23200a03ba7edf413c05ee0acfcedf0)
 
 1. **Label** — the text that communicates the action the button will perform. Always required.
 2. **Container** — the bounding shape that defines the button's clickable area and visual weight.
@@ -1891,72 +2260,72 @@ Pagination always shows previous and next controls, and optionally shows numbere
 
 ### Primary fill
 
-|  ![](zeroheight://image/8332388/44566d0a6a4ed21979d2f17a90ba743e46137dfa13fa683e3c2c2511a9a4f31e) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.inverse` Container: `bg.interactive.primary.default`  |
+|  ![](zeroheight://image/8332388/e563c8f96db67cbffddd0539431364b10873f1949f7e36f022372cf83daed3a7) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.inverse` Container: `bg.interactive.primary.default`  |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/20f0aa345dc51cbd69479c9b23c219d14cb38b49bbc2744b415ac1a726346330) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.inverse` Container: `bg.interactive.primary.hover` |
-| ![](zeroheight://image/8332388/b429532fd5745cd5174ae9fb89d57636a726fcf1988131f9077d9e109fcb2a34) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.inverse` Container: `bg.interactive.primary.active` |
-| ![](zeroheight://image/8332388/79ab314221e816c57be834627c92164a6bae2644bf319a14b095155e5c3e7fa2) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.inverse` Container: `bg.interactive.primary.disabled` |
-| ![](zeroheight://image/8332388/9eb7989f9644bedbbb7ece872a2353ca4565c62f4d7f45d6a83d32acf5817990) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.inverse` Container: `bg.interactive.primary.default` Outline: `focus.default` |
+| ![](zeroheight://image/8332388/bb9eacb7daf6f51acb33a759e5e189d27c843830557260281ea780863a1dfa45) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.inverse` Container: `bg.interactive.primary.hover` |
+| ![](zeroheight://image/8332388/9e6ae761edb11b6a9f1d24783e87535065f6f735d92fed4ebf17f91d3cec7b60) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.inverse` Container: `bg.interactive.primary.active` |
+| ![](zeroheight://image/8332388/d0fcdab4e851cb642cfa99fc248a8830930d4473af532edf93f72dbd994908a7) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.inverse` Container: `bg.interactive.primary.disabled` |
+| ![](zeroheight://image/8332388/a7eeab26bd454be18c168ff6042841558ce04767351856fa5ee1499a486d395e) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.inverse` Container: `bg.interactive.primary.default` Outline: `focus.default` |
 
 ### Primary outline
 
-| ![](zeroheight://image/8332388/02f1e9154e252e843c1e76fe6cb3b7465a3cd293e729e3610629452163bfc0e4) | **Default** Label: `text.link.primary.default` Border: `border.interactive.primary.default`  |
+| ![](zeroheight://image/8332388/070cb1fdd2eb6efb33abb7c58e4d7c6e9430540fa69ae892b64e5725855e5f3e) | **Default** Label: `text.link.primary.default` Border: `border.interactive.primary.default`  |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/cc3895a907dc143fbe3e68ee809137ac66f7d2cccad415ea9c71cf385356d1d4) | **Hover:** Label: `text.inverse` Container: `bg.interactive.primary.hover` |
-| ![](zeroheight://image/8332388/db1cde2517c87966ef86067e750c55eace34f386ddf40c73cbdfa1b07e5aeab3) | **Active:** Label: `text.inverse` Container: `bg.interactive.primary.active` |
-| ![](zeroheight://image/8332388/00904c5db82e95da640ff209c80c084e524ba6e0f0df00b3ab7761bbc4f2afa9) | **Disabled:** Label: `text.link.primary.disabled` Border: `border.interactive.primary.disabled` |
-| ![](zeroheight://image/8332388/c77a5a73bf16315a55cfefff8e01ae48e6093ffb2714a9fa2e49b4582917a1ed) | **Focus:** Label: `text.link.primary.default` Border: `border.interactive.primary.default` Outline: `focus.default` |
+| ![](zeroheight://image/8332388/ab17e1ae877f1e9ce1b51722197001d5744b82faf81b2f0f2463714922a45b5a) | **Hover:** Label: `text.inverse` Container: `bg.interactive.primary.hover` |
+| ![](zeroheight://image/8332388/76f77a850cd678acba6447c178205d4278a01578e17d2d0a0f29c8831ffa8072) | **Active:** Label: `text.inverse` Container: `bg.interactive.primary.active` |
+| ![](zeroheight://image/8332388/2496672f45dc46395c9452c2ecac9f2052462a65189acafac26a2e805664848e) | **Disabled:** Label: `text.link.primary.disabled` Border: `border.interactive.primary.disabled` |
+| ![](zeroheight://image/8332388/b522901d36d4f295b50b39eada47bf9734730be102b546db51d421d3f1612303) | **Focus:** Label: `text.link.primary.default` Border: `border.interactive.primary.default` Outline: `focus.default` |
 
 ### Secondary fill
 
-|  ![](zeroheight://image/8332388/b791504e1d4606345a498ce2dd27e8f9b98fa3d9b1c9a81f04aaa40d3ea58084) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.subtle` Container: `bg.interactive.secondary.default`  |
+|  ![](zeroheight://image/8332388/0f5c9768aeb47d040d8d55f7ae3937709634c710ae5a0cc597c6080a4b2f3814) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.subtle` Container: `bg.interactive.secondary.default`  |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/c894136eb04a85f39210fc771c29bb9768c56c988efa2c79dd53e3acd95a5bcb) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.subtle` Container: `bg.interactive.secondary.hover` |
-| ![](zeroheight://image/8332388/ecac42919483859474b00aa6ddcc9fb560d23768df651f2336f0dd8181eccf5c) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.subtle` Container: `bg.interactive.secondary.active` |
-| ![](zeroheight://image/8332388/ffdd6fee883dfd13b463e299c74aaa27682fc7bfb7ccea919e2b71721bd4ea7c) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.muted` Container: `bg.interactive.secondary.disabled` |
-| ![](zeroheight://image/8332388/a89f5f1898826845d2fc1a36c505d842fc2dd63953c02935cd255870698faa88) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.subtle` Container: `bg.interactive.secondary.default` Outline: `focus.default` |
+| ![](zeroheight://image/8332388/d86a243417a096cb2a2fc38eeaf3f8c8e9fe75ac6f1063437dc000d6819a756c) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.subtle` Container: `bg.interactive.secondary.hover` |
+| ![](zeroheight://image/8332388/f3ab3e6d0cb7f5527c1692b02ee0e6629541fadc78b96c128654a0222e0b8254) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.subtle` Container: `bg.interactive.secondary.active` |
+| ![](zeroheight://image/8332388/b0ac7cb2898d6aa2d1d858ed127336285cd29bccb3ea8807939454c10a4c3dd7) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.muted` Container: `bg.interactive.secondary.disabled` |
+| ![](zeroheight://image/8332388/626ed6ee934dbb34a6bd3575ce66ace45a4b7a46950151a7561858386a86b0bf) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.subtle` Container: `bg.interactive.secondary.default` Outline: `focus.default` |
 
 ### Secondary outline
 
-| ![](zeroheight://image/8332388/a8ee86faa43b0767c57b85a2c9583cadc303e0d823d2061dc1d6a6b12839706e)  | **Default** Label: `text.subtle` Border: `border.interactive.secondary.default`  |
+| ![](zeroheight://image/8332388/786621eb31a86d3842adf5f4f3ab6e812eb0f8e97ca10b7b959dda020e2f4ecf)  | **Default** Label: `text.subtle` Border: `border.interactive.secondary.default`  |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/b8d82b4c02673ea5c686da5ea301e83f7299093096f69b2a649fecc3320cb445) | **Hover:** Label: `text.inverse` Container: `border.interactive.secondary.hover` |
-| ![](zeroheight://image/8332388/3d6aa3573257e868680787fc6fbe841ad51eab26ef149b467b5916209ab4c59d) | **Active:** Label: `text.inverse` Container: `border.interactive.secondary.active` |
-| ![](zeroheight://image/8332388/701f2bd8656cce955386895061eb95aa679ae7fe3cb22732c16aa58e58e532bc) | **Disabled:** Label: `text.muted` Border: `border.interactive.secondary.disabled` |
-| ![](zeroheight://image/8332388/9f28a7a1c1799d1f4beb6112d3485f359f76a6f55782916a86c4d0363ef4c4ae) | **Focus:** Label: `text.subtle` Border: `border.interactive.secondary.default`  Outline: `focus.default` |
+| ![](zeroheight://image/8332388/7e12419dcd9d5a901e4a71e392a5df9ab9237af2c0f4da827953856f45451232) | **Hover:** Label: `text.inverse` Container: `border.interactive.secondary.hover` |
+| ![](zeroheight://image/8332388/a0d4125c6d183cb41717397cd663f42a20c3f8f3239d60c427c5b01cd1ce296b) | **Active:** Label: `text.inverse` Container: `border.interactive.secondary.active` |
+| ![](zeroheight://image/8332388/6d5db31cf235390620dd4d13aa12a3ba51d50305e9739560aa85040c74cd8657) | **Disabled:** Label: `text.muted` Border: `border.interactive.secondary.disabled` |
+| ![](zeroheight://image/8332388/5ace118a196278d71ecec1eb085e2842cabb3a1fdad489a8e1f8a1fbead12e60) | **Focus:** Label: `text.subtle` Border: `border.interactive.secondary.default`  Outline: `focus.default` |
 
 ### Danger fill
 
-|  ![](zeroheight://image/8332388/b4c167b4f326bb95a7c8521ff6925602ca9b7db2c5b84070018638b4a6076d7e) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.inverse` Container: `bg.interactive.danger.default`  |
+|  ![](zeroheight://image/8332388/7ad0c65ac97cdef6b0045dbc0f09cea651b999809205cf3486bb4edb10ce758a) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.inverse` Container: `bg.interactive.danger.default`  |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/7a5d58f00eb837324cd641d35f4b132001cb1abdbc5ac847ac45c69982a46059) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.inverse` Container: `bg.interactive.danger.hover` |
-| ![](zeroheight://image/8332388/d0145bae9f971c9a0bebd3357331e35e4483294bb13ea1d5186acd16e7994517) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.inverse` Container: `bg.interactive.danger.active` |
-| ![](zeroheight://image/8332388/349b1656bdf95bedac1fde3d84e24c8c9831553e58b3e9d674d8461fefca1118) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.inverse` Container: `bg.interactive.danger.disabled` |
-| ![](zeroheight://image/8332388/f52b8397a3941b2a3437d2dad714fd2cd5fbb233497f8efd8c40d18307561610) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.inverse` Container: `bg.interactive.danger.default` Outline: `focus.danger` |
+| ![](zeroheight://image/8332388/1540d0b239126899eb9aa871c46004cbb2d3904494f0e15c4bbb83add1b4d210) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.inverse` Container: `bg.interactive.danger.hover` |
+| ![](zeroheight://image/8332388/a03611f2c2877dcce084fff6b34b0ffb8c41d3da72215a3ed88415b0cbd4677e) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.inverse` Container: `bg.interactive.danger.active` |
+| ![](zeroheight://image/8332388/c921db9fc4228029a1eacdc6f03190deaa80ffea5e2e2586ef2b895cc1c7380e) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.inverse` Container: `bg.interactive.danger.disabled` |
+| ![](zeroheight://image/8332388/88d9dda740cc61ea5b9b49a779f80584aadff75627eb5985db05ed21acdc7641) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.inverse` Container: `bg.interactive.danger.default` Outline: `focus.danger` |
 
 ### Danger outline
 
-|  ![](zeroheight://image/8332388/403f3d280091633759ce718d716a14de5ceb15842296f1f3fe0e5ba077813ada) | **Default** Label: `text.danger` Container: `border.interactive.danger.default`  |
+|  ![](zeroheight://image/8332388/9aa8519f91bf1d13f81762f7193a7fbdfbfd1df44729ee5ad5bae252ddc39a40) | **Default** Label: `text.danger` Container: `border.interactive.danger.default`  |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/f934d5de5f259f78349e2d2a89b8c694c75fc3f68bf89835cf5ab6ce76613751) | **Hover** Label: `text.inverse` Container: `bg.interactive.danger.hover` |
-| ![](zeroheight://image/8332388/763f4741f7c0275ff51272fc57c5510f02f6437565af4c1d5486d1e06d23e658) | **Active / Pressed** Label: `text.inverse` Container: `bg.interactive.danger.active` |
-| ![](zeroheight://image/8332388/9bf371e1c1a50568d63b6c3faf0e4143cf3e7771f15786c983880c4f480bdb13) | **Disabled** Label: `text.danger disabled` Container: `border.interactive.danger.disabled` |
-| ![](zeroheight://image/8332388/b747c0f41f67768caeb2070fa42676e96782bf15436319db26e38ee2b1bbb358) | **Focus** Label: `text.danger` Container: `border.interactive.danger.default` Outline: `focus.danger` |
+| ![](zeroheight://image/8332388/5c128681ac5a138ae8c3133355fff7f7c7c3f026cc2c08d9b6b13007b59b484e) | **Hover** Label: `text.inverse` Container: `bg.interactive.danger.hover` |
+| ![](zeroheight://image/8332388/fb01bee7253454b0c9fc9331f56bcd58aa13d799548ff7675b22bd08ce7679a5) | **Active / Pressed** Label: `text.inverse` Container: `bg.interactive.danger.active` |
+| ![](zeroheight://image/8332388/6cd1f759716e60d0f578f5654c7a2faf9b691fa7dcb7e047e782b5c2b3a894f5) | **Disabled** Label: `text.danger disabled` Container: `border.interactive.danger.disabled` |
+| ![](zeroheight://image/8332388/7913716befbfba18e828191fa51a5b529559bbb19b5bb71e6f25330786d4f550) | **Focus** Label: `text.danger` Container: `border.interactive.danger.default` Outline: `focus.danger` |
 
 ### Ghost
 
-|  ![](zeroheight://image/8332388/8c6bdd8f797c436dc8dc0d29d461b1eafe9b55c8c4c3534ff3ac281d8d5d10c5) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.subtle` Container: `none` |
+|  ![](zeroheight://image/8332388/f08b91b869cbac2e3b8b1b13d22f4690aab1746814e812e7be9434ec6febe661) | **Default** The button's resting state. Confirm the label clearly communicates the action before any interaction begins.  Label: `text.subtle` Container: `none` |
 | :--- | :--- |
-| ![](zeroheight://image/8332388/c894136eb04a85f39210fc771c29bb9768c56c988efa2c79dd53e3acd95a5bcb) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.subtle` Container: `bg.interactive.secondary.hover` |
-| ![](zeroheight://image/8332388/ecac42919483859474b00aa6ddcc9fb560d23768df651f2336f0dd8181eccf5c) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.subtle` Container: `bg.interactive.secondary.active` |
-| ![](zeroheight://image/8332388/d9cbecde2e9466fde447195a34de541e08c9d6af25907bbee32a8c08bb773231) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.muted` Container: `none` |
-| ![](zeroheight://image/8332388/eeffeaaa94fe0e4f61359d420cbd1316d87b7e6e29b4f586ea33554e98a85a6e) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.subtle` Outline: `focus.default` Container: `none` |
+| ![](zeroheight://image/8332388/c5e6b9f282e8f2f7249084fcdcd09b735771507d749ed0f1f748a640bb4f4e4e) | **Hover** Triggered when the cursor moves over the button. Don't suppress or override this state — users rely on it to identify interactive elements.  Label: `text.subtle` Container: `bg.interactive.secondary.hover` |
+| ![](zeroheight://image/8332388/c7cbe66c8e92fdd2a0805c065cd243b6600f6055a6ef178e9d4cd70251d5d4f0) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.subtle` Container: `bg.interactive.secondary.active` |
+| ![](zeroheight://image/8332388/001e96e0e1f8e6bea40a4b603ee8697f6ed0983a5c929dc32988b1e8fa72e495) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation — keep the button active and show errors on the relevant fields instead.  Label: `text.muted` Container: `none` |
+| ![](zeroheight://image/8332388/e692936218af7fce9aef23cfe0326debe5df958956fadbe54b0a6b75e5a7438f) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.subtle` Outline: `focus.default` Container: `none` |
 ---
 
 # Usage
 ## Overview
 
-![](zeroheight://image/8332388/798c8260d59d4136dc16f82995fce8904662d0638ca8ae9ac9a11ee171b098b0)
+![](zeroheight://image/8332388/6a77f78356645c63f342c0253927247f06c01b9b4da9e130676c4aac66e54066)
 
 Buttons let users trigger actions or navigate to a next step. They communicate what will happen when tapped or clicked, and their visual weight signals the importance of the action relative to others on the screen.
 
@@ -1988,10 +2357,10 @@ The button has 3 variant groups — role, style, and size — that can be combin
 
 | **Variant** |   | **When to use** |
 | :--- | --- | --- |
-| ![](zeroheight://image/8332388/065fcb9d5e878de71be257a540263e2fd02b5cfeb300631fdbe3a0d7a640d2d1)  |   | ****Primary**** The single most important action in a view. Use only 1 primary button per screen or section. |
-| ![](zeroheight://image/8332388/3b28a2d6a3293c448ccdbb5ddccb0cdc50fc849894d868b6f6553c04f271fc78) |   | ****Secondary**** Supporting actions that are relevant but not the main call to action. Can appear alongside a primary button. |
-| ![](zeroheight://image/8332388/3017e7454d6f15b716ea6bd5ec9d81fa9c61f90a4122d9eb805424cbfeb227fc) |   | ****Danger**** Destructive or irreversible actions, such as deleting content or revoking access.  |
-| ![](zeroheight://image/8332388/b575c89c04d21cf87135ba0c9ffc181cb8d8c90169dc9d8d7dcc58ee0c25cced) |   | ****Ghost**** Low-emphasis actions that need to be present but shouldn't compete visually. Use for tertiary actions, toolbar controls, or actions within already-styled containers like cards or banners. |
+| ![](zeroheight://image/8332388/9977619061d4ed831afea13d89c655a4c1c1b58b4248596d87f3ca623cb806c4)  |   | ****Primary**** The single most important action in a view. Use only 1 primary button per screen or section. |
+| ![](zeroheight://image/8332388/3fdf13de130657e6a39f060aa58f862cb8af7f0225992cee555477d8461e7b70) |   | ****Secondary**** Supporting actions that are relevant but not the main call to action. Can appear alongside a primary button. |
+| ![](zeroheight://image/8332388/e450d6eb07b6cc5ceb765cd48e487129e31a3a4d46c739e536a73d0bd0825634) |   | ****Danger**** Destructive or irreversible actions, such as deleting content or revoking access.  |
+| ![](zeroheight://image/8332388/4cd67b547a9e0ecab17f100c56d2b52cd88f94f3b863adcb647b0c3f02a364ab) |   | ****Ghost**** Low-emphasis actions that need to be present but shouldn't compete visually. Use for tertiary actions, toolbar controls, or actions within already-styled containers like cards or banners. |
 
 ### Style
 
@@ -1999,19 +2368,19 @@ Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a
 
 | **Variant** |   | **When to use** |
 | --- | --- | --- |
-| ![](zeroheight://image/8332388/deb4af0e090e04b5a40bc129c372e0df80d8574ca7d11707067c7613778412fc) |   | ****Fill**** Default style for most contexts. Use when the button needs clear visual prominence. |
-| ![](zeroheight://image/8332388/8dcb1fb842dd40659c251a362c34005df2c8d836ac66707305dac299be269b9a) |   | ****Outline**** Use when the button needs to feel lighter — for example, in toolbars, card footers, or alongside a fill button of the same role. |
+| ![](zeroheight://image/8332388/9ef3b22d9ec5047473debfa9c7f7955e6d031d18caafa3ba0cac4ce035b4f35c) |   | ****Fill**** Default style for most contexts. Use when the button needs clear visual prominence. |
+| ![](zeroheight://image/8332388/bc9f92696c5c03e9e2bc46e7af66b75b19f564f1cd11a12c158f58ed748107ef) |   | ****Outline**** Use when the button needs to feel lighter — for example, in toolbars, card footers, or alongside a fill button of the same role. |
 
 ### Size
 
 | **Variant** | **When to use** |
 | :--- | --- |
-| ![](zeroheight://image/8332388/f3ad0281acac9d626b6dbb7c2a392b43db6507f3bd958349a702f64c4ac60639)  | ****Large**** Use in hero areas, empty states, or standalone CTAs where extra visual weight is needed. |
-| ![](zeroheight://image/8332388/e8d83c78123ead8c4312ea1450d94dd332113ebeffaea7c3a06cee838a5024c9) | ****Medium (default)**** The standard size for most interface contexts. |
-| ![](zeroheight://image/8332388/7299b950da70a47edaffe0b6f673a61088a2eae3d339e32ad11e7d689746e269) | ****Small**** Use in dense layouts such as tables, inline actions, or compact toolbars. |
-| ![](zeroheight://image/8332388/73a65a4a1aff2534500272aff720f509a40ef20ec4f0f7aea4984bd5870a97be) | ****Large Icon-only**** Square container with rounded corners, matching the Default button height. Use in toolbars and action bars where icon buttons sit alongside labelled buttons.  |
-| ![](zeroheight://image/8332388/65e3f3705dad948e010ff7f0c46fb5017b4284be2c99ace1e0bb0b981cb51b1b) | ****Medium Icon-only**** Circular container. Use for standalone icon actions where a label isn't needed but the button needs standard tap target sizing.  |
-| ![](zeroheight://image/8332388/e4648110a3d3f424df45da5c7eb3bb214cbc55ab33350846c373da4233945a33) | ****Small Icon-only**** Circular container. Use for low-prominence actions in tight spaces, such as overflow menus on cards or inline controls.   |
+| ![](zeroheight://image/8332388/b2fb7c5ff1bc369d819a546842634bf16f9c76ea6d12d49680baf1bcf28f8a64)  | ****Large**** Use in hero areas, empty states, or standalone CTAs where extra visual weight is needed. |
+| ![](zeroheight://image/8332388/201335c7746c5bd7cf5f82fc63e07d4a148c04f17023b5d956be556baa67fe68) | ****Medium (default)**** The standard size for most interface contexts. |
+| ![](zeroheight://image/8332388/28bab300f3c4df7dac5d3a36b13dffbea75cbcb8aac5340e45a3dea61abc23f5) | ****Small**** Use in dense layouts such as tables, inline actions, or compact toolbars. |
+| ![](zeroheight://image/8332388/7e5b6696c388be219df77f75435f6470bedd0c5d3d409307852e047f0819d25e) | ****Large Icon-only**** Square container with rounded corners, matching the Default button height. Use in toolbars and action bars where icon buttons sit alongside labelled buttons.  |
+| ![](zeroheight://image/8332388/e67bd1e90f4c9a2ecaae87262bcc1d33a8faae1088be282377e305f7f1dc4909) | ****Medium Icon-only**** Circular container. Use for standalone icon actions where a label isn't needed but the button needs standard tap target sizing.  |
+| ![](zeroheight://image/8332388/cc00566930fd5b603a6c646023ff10ed03ca42aafd80328233e890025557b7bc) | ****Small Icon-only**** Circular container. Use for low-prominence actions in tight spaces, such as overflow menus on cards or inline controls.   |
 
 ---
 
@@ -2078,7 +2447,7 @@ Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a
 * At small breakpoints, buttons can expand to full width in single-column layouts.
 * Size variant doesn't change automatically at breakpoints — choose the size intentionally for the context
 
-![](zeroheight://image/8332388/b917f133244c1c5718038ed40529fdda6a9c0af2c2ea4c002029d151713d506b)
+![](zeroheight://image/8332388/f267bab24885d9db95d25379e481484ffda68be1f06a32154b27a048698bf754)
 
 ---
 
@@ -2146,13 +2515,13 @@ Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a
 # Design
 ## Anatomy
 
-![](zeroheight://image/8052226/4d2eccdba7d2a43249ca62efb968cb1a3c772f62efe59fa01acd4e0b2601b0bf)
+![](zeroheight://image/8052226/6d0a26b579fea8bd1169719155b408845db477e5cf11531ab86d4cbc6b20b3d5)
 
 1. **Hit area** — the interactive touch target that wraps the checkbox indicator. Invisible in the UI, but required to meet minimum target size requirements.
 2. **Checkbox indicator** — the visible control that shows the selection state through its border, fill, and icon.
 3. **Label** — describes what the user is selecting or agreeing to. Required in all contexts except data tables.
 
-![](zeroheight://image/8052226/181af550b981c505aad67bbf6434ca61223a2ccc86cbe19d409a57da31c0e38d)
+![](zeroheight://image/8052226/4c2f534ed1cec3701c012b058425f77b2c7d2999fd625a2c65addc5ff7f35a06)
 
 4. **Required marker** *(optional)* — a red asterisk (*) adjacent to the label. Indicates the field must be completed before form submission.
 5. **Supporting text** *(optional)* — appears below the label. Used in the Invalid state to explain the validation error and what the user needs to do.
@@ -2163,14 +2532,14 @@ Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a
 
 | **States** | **Styles and tokens** |
 | :--- | --- |
-|  ![](zeroheight://image/8052226/85345d748c30d4451025fe011ae94dc5e82aa4cd6b0b2c18dcb498b9537fd259)  |  **Unchecked**   Default state. No option has been selected. The checkbox indicator appears as an empty box. This is the initial state when no value has been set.  Checkbox indicator:. Label text:. |
-|  ![](zeroheight://image/8052226/e7525663994a7d336f1d9e00f5241ee63a7adb7390c244a0e6aacbd518854e36)  |  **Checked **  The user has selected this option. The indicator fills with the primary colour and displays a checkmark icon. Unlike radio buttons, checking one checkbox doesn't affect others in the same group.   Checkbox indicator:. Label text:.  |
-|  ![](zeroheight://image/8052226/5948d156b15b1410c0f01910ba0e3ee8feea61ff0d23a4721ec2cbacf1510563)  |  **Indeterminate **  Applied to a parent checkbox when some — but not all — of its child options are selected. The indicator shows a dash icon. This state is set programmatically; never set it manually.  Checkbox indicator:. Label text:.  |
-|  ![](zeroheight://image/8052226/b469b6349af7fb3223b2959a9b24eb76697c681da33996aec5b55d692c6a2f78)  |  ****Supporting text** *(optional)* **  A secondary line that appears below the label text in any state. Use it to give users additional context about the option — for example, what happens when the checkbox is selected, or what's required. In the Invalid state, this becomes feedback text and communicates the validation error.  Feedback text:. Feedback text (Invalid state only):.  |
-|  ![](zeroheight://image/8052226/932ccdcf9aae571cad02488a48f0f3635dfba478c78b904cbac6332b7e2e7ad4)  |  **Invalid**   Applied when form validation fails — for example, when a required checkbox is submitted without being checked. The indicator border and label text turn red to signal the error. Always pair this state with visible feedback text that tells the user what to do — don't rely on colour alone.  Checkbox indicator:. Label text:. Feedback text:.  |
-|  ![](zeroheight://image/8052226/ebd39ac8303746224457c704f181c36b30948bd22c51410b11650b02dbd307e6)  |  **Disabled **  The option can't be interacted with. Both the indicator and label render with muted colours. Don't use the disabled state instead of conditional logic — if an option is unavailable in a given context, hide it or explain why.  Checkbox indicator:. Label text:.  |
-|  ![](zeroheight://image/8052226/75fc7c9d3394bae38824f56ffe2b38f6fc12d8238a7ee7ef2c2cec16713dca43)     |  **Disabled + Checked**  A pre-selected option the user can't change. Use sparingly — only when the system locks the value and the user needs to see it.  Checkbox indicator:. Label text:.  |
-|  ![](zeroheight://image/8052226/922ee29872d89311eab9553e3a7e71d2b223dd507a9a6b859253a4018dc7a277)  |  **Focus **  Shown when the checkbox receives keyboard focus. A visible focus ring appears around the checkbox indicator. In the Invalid state, the focus ring uses the danger token to maintain visual consistency with the error treatment.  Focus ring: . |
+|  ![](zeroheight://image/8052226/493aacd21c13a338bab501c2441593b654f7ea0c52f64419fb70b96dc4037f2c)  |  **Unchecked**   Default state. No option has been selected. The checkbox indicator appears as an empty box. This is the initial state when no value has been set.  Checkbox indicator:. Label text:. |
+|  ![](zeroheight://image/8052226/684715851bc8cf954fd0ec1fee02189f32a69bb8a8a873a673976caa1acd301e)  |  **Checked **  The user has selected this option. The indicator fills with the primary colour and displays a checkmark icon. Unlike radio buttons, checking one checkbox doesn't affect others in the same group.   Checkbox indicator:. Label text:.  |
+|  ![](zeroheight://image/8052226/d77489a06171ff6dc4818643aee582e3c9b4edb1c4be87b461235c639f537636)  |  **Indeterminate **  Applied to a parent checkbox when some — but not all — of its child options are selected. The indicator shows a dash icon. This state is set programmatically; never set it manually.  Checkbox indicator:. Label text:.  |
+|  ![](zeroheight://image/8052226/7f62b31daabb1d91c04a8df45c0249458a59c90b895b8e5ee06e1ca4da7f0182)  |  ****Supporting text** *(optional)* **  A secondary line that appears below the label text in any state. Use it to give users additional context about the option — for example, what happens when the checkbox is selected, or what's required. In the Invalid state, this becomes feedback text and communicates the validation error.  Feedback text:. Feedback text (Invalid state only):.  |
+|  ![](zeroheight://image/8052226/7829473e85ddf5aa7993e7f319187d1982dcece564ea6f0024512d7be4dcf74e)  |  **Invalid**   Applied when form validation fails — for example, when a required checkbox is submitted without being checked. The indicator border and label text turn red to signal the error. Always pair this state with visible feedback text that tells the user what to do — don't rely on colour alone.  Checkbox indicator:. Label text:. Feedback text:.  |
+|  ![](zeroheight://image/8052226/aa99f482b8559980305d82aeadb63862cd00f895d029e24c7da2ee8fef039e6a)  |  **Disabled **  The option can't be interacted with. Both the indicator and label render with muted colours. Don't use the disabled state instead of conditional logic — if an option is unavailable in a given context, hide it or explain why.  Checkbox indicator:. Label text:.  |
+|  ![](zeroheight://image/8052226/32c7ca18b038580423552cfef62f358d220403fc5d3b9fb818e074d9c806b116)     |  **Disabled + Checked**  A pre-selected option the user can't change. Use sparingly — only when the system locks the value and the user needs to see it.  Checkbox indicator:. Label text:.  |
+|  ![](zeroheight://image/8052226/0bd8db5238e8db31d3fbc40f3c01b08dd07a383a739dd49d9e20c2a3d39d1846)  |  **Focus **  Shown when the checkbox receives keyboard focus. A visible focus ring appears around the checkbox indicator. In the Invalid state, the focus ring uses the danger token to maintain visual consistency with the error treatment.  Focus ring: . |
 
 ---
 ---
@@ -2178,7 +2547,7 @@ Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a
 # Usage
 ## Overview
 
-![](zeroheight://image/8052226/8721543e2b6d8a68e31b42c64644bd8f205bf7067697fe241c784febb14ef679)
+![](zeroheight://image/8052226/4413e930e7defc46d0d39a7aeba792fb72027ff80a1ec41eb5f5b52e4425d1c3)
 
 Checkboxes are form controls that let users select one or more options from a set. Each checkbox operates independently — selecting one doesn't affect the others. Use checkboxes when users need to make explicit choices that are submitted as part of a form, not applied immediately.
 
@@ -2218,7 +2587,7 @@ Checkboxes are form controls that let users select one or more options from a se
 
 | Rule | Image | Caption | Description |
 | :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8052226/33463fd29489bfa4afcb1defb480fe1d0827f4c69827fc82fa7144877a408b66) |   |   |
+| Do | ![](zeroheight://image/8052226/9dec3e9fc346eeb35c932c230b79bb475d967facea9ef1b424aa45af0af5a0e2) |   |   |
 
 #### Content structure and constraints
 
@@ -2353,13 +2722,13 @@ Checkboxes are form controls that let users select one or more options from a se
 # Design
 ## Anatomy
 
-![](zeroheight://image/8052231/c3d245bc4b2bbb7080a1db6e7357e94472a35a8300bc6446a2aa890dff16831f)
+![](zeroheight://image/8052231/b0a31119be46d9ec8cf55abcaf5a3b7d117a7af625c9e1b22ff4bf21eba71aca)
 
 1. **Container** — the wrapper that groups the radio input and its label.
 2. **Radio indicator** — the circular control that shows the selection state. It displays as empty (unselected) or filled with a dot (selected).
 3. **Label** — the text that describes the option. It’s always required for standalone use. It can be visually hidden when the surrounding context — for example, a table column header or a selectable card — provides enough identification. When the label is hidden, an `aria-label` must be provided in code.
 
-![](zeroheight://image/8052231/03e05b4cb046fc8464fe2767817ae194e8c5776d1171d454738a79e9bba7651c)
+![](zeroheight://image/8052231/48e022d827630ce33f0c5482e700e575cbdb62167de5ded1e28d29570a016da3)
 
 4. **Feedback text** ***(optional)*** — a short message that appears below the radio group to communicate a validation error. Only shown in the invalid state. Always pair it with the visual error treatment on the indicator and label — don't rely on colour alone.
 
@@ -2370,12 +2739,12 @@ Checkboxes are form controls that let users select one or more options from a se
 
 | **States** | **Styles and tokens** |
 | :--- | --- |
-|  ![](zeroheight://image/8052231/42bfccf1243775834e83ededb888f9a5cad9a2bd3f362a57b035233bfafaab08) |  ****Unselected****  Default state. No option is selected, and the radio indicator appears as an empty circle. This is the initial state when no default value is set.   Radio indicator:  Ring: .  Label:  Text color: .`text.default`. Text style: .`ui-text.ui-default`.  |
-|  ![](zeroheight://image/8052231/40609a70f7a520bfba1dfa2c4fcd4e6d50cef889e35b3ce1cad44b8b24335cbd)  |  **Selected**  An option is selected. The radio indicator shows a filled circle with a dot, and selecting this option deselects any other radio in the same group.   Radio indicator:  Ring . Dot .  Label:  Same as Unselected.  |
-|  ![](zeroheight://image/8052231/b4db8f1a186a7494dbfcfa8d3a42d7d1fd808a724094288feb2af81ec2e68fd3)  |  ****Disabled****  The option can’t be interacted with. Both the indicator and label appear with muted colors. Don’t use the disabled state instead of conditional logic; if an option is unavailable in a given context, hide it or explain why.  Radio indicator:  Ring .  Label:  Text color: .`text.muted`. Text style: .`ui-text.ui-default`.  |
-|  ![](zeroheight://image/8052231/beb8cd888e44fc21b2a445459c6266f4e7436f057204002ff1387558dfa001a4)  |  ****Disabled + Selected****  A pre-selected option the user can't change. Use sparingly — only when the system locks the value and the user needs to see it.   Radio indicator:  Ring . Dot .  Label: • Same as Disabled  |
-|  ![](zeroheight://image/8052231/4ce54a42dcc0def2c3943d8b3a631a6c9aab76c58e9726ac950cb3e21f4c14f6)  |  ****Invalid****  Applied when the radio group is required and the user tries to proceed without making a selection. The indicator border and label turn red to signal the error. Always pair this with a visible error message that explains what's required — don't rely on colour alone. Apply this state at the group level, not to individual options.   Radio indicator:  Border color: .`border.interactive.danger.default`. Background fill: .`bg.surface.default`.  Label:  Text color: .`text.danger`.  Feedback text:  Text color: .`text.danger`.  |
-|  ![](zeroheight://image/8052231/c01e91eccdb4c3f8da64ab7b7e51dfefc32decb2838b96be65d97215781324da)  |  ****Focus****  Shown when the radio receives keyboard focus. A visible focus ring appears around the radio indicator. In the invalid state, the focus ring uses the danger token to maintain visual consistency with the error treatment.   Focus ring:  Border color: . Border width: .`stroke weight.md` . Offset: .`2px (0.125em)`. |
+|  ![](zeroheight://image/8052231/7819553bc5b41c1709e771924640827e80dcbb61779bfa8600044d2f8fd78562) |  ****Unselected****  Default state. No option is selected, and the radio indicator appears as an empty circle. This is the initial state when no default value is set.   Radio indicator:  Ring: .  Label:  Text color: .`text.default`. Text style: .`ui-text.ui-default`.  |
+|  ![](zeroheight://image/8052231/5e065e14e2d446972c61cbbce3eaeb2739d71b31179fc72501b98c6bd7a8b436)  |  **Selected**  An option is selected. The radio indicator shows a filled circle with a dot, and selecting this option deselects any other radio in the same group.   Radio indicator:  Ring . Dot .  Label:  Same as Unselected.  |
+|  ![](zeroheight://image/8052231/a67abbdd1ef2e16ffc91f29c191e7a09fc55db3bb68259ceb89ec07afb3ec5d1)  |  ****Disabled****  The option can’t be interacted with. Both the indicator and label appear with muted colors. Don’t use the disabled state instead of conditional logic; if an option is unavailable in a given context, hide it or explain why.  Radio indicator:  Ring .  Label:  Text color: .`text.muted`. Text style: .`ui-text.ui-default`.  |
+|  ![](zeroheight://image/8052231/48a8533e8f5fd62a9b282524180aeb137bbf21927511915bbb7e1b0a5583e26f)  |  ****Disabled + Selected****  A pre-selected option the user can't change. Use sparingly — only when the system locks the value and the user needs to see it.   Radio indicator:  Ring . Dot .  Label: • Same as Disabled  |
+|  ![](zeroheight://image/8052231/6973ac3f5397e9069c8ccfb69f71f7c9c0ff366bd8a1308b38672e19ead1261e)  |  ****Invalid****  Applied when the radio group is required and the user tries to proceed without making a selection. The indicator border and label turn red to signal the error. Always pair this with a visible error message that explains what's required — don't rely on colour alone. Apply this state at the group level, not to individual options.   Radio indicator:  Border color: .`border.interactive.danger.default`. Background fill: .`bg.surface.default`.  Label:  Text color: .`text.danger`.  Feedback text:  Text color: .`text.danger`.  |
+|  ![](zeroheight://image/8052231/cddf40677fdd49d9fc6f7f2b4c35222d2521691e10eb0e8832d697db75b53750)  |  ****Focus****  Shown when the radio receives keyboard focus. A visible focus ring appears around the radio indicator. In the invalid state, the focus ring uses the danger token to maintain visual consistency with the error treatment.   Focus ring:  Border color: . Border width: .`stroke weight.md` . Offset: .`2px (0.125em)`. |
 
 ---
 ---
@@ -2383,7 +2752,7 @@ Checkboxes are form controls that let users select one or more options from a se
 # Usage
 ## Overview
 
-![](zeroheight://image/8052231/c3aa1120b509c9b24586b4cee28f74de016eab78fa07fa8e26e1efef27db69c4)
+![](zeroheight://image/8052231/02460a0e7d8ae936942a7d95a804e5993887ccb8fe2772a02cce0347c0a1e2ea)
 
 Radio buttons are form controls that let users select one value from a predefined set of options. When a user selects an option in a group, it automatically deselects any previously selected option. Use radio buttons when users need to see all available options at once and make a single, final choice.
 
@@ -2760,11 +3129,11 @@ Colour supports meaning, hierarchy, and state across the interface. Apply colour
 | `primary` | `secondary` | `danger` |   |
 | --- | --- | --- | --- |
 
-| ![](zeroheight://image/7242086/85a7d92bac80264afe2f56ee2577eab048d781e6c7c3ec445d18f4d67a333bf5) | `default` | ![](zeroheight://image/7242086/d06c5179ae5f1c2b3673e674b5b2f2dfc3051714424f037702926c64c5d0ad7e) | `default` | ![](zeroheight://image/7242086/712aa15062b51da289d0438d21771eee0f3eb72cc8409666ef23aa2181d46fe5) | `default` |   |   |
+| ![](zeroheight://image/7242086/85a7d92bac80264afe2f56ee2577eab048d781e6c7c3ec445d18f4d67a333bf5) | `default` | ![](zeroheight://image/7242086/37268997d71374ca1ba8581b4acbca2c37598d30c9fd0df8ac9626fa666bb5e1) | `default` | ![](zeroheight://image/7242086/712aa15062b51da289d0438d21771eee0f3eb72cc8409666ef23aa2181d46fe5) | `default` |   |   |
 | :---: | :--- | :---: | :--- | :---: | :--- | :---: | :--- |
-| ![](zeroheight://image/7242086/9c9f6bf938519426237f1724fe2c3170a19f65bbe574ce048c1c2c942c677b25) | `hover` | ![](zeroheight://image/7242086/102a34176d4bbf5d6f89cab5877fde4a20cfd91f0e65cf63c9412a7acc1b1d4d) | `hover` | ![](zeroheight://image/7242086/78057a12f9a5a58186267d5434b9baec79d72663116e6b629eee14609272371c) | `hover` |   |   |
-| ![](zeroheight://image/7242086/e6c8d7a0729a9d7d080572eeedd05365043f0c0734d532b2e2ec590078f4ddbc) | `active` | ![](zeroheight://image/7242086/b8764c0f6e5dd237608f711b9d9b49d83d894573d8cba5377640a0d0582e1541) | `active` | ![](zeroheight://image/7242086/32820cee1dc0c0cfe9c8717fbfa285d23e05e0dec8caa89e9332d3b6f0b5a3c1) | `active` |   |   |
-| ![](zeroheight://image/7242086/b60cd35d6e2af2b3fa5aa8a17dd14a96ef195bc5fb76d77efa1e61a60baeafa9) | `disabled` | ![](zeroheight://image/7242086/bb186137f5bdf70f16714d78c792f3829d0931c5a07928cef7d0c4e645570793) | `disabled` | ![](zeroheight://image/7242086/abd3faef0b4ce4bd1e5bec10a48680b5baf0de24e8ffdb4143638da9744329c9) | `disabled` |   |   |
+| ![](zeroheight://image/7242086/9c9f6bf938519426237f1724fe2c3170a19f65bbe574ce048c1c2c942c677b25) | `hover` | ![](zeroheight://image/7242086/44c935d4e038b90209dc64e5d926f69e1163a2bc295498c437429192f49368e8) | `hover` | ![](zeroheight://image/7242086/78057a12f9a5a58186267d5434b9baec79d72663116e6b629eee14609272371c) | `hover` |   |   |
+| ![](zeroheight://image/7242086/e6c8d7a0729a9d7d080572eeedd05365043f0c0734d532b2e2ec590078f4ddbc) | `active` | ![](zeroheight://image/7242086/059882507fe6d7a64328b6b65d7990cfe9cd239a729708893437a2527b1ef321) | `active` | ![](zeroheight://image/7242086/32820cee1dc0c0cfe9c8717fbfa285d23e05e0dec8caa89e9332d3b6f0b5a3c1) | `active` |   |   |
+| ![](zeroheight://image/7242086/b60cd35d6e2af2b3fa5aa8a17dd14a96ef195bc5fb76d77efa1e61a60baeafa9) | `disabled` | ![](zeroheight://image/7242086/e2c235736b6eb5704fb8940191572dd44c922b04d5b590f610cf4c156728fb75) | `disabled` | ![](zeroheight://image/7242086/abd3faef0b4ce4bd1e5bec10a48680b5baf0de24e8ffdb4143638da9744329c9) | `disabled` |   |   |
 | ![](zeroheight://image/7242086/1fae928467288251f07f1dfb22bc81c1cd74f230a94b5262174a9c336d937f1e) | `default-light` |   |   | ![](zeroheight://image/7242086/87b176238c866605acfe98b11e409574e036b810964154e27dc591422b47ef97) | `default-light` |   |   |
 
 **Feedback backgrounds** Use these for alerts/banners/toasts. 
@@ -2827,7 +3196,7 @@ Interactive borders pair with interactive states:
 | `primary` | `secondary` | `danger` |   |
 | --- | --- | --- | --- |
 
-| ![](zeroheight://image/7242086/c690f70787bb93de62ec5df85f3c7b924896fbe17adff266eaf470ec907fcc21) | `default` | ![](zeroheight://image/7242086/10db939928febe253437396cec9520d72545817f2deb9e72a3981dbd539baf89) | `default` | ![](zeroheight://image/7242086/70549f68d4eb8bc7fabcfbe75fffaffabb3884157106804465fc226d8af12841) | `default` |   |   |
+| ![](zeroheight://image/7242086/c690f70787bb93de62ec5df85f3c7b924896fbe17adff266eaf470ec907fcc21) | `default` | ![](zeroheight://image/7242086/1351fa6ca2efe5e0ade23968118998a3118cb8f46de79bd764fbf2e8b3a31765) | `default` | ![](zeroheight://image/7242086/70549f68d4eb8bc7fabcfbe75fffaffabb3884157106804465fc226d8af12841) | `default` |   |   |
 | :---: | :--- | :---: | :--- | :---: | :--- | :---: | :--- |
 | ![](zeroheight://image/7242086/d14ef54e8a98787e8b84b777532f4caabe5d36766285cd9ea39a84382db634f1) | `hover` | ![](zeroheight://image/7242086/6e7d87189224c396f457fe71c9d35d1a28c891b68f4a1bf5767ed1098085aee6) | `hover` | ![](zeroheight://image/7242086/0bf3f715ac49ae6776ae4a6362f9e2ee9dc942259a53c762933d0cfc716f4419) | `hover` |   |   |
 | ![](zeroheight://image/7242086/82e4e5a53f26bdfc77c0b14c308fa7bb570238e643879bec5823fcd398e4425d) | `active` | ![](zeroheight://image/7242086/5536924250ff8465a18c82e221d702345dddeb0e93e5259ecc1c0b165ec0d188) | `active` | ![](zeroheight://image/7242086/434818c7678f39a4415b53303e38defe8818320625d4e8387f743851e7e74864) | `active` |   |   |
@@ -3022,7 +3391,7 @@ These tokens give colours a meaning and a role within the interface.
 | bg.feedback.primary.default | {color.blue.500} |
 | bg.feedback.primary.light | {color.blue.50} |
 | bg.feedback.primary.subtle | {color.blue.100} |
-| bg.feedback.secondary.default | {color.gray.400} |
+| bg.feedback.secondary.default | {color.gray.300} |
 | bg.feedback.secondary.subtle | {color.gray.100} |
 | bg.feedback.success.default | {color.green.500} |
 | bg.feedback.success.light | {color.green.50} |
@@ -3041,9 +3410,9 @@ These tokens give colours a meaning and a role within the interface.
 | bg.interactive.primary.disabled | {color.blue.200} |
 | bg.interactive.primary.hover | {color.blue.600} |
 | bg.interactive.secondary.active | {bg.interactive.secondary.default} |
-| bg.interactive.secondary.default | {color.gray.400} |
+| bg.interactive.secondary.default | {color.gray.300} |
 | bg.interactive.secondary.disabled | {color.gray.200} |
-| bg.interactive.secondary.hover | {color.gray.300} |
+| bg.interactive.secondary.hover | {color.gray.400} |
 | bg.surface.default | {color.gray.white} |
 | bg.surface.strong | {color.gray.200} |
 | bg.surface.subtle | {color.gray.100} |
@@ -3065,7 +3434,7 @@ These tokens give colours a meaning and a role within the interface.
 | border.interactive.primary.disabled | {color.blue.300} |
 | border.interactive.primary.hover | {bg.interactive.primary.default} |
 | border.interactive.secondary.active | {color.gray.700} |
-| border.interactive.secondary.default | {color.gray.600} |
+| border.interactive.secondary.default | {color.gray.500} |
 | border.interactive.secondary.disabled | {color.gray.500} |
 | border.interactive.secondary.hover | {color.gray.600} |
 | focus.danger | {color.red.200} |
@@ -3305,6 +3674,21 @@ For more icons go to:
 
 **address-card**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1598">
@@ -3312,6 +3696,21 @@ For more icons go to:
 ![adjust](zeroheight://image/7242089/d50b8578f5fbd1bc73edd33b822ce0571cd38f8270627076b5a8ab3a0272e776)
 
 **adjust**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3321,6 +3720,21 @@ For more icons go to:
 
 **align-center**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1676">
@@ -3328,6 +3742,21 @@ For more icons go to:
 ![align-justify](zeroheight://image/7242089/322768b2df5d8c08eb6ace16eb11f2f634479680923abc5db4d350812cac66ad)
 
 **align-justify**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3337,6 +3766,21 @@ For more icons go to:
 
 **align-left**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1686">
@@ -3344,6 +3788,21 @@ For more icons go to:
 ![align-right](zeroheight://image/7242089/b15dc3485bb64d90b1b7abc988971a43ac94ff1ecce2d03c5294929b88bf6c7e)
 
 **align-right**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3353,6 +3812,21 @@ For more icons go to:
 
 **anchor**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1586">
@@ -3360,6 +3834,21 @@ For more icons go to:
 ![angles-left](zeroheight://image/7242089/769779509f5e5a97685c1f40b6ad0ae2b730e4357e854f68019d2f99fe5b4dfa)
 
 **angles-left**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3369,6 +3858,21 @@ For more icons go to:
 
 **angles-right**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1632">
@@ -3376,6 +3880,21 @@ For more icons go to:
 ![arrow-down](zeroheight://image/7242089/5b7bb7e5dcad856699fe91293de81d508caf32f81d98439f509dd0d75aa52ffd)
 
 **arrow-down**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3385,6 +3904,21 @@ For more icons go to:
 
 **arrow-down-short-wide**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1624">
@@ -3392,6 +3926,21 @@ For more icons go to:
 ![arrow-down-wide-short](zeroheight://image/7242089/66e60972a0b0210cf9c3180e0c040b31cbace1d46ee6aa8fb9959ed2445843fe)
 
 **arrow-down-wide-short**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3401,6 +3950,21 @@ For more icons go to:
 
 **arrow-left**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1661">
@@ -3408,6 +3972,21 @@ For more icons go to:
 ![arrow-right](zeroheight://image/7242089/41c87999ae17039525e68faca3c2d6097a5cd7f4ab47b7a6b0d867b0e79c842a)
 
 **arrow-right**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3417,6 +3996,21 @@ For more icons go to:
 
 **arrow-right-from-bracket**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1653">
@@ -3425,6 +4019,21 @@ For more icons go to:
 
 **arrow-right-to-bracket**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1650">
@@ -3432,6 +4041,21 @@ For more icons go to:
 ![arrow-rotate-left](zeroheight://image/7242089/427dde9eb6cfd7cd71d9c50a2920d964fc5c676076d17f984a1619f009888d93)
 
 **arrow-rotate-left**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3447,6 +4071,21 @@ For more icons go to:
 
 **arrow-rotate-right**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 34 px |
+| Opacity | 100% |
+
 <notes>
 
 **redo**
@@ -3461,6 +4100,21 @@ For more icons go to:
 
 **arrow-turn-up**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1645">
@@ -3468,6 +4122,21 @@ For more icons go to:
 ![arrow-up](zeroheight://image/7242089/706d208686eaff78683784b1fc30cb31d19b915a8672d0757ef0b490692c7db9)
 
 **arrow-up**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3477,6 +4146,21 @@ For more icons go to:
 
 **arrow-up-from-bracket**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1643">
@@ -3484,6 +4168,21 @@ For more icons go to:
 ![arrow-up-short-wide](zeroheight://image/7242089/3db1f25c26a9f2659a7704ddb2324bf6f95c5911af5d086b2e21672089bcf54d)
 
 **arrow-up-short-wide**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3493,6 +4192,21 @@ For more icons go to:
 
 **arrow-up-wide-short**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 34 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1641">
@@ -3501,6 +4215,21 @@ For more icons go to:
 
 **arrows**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1637">
@@ -3508,6 +4237,21 @@ For more icons go to:
 ![arrows-left-right](zeroheight://image/7242089/e6a34007aef00941e5a3ae4e2ba8c23a1dfae3175ccdb2c724fad31c6f330b18)
 
 **arrows-left-right**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3523,6 +4267,21 @@ For more icons go to:
 
 **arrows-left-right-to-line**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1525">
@@ -3530,6 +4289,21 @@ For more icons go to:
 ![arrows-rotate](zeroheight://image/7242089/6eeb62def3403fb82219a95c21d2f986c3dd05201a1b03b9eca4bdf3a6d9e98a)
 
 **arrows-rotate**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3539,6 +4313,21 @@ For more icons go to:
 
 **arrows-to-circle**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1517">
@@ -3546,6 +4335,21 @@ For more icons go to:
 ![arrows-up-down-left-right](zeroheight://image/7242089/49add005d0c96f2a2299d801dcd454a27520903995708137ca008fe9d4385fab)
 
 **arrows-up-down-left-right**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3555,6 +4359,21 @@ For more icons go to:
 
 **audio-description**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1509">
@@ -3562,6 +4381,21 @@ For more icons go to:
 ![balance-scale](zeroheight://image/7242089/7639de5f3e6bb875874db9dd040ffe4d8f309664dca1838395fe28de8a968a61)
 
 **balance-scale**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3571,6 +4405,21 @@ For more icons go to:
 
 **ban**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1501">
@@ -3578,6 +4427,21 @@ For more icons go to:
 ![bars](zeroheight://image/7242089/8cfaf353f5078d147ccb5914a457de3388fc8ef5a8f21b86858fec69ac358c37)
 
 **bars**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3587,6 +4451,21 @@ For more icons go to:
 
 **bell**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1688">
@@ -3594,6 +4473,21 @@ For more icons go to:
 ![bell-slash](zeroheight://image/7242089/525a43848c06bb5320432071f60186e65312b0d2d9e740692c1da68f67133c78)
 
 **bell-slash**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3603,6 +4497,21 @@ For more icons go to:
 
 **bold**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1683">
@@ -3610,6 +4519,21 @@ For more icons go to:
 ![bolt](zeroheight://image/7242089/f2688ede9bb60cdbaba2ed2c37aceb5207cd9430ea6b8813241a94b1ca7cdc28)
 
 **bolt**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3619,6 +4543,21 @@ For more icons go to:
 
 **book**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1675">
@@ -3626,6 +4565,21 @@ For more icons go to:
 ![book-bookmark](zeroheight://image/7242089/562f558c4d7a81fefd7d8621edfd9ecbb509014094b636aa233f77f1214b5b17)
 
 **book-bookmark**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3635,6 +4589,21 @@ For more icons go to:
 
 **bookmark**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1626">
@@ -3642,6 +4611,21 @@ For more icons go to:
 ![bookmark](zeroheight://image/7242089/4b8056796a3d9c949cb975db1bb9afa6d135eb486d505476077d3a2ca02a0629)
 
 **bookmark**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3651,6 +4635,21 @@ For more icons go to:
 
 **border-all**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1483">
@@ -3658,6 +4657,21 @@ For more icons go to:
 ![briefcase](zeroheight://image/7242089/2d4ddef903f76dd9880cc6a055510b2707b873162b47620ec122061b1d5265e9)
 
 **briefcase**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3667,6 +4681,21 @@ For more icons go to:
 
 **bullhorn**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1658">
@@ -3674,6 +4703,21 @@ For more icons go to:
 ![calculator](zeroheight://image/7242089/67607c3734bd94eba3367c5ce04399ea668d30d7f7f1a737104d17e3bff613ac)
 
 **calculator**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3683,6 +4727,21 @@ For more icons go to:
 
 **calendar**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=39:261">
@@ -3690,6 +4749,21 @@ For more icons go to:
 ![calendar](zeroheight://image/7242089/b30e44906cdc0f1129bdd3bad152b948def902a9ccf406c55448bd97772e40e0)
 
 **calendar**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 34 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3699,6 +4773,21 @@ For more icons go to:
 
 **calendar-check**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1660">
@@ -3706,6 +4795,21 @@ For more icons go to:
 ![calendar-plus](zeroheight://image/7242089/3c4acaf9a820363e038009e8f0f366bd49bd1dea5a896e595dcabef9d972dc2f)
 
 **calendar-plus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3715,6 +4819,21 @@ For more icons go to:
 
 **caret-down**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1652">
@@ -3723,6 +4842,21 @@ For more icons go to:
 
 **chart-column**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1466">
@@ -3730,6 +4864,21 @@ For more icons go to:
 ![chart-line](zeroheight://image/7242089/230e5b1aeef19ff114bdfebf09f117390c6aceb0f503340247c49d8f204b94db)
 
 **chart-line**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3745,6 +4894,21 @@ For more icons go to:
 
 **check**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1628">
@@ -3752,6 +4916,21 @@ For more icons go to:
 ![check-double](zeroheight://image/7242089/719ee17aa5103ba5848ec6fb2ba508769b3c59b6a716ec3b0088c61d5268373b)
 
 **check-double**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3761,6 +4940,21 @@ For more icons go to:
 
 **check-to-slot**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1622">
@@ -3768,6 +4962,21 @@ For more icons go to:
 ![chevron-down](zeroheight://image/7242089/1ea8d4da2a56614f5b3e85588e0a89ff00f90c06279426bc6c2568efcb1b5b81)
 
 **chevron-down**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3777,6 +4986,21 @@ For more icons go to:
 
 **chevron-left**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1620">
@@ -3784,6 +5008,21 @@ For more icons go to:
 ![chevron-right](zeroheight://image/7242089/0724e1fbedb49f9d630827ad66ddbb957e52aad240e79745bcedeb822279cc0c)
 
 **chevron-right**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3793,6 +5032,21 @@ For more icons go to:
 
 **chevron-up**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 34 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1619">
@@ -3800,6 +5054,21 @@ For more icons go to:
 ![circle](zeroheight://image/7242089/70f0d52b2acf4082a12e6a2c1497859d42a7b1484bc4111fb868ca0c88bf87d1)
 
 **circle**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -3809,6 +5078,21 @@ For more icons go to:
 
 **circle**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1618">
@@ -3816,6 +5100,21 @@ For more icons go to:
 ![circle-arrow-down](zeroheight://image/7242089/708f122e4b9488e5c79ecc20bb821798c7ca5995a12bd39721a5cc305af17e97)
 
 **circle-arrow-down**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3831,6 +5130,21 @@ For more icons go to:
 
 **circle-check**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **check-circle**
@@ -3844,6 +5158,21 @@ For more icons go to:
 ![circle-check](zeroheight://image/7242089/1af639bf0d8d36ea9c8dbaabb4abb61a828aa734883064d4267c8b7f2195fe29)
 
 **circle-check**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3859,6 +5188,21 @@ For more icons go to:
 
 **circle-dot**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **dot-circle**
@@ -3872,6 +5216,21 @@ For more icons go to:
 ![circle-dot](zeroheight://image/7242089/4f90030d3452bf9dce1c57807fae12c165e641064562536c529ddb8a5bbf2cc9)
 
 **circle-dot**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3887,6 +5246,21 @@ For more icons go to:
 
 **circle-exclamation**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **exclamation-circle**
@@ -3900,6 +5274,21 @@ For more icons go to:
 ![circle-info](zeroheight://image/7242089/2a7f588a2d88b82291221b8ae91c1152e2a28e957acfa4301b22777feb451786)
 
 **circle-info**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3915,6 +5304,21 @@ For more icons go to:
 
 **circle-minus**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **minus-circle**
@@ -3928,6 +5332,21 @@ For more icons go to:
 ![circle-pause](zeroheight://image/7242089/a528ff7cb36c9ca152be30590e84b7090a14f302dc9d51569a090207ca2b3c2f)
 
 **circle-pause**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3943,6 +5362,21 @@ For more icons go to:
 
 **circle-pause**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **pause-circle**
@@ -3956,6 +5390,21 @@ For more icons go to:
 ![circle-plus](zeroheight://image/7242089/ed7afee9cf5b526f80e9eaf53f4caac8656cd43c6648cb41c9dc52d620774e75)
 
 **circle-plus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3971,6 +5420,21 @@ For more icons go to:
 
 **circle-question**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **question-circle**
@@ -3984,6 +5448,21 @@ For more icons go to:
 ![circle-xmark](zeroheight://image/7242089/b7d638043572302d9a413936e95016f4fdcae5e627a1a9ce07ca030405a24dee)
 
 **circle-xmark**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -3999,6 +5478,21 @@ For more icons go to:
 
 **circle-xmark**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **times-circle, xmark-circle**
@@ -4013,6 +5507,21 @@ For more icons go to:
 
 **clipboard**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1545">
@@ -4020,6 +5529,21 @@ For more icons go to:
 ![clipboard](zeroheight://image/7242089/9b823ecabdbfa9f61b4c700f5b6decc5f906e20d60e9f95f2754828ab669b2dc)
 
 **clipboard**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4029,6 +5553,21 @@ For more icons go to:
 
 **clipboard-check**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1595">
@@ -4036,6 +5575,21 @@ For more icons go to:
 ![clipboard-user](zeroheight://image/7242089/39ce5264bb2048518241990c9a125febe1b36bd754d16f7177e0fce37d2d0698)
 
 **clipboard-user**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4045,6 +5599,21 @@ For more icons go to:
 
 **clock**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1593">
@@ -4052,6 +5621,21 @@ For more icons go to:
 ![clock-rotate-left](zeroheight://image/7242089/dbc51b9299819448577c3c825b4ad2d0cce02dd0cd19e566ee1938f33659c296)
 
 **clock-rotate-left**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4061,6 +5645,21 @@ For more icons go to:
 
 **clone**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1591">
@@ -4068,6 +5667,21 @@ For more icons go to:
 ![code](zeroheight://image/7242089/3018ae7ae7788613325ce9066d1480d5b6525f5dc879122d505bb391387f688b)
 
 **code**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4077,6 +5691,21 @@ For more icons go to:
 
 **comment**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1588">
@@ -4084,6 +5713,21 @@ For more icons go to:
 ![comment](zeroheight://image/7242089/5524962c12d12abc2dd7048e113ded8815917ec152097fad6ef73ce3980b0f37)
 
 **comment**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4093,6 +5737,21 @@ For more icons go to:
 
 **credit-card**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1584">
@@ -4100,6 +5759,21 @@ For more icons go to:
 ![crosshairs](zeroheight://image/7242089/f879213b43c39d123d59d0f8a616105610b959c834e7fe5f81ce1cc6908000d3)
 
 **crosshairs**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4109,6 +5783,21 @@ For more icons go to:
 
 **database**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1582">
@@ -4116,6 +5805,21 @@ For more icons go to:
 ![delete-left](zeroheight://image/7242089/7dc38e769c995f65e072b5c3dc45ce0b7b395663feea89cb23a9b3bd4bb58df0)
 
 **delete-left**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4125,6 +5829,21 @@ For more icons go to:
 
 **download**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1580">
@@ -4132,6 +5851,21 @@ For more icons go to:
 ![ear-listen](zeroheight://image/7242089/1149530a76cbe738f7633f2275d27a78918e73603009ab064c8687163e54a907)
 
 **ear-listen**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4141,6 +5875,21 @@ For more icons go to:
 
 **earth-americas**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1627">
@@ -4148,6 +5897,21 @@ For more icons go to:
 ![edit](zeroheight://image/7242089/39aec296ccf7007d37e54da7241acbee3456e3723c4dfb000faa054f1345bc4a)
 
 **edit**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4157,6 +5921,21 @@ For more icons go to:
 
 **ellipsis-vertical**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1578">
@@ -4164,6 +5943,21 @@ For more icons go to:
 ![envelope](zeroheight://image/7242089/ea490012daba563fbb06051a3799be5237374bdd2d8ad78a630764e57bac080a)
 
 **envelope**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4173,6 +5967,21 @@ For more icons go to:
 
 **equals**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1576">
@@ -4180,6 +5989,21 @@ For more icons go to:
 ![eraser](zeroheight://image/7242089/d306a50ede7518c1652f20ecfde449c7ddac228590652644c6affd463197216f)
 
 **eraser**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4189,6 +6013,21 @@ For more icons go to:
 
 **exclamation**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1570">
@@ -4196,6 +6035,21 @@ For more icons go to:
 ![expand](zeroheight://image/7242089/c14cdc74592969bae3c3b3ad16b6ca43e68784ec4d81f562834f7dc7fa4fe655)
 
 **expand**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4205,6 +6059,21 @@ For more icons go to:
 
 **external-link**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1566">
@@ -4212,6 +6081,21 @@ For more icons go to:
 ![eye](zeroheight://image/7242089/de86cc9a0a9b683edab4c1b146d1d63a84fc06b2c9d8957b2d24271221de6531)
 
 **eye**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4221,6 +6105,21 @@ For more icons go to:
 
 **eye**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1564">
@@ -4229,6 +6128,21 @@ For more icons go to:
 
 **eye-dropper**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1461">
@@ -4236,6 +6150,21 @@ For more icons go to:
 ![eye-low-vision](zeroheight://image/7242089/d1b5a2d7b231a676aa9eaa90077dd77535eedcf495423ebc5e1579e3f130f5e6)
 
 **eye-low-vision**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4251,6 +6180,21 @@ low-vision
 
 **eye-slash**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1560">
@@ -4258,6 +6202,21 @@ low-vision
 ![face-frown](zeroheight://image/7242089/449ad794a05fd82ec18e7a32bb61ad9b2c93edcacaaf6a5b7fd23838c2a277db)
 
 **face-frown**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4273,6 +6232,21 @@ low-vision
 
 **face-frown**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **frown**
@@ -4286,6 +6260,21 @@ low-vision
 ![face-smile](zeroheight://image/7242089/baa66521589a6a87c2ad1884f61309c0ccff1d1b0dccd66c42bd4c339a2348f7)
 
 **face-smile**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4301,6 +6290,21 @@ low-vision
 
 **face-smile**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 34 px |
+| Opacity | 100% |
+
 <notes>
 
 **smile**
@@ -4315,6 +6319,21 @@ low-vision
 
 **file**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1543">
@@ -4322,6 +6341,21 @@ low-vision
 ![file](zeroheight://image/7242089/a69942b51b30f46998e7e1dda9c5448c729c4fc5c76f443882bdff4fc493dce4)
 
 **file**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4331,6 +6365,21 @@ low-vision
 
 **file-circle-minus**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1554">
@@ -4338,6 +6387,21 @@ low-vision
 ![file-circle-plus](zeroheight://image/7242089/1ec18d5f3e25661db3470985f51e54ec3f43c92d2e2f99d9685fc20ea35a5130)
 
 **file-circle-plus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4347,6 +6411,21 @@ low-vision
 
 **file-image**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1539">
@@ -4354,6 +6433,21 @@ low-vision
 ![file-image](zeroheight://image/7242089/62161b164c79c891afb9746da135b2a5f51f38713e5adb00cbb455d4dff527f4)
 
 **file-image**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4363,6 +6457,21 @@ low-vision
 
 **file-invoice**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1551">
@@ -4370,6 +6479,21 @@ low-vision
 ![file-pdf](zeroheight://image/7242089/4a48cc63b901114113c43b9ebd65c2ecda00b4fc11b126b9cc22b1175f358443)
 
 **file-pdf**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4379,6 +6503,21 @@ low-vision
 
 **file-pdf**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1550">
@@ -4386,6 +6525,21 @@ low-vision
 ![file-text](zeroheight://image/7242089/cc9b60f49c28a33e5db00184776d6edb0bdd43efb5926e5807eb5b73e380d8d3)
 
 **file-text**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4395,6 +6549,21 @@ low-vision
 
 **file-text**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1549">
@@ -4402,6 +6571,21 @@ low-vision
 ![file-video](zeroheight://image/7242089/1d8fd8f7b44bd8e29ca93670234b72749699c162a37150def731ab43de94f21a)
 
 **file-video**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4411,6 +6595,21 @@ low-vision
 
 **file-video**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1548">
@@ -4418,6 +6617,21 @@ low-vision
 ![file-zipper](zeroheight://image/7242089/8e0c0c17b57cb782622c8b41cc32fb3b218f28e9ddc4f3cbb0ea3a73cb37ab14)
 
 **file-zipper**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4427,6 +6641,21 @@ low-vision
 
 **file-zipper**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1546">
@@ -4434,6 +6663,21 @@ low-vision
 ![film](zeroheight://image/7242089/23a1c1726ed524a576274501449badf08a77588a17efbddbdd6f29e12ec40e01)
 
 **film**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4443,6 +6687,21 @@ low-vision
 
 **filter**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1542">
@@ -4450,6 +6709,21 @@ low-vision
 ![flag](zeroheight://image/7242089/f023c775b62691f9f96fc1d5bbe01cf6847e05735d650525444654c7b528d048)
 
 **flag**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4459,6 +6733,21 @@ low-vision
 
 **folder**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1538">
@@ -4466,6 +6755,21 @@ low-vision
 ![folder-open](zeroheight://image/7242089/b455da777b7e1c6ac43d6b634ec5998a6dff40293c0256ca896a953926d85bc5)
 
 **folder-open**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4475,6 +6779,21 @@ low-vision
 
 **folder-plus**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1534">
@@ -4482,6 +6801,21 @@ low-vision
 ![folder-tree](zeroheight://image/7242089/330662fed66d7a2b0408ec45d0b99f83d4135a0e42ebca797ccdbb954225149f)
 
 **folder-tree**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4491,6 +6825,21 @@ low-vision
 
 **font**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1528">
@@ -4498,6 +6847,21 @@ low-vision
 ![futbol](zeroheight://image/7242089/0d577ba35b4ff06d46e7ffde9a61f8f20c283e3a1a41aa357baf77a6d9cf9f5f)
 
 **futbol**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4507,6 +6871,21 @@ low-vision
 
 **gauge**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1520">
@@ -4514,6 +6893,21 @@ low-vision
 ![gear](zeroheight://image/7242089/1138f688a717c5b9fe62e2f50c6f7ed1c768feafb31f242c73c4093394fbec6a)
 
 **gear**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4529,6 +6923,21 @@ low-vision
 
 **globe**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1512">
@@ -4536,6 +6945,21 @@ low-vision
 ![graduation-cap](zeroheight://image/7242089/676d143fea34323cc499ff1bf4033f69214bb29d93f290ea7a5a022c89662db8)
 
 **graduation-cap**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4545,6 +6969,21 @@ low-vision
 
 **hammer**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1504">
@@ -4552,6 +6991,21 @@ low-vision
 ![hard-drive](zeroheight://image/7242089/b7b7b63f2ae147766b62b293dd59e2addabdf70a50afb8fba5bd8158cdd7085a)
 
 **hard-drive**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4561,6 +7015,21 @@ low-vision
 
 **hashtag**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1498">
@@ -4568,6 +7037,21 @@ low-vision
 ![headphones](zeroheight://image/7242089/a32052d5fc892fa43c368cb846bc62f3d93b36b53b7501bb6da6602019a83063)
 
 **headphones**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4577,6 +7061,21 @@ low-vision
 
 **highlighter**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1494">
@@ -4584,6 +7083,21 @@ low-vision
 ![home](zeroheight://image/7242089/bf2f8525f73a392abf49e86ac7cbb7a5abcd44707b8b34b84dbc5c379e2657ff)
 
 **home**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4593,6 +7107,21 @@ low-vision
 
 **hourglass**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1490">
@@ -4600,6 +7129,21 @@ low-vision
 ![hourglass-half](zeroheight://image/7242089/319c58d1fbcb5c9873035680b155f800429ec2759e244bbde4d5139f1441ac70)
 
 **hourglass-half**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4609,6 +7153,21 @@ low-vision
 
 **i-cursor**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1487">
@@ -4616,6 +7175,21 @@ low-vision
 ![image](zeroheight://image/7242089/569d407dfb9d426de3a288ded87b0b1b7e8a503ac16bc2fec027aa40a3c1f95b)
 
 **image**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4625,6 +7199,21 @@ low-vision
 
 **indent**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1482">
@@ -4632,6 +7221,21 @@ low-vision
 ![info](zeroheight://image/7242089/d57374978d98e5493dbef13876e184a5d4fdcb59ff30e48f62f8942f86a108a1)
 
 **info**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4641,6 +7245,21 @@ low-vision
 
 **italic**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1476">
@@ -4648,6 +7267,21 @@ low-vision
 ![language](zeroheight://image/7242089/4f5c9f51e26d38108913eb91133e33e222f17a4e8e45fd85a2b0048c18f5d6a5)
 
 **language**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4657,6 +7291,21 @@ low-vision
 
 **laptop-file**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1472">
@@ -4664,6 +7313,21 @@ low-vision
 ![layer-group](zeroheight://image/7242089/702755b1c078fe90ca4493739a7eccf973477dd9107b9359c93d722d40901a50)
 
 **layer-group**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4673,6 +7337,21 @@ low-vision
 
 **leaf**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1468">
@@ -4680,6 +7359,21 @@ low-vision
 ![life-ring](zeroheight://image/7242089/cd63db1a55c55077beff30538144443c4145b2fa335334b485a04c08d4822a0c)
 
 **life-ring**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4689,6 +7383,21 @@ low-vision
 
 **link**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1462">
@@ -4696,6 +7405,21 @@ low-vision
 ![link-slash](zeroheight://image/7242089/89d9de874a4133f7f234e071131dc5c3ea9a3fa732194ae43a1283d89fdbe326)
 
 **link-slash**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4705,6 +7429,21 @@ low-vision
 
 **list**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1458">
@@ -4712,6 +7451,21 @@ low-vision
 ![list-check](zeroheight://image/7242089/1756dbf462171491c709dafd63a392207e7ef4e7f9f811aec2f6c7a8e82ddb36)
 
 **list-check**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4727,6 +7481,21 @@ low-vision
 
 **list-ol**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1454">
@@ -4734,6 +7503,21 @@ low-vision
 ![list-ul](zeroheight://image/7242089/db9ba777432349ef02dac35f5ce20f8496f4219db115cbf9559bfbf8349dbfa3)
 
 **list-ul**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4743,6 +7527,21 @@ low-vision
 
 **location-dot**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1465">
@@ -4750,6 +7549,21 @@ low-vision
 ![lock](zeroheight://image/7242089/6f1cc130fd465efc5df752aeec1b5c8188725888c17fbca3376291f5852fd2fb)
 
 **lock**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4759,6 +7573,21 @@ low-vision
 
 **lock-open**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1459">
@@ -4766,6 +7595,21 @@ low-vision
 ![magnifying-glass](zeroheight://image/7242089/462307b2a68e96f8dfa4cffece854ddb4ce874aeb896eabe9c2aab4130ee088e)
 
 **magnifying-glass**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4781,6 +7625,21 @@ low-vision
 
 **magnifying-glass-minus**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 34 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1457">
@@ -4789,6 +7648,21 @@ low-vision
 
 **magnifying-glass-plus**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1455">
@@ -4796,6 +7670,21 @@ low-vision
 ![male](zeroheight://image/7242089/a0ed77e324e526ad4d4a99afabf1f7ef501c201bf6f78e9f8689c7ec3f97fb26)
 
 **male**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4811,6 +7700,21 @@ person
 
 **maximize**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1531">
@@ -4818,6 +7722,21 @@ person
 ![message](zeroheight://image/7242089/37a12f198cf2b4ed00691e4576de227150058a284640b0792d3cecbb3f328b98)
 
 **message**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4827,6 +7746,21 @@ person
 
 **microphone**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1523">
@@ -4835,6 +7769,21 @@ person
 
 **microphone-slash**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1519">
@@ -4842,6 +7791,21 @@ person
 ![minus](zeroheight://image/7242089/08b792e74210bfe24285ddfaf98efdbf1028fec2bc13948f066ac57f6abd5c50)
 
 **minus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4857,6 +7821,21 @@ person
 
 **network-wired**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1511">
@@ -4864,6 +7843,21 @@ person
 ![newspaper](zeroheight://image/7242089/18d4d6361737933e713d2c79be61e6a68385f42779ddae082371061f68f62da7)
 
 **newspaper**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4873,6 +7867,21 @@ person
 
 **outdent**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1503">
@@ -4880,6 +7889,21 @@ person
 ![paper-plane](zeroheight://image/7242089/51b566a5526a651587dacb36efd8d0dc4fc35b182508617629883a7f5b6af7f7)
 
 **paper-plane**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4889,6 +7913,21 @@ person
 
 **paperclip**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1526">
@@ -4896,6 +7935,21 @@ person
 ![paste](zeroheight://image/7242089/3f8290c934f66f09a42d2bb1217bd67cb2e225a94b684b51a095b2ee2de28d02)
 
 **paste**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4905,6 +7959,21 @@ person
 
 **peace**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1518">
@@ -4912,6 +7981,21 @@ person
 ![pen](zeroheight://image/7242089/fd43c3ef631ddbb61c974951f2f4e5b044c2ebdb444a1eff89a953c1a3d7b472)
 
 **pen**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4921,6 +8005,21 @@ person
 
 **pen-clip**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1510">
@@ -4928,6 +8027,21 @@ person
 ![people-arrows](zeroheight://image/7242089/147f194e76716fd7d28b842ab96149aa486b91c592001629043fd14c6228919e)
 
 **people-arrows**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4937,6 +8051,21 @@ person
 
 **photo-film**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1502">
@@ -4944,6 +8073,21 @@ person
 ![pizza-slice](zeroheight://image/7242089/90f58535ee9bc84d20a3962096747b93b33516fb785fec0d098c3cbfab1537ed)
 
 **pizza-slice**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -4953,6 +8097,21 @@ person
 
 **plane**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1481">
@@ -4961,6 +8120,21 @@ person
 
 **play**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1634">
@@ -4968,6 +8142,21 @@ person
 ![plus](zeroheight://image/7242089/aed74bd245b87ca17ea017ad56c35e7012da2d1cbda2715aa0dd118b39f1150e)
 
 **plus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -4983,6 +8172,21 @@ person
 
 **question**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 ?
@@ -4997,6 +8201,21 @@ person
 
 **print**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1475">
@@ -5004,6 +8223,21 @@ person
 ![quote-left](zeroheight://image/7242089/1255eed6aea39b0f329c5631c32d6039351aa39a26df7936a81f52075b15e1a1)
 
 **quote-left**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5013,6 +8247,21 @@ person
 
 **quote-right**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1471">
@@ -5020,6 +8269,21 @@ person
 ![rectangle-list](zeroheight://image/7242089/40cf123790eeb9beba5fd114c1a447b3bcfbbf7ef8b79d126860997f502114ce)
 
 **rectangle-list**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5029,6 +8293,21 @@ person
 
 **rectangle-xmark**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1484">
@@ -5036,6 +8315,21 @@ person
 ![refresh](zeroheight://image/7242089/939f8837e1102c4206190d4f68029454d109ef78f0e255b193b1bf0085fa244f)
 
 **refresh**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5045,6 +8339,21 @@ person
 
 **right-left**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1657">
@@ -5052,6 +8361,21 @@ person
 ![rss](zeroheight://image/7242089/4094387568f5bd9d53559a8d15507e47481ecff93807c8cfc4c01612275729f7)
 
 **rss**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5061,6 +8385,21 @@ person
 
 **ruler-horizontal**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1664">
@@ -5068,6 +8407,21 @@ person
 ![save](zeroheight://image/7242089/d93a7e6bd5d72905394a5dea9f4d999d8c82fef232e0ba14bc00cfaac7cf67b8)
 
 **save**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5077,6 +8431,21 @@ person
 
 **scissors**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1651">
@@ -5084,6 +8453,21 @@ person
 ![shapes](zeroheight://image/7242089/1064f8a22f290d6aff10fcd93dc0501be96203fb95e0abc8b8d5b833bff197f5)
 
 **shapes**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5093,6 +8477,21 @@ person
 
 **share**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1644">
@@ -5100,6 +8499,21 @@ person
 ![spell-check](zeroheight://image/7242089/2d55134c2ac9e3429001a242a6492486d5c927525e6f8ae94d6ab2f3fee8a886)
 
 **spell-check**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5109,6 +8523,21 @@ person
 
 **spinner**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1642">
@@ -5116,6 +8545,21 @@ person
 ![square](zeroheight://image/7242089/16485750417b84e38bd02065aba6bc0399e8cfb63f8575acc4bcad627acb5eaa)
 
 **square**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5125,6 +8569,21 @@ person
 
 **square**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1640">
@@ -5133,6 +8592,21 @@ person
 
 **square-arrow-up-right**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1638">
@@ -5140,6 +8614,21 @@ person
 ![square-check](zeroheight://image/7242089/b3715fd47eb77b34e00f970ec517703a853991c07146be6ddbef5724fb0d9efe)
 
 **square-check**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -5155,6 +8644,21 @@ person
 
 **square-check**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 <notes>
 
 **check-square**
@@ -5168,6 +8672,21 @@ person
 ![square-plus](zeroheight://image/7242089/589ea01c23186a6ecd5c2327ca1c7d981ccf9be4b6365347a19309b16302f6a1)
 
 **square-plus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -5183,6 +8702,21 @@ person
 
 **square-root-variable**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1615">
@@ -5190,6 +8724,21 @@ person
 ![star](zeroheight://image/7242089/004316f505729657536fff1b712fab362d333cee12c66dd7a4d74d840d7b51dc)
 
 **star**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5199,6 +8748,21 @@ person
 
 **star**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1613">
@@ -5206,6 +8770,21 @@ person
 ![stop](zeroheight://image/7242089/e1dd56a130f2b593d0f2fae1d9269fc0e95f8c600e12a2b990a1a8c3af8edfca)
 
 **stop**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5215,6 +8794,21 @@ person
 
 **strikethrough**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1607">
@@ -5222,6 +8816,21 @@ person
 ![subscript](zeroheight://image/7242089/b5a4a9a2bdac2fb4a5bdb23ef9b4230be82c3c5417109fdb8a6c22de838121c8)
 
 **subscript**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5231,6 +8840,21 @@ person
 
 **suitcase**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1603">
@@ -5238,6 +8862,21 @@ person
 ![superscript](zeroheight://image/7242089/8406c2a1ac2d4b609f377539efa1f3677fe6b175a61c30b6b8c5cb6c8224bead)
 
 **superscript**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5247,6 +8886,21 @@ person
 
 **table**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1689">
@@ -5254,6 +8908,21 @@ person
 ![table-cells-large](zeroheight://image/7242089/a3ba52456d7e6388a0fddf24fcf4fad3c2c573b4fba2c98c71068dc6be2c44c8)
 
 **table-cells-large**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5263,6 +8932,21 @@ person
 
 **table-list**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1682">
@@ -5270,6 +8954,21 @@ person
 ![tags](zeroheight://image/7242089/bcb7ce81fda7da57ac64085adcc0b09e13876c6bae9fb74c4b95d1a9eeb728f1)
 
 **tags**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5279,6 +8978,21 @@ person
 
 **thumbs-up**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1684">
@@ -5286,6 +9000,21 @@ person
 ![thumbtack](zeroheight://image/7242089/88714d5026ec8a7d5120389d794ea0b3abd8dd3985d36d283f9eec57ceaa4ed1)
 
 **thumbtack**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5295,6 +9024,21 @@ person
 
 **trash-can**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1667">
@@ -5302,6 +9046,21 @@ person
 ![trash-can-arrow-up](zeroheight://image/7242089/4f4f0f1d180b9c570415e2faeaa9d4b9f73a01ac34c84c558e84351e9767c389)
 
 **trash-can-arrow-up**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5311,6 +9070,21 @@ person
 
 **tree**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1451">
@@ -5318,6 +9092,21 @@ person
 ![triangle-exclamation](zeroheight://image/7242089/e831e208d4f3f2b4ec00736b881dd1b37eee4b16f6e432dbc6171246c822cc8a)
 
 **triangle-exclamation**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 <notes>
 
@@ -5333,6 +9122,21 @@ person
 
 **trophy**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1449">
@@ -5340,6 +9144,21 @@ person
 ![underline](zeroheight://image/7242089/66b844fa7281e5d3f4361faee02f2fdf101aa35a47da98ff8730101234025e01)
 
 **underline**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5349,6 +9168,21 @@ person
 
 **universal-access**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1446">
@@ -5356,6 +9190,21 @@ person
 ![unlock](zeroheight://image/7242089/19941b96e4c8b42b2c97dad182ef4fa8d3e1c6fb1f22c551e613068827fe5b20)
 
 **unlock**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5365,6 +9214,21 @@ person
 
 **unlock-keyhole**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1444">
@@ -5372,6 +9236,21 @@ person
 ![up-right-and-down-left-from-center](zeroheight://image/7242089/281fbf1138aca955b8a3a2049c76493703115a13cdf5d813aaf563d154b917bb)
 
 **up-right-and-down-left-from-center**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5381,6 +9260,21 @@ person
 
 **upload**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1442">
@@ -5388,6 +9282,21 @@ person
 ![usd](zeroheight://image/7242089/54dc7a3f4e12aa4caea0e091aeb20e3f8ecacc7629e58d697218969a622da187)
 
 **usd**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5397,6 +9306,21 @@ person
 
 **user**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1440">
@@ -5404,6 +9328,21 @@ person
 ![user-check](zeroheight://image/7242089/138bc94839ad51cb5de36b1ad4c549a4689e00b1565ea0624d64ec85855bebe6)
 
 **user-check**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5413,6 +9352,21 @@ person
 
 **user-group**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1438">
@@ -5420,6 +9374,21 @@ person
 ![user-lock](zeroheight://image/7242089/ca462fba1076b91cdcfbf2e2aee009a18ecffa04c046267c62fc12e8f94eb439)
 
 **user-lock**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5429,6 +9398,21 @@ person
 
 **user-lock**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1437">
@@ -5436,6 +9420,21 @@ person
 ![user-plus](zeroheight://image/7242089/537fadad078f5882157f354e683f28666dac20273a5ae0bf367ce66fbea6c8eb)
 
 **user-plus**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5445,6 +9444,21 @@ person
 
 **user-tag**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1569">
@@ -5452,6 +9466,21 @@ person
 ![user-tie](zeroheight://image/7242089/1d4c9ad8c2f87bd312b6dfe4b9203f922c6191183ae7c43f88bba4fdba919077)
 
 **user-tie**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5461,6 +9490,21 @@ person
 
 **user-xmark**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1565">
@@ -5468,6 +9512,21 @@ person
 ![users](zeroheight://image/7242089/435e14325960f42d6503c4c86e056066df2d9ac572de92c61b6dae41800f7f0a)
 
 **users**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5477,6 +9536,21 @@ person
 
 **users-gear**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1563">
@@ -5484,6 +9558,21 @@ person
 ![users-line](zeroheight://image/7242089/f88723cb51e31558d31c76b1ab90147eb633064202e6c8dbec8519c3bd47adb6)
 
 **users-line**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5493,6 +9582,21 @@ person
 
 **video**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1436">
@@ -5500,6 +9604,21 @@ person
 ![volume-high](zeroheight://image/7242089/f96fe46c4e65cdb1dd0f2a7b1614e55608efd5fd4b0c785617294c19d054f9e0)
 
 **volume-high**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5509,6 +9628,21 @@ person
 
 **wand-magic-sparkles**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1433">
@@ -5516,6 +9650,21 @@ person
 ![window-restore](zeroheight://image/7242089/eda69c7f06d7fb949e39e0bc485d11a16171d442cd901803632e819c1f3566cd)
 
 **window-restore**
+
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 
@@ -5525,6 +9674,21 @@ person
 
 **wrench**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
+
 </design>
 
 <design figma-url="https://www.figma.com/design/Diwjkwtp784SX412Y6fT4I/?node-id=22:1431">
@@ -5533,6 +9697,13 @@ person
 
 **xmark**
 
+**Style**
+
+| Group | Name | Value |
+| :--- | :--- | :--- |
+| Borders | Weight | 1 px |
+| Borders | Align | Inside |
+
 **Details**
 
 <item-details>
@@ -5540,6 +9711,14 @@ person
 **xmark, close**, **multiply**, **remove, times**
 
 </item-details>
+
+**Attributes**
+
+| Attribute | Value |
+| :--- | :--- |
+| Position | X: 0 px; Y: 0 px |
+| Size | W: 34 px; H: 32 px |
+| Opacity | 100% |
 
 </design>
 ---
@@ -5955,7 +10134,7 @@ While not frequently used in Moodle’s current UI, these styles are available f
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (300) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (300) | The quick brown fox jumped over the lazy dog |
 | Size | 80px |   |
 | Line height | 96px |   |
 | Letter spacing | 0px |   |
@@ -5968,7 +10147,7 @@ While not frequently used in Moodle’s current UI, these styles are available f
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (300) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (300) | The quick brown fox jumped over the lazy dog |
 | Size | 72px |   |
 | Line height | 86.4px |   |
 | Letter spacing | 0px |   |
@@ -5981,7 +10160,7 @@ While not frequently used in Moodle’s current UI, these styles are available f
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (300) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (300) | The quick brown fox jumped over the lazy dog |
 | Size | 64px |   |
 | Line height | 76.8px |   |
 | Letter spacing | 0px |   |
@@ -5994,7 +10173,7 @@ While not frequently used in Moodle’s current UI, these styles are available f
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (300) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (300) | The quick brown fox jumped over the lazy dog |
 | Size | 56px |   |
 | Line height | 67.2px |   |
 | Letter spacing | 0px |   |
@@ -6007,20 +10186,20 @@ While not frequently used in Moodle’s current UI, these styles are available f
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (300) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (300) | The quick brown fox jumped over the lazy dog |
 | Size | 48px |   |
 | Line height | 57.6px |   |
 | Letter spacing | 0px |   |
 
 </design>
 
-<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1059:1146">
+<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=b036706afdf8900157f946655a8b49a90b0c73a2">
 
 **Display 6**
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (300) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (300) | The quick brown fox jumped over the lazy dog |
 | Size | 40px |   |
 | Line height | 48px |   |
 | Letter spacing | 0px |   |
@@ -6040,54 +10219,54 @@ These styles are more commonly used across Moodle, and may also play a role in h
 * Avoid skipping heading levels.
 
 
-<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1059:1152">
+<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1545:1183">
 
 **Heading 1**
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
-| Size | 37.5px |   |
-| Line height | 45px |   |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
+| Size | 40px |   |
+| Line height | 48px |   |
 | Letter spacing | 0px |   |
 
 </design>
 
-<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1059:1155">
+<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1545:1218">
 
 **Heading 2**
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
-| Size | 30px |   |
-| Line height | 36px |   |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
+| Size | 32px |   |
+| Line height | 38.4px |   |
 | Letter spacing | 0px |   |
 
 </design>
 
-<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1059:1158">
+<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1545:1198">
 
 **Heading 3**
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
-| Size | 26.3px |   |
-| Line height | 31.5px |   |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
+| Size | 28px |   |
+| Line height | 33.6px |   |
 | Letter spacing | 0px |   |
 
 </design>
 
-<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1059:1161">
+<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=014e528a77f0bf522f557c66b376f1f705262723">
 
 **Heading 4**
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
-| Size | 22.5px |   |
-| Line height | 27px |   |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
+| Size | 24px |   |
+| Line height | 28.8px |   |
 | Letter spacing | 0px |   |
 
 </design>
@@ -6098,7 +10277,7 @@ These styles are more commonly used across Moodle, and may also play a role in h
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
 | Size | 20px |   |
 | Line height | 24px |   |
 | Letter spacing | 0px |   |
@@ -6111,7 +10290,7 @@ These styles are more commonly used across Moodle, and may also play a role in h
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
 | Size | 16px |   |
 | Line height | 19.2px |   |
 | Letter spacing | 0px |   |
@@ -6132,13 +10311,13 @@ This is the default text style for body content. Use it for paragraphs, descript
 
 It is the most widely used style across the system.
 
-<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1061:7137">
+<design figma-url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/?node-id=1545:1209">
 
 **Base text**
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (400) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (400) | The quick brown fox jumped over the lazy dog |
 | Size | 16px |   |
 | Line height | 24px |   |
 | Letter spacing | 0px |   |
@@ -6162,7 +10341,7 @@ Do not use it for long paragraphs or dense content, as this would make it inacce
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (400) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (400) | The quick brown fox jumped over the lazy dog |
 | Size | 14px |   |
 | Line height | 17.4px |   |
 | Letter spacing | 0px |   |
@@ -6183,7 +10362,7 @@ Use it sparingly and only when it helps improve clarity or user focus.
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (400) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (400) | The quick brown fox jumped over the lazy dog |
 | Size | 20px |   |
 | Line height | 40px |   |
 | Letter spacing | 0px |   |
@@ -6206,7 +10385,7 @@ It is the most widely used text size for components across the system.
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (400) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (400) | The quick brown fox jumped over the lazy dog |
 | Size | 16px |   |
 | Line height | 12px |   |
 | Letter spacing | 0px |   |
@@ -6225,7 +10404,7 @@ This size is ideal when less prominence is needed or the default UI text is too 
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (500) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (500) | The quick brown fox jumped over the lazy dog |
 | Size | 14px |   |
 | Line height | 12px |   |
 | Letter spacing | 0px |   |
@@ -6244,9 +10423,9 @@ This size is ideal when the default UI text is too small for the available space
 
 | Property | Value | Example Text |
 | :--- | :--- | :--- |
-| Family | Roboto (400) | The quick brown fox jumped over the lazy dog |
+| Family | Noto Sans (400) | The quick brown fox jumped over the lazy dog |
 | Size | 20px |   |
-| Line height | 24px |   |
+| Line height | 17.4px |   |
 | Letter spacing | 0px |   |
 
 </design>
@@ -6264,19 +10443,15 @@ Typography provides a consistent, readable hierarchy across products and compone
 * Don’t skip heading levels.
 * Use system text colour roles (don’t hardcode).
 
-![](zeroheight://image/7726675/b9f1cb95105b3f0355d6fceceb529fa90ac02744e59514f050a6ef5651e59dc6)
-
 ---
 
 ## Usage
 
 ### Typeface
 
-We use **[Roboto](https://fonts.google.com/specimen/Roboto)** as our primary typeface across the system.
+We use **[Noto sans](https://fonts.google.com/noto/specimen/Noto+Sans)** as our primary typeface across the system.
 
-While Moodle LMS will use the user's system font, we have chosen Roboto as the default font to use for Figma designs, as system fonts can't be embedded.
-
-![](zeroheight://image/7726675/fa04e0330b093a36d25276bbc8fe39e66e4916de7633c1b56f4814e776e66cd4)
+![](zeroheight://image/7726675/cf9211904d6d8730a82f7f90a96c3f9706c8ef4ae51666ae8e0a335adf00a8d9)
 
 ### Weights 
 
