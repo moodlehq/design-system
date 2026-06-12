@@ -9,6 +9,17 @@
     "javascriptreact"
   ],
   "eslint.workingDirectories": [{ "mode": "auto" }],
+  "files.exclude": {
+    "coverage": true,
+    "dist": true,
+    "storybook-static": true,
+    "node_modules": true
+  },
+  "search.exclude": {
+    "coverage": true,
+    "dist": true,
+    "storybook-static": true
+  },
   "prettier.configPath": ".github/linters/.prettierrc",
   "prettier.ignorePath": ".github/linters/.prettierignore"
 }

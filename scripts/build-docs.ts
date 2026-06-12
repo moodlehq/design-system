@@ -19,14 +19,14 @@ const OUTPUT_PATH = resolve(
 // The cover page is a ZeroHeight UI chrome element with no text content.
 const SKIP_KEYS = new Set(['___cover']);
 
-// applyTo: '**' tells VS Code / Copilot to load this file as context for every file.
-const FILE_HEADER = `---
-applyTo: '**'
----
-
-<!-- Auto-generated from ZeroHeight. Do not edit manually. -->
+// No applyTo frontmatter — this file is intentionally opt-in only (not auto-loaded by Copilot).
+// See routing rules in copilot-instructions.md.
+const FILE_HEADER = `<!-- Auto-generated from ZeroHeight. Do not edit manually. -->
 <!-- Source: https://design.moodle.com/ -->
 <!-- Regenerate: npm run build-docs -->
+<!-- NOTE: No applyTo frontmatter — this file is intentionally opt-in only.
+     Load it manually when ZeroHeight MCP is unavailable and design context is needed.
+     See routing rules in copilot-instructions.md. -->
 
 # Moodle Design System — Agent Reference
 

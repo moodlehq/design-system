@@ -5,7 +5,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 The GitHub instruction files are the authoritative source for all guidance. Read them before working in this repo:
 
 - **All work:** [.github/copilot-instructions.md](.github/copilot-instructions.md) — setup, commands, commit conventions, architecture, and guardrails
-- **All work:** [.github/instructions/design-system.instructions.md](.github/instructions/design-system.instructions.md) — design system tokens, spacing, colour, typography, and icons (auto-generated from ZeroHeight; do not edit manually)
+- **All work:** [.github/instructions/component-index.instructions.md](.github/instructions/component-index.instructions.md) — compact component overview and fast entry points
 - **Components (`components/**`):\*\* [.github/instructions/components.instructions.md](.github/instructions/components.instructions.md)
 - **Stories & tests (`*.stories.tsx`, `*.test.tsx`, `tests/**`):\*\* [.github/instructions/stories-tests.instructions.md](.github/instructions/stories-tests.instructions.md)
 - **Token pipeline (`tokens/**`, `scripts/tokens.ts`):\*\* [.github/instructions/tokens.instructions.md](.github/instructions/tokens.instructions.md)
+
+Fallback policy:
+
+- Use ZeroHeight documentation and MCP access as the primary design guidance source.
+- Only load [.github/instructions/design-system.instructions.md](.github/instructions/design-system.instructions.md) if ZeroHeight cannot be accessed and additional design context is still required.
+- Ask before loading the large fallback file into the context window.
