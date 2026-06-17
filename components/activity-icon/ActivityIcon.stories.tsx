@@ -34,11 +34,10 @@ const meta = {
         defaultValue: { summary: 'md' },
       },
     },
-    variant: {
+    container: {
       control: { type: 'select' },
       options: ['none', 'default', 'large'],
-      description:
-        'Background/size variant matching Figma activity icon treatments.',
+      description: 'Container treatment matching Figma activity icon styles.',
       table: {
         type: { summary: 'none | default | large' },
         defaultValue: { summary: 'default' },
@@ -56,8 +55,8 @@ const meta = {
   },
   args: {
     icon: 'assignment',
-    size: 'md',
-    variant: 'default',
+    size: undefined,
+    container: undefined,
     alt: '',
   },
 } satisfies Meta<typeof ActivityIcon>;
@@ -66,111 +65,165 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const VariantDefault: Story = {
-  args: {
-    variant: 'default',
-    icon: 'assignment',
+const showcaseParameters = {
+  controls: { disable: true },
+  docs: {
+    canvas: { sourceState: 'none' as const },
   },
 };
 
-export const VariantNone: Story = {
-  args: {
-    variant: 'none',
-    icon: 'assignment',
-  },
+const showcaseStyles = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 'var(--mds-spacing-md)',
 };
 
-export const VariantLarge: Story = {
-  args: {
-    variant: 'large',
-    icon: 'assignment',
-  },
-};
+export const Default: Story = {};
 
-export const WithAltText: Story = {
-  args: {
-    variant: 'default',
-    icon: 'assignment',
-    alt: 'Assignment activity icon',
-  },
+export const Containers: Story = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={showcaseStyles}>
+      <ActivityIcon
+        {...args}
+        container="none"
+        icon="assignment"
+        alt="None container"
+      />
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="assignment"
+        alt="Default container"
+      />
+      <ActivityIcon
+        {...args}
+        container="large"
+        icon="assignment"
+        alt="Large container"
+      />
+    </div>
+  ),
   play: async ({ canvas }) => {
     await expect(
-      canvas.getByRole('img', { name: 'Assignment activity icon' }),
+      canvas.getByRole('img', { name: 'None container' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Default container' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Large container' }),
     ).toBeVisible();
   },
 };
 
-export const SizeSmall: Story = {
-  args: {
-    size: 'sm',
-    variant: 'default',
-    icon: 'assignment',
+export const Sizes: Story = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={showcaseStyles}>
+      <ActivityIcon
+        {...args}
+        size="sm"
+        container="default"
+        icon="assignment"
+        alt="Small size"
+      />
+      <ActivityIcon
+        {...args}
+        size="md"
+        container="default"
+        icon="assignment"
+        alt="Medium size"
+      />
+      <ActivityIcon
+        {...args}
+        size="lg"
+        container="default"
+        icon="assignment"
+        alt="Large size"
+      />
+      <ActivityIcon
+        {...args}
+        size="xl"
+        container="default"
+        icon="assignment"
+        alt="Extra large size"
+      />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('img', { name: 'Small size' })).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Medium size' }),
+    ).toBeVisible();
+    await expect(canvas.getByRole('img', { name: 'Large size' })).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Extra large size' }),
+    ).toBeVisible();
   },
 };
 
-export const SizeMedium: Story = {
-  args: {
-    size: 'md',
-    variant: 'default',
-    icon: 'assignment',
-  },
-};
-
-export const SizeLarge: Story = {
-  args: {
-    size: 'lg',
-    variant: 'default',
-    icon: 'assignment',
-  },
-};
-
-export const SizeExtraLarge: Story = {
-  args: {
-    size: 'xl',
-    variant: 'default',
-    icon: 'assignment',
-  },
-};
-
-export const CategoryCollaboration: Story = {
-  args: {
-    variant: 'default',
-    icon: 'forum',
-  },
-};
-
-export const CategoryAssessment: Story = {
-  args: {
-    variant: 'default',
-    icon: 'assignment',
-  },
-};
-
-export const CategoryCommunication: Story = {
-  args: {
-    variant: 'default',
-    icon: 'chat',
-  },
-};
-
-export const CategoryInteractive: Story = {
-  args: {
-    variant: 'default',
-    icon: 'lesson',
-  },
-};
-
-export const CategoryOther: Story = {
-  args: {
-    variant: 'default',
-    icon: 'h5p',
-  },
-};
-
-export const CategoryResource: Story = {
-  args: {
-    variant: 'default',
-    icon: 'file-pdf',
+export const Categories: Story = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={{ ...showcaseStyles, flexWrap: 'wrap' }}>
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="forum"
+        alt="Collaboration category"
+      />
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="assignment"
+        alt="Assessment category"
+      />
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="chat"
+        alt="Communication category"
+      />
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="lesson"
+        alt="Interactive category"
+      />
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="h5p"
+        alt="Other category"
+      />
+      <ActivityIcon
+        {...args}
+        container="default"
+        icon="file-pdf"
+        alt="Resource category"
+      />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole('img', { name: 'Collaboration category' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Assessment category' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Communication category' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Interactive category' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Other category' }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole('img', { name: 'Resource category' }),
+    ).toBeVisible();
   },
 };
 
@@ -245,7 +298,7 @@ export const AllIcons: Story = {
                 >
                   <ActivityIcon
                     icon={name}
-                    variant="default"
+                    container="default"
                     size="md"
                     alt=""
                   />

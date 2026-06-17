@@ -11,7 +11,7 @@ const size = figma.enum('Size', {
   XL: 'xl',
 });
 
-const variant = figma.enum('Container', {
+const container = figma.enum('Container', {
   None: 'none',
   Default: 'default',
   Large: 'large',
@@ -22,13 +22,13 @@ figma.connect(ActivityIcon, url, {
   variant: { Category: 'Collaboration' },
   props: {
     size: size,
-    variant: variant,
+    container: container,
   },
-  example: ({ size, variant }) => (
+  example: ({ size, container }) => (
     <ActivityIcon
       icon="database"
       size={size}
-      variant={variant}
+      container={container}
       alt="Collaboration activity"
     />
   ),
@@ -39,13 +39,13 @@ figma.connect(ActivityIcon, url, {
   variant: { Category: 'Communication' },
   props: {
     size: size,
-    variant: variant,
+    container: container,
   },
-  example: ({ size, variant }) => (
+  example: ({ size, container }) => (
     <ActivityIcon
       icon="chat"
       size={size}
-      variant={variant}
+      container={container}
       alt="Communication activity"
     />
   ),
@@ -56,13 +56,13 @@ figma.connect(ActivityIcon, url, {
   variant: { Category: 'Assessment' },
   props: {
     size: size,
-    variant: variant,
+    container: container,
   },
-  example: ({ size, variant }) => (
+  example: ({ size, container }) => (
     <ActivityIcon
       icon="assignment"
       size={size}
-      variant={variant}
+      container={container}
       alt="Assessment activity"
     />
   ),
@@ -73,13 +73,13 @@ figma.connect(ActivityIcon, url, {
   variant: { Category: 'Interactive' },
   props: {
     size: size,
-    variant: variant,
+    container: container,
   },
-  example: ({ size, variant }) => (
+  example: ({ size, container }) => (
     <ActivityIcon
       icon="ims-package"
       size={size}
-      variant={variant}
+      container={container}
       alt="Interactive activity"
     />
   ),
@@ -90,10 +90,15 @@ figma.connect(ActivityIcon, url, {
   variant: { Category: 'Resource' },
   props: {
     size: size,
-    variant: variant,
+    container: container,
   },
-  example: ({ size, variant }) => (
-    <ActivityIcon icon="book" size={size} variant={variant} alt="Resource" />
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="book"
+      size={size}
+      container={container}
+      alt="Resource"
+    />
   ),
 });
 
@@ -102,13 +107,13 @@ figma.connect(ActivityIcon, url, {
   variant: { Category: 'Other' },
   props: {
     size: size,
-    variant: variant,
+    container: container,
   },
-  example: ({ size, variant }) => (
+  example: ({ size, container }) => (
     <ActivityIcon
       icon="subsection"
       size={size}
-      variant={variant}
+      container={container}
       alt="Activity"
     />
   ),
