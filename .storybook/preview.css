@@ -12,3 +12,49 @@
   font-weight: 100 900;
   font-style: italic;
 }
+
+/* ---------------------------------------------------------------------------
+ * Pseudo-state class equivalents for storybook-addon-pseudo-states.
+ *
+ * The addon rewrites document stylesheets at runtime to add .pseudo-* class
+ * selectors alongside every :pseudo-state rule. In Vite dev mode the CSS is
+ * injected into the iframe after the addon's STORY_RENDERED rewrite pass, so
+ * the rewrite never lands on our component stylesheets. Adding the equivalents
+ * here (a static file loaded before stories render) is the correct fallback.
+ *
+ * Rules mirror the `:focus-visible` declarations in each component's CSS file.
+ * Note: do NOT combine real pseudo-states (e.g. :active) with .pseudo-* class
+ * names in this file — the addon will attempt to rewrite such rules, produce
+ * an empty selector, and throw a CSSStyleSheet insertRule error.
+ * --------------------------------------------------------------------------- */
+
+/* All components — default focus ring */
+.mds-btn.btn.pseudo-focus-visible,
+.mds-checkbox-input.pseudo-focus-visible,
+.mds-form-check-input.pseudo-focus-visible,
+.mds-pagination__button.pseudo-focus-visible:not(:disabled),
+.mds-pagination__page.pseudo-focus-visible:not(:disabled) {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(--mds-spacing-offset);
+  box-shadow: none;
+}
+
+/* Close button — different offset and opacity */
+.mds-close-button.btn-close.pseudo-focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(--mds-spacing-none);
+  box-shadow: none;
+  opacity: 1;
+}
+
+/* Button danger — outline color override */
+.mds-btn.btn.btn-danger.pseudo-focus-visible,
+.mds-btn.btn.btn-outline-danger.pseudo-focus-visible {
+  outline-color: var(--mds-focus-danger);
+}
+
+/* Checkbox / radio invalid — outline color override */
+.mds-checkbox-input.is-invalid.pseudo-focus-visible,
+.mds-form-check-input.is-invalid.pseudo-focus-visible {
+  outline-color: var(--mds-border-feedback-danger);
+}

@@ -13,5 +13,8 @@ export type { CheckboxProps } from './checkbox';
 export { CloseButton } from './close-button';
 export type { CloseButtonProps } from './close-button';
 
+export { Pagination } from './pagination';
+export type { PaginationProps } from './pagination';
+
 export { Radio } from './radio';
 export type { RadioProps } from './radio';
