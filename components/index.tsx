@@ -13,6 +13,9 @@ export type { CheckboxProps } from './checkbox';
 export { CloseButton } from './close-button';
 export type { CloseButtonProps } from './close-button';
 
+export { FavouriteButton } from './favourite-button';
+export type { FavouriteButtonProps } from './favourite-button';
+
 export { Link } from './link';
 export type { LinkProps } from './link';
 
