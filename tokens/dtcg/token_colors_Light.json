@@ -218,6 +218,24 @@
         }
       }
     },
+    "nav-pill": {
+      "hover": {
+        "$type": "color",
+        "$value": "{color.gray.200}"
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.gray.300}"
+      },
+      "selected": {
+        "$type": "color",
+        "$value": "{color.gray.200}"
+      },
+      "selected-hover": {
+        "$type": "color",
+        "$value": "{color.gray.400}"
+      }
+    },
     "surface": {
       "default": {
         "$type": "color",
