@@ -25,10 +25,27 @@ Component subpath imports are auto-discovered at build time — adding a new fol
 
 Three scoped files contain the detailed rules for their areas. They auto-load in VS Code/Copilot when a matching file is open. Other agents should read the relevant file proactively before starting work in that area:
 
-- **All work:** `.github/instructions/design-system.instructions.md` — design system tokens, spacing, colour, typography, and icons (auto-generated from ZeroHeight; do not edit manually)
+- **All work (quick local map):** `.github/instructions/component-index.instructions.md` — compact component overview and entry points
 - **`components/**`** → `.github/instructions/components.instructions.md`
 - **`*.stories.tsx`, `*.test.tsx`, `tests/**`** → `.github/instructions/stories-tests.instructions.md`
 - **`tokens/**`, `scripts/tokens.ts`** → `.github/instructions/tokens.instructions.md`
+
+Large fallback resource (opt-in only — no `applyTo`, never auto-loaded):
+
+- **Fallback only:** `.github/instructions/design-system.instructions.md` — auto-generated full export from ZeroHeight, intentionally large, do not edit manually
+
+Routing rule for agents:
+
+1. Prefer ZeroHeight MCP and `.github/instructions/component-index.instructions.md` first.
+2. Load scoped instruction files based on the file(s) being edited.
+3. Load `.github/instructions/design-system.instructions.md` only when the agent cannot access ZeroHeight and still needs missing design context.
+4. Ask before loading the large fallback file into the context window.
+
+Component index artifacts:
+
+- `.github/instructions/component-index.instructions.md` is the instruction-friendly quick map for humans and agents.
+- `dist/component-index.json` is a build-generated machine-readable index for deterministic lookups.
+- Generate with `npm run build-component-index` (also runs as part of `npm run build`).
 
 > When adding a new instruction file, add a pointer entry to both this list and to `.claude/CLAUDE.md` so all agent entry points stay in sync.
 

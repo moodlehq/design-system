@@ -195,6 +195,15 @@ npm run test-unit-coverage
 npm run test-storybook
 ```
 
+#### Generated component index
+
+The build now generates a machine-readable component index at `dist/component-index.json`.
+
+- Generation command: `npm run build-component-index`
+- Included in full build: `npm run build`
+
+Use this JSON for deterministic tooling/agent lookups, while `.github/instructions/component-index.instructions.md` remains the compact instruction-friendly entry point.
+
 ### Build the Design System
 
 To build the design system, run the following commands in your terminal:

@@ -1,10 +1,9 @@
----
-applyTo: '**'
----
-
 <!-- Auto-generated from ZeroHeight. Do not edit manually. -->
 <!-- Source: https://design.moodle.com/ -->
 <!-- Regenerate: npm run build-docs -->
+<!-- NOTE: No applyTo frontmatter — this file is intentionally opt-in only.
+     Load it manually when ZeroHeight MCP is unavailable and design context is needed.
+     See routing rules in copilot-instructions.md. -->
 
 # Moodle Design System — Agent Reference
 
@@ -232,14 +231,6 @@ Now you’re ready to design using Moodle’s design system foundations!
 **Moodle Design System**
 
 Access the Moodle Design System resources published on Figma Community.
-</shortcut_tile>
-
-<shortcut_tile url="https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?m=auto&amp;node-id=6011-198&amp;t=ffwygiMvvnLdpYmW-1">
-![HQ Design System](zeroheight://image/8079522/cc20beb2814c96182f0efc1f227e0c768eb8e3f0647c04868ba836bf79c10c10)
-
-**HQ Design System**
-
-Access the Moodle Design System (Moodle HQ Staff only ⛔︎).
 </shortcut_tile>
 </shortcut_tiles>
 ---
@@ -889,10 +880,6 @@ For usage examples, configuration details, and implementation guidance, refer to
 
 ---
 
-# What's new
-
----
-
 # Quickstart
 ### Quickstart
 
@@ -967,6 +954,526 @@ Explore styles and tokens: colours, typography, layout, and more.
 How to request changes, report issues, and collaborate with the DS team.
 </shortcut_tile>
 </shortcut_tiles>
+---
+
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/8505350/29c51a635078c9b6eb5d61c206f1915ee81b3f168747e407a07987fd56f0e8b9)
+
+1. **Previous button** — a directional control that moves the user to the preceding page. Always present. Shown in the disabled state when the user is on the first page.
+2. **Page link item** — a numbered item the user can click to navigate directly to that page.
+3. **Current page item** — the numbered item that represents the page the user is currently on. Always exactly one current page item in the bar.
+4. **Ellipsis item** — a non-interactive item that indicates truncated pages. Appears when the total number of pages exceeds the visible range.
+5. **Next button** — a directional control that moves the user to the following page. Always present. Shown in the disabled state when the user is on the last page.
+
+![](zeroheight://image/8505350/688d87aefe143d2bd5ebcccd784558b5e492f6458bd7ee8871dd9d33bd8b189a)
+
+6. **Grouped previous / next buttons** — a style variant of the previous and next buttons used in minimal paging contexts where no page numbers are shown. 
+
+---
+
+## States
+
+### Page link item
+
+| **State** | **Styles and tokens** |
+| --- | --- |
+|  ![](zeroheight://image/8505350/50a5ca1f96d6cd0a9ae8e38ecdb0a7afadfebf661fdfa38f30888e94ef38d854)  |  **Default**   The item is available and can be navigated to. This is the base state for all page items that aren't the current page.   Label: .  |
+|  ![](zeroheight://image/8505350/5bc6892252d885324168da58a4412052dd29977d48da41f0bc3733901c578158)  |  **Hover**   The cursor is over the item.   Page item: . Label: .  |
+|  ![](zeroheight://image/8505350/faeb7bdf6551d6a91d6cd1d5194c9fbfb1cffd484e8c8d68ba3bcc9cccd83a81)  |  **Focus**   The item has received keyboard focus. A visible focus ring appears around the item.   Page item: . Label: .  |
+|  ![](zeroheight://image/8505350/1c10a2e495c1f7909c818213256ff6fe08384098a1ca13d167c4e90230121c41)  |  **Pressed**   The item is being actively clicked or tapped.   Page item: . Label: .  |
+|  ![](zeroheight://image/8505350/5ee0c190f7c3f789cd0d25521cfbe22696d828af7b783e405946f9479b2b6301)  |  **Disabled**   The item can't be interacted with and is removed from the tab order. Only applied to ellipsis or truncation items. Page link items don't use the disabled state — if a page isn't available, remove it from the bar entirely.  Label: .  |
+
+### Current page item
+
+| **State** | **Styles and tokens** |
+| --- | --- |
+|  ![](zeroheight://image/8505350/4c3a3b977254bf6bf45adcdf4a2dc5d2bd033f62382b3ed546285d8393882728)  |  **Default**   Identifies the page the user is currently viewing. There's always exactly one current page item in the bar.   Page item:. Label: .  |
+|  ![](zeroheight://image/8505350/23b0b878a98dba4a3abca16cf5cce68f681892fd970ae4eb632c51b50ac7c0c4)  |  **Hover**   The cursor is over the current page item. The item remains visually distinct as the current page.   Page item: . Label: .  |
+|  ![](zeroheight://image/8505350/3583e46188a79ffa97ca4299a04ba2745b2f57d5b26402ed3500ccd006a7df61)  |  **Focus**   The current page item has received keyboard focus. The focus ring appears on top of the active background.   Page item: . Label: .  |
+|  ![](zeroheight://image/8505350/422b15de39b4950e1d0985b66d68fd861f89d389dab97839583fde372c64915a)  |  **Pressed**   The current page item is being actively clicked or tapped.  Page item: . Label: . |
+
+### Previous and next buttons
+
+| **States** | **Styles and tokens** |
+| --- | --- |
+|  ![](zeroheight://image/8505350/20559500bc48e88a2aa5bafbe45b93aab8b1e67923df97e028ebb63659282146)  |  **Default**   The control is available. Clicking or tapping moves the user one page in the corresponding direction.   Icon: .  |
+|  ![](zeroheight://image/8505350/56701dba595fde5b05046c2b3093896d4c609f6ab42e463b7974c9160d0ed562)  |  **Hover**   The cursor is over the control.   Page item: . Icon .  |
+|  ![](zeroheight://image/8505350/cae5cfa8675cef300cda54d2345894ed15a90732d7cc5b5582eaf14db3e45fec)  |  **Focus**   The control has received keyboard focus. A visible focus ring appears around the item.   Page item: . Icon:.  |
+|  ![](zeroheight://image/8505350/a8dec0cc696601bca1670db706df99c9045a0fc294e731ded3643807751d46d6)  |  **Pressed**   The control is being actively clicked or tapped.   Page item: . Icon: .  |
+|  ![](zeroheight://image/8505350/39e1f2fd23578f613cbb1cc11634714b865d44f80d83bffb6a11450ba9084837)   |  **Disabled**   Applied to the previous button on the first page, and to the next button on the last page. The control is visible but can't be interacted with and is removed from the tab order. Don't hide the control — keeping it visible communicates the boundary of the pagination range.   Icon: . |
+
+### Grouped previous and next buttons
+
+| **States** | **Styles and tokens** |
+| --- | --- |
+|  ![](zeroheight://image/8505350/f5c5e595ae3053dd532aa540bfb2170a11f6df19b9296cd3b0889de940cc5ef1)  |  **Default**   Both controls are available. Clicking or tapping either moves the user one page in the corresponding direction.  Page item: .  |
+|  ![](zeroheight://image/8505350/95f7272542b7f76f8e058687c866c85505701892d9ab189e4aa04b84818dfcab)  |  **Hover**   Only the hovered control changes state — the other remains in its current state.   Page item: . Icon: .  |
+|  ![](zeroheight://image/8505350/dca80a12dee61dbcbef22a00c15897c5c6e24db9602ee674775e8f371c234d4e)  |  **Focus**   The focus ring appears on the focused control individually.  Page item: . Icon: .  |
+|  ![](zeroheight://image/8505350/db48ec89920ca3661e09552d8f2961be11de6ca3ffc8d725f6fa814cc36ddbdc)  |  **Pressed**   Only the pressed control changes state.   Page item: . Icon: .  |
+|  ![](zeroheight://image/8505350/c9b38ceefdc1b51588e3c779585dac07563dc48f6ee6e83e946766ccf7b35d3c)  |  **Disabled**   Applied to the previous button on the first page, and to the next button on the last page. The disabled control renders with muted styles; the other control remains in its default state.   Page item: . Icon: . |
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/8505350/d1dbdac3b49360c8871992b6cef829e09aab846ab45fc8056b93422da16717ba)
+
+Pagination enables users to navigate between content pages, dividing large between pages of content, breaking large sets of content into discrete pages, showing where users are within this set and giving them controls to move to a specific page, or step forward and backward through the sequence. 
+
+Pagination always shows previous and next controls, and optionally shows numbered page items and ellipsis truncation when the total page count exceeds the visible range.
+
+---
+
+## When to use
+
+* Use when content is split across a finite, known number of pages.
+* Use when users may want to jump to a specific page — not just move sequentially.
+* Use when the total page count is 2 or more.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use for infinite scroll or load-more patterns — pagination implies a known, finite set.
+* Don't use when there's only 1 page of content.
+* Don't use as a step-by-step navigation indicator — use a stepper or progress indicator instead.
+
+</callout>
+
+---
+
+## Variants
+
+### Style
+
+| **Variant** | **When to use** |
+| :--- | :--- |
+|  ![](zeroheight://image/8505350/8837ebe130985041521bef965677b98df49f6d205ad8ca601fbbeb9b7e1ac5df)  |  **Default**  Full pagination bar — previous, page numbers, ellipsis, next. Use this when the total number of pages is known and the user needs to navigate to specific pages. |
+|  ![](zeroheight://image/8505350/45046fa4367dd4219ceb9f149a9a3f98735288879d76a4cd70eba47860c21d95)  |  **Grouped**  Previous and Next buttons as a single unit, without page numbers. Use in compact layouts where there isn't room for the full navigation bar—for example, a pagination bar within a table or feed. |
+
+---
+
+## Guidelines
+
+### Ellipsis truncation
+
+* The pagination bar shows a maximum of 9 items between the previous and next controls, including page link items, the current page item, and ellipsis items.
+
+
+![](zeroheight://image/8505350/967410b789934b2d490ea73f507d82dc10926b9446fe8a8400de4628a699c0f3)
+
+* When the total number of pages is 8 or fewer, all pages are shown without truncation.
+
+![](zeroheight://image/8505350/f0735f9a1ee236f7a19b7b30b1a933debe89bf3e55f4df009f9e2101bf0aae15)
+
+* When the total number of pages is 9 or more, ellipsis truncation applies:
+    * **Near the start** — show the first 7 pages, one ellipsis, and the last page.
+    * **In the middle** — show the first page, one ellipsis, 2 pages before the current page, the current page, 2 pages after, one ellipsis, and the last page.
+    * **Near the end** — show the first page, one ellipsis, and the last 7 pages.
+* Don't show ellipsis when all pages fit within 8 items.
+
+### Previous and next controls
+
+* Previous and next must always be present, regardless of total page count or current page position. Disable them — don't hide them — when there are no more pages in that direction.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8505350/f6b77e21e570d542a61b8253772caa1d27f5841df4ca14c7e07e791023cc2c48) |   | Keep the previous button visible but disabled on the first page. |
+| Don't | ![](zeroheight://image/8505350/79b4d5e951fd61ba6b47c262d5c14a0c4584bafcebe038f6478ca8918a98fdcb) |   | Don't hide the previous or next button at the ends of the range. |
+
+### Current page
+
+* Mark exactly 1 page item as active at a time. The active item always reflects the page the user is currently viewing — not a selection or a hover state.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8505350/a0d2599741281a403c25195f7fc4721f5deb62c2cf57ef1c444f6ff32d2bff79) |   | Mark exactly one page item as the current page at a time. |
+| Don't | ![](zeroheight://image/8505350/5bf67896f1ba92f4dcaaa6eb4b91b47a1ae027394839ff3d5281c91e96aa3a7b) |   | Don't show more than one current page item simultaneously. |
+
+---
+
+### Content design
+
+#### Content structure and constraints
+
+* Previous and next labels are always visually hidden — only the icon is visible. Screen-reader text must say "Previous page" and "Next page" respectively.
+* Page number labels are integers only. Don't add ordinal suffixes (no "1st", "2nd").
+* Ellipsis renders as the horizontal ellipsis character (…), not 3 separate full stops.
+
+#### Content behaviour
+
+* When total pages change dynamically (e.g. after filtering), update the pagination accordingly. Don't keep the old page count visible.
+* If the current page becomes out of range (e.g. after filtering reduces total pages), navigate to the last available page automatically.
+
+#### Copywriting
+
+* Screen-reader label for the nav container: "Pagination" — keep it short and unambiguous.
+* Screen-reader text for page number items: "Page [n]" (e.g. "Page 1", "Page 4").
+* Don't include "Go to" — it's verbose and redundant.
+
+---
+
+### Layout and spacing
+
+* Pagination items are separated by 4px
+* Pagination doesn't set its own width. It wraps to the content width of its items.
+
+![](zeroheight://image/8505350/f0c373294c09ba5b424941e48e19120f91d5aa2ae01556438ac7988da316188a)
+
+---
+
+### Breakpoints and responsive behaviour
+
+* Pagination truncates and hides items based on viewport width and ellipsis logic applied to total page count. 
+
+![](zeroheight://image/8505350/a167a237aaa83259c1bb0783ac63366018b88484b89e0ab28398d998415a40e4)
+
+* In narrow containers, the number of page link items between the ellipsis and the current page is reduced on both sides to fit the available width, ensuring the Previous and Next controls, first and/or last page items, ellipsis items, and current page item remain visible.
+    * At viewports of 576px and above, the full 9-item bar is shown.
+    * Below 576px, page link items around the current page are reduced to prevent line wrapping.
+* On mobile (< 576px), consider showing the grouped (prev/next only) style if space is too limited for numbered items.
+
+---
+
+### Interaction behaviour
+
+* Minimum tap target for page items: 36x36px.
+
+---
+
+### Accessibility guidelines
+
+#### Colour and contrast
+
+* All state colour combinations meet WCAG AA (4.5:1 minimum for text). 
+* Don't use colour alone to indicate the active page — the aria-current="page" attribute communicates current position to screen readers independently of visual styling.
+
+#### Focus
+
+* All interactive page items (numbers, previous, next) must be reachable via Tab and show a visible focus ring. The focus ring uses a 2px border in focus.default with a 1px offset from the item edge.
+* Disabled items must not receive keyboard focus — set tabindex="-1" on the anchor element.
+* Ellipsis items are non-interactive and must not appear in the tab order.
+
+#### Labelling
+
+* The <nav> element must have aria-label="Pagination" so screen readers can identify it as a distinct landmark.
+* The active page item must have aria-current="page" on its anchor element.
+* Previous and next icons are decorative — set aria-hidden="true" on the SVG. Provide visually-hidden text on the anchor for screen readers.
+---
+
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/8647020/a0f80309f6651ab2ae808ed727633b4f2f259f1cb2fca971975a747f409f8552)
+
+1. **Label** — the text that communicates where the link will navigate to. Always required.
+2. **Underline** — appears on hover to reinforce that the text is interactive. Not present in the default resting state.
+3. **Icon** (Optional) — place before (startIcon) or after (endIcon) the label only when it adds meaning, not decoration. The most common use of an EndIcon is the External link indicator, signalling the destination opens in a new tab or leaves the site.
+
+---
+
+## States
+
+### Primary
+
+| ![](zeroheight://image/8647020/4a6280f919e8c279090f067ba23ae776919f41af9d2aadf14f6a3aeb246e3aac) | **Default** The link's resting state. Confirm the label clearly describes the destination before any interaction begins.  Label: `text.link.primary.default` Icon: `text.link.primary.default` Space between:`spacing.xs`  |
+| :--- | :--- |
+| ![](zeroheight://image/8647020/8b7a6bf9dfb5f08a8d44a4272d863b6ce8dee5aaeab2f5ea26c1f3ec5bd9aaea)  | **Hover** Triggered when the cursor moves over the link. Don't suppress or override this state — users rely on it to identify interactive text.  Label: `text.link.primary.hover` Icon: `text.link.primary.hover` Space between:`spacing.xxs` |
+| ![](zeroheight://image/8647020/4b025eb47daebf1f2d80a9c4047056aa82a381a0ed89e7a6285e44357f4504ec)  | **Active / Pressed** Triggered while the link is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.link.primary.hover` Icon: `text.link.primary.hover` Space between:`spacing.xs` |
+| ![](zeroheight://image/8647020/defdb9bb279c0fc453b547216e8eb7ff10f6b9148f68cbbdefc12fd12ca1e792) | **Disabled** Applied when the destination is genuinely unavailable. Don't use as a substitute for removing a link entirely — if the action will never be available, consider not rendering the link at all.  Label: `text.link.primary.disabled` Icon: `text.link.primary.disabled` Space between:`spacing.xs` |
+| ![](zeroheight://image/8647020/a89ff50bfe2f4e0e721ad1baba9e4672158af8f285cfb6b390ae9dcc785594ac) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.link.primary.default` Icon: `text.link.primary.default` Space between:`spacing.xs` |
+
+### Secondary
+
+| ![](zeroheight://image/8647020/c8a0ba79c0fedf522a6de7e07aae2d127461d13a46761996fad71075cf03dddc)  | **Default** The link's resting state. Confirm the label clearly describes the destination before any interaction begins.  Label: `text.subtle` Icon: `text.subtle` Space between:`spacing.xs`  |
+| :--- | :--- |
+| ![](zeroheight://image/8647020/108960c7689efb1f34cf2c7d2d85c279c12fe9124a3db8e4d1ec7fee7a53ba3e)  | **Hover** Triggered when the cursor moves over the link. Don't suppress or override this state — users rely on it to identify interactive text.  Label: `text.default` Icon: `text.default` Space between:`spacing.xxs` |
+| ![](zeroheight://image/8647020/5ed7f5e08bf0c0dbab9025830bc0292a3bedacd50ac24159b02b1a0b7018fd04)   | **Active / Pressed** Triggered while the link is being pressed. Transitions away immediately on release — don't hold this state.  Label: `text.default` Icon: `text.default` Space between:`spacing.xs` |
+| ![](zeroheight://image/8647020/e396a6488a57dfe94fe4640f1edfc10a9bd705fea02deddb02ca03cf435fe221)  | **Disabled** Applied when the destination is genuinely unavailable. Don't use as a substitute for removing a link entirely — if the action will never be available, consider not rendering the link at all.  Label: `text.muted` Icon: `text.muted` Space between:`spacing.xs` |
+| ![](zeroheight://image/8647020/cc2c9a7637ebae3b4d938d19331d197a4c75665a92f2d7f1778f01bf54afc0bf)  | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.  Label: `text.subtle` Icon: `text.subtle` Space between:`spacing.xs` |
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/8647020/3d085753b541280c18fc59581386370f557402443981ce97296221cda66fbc1b)
+
+Links let users navigate to another page, view, or resource. They communicate where the user will go when tapped or clicked, and they sit naturally within or alongside text content.
+
+---
+
+## When to use
+
+* Use when the user needs to navigate to another page, view, or external resource.
+* Use when the action belongs inline within a sentence or paragraph and should read as part of the text.
+* Use when you need a low-emphasis navigation target that doesn't carry the visual weight of a button.
+* Use the External link indicator when the destination opens in a new tab or leaves the current site.
+
+<callout background="4" fullWidth="true">
+
+### **❌ When not to use**
+
+* Don't use a link to trigger an action that changes state or submits data — use a Button instead.
+* Don't use a link styled to look like a button when the underlying behaviour is navigation only handle visual weight through the Button component, not by restyling a link.
+
+</callout>
+
+---
+
+## Variants
+
+### Type
+
+The link has 2 colour variants that signal emphasis relative to the surrounding content.
+
+| **Variant** |   | **When to use** |
+| :--- | --- | --- |
+| ![](zeroheight://image/8647020/c6f01282d14ba2264bcd1c05f1c379c8b8d63fc99efd709c067e1e671c755acf) |   | ****Primary**** The default link colour for most navigation. Use for standard inline and standalone links. |
+| ![](zeroheight://image/8647020/f5d68f4aebc8a655b04bd61ded63818fb1e4f090bb6cf75f9e796f6632dca6e2) |   | ****Secondary**** Lower-emphasis links that need to be present but shouldn't compete with primary links or surrounding content. |
+
+### Icon
+
+The link has 3 icon configurations that can be combined with either colour variant.
+
+| **Variant** |   | **When to use** |
+| --- | --- | --- |
+|  ![](zeroheight://image/8647020/d47496aac090b891b1ddfd2ffeddd0aab07cdbcbb55294fcdd34476369cec17d) |   | ****No icon**** Default. Use for inline links and most standard navigation. |
+| ![](zeroheight://image/8647020/4edf6e66d2348d9f28029f994c76f763b46f834998f53a7dfc2394573b037725) |   | ****StartIcon (prefix)**** Use when a leading icon adds clarity, such as a download or back-navigation icon before the label. |
+| ![](zeroheight://image/8647020/ed5765cd92da04978d5995bce516ffcc4b63d3a9a888c880d4c210a41349eb4a) |   | ****EndIcon (suffix)**** Use when a trailing icon clarifies the destination. The External link indicator is an EndIcon used when the link opens in a new tab or leaves the site. |
+
+---
+
+## Guidelines
+
+### Content design
+
+#### **Content structure and constraints**
+
+* Labels support text only. Links may wrap to a second line when they appear inline within a paragraph this is expected for inline use.
+* Recommended label length for standalone links: 1–4 words. Inline links can be longer where the link text describes the destination.
+* Links support a StartIcon (prefix), an EndIcon (suffix), or no icon. Don't combine StartIcon and EndIcon in the same link.
+* When using the External link indicator, it appears as an EndIcon and signals that the destination opens in a new tab.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8647020/ca5825cdeb0f15f73ce1fc41cc60fb2f9aebf81bd8d5e0bffc7dd6171e373eaa) |   | Use a single StartIcon or EndIcon, not both, to keep the link's direction of meaning clear. |
+| Don't | ![](zeroheight://image/8647020/4a6fc08d9c934068a4166f10979adb847ee45117158460056e92975e41919cf1) |   | Don't combine a StartIcon and EndIcon on the same link, it's not a supported configuration and confuses the action. |
+
+#### **Content behaviour**
+
+* The link width is determined by the label length (Hug behaviour).
+* Inline links flow with the surrounding text and wrap naturally at line breaks.
+
+#### **Copywriting** *(if applicable)*
+
+* Use sentence case. Don't capitalise every word.
+* Make the label describe the destination, not the mechanism. "View course settings" is stronger than "Click here" or "Read more".
+* Be specific. Link text should make sense when read out of context.
+* Don't use punctuation at the end of a standalone link label.
+* For external links, make the destination clear so users know they're leaving the site.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8647020/99b77f23d142daccd99b39cd29ea65309b86d77f998c6bf39053eea1dad6bf02) |   | Describe the destination in sentence case, e.g. "View grading criteria" or "Download assignment brief." |
+| Don't | ![](zeroheight://image/8647020/541eadf073d05e1ff6c5e5a6d7a762e8e54a57f40ff7fdac1c38e77704e9281b) |   | Don't use vague mechanism-based labels like "Click here" or "Read more", they're meaningless out of context for screen reader users. |
+
+---
+
+### Layout and spacing
+
+* Inline links sit within the text flow and inherit the line height of surrounding content.
+* Standalone links can stand on their own line, optionally paired with a StartIcon or EndIcon.
+* Avoid placing multiple links so close together that they're hard to distinguish as separate targets.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8647020/5de55a3b4129af66d7d92eecbe59f2b3e1a9d7c79448eb8354ad16491d0a8ec0) |   | Give standalone links enough spacing so each reads as a separate tappable target. |
+| Don't | ![](zeroheight://image/8647020/c62afa96f51314eee7f3d5ee8253f5e033b61da215e8b9c95149318089d8fe0d) |   | Don't place two standalone links back-to-back with no spacing, they read as one tappable area. |
+
+### Responsive behaviour
+
+* Inline links wrap with their surrounding text at all breakpoints.
+
+---
+
+### Interaction behaviour
+
+* Cursor: pointer on hover, not-allowed when disabled.
+* Use disabled state only when the action is genuinely unavailable.
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* Link text meets 4.5:1 contrast ratio against its background.
+* Disabled state contrast is intentionally reduced. Don't rely on disabled alone to communicate unavailability to screen reader users — supplement with `aria-disabled` or accessible copy.
+
+#### **Focus**
+
+* The focus ring must be visible on all background colours used in your layout. Avoid placing buttons on dark backgrounds where the focus ring becomes invisible.
+
+#### **Labelling**
+
+* Always provide descriptive link text. Avoid "Click here" or "Read more" as the sole link text.
+* For external links, announce that the link opens in a new tab via accessible copy or an aria-label so screen reader users aren't surprised by the context change.
+
+---
+---
+
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/8648336/4dd3822e0a031cf531969baa74887cd85f18418025d97e02306f68ba5bf198e0)
+
+1. **Container**. the bounding shape of the item. Transparent at rest; fills when hovered, pressed, or selected.
+2. **Label**. the text that identifies the destination. Always required.
+3. **Selected indicator.** *(Selected state only)* A dot that appears to the left of the label when the item is the current page.
+
+---
+
+## States
+
+| **States** | **Styles and tokens** |
+| :--- | --- |
+| ![](zeroheight://image/8648336/39a4644489aa7168a78c24a0a28f29917bc3052340dac0326ace1e41d5763ef7)  | **Default**The resting state. No interaction has occurred.  Label: . Container: .  |
+| ![](zeroheight://image/8648336/1eaed615d6244cd9986d4a185fbd7dfd2a52d889c70afb132ef21a70f0460dd8)  | **Hover**Triggered when the cursor moves over the item. Don't suppress this state — users rely on it to identify interactive elements.  Label: . Container: .  |
+| ![](zeroheight://image/8648336/e43f1c1f5b552c3b26583f69f9914e1df35abb01acc86db865c0087063875bd3)  | **Focus**Triggered via keyboard navigation. Must remain visible on all backgrounds used in the nav bar.  Label: . Container: .  |
+| ![](zeroheight://image/8648336/735859e94e4ddd022a27317238b866e1e9b9b103da4e99e160667a9033b4e175)  | **Pressed**Triggered while the item is being clicked or tapped. Transitions away immediately on release.  Label: . Container: .  |
+| ![](zeroheight://image/8648336/045cd95a9f83594858ff88169376ec98ae873319d91a6cde3ed69dfc352af66e)  | **Disabled**Applied when the destination is unavailable in the current context. Disabled items are removed from the keyboard tab order. Use sparingly — if a destination is permanently unavailable to a user, consider hiding the item entirely.  Label: . Container: .  |
+| ![](zeroheight://image/8648336/62655191c4838aaa6d161912fdf27b2a7d5a8f234b5b314396c22d99c0f6fbd8)  | **Selected**Applied to the item that represents the current page. Set programmatically via `aria-current="page"` — don't apply this state manually in design.  Label: . Container: .  |
+| ![](zeroheight://image/8648336/f75a6b10b324b5813a8a444e6be9874100b27b757df7ccbaf1e1bc3896655f93)  | **Selected + Focus**Triggered via keyboard navigation when focus lands on the current page item. Required — don't suppress the focus ring on selected items.  Label: . Container: . |
+
+---
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/8648336/1295f8430b4dde4fe15984e0ec9d08fbe437e4cc36386efc5ae0d1750aaffd16)
+
+Nav pill is the individual link item used within a horizontal navigation bar. It represents a single destination, displaying a label and, when selected, a dot indicator that marks the current page. The component is scoped to the single item; grouping, layout, and overflow behaviour are handled at the implementation layer.
+
+---
+
+## When to use
+
+* Use within a horizontal nav bar when users need to move between distinct pages or sections, for example, course navigation or site administration sections.
+* Use the Selected state to mark the current page. Don't replicate this visually with custom styling; always rely on the component state.
+* Use when the navigation destinations each correspond to a distinct URL.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use to trigger in-page behaviour without a URL change — use a Button instead.
+* Don't use for tab switching between content panels on the same page — use the Tabs component instead.
+* Don't use nav pill in isolation. It's designed to be used within a `nav-bar`
+
+</callout>
+
+---
+
+## Guidelines
+
+### Content design
+
+#### **Content structure and constraints**
+
+* Labels should be short and descriptive, ideally 1–3 words.
+* Use clear, destination-oriented language. The label should name the page or section the user will land on.
+* Don't use verbs. Nav pill labels are destinations, not actions.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8648336/c864f90abba28c6596892c05ac97376513c282bb4561dd57e01ec134f1e2d878) |   | Keep labels to 1–3 words. |
+| Don't | ![](zeroheight://image/8648336/de7d2627680223e090fe44212644b376e521b91c7e4d85be9bdd677155d7018c) |   | Don't use full sentences or verb phrases as labels. |
+
+---
+
+### Layout and spacing
+
+* Nav pills in a group are arranged horizontally, in a single row.
+* Each item's width is determined by its label length — don't apply fixed widths.
+* Don't stack nav pills vertically — use a different navigation pattern for vertical navigation.
+* When the group overflows the available width, hidden items move to a "More" overflow menu. This behaviour is handled at the implementation layer, not by the Nav Pill component itself.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8648336/5047fe8440d8c2766ebb5312e6210a120d88bdb8ede4d4bab4a144c2f4311102) |   | Let each item's width follow its label length. |
+| Don't | ![](zeroheight://image/8648336/5f31c41bfb86e5e1bb1b8125f96dd7af8ae0d428a56ae0c191be029385d31c32) |   | Don't apply equal or fixed widths to all items. |
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8648336/9442d28ea6a538a7f34293fee6508ce1adbfb07720c451af499efb0193c4e8f1) |   | Arrange nav pills in a single horizontal row. |
+| Don't | ![](zeroheight://image/8648336/aa08ac2949d1c4ba2250648dfccb23b4e41cd7b9bc679b3c53242a16da6373fc) |   | Don't stack nav pills vertically; use a different navigation pattern instead. |
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8648336/1530c8263abdfe6ae14c187266795d0ccc89741c649a6ea497b3f34b1f8ad8be) |   | Left-align the nav pill group within its container. |
+| Don't | ![](zeroheight://image/8648336/117db021968be204471717c6e1b9273b9181db1abc41cef1ed270e819c9ae58c) |   | Don't stretch or distribute nav pills to fill the full container width. |
+
+---
+
+### Breakpoints and responsive behaviour
+
+* The component's size and styling remain consistent across all breakpoints.
+* On narrow viewports, the number of visible items is controlled by the implementing nav bar pattern — the component itself has no responsive override.
+
+---
+
+### Interaction behaviour 
+
+* Clicking or tapping a nav pill navigates to the linked page. The component doesn't toggle the Selected state — the selected item is set by the application based on the current page URL.
+* The Selected state is always determined programmatically. Don't apply it manually in design mockups unless you're accurately representing the current page.
+* **Cursor:** pointer on hover; not-allowed when disabled.
+* **Keyboard:** the nav bar behaves as a single tab stop. Tab moves focus into and out of the group as a unit. Arrow keys navigate between items within the group. This is intentional — don't design interactions that assume Tab will step through each item individually.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8648336/19a42875a2f6a7bb8bb5d95ffdb76298a106969a8c7a6f80410a1ea402bffaae) |   | Represent only one item as Selected per nav bar — the current page. |
+| Don't | ![](zeroheight://image/8648336/db932b7b16ea38bd347da375afcf122a6929f823ede56394c55c2dc733cefb4c) |   | Don't show multiple items in the Selected state simultaneously. |
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* The selected indicator (dot) alone must not be the only signal for the current page — `aria-current="page"` must also be applied on the selected item.
+* Disabled state contrast is intentionally reduced. Don't rely on the disabled state to communicate unavailability to screen reader users — supplement with `aria-disabled`.
+
+#### **Focus**
+
+* The focus ring must remain visible on all background colours used in the nav bar.
+* The Selected + Focus state must be visually distinct from the Selected state — don't remove the focus ring on selected items.
+
+#### **Labelling**
+
+* Every nav pill must have a visible text label. Icon-only nav pills are not supported by this component.
+
+---
+
+## Related
+
+#### **Alternatives**
+
+* Button — use when the action triggers an in-page behaviour without navigation.
+
+#### **Used with**
+
+* Dropdown — the "More" overflow mechanism uses a Dropdown component to house hidden nav items. These are separate components; the Nav Pill component itself does not include dropdown behaviour.
+
+---
 ---
 
 ---
@@ -1206,36 +1713,6 @@ None. If the icon changes communicate status updates, the parent context should 
 
 ---
 
-# Code
-## Storybook
-
----
-
-## Accessibility implementation
-
-### Keyboard interaction
-
-| **Key** | **Action** |
-| --- | --- |
-| `[Key]` | [Action] |
-| `[Key]` | [Action] |
-| `[Key]` | [Action] |
-
-### ARIA
-
-* Role: 
-* Required attributes: 
-* Optional attributes: 
-
-### Dynamic announcements *(if applicable)*
-
-`[aria-live, state changes]`
-
----
-
-## GitHub
----
-
 # Design
 ## Anatomy
 
@@ -1346,7 +1823,7 @@ The label property controls which text is shown and where it appears. It can be 
 
 | Rule | Image | Caption | Description |
 | :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8449677/110eb5276a4ced38fdb6ca471abecfbc51e40d73c03b283d05118faa4c10d498) |   | Use the title and count above the progress bar when horizontal space is tight, so the bar stays long enough to show progress clearly. |
+| Do | ![](zeroheight://image/8449677/110eb5276a4ced38fdb6ca471abecfbc51e40d73c03b283d05118faa4c10d498) |   | Use the title or the title and count above the progress bar when horizontal space is tight, so the bar stays long enough to show progress clearly. |
 | Don't | ![](zeroheight://image/8449677/90ae0ac8844e8fb77605575e3ff5b6640e56b5b8750ee4bd7a8b6ae933ce7564) |   | Use the count inline when horizontal space is tight, because it can make the bar too short to show progress clearly. |
 
 ---
@@ -1417,7 +1894,7 @@ Use a badge to show short status that helps users understand an item at a glance
 ### **❌ When not to use**
 
 * Do not use a badge to display important messages. Use Alert.
-* Do not use a badge for actions. Use Button or Chip.
+* Do not use a badge for actions. Use Button.
 * Do not use a badge for long text. If the label wraps, it is usually the wrong component.
 
 </callout>
@@ -1599,94 +2076,63 @@ Do not add custom interactions to badges.
 
 ---
 
-# Code
-## Storybook
-
----
-
-## Accessibility implementation
-
-### Keyboard interaction
-
-| **Key** | **Action** |
-| --- | --- |
-| `Tab` | Moves focus to the button |
-| `Shift + Tab` | Moves focus to the previous interactive element |
-| `Space` | Presses the button |
-
-### ARIA
-
-* Role: button
-* `aria-pressed: true` when favourited, `false` when not
-* `aria-label`: a label that reflects the current state, e.g. "Add to favourites" or "Remove from favourites"
-
----
-
-## GitHub
-
-<shortcut_tiles>
-<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/button">
-**GitHub: Button**
-</shortcut_tile>
-</shortcut_tiles>
----
-
 # Design
 ## Anatomy
 
 ![](zeroheight://image/8623878/02c2a32e6fba1bf968d8da12bffdc6cca9d78d86c1b84af57f01f4e154b78e71)
 
-1. **Container**: a circular pill-shaped hit area that holds the icon and surfaces the background for each interaction state.
-2. **Icon**: a star that switches between outlined (unfavourited) and filled (favourited) to communicate the current state.
+1. **Container**: The outer pill-shaped wrapper. It holds the icon and applies the focus ring when the button receives keyboard focus.
+2. **Icon**: The star vector inside the container. It changes between an unfilled (not favourited) and a filled (favourited) appearance to communicate the current toggle state.
 
 ---
 
 ## States
 
-Each interaction state applies to both `Favourite=False` and `Favourite=True`.
+Each interaction state applies to both favourited and not favourited.
 
-### Favourite=False
-
-| **State** | **Styles and tokens** |
-| :--- | --- |
-| ![](zeroheight://image/8623878/56c7962d79f40ee386abd12fbaf621311e3f3909531b1fec5a530be49ced9de7)  | ****Default**** The resting state.   Icon: `colors.text.default` Container: `color.bg.surface.default` |
-| ![](zeroheight://image/8623878/d507cc532d86a85ba3083a18131be61c1abc253909d70e9c37b17de1b37998fd)  | **Focus** Triggered via keyboard navigation.   Icon: `colors.text.default`  Container: `colors.bg.surface.default`Focus ring: `colors.focus.default` |
-| ![](zeroheight://image/8623878/d86d32dfa2e2326e3082a4672460d8ece0f288c33604e0281c84b4151882383c)  | ****Hover**** Triggered when the cursor moves over the button.   Icon: `colors.text.subtle` Container: `colors.bg.surface.subtle` |
-| ![](zeroheight://image/8623878/33379257e432c62cc7cccfe97f2f570a1844c73effe618ef824abba8146da6ba)  | ****Pressed**** Triggered while the button is being pressed.  Icon: `colors.text.default` Container: `colors.bg.surface.strong` |
-| ![](zeroheight://image/8623878/1e87410207f9c4748b544666a48b570e9afc10fc59f5ac2f2c9b52bcba150ebd)  | **Disabled** The button is unavailable. Icon is muted.   Icon: `colors.text.muted` Container: `colors.bg.surface.default` |
-
-### Favourite=True
+### Not favourited  (Selected = False)
 
 | **State** | **Styles and tokens** |
 | :--- | --- |
-| ![](zeroheight://image/8623878/1e83062dd02b234a29c067b9449e5cecf458bd7b902131b686cd85f8cd56538b)  | ****Default**** The resting state.  Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default` |
-| ![](zeroheight://image/8623878/e8f9e64d178ec488a411697fc1fa6fae189062702f7ce9ece0d55e5a18063520)  | **Focus** Triggered via keyboard navigation.  Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default`Focus ring: `colors.focus.default` |
-| ![](zeroheight://image/8623878/7aff31b0de4699f3f3207fcc5ceeddfc35bc106fc69a3ef72f3d50c9f1e373d8)  | ****Hover**** Triggered when the cursor moves over the button.  Icon: `colors.text.link.primary.hover` Container: `colors.bg.surface.default` |
-| ![](zeroheight://image/8623878/0665610072166c68820f02d66c5bea075c983fe95b4be31f62c823e41fe19e76)  | ****Pressed**** Triggered while the button is being pressed. Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default` |
-| ![](zeroheight://image/8623878/94f65261c9fd282d9f365b0dd14c5c20318eafdb071dd08b6d7719d6495524cc)  | **Disabled** The button is unavailable. Icon is muted.  Icon: `colors.text.link.primary.disabled` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/56c7962d79f40ee386abd12fbaf621311e3f3909531b1fec5a530be49ced9de7)  | ****Default**** The button's resting state when the item has not been saved.  Icon: `colors.text.default` Container: `color.bg.surface.default` |
+| ![](zeroheight://image/8623878/d507cc532d86a85ba3083a18131be61c1abc253909d70e9c37b17de1b37998fd)  | **Focus** Triggered when the button receives keyboard focus.  Icon: `colors.text.default`  Container: `colors.bg.surface.default`Focus ring: `colors.focus.default` Border width: `borders.stroke weight.md` Border offset: `spacing.spacing.offset` |
+| ![](zeroheight://image/8623878/d86d32dfa2e2326e3082a4672460d8ece0f288c33604e0281c84b4151882383c)  | ****Hover**** Triggered when the pointer moves over the button. The icon and container change colour to signal the button is interactive.  Icon: `colors.text.subtle` Container: `colors.bg.surface.subtle` |
+| ![](zeroheight://image/8623878/33379257e432c62cc7cccfe97f2f570a1844c73effe618ef824abba8146da6ba)  | ****Pressed**** Triggered while the user holds the pointer down. Confirms the action is being activated. Icon: `colors.text.default` Container: `colors.bg.surface.strong` |
+| ![](zeroheight://image/8623878/1e87410207f9c4748b544666a48b570e9afc10fc59f5ac2f2c9b52bcba150ebd)  | **Disabled** Use when the favourite action is not available. The icon is dimmed.  Icon: `colors.text.muted` Container: `colors.bg.surface.default` |
+
+### Favourited  (Selected = True)
+
+| **State** | **Styles and tokens** |
+| :--- | --- |
+| ![](zeroheight://image/8623878/1e83062dd02b234a29c067b9449e5cecf458bd7b902131b686cd85f8cd56538b)  | ****Default**** The button's resting state when the item has been saved.  Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/e8f9e64d178ec488a411697fc1fa6fae189062702f7ce9ece0d55e5a18063520)  | **Focus** Triggered when the favourited button receives keyboard focus.  Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default`Focus ring: `colors.focus.default` Border width: `borders.stroke weight.md` Border offset: `spacing.spacing.offset` |
+| ![](zeroheight://image/8623878/7aff31b0de4699f3f3207fcc5ceeddfc35bc106fc69a3ef72f3d50c9f1e373d8)  | ****Hover**** Triggered when the pointer moves over a favourited button. The icon changes colour to signal it can be toggled off.  Icon: `colors.text.link.primary.hover` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/0665610072166c68820f02d66c5bea075c983fe95b4be31f62c823e41fe19e76)  | ****Pressed**** Triggered while the user holds the pointer down on a favourited button. Confirms the removal action is being activated. Icon: `colors.text.link.primary.default` Container: `colors.bg.surface.default` |
+| ![](zeroheight://image/8623878/94f65261c9fd282d9f365b0dd14c5c20318eafdb071dd08b6d7719d6495524cc)  | **Disabled** Use when a favourited item cannot be changed. The filled icon is dimmed.  Icon: `colors.text.link.primary.disabled` Container: `colors.bg.surface.default` |
 ---
 
 # Usage
 ## Overview
 
-![](zeroheight://image/8623878/7c371d6fbb4460c7826b1b163a88f9a4be949d71a1d7436e161edcc410911d57)
+![](zeroheight://image/8623878/cdce5503da9f69317228f137d8f0a9a340575dce1d6dcf7d91d80d5a98d05c87)
 
-The favourite button lets users save items they want to come back to. It is a toggle: clicking it once marks the item as a favourite; clicking again removes it. The star icon changes between outlined (not favourited) and filled (favourited) to show the current state.
+The favourite button is a small icon-only toggle button. It lets users mark or unmark an item as a favourite. It uses a heart icon that switches between an unfilled and a filled state to reflect the current status.
 
 ---
 
 ## When to use
 
-* Use when users need to save, bookmark, or flag individual items. For example, a course, activity, or resource.
-* Use when the star icon meaning is clear without a label, and space is constrained.
-* Use inside cards, list rows, or toolbars where a compact toggle is needed.
+* Use when users need a persistent way to save or bookmark an individual content item such as a course, activity, or resource.
+* Use when space is constrained and a full-text button would be too large for the context.
+* Use in cards, tiles, or list rows where the save action is secondary to the primary content.
+* Use when the toggled state needs to persist and be visible across sessions.
 
 <callout background="4" fullWidth="true">
 
 ### **❌ When not to use**
 
-* Don't use when the action needs a text label to be understood. Use a labelled toggle button instead.
-* Don't use for actions that are not a simple saved/unsaved toggle.
+* Do not use for primary calls to action. Use a labelled button instead.
+* Do not use when the action needs an explicit text label for clarity. Use a button with an icon and label instead.
 
 </callout>
 
@@ -1694,12 +2140,12 @@ The favourite button lets users save items they want to come back to. It is a to
 
 ## Variants
 
-The favourite button has one toggle property: `Favourite`.
+The favourite button has one toggle property: `Selected`.
 
 | **Variant** | **When to use** |
 | :--- | --- |
-| ![](zeroheight://image/8623878/bb39755988f83c65cc8d8530eb309e290030aa3266863cc3f49cca019073a822)  | ****Favourite=False**** The default resting state. The item has not been saved. The star is outlined. |
-| ![](zeroheight://image/8623878/b28c8d2debd9a8c04b7f000fe6876d8421d0bbaaa9dab795a6c1d84bc8a67dac)  | ****Favourite=True**** The item has been marked as a favourite. The star fills to confirm the action. |
+| ![](zeroheight://image/8623878/bb39755988f83c65cc8d8530eb309e290030aa3266863cc3f49cca019073a822)  | **Not favourited**  (Selected = False) Use when the item has not been saved by the user. The icon is unfilled. |
+| ![](zeroheight://image/8623878/b28c8d2debd9a8c04b7f000fe6876d8421d0bbaaa9dab795a6c1d84bc8a67dac)  | **Favourited**  (Selected = True) Use when the item has already been saved. The icon is filled to confirm the current state. |
 
 ---
 
@@ -1709,27 +2155,47 @@ The favourite button has one toggle property: `Favourite`.
 
 #### **Labelling**
 
-* The button has no visible label. Always provide an accessible text label via `aria-label`.
-* The label must reflect the current state: "Add to favourites" when not favourited, "Remove from favourites" when favourited.
+* The button contains no text. The icon is the only visual element.
+* The accessible label must be provided in code. Use "Add to favourites" when not favourited and "Remove from favourites" when favourited.
 
 | Rule | Image | Caption | Description |
 | :--- | :--- | :--- | :--- |
-| Do |   |   | Use an aria-label that describes what will happen: "Add to favourites". |
-| Don't |   |   | Don't leave the button without an accessible label. |
+| Do | ![](zeroheight://image/8623878/545654519f9bb5c1f3f03750dbcd838c18b8acd9621759031020473dab41800f) |   | Use a tooltip that describes what will happen: "Add to favourites". |
+| Don't | ![](zeroheight://image/8623878/2fff6a0e734324c4207ea96b5e0911976ed7fe3dcbb0deb00b61777d39bc20d2) |   | Leave the button without a label. |
 
 #### **Copywriting**
 
-* Keep accessible labels short and action-oriented.
-* Use sentence case: "Add to favourites", not "Add To Favourites".
+* Use sentence case for accessible labels.
+* Keep labels concise and action-oriented: "Add to favourites" and "Remove from favourites".
 * Don't use vague labels like "Toggle" or "Star".
+
+---
+
+### Layout and spacing
+
+* Place the favourite button in a consistent position within its parent container, such as the top-right corner of a card.
+* Do not group multiple favourite buttons side by side.
+* Ensure the touch target meets the minimum 44×44px requirement on touch devices, even if the visible icon is smaller.
+
+---
+
+### Breakpoints
+
+* The button size stays fixed across breakpoints. No layout changes are needed.
 
 ---
 
 ### Interaction behaviour
 
-* Clicking or tapping toggles the `Favourite` property between True and False.
-* The icon changes immediately on interaction.
-* Cursor: pointer on hover; not-allowed when disabled.
+* The button toggles between favourited and not favourited on each click or activation.
+* Use a pointer cursor on hover.
+* Use a not-allowed cursor when disabled.
+* The focus ring must be visible at all viewport sizes.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8623878/ce63eadb109ce6e3ee8678546612d69398cfec05acc32222abfe61a1ee285c91) |   | Use the filled icon to clearly show an item is already favourited. |
+| Don't | ![](zeroheight://image/8623878/187f1cd067df3054e13dbec1d5ac8bf48c435bd0b9a9af2eed0a2ed39802ada2) |   | Leave the icon in the same visual state regardless of whether the item is saved. Users cannot tell if their action worked. |
 
 ---
 
@@ -1737,52 +2203,21 @@ The favourite button has one toggle property: `Favourite`.
 
 #### **Colour and contrast**
 
-* Don't rely on icon fill change alone to communicate state. Supplement with `aria-pressed` so screen readers announce the toggled state.
+* The icon must meet a minimum 3:1 contrast ratio against its background in all interactive states.
+* Do not rely on colour alone to communicate the toggle state. The icon fill change (unfilled vs filled) provides a second visual indicator.
 
 #### **Focus**
 
+* Focus is placed directly on the button container.
 * The focus ring must be visible on all background colours used in the layout. Avoid placing the button on backgrounds where the ring becomes invisible.
 
 #### **Labelling**
 
-* Set `aria-labe`l to describe the action.
-* Update `aria-pressed` dynamically: `true` when favourited, `false` when not.
-
----
----
-
+* The button must always have an accessible label.
+* The label must update dynamically when the toggle state changes so screen readers announce the new state.
+* Example labels: "Add to favourites" (not favourited), "Remove from favourites" (favourited).
 ---
 
-# Code
-## Storybook
-
----
-
-## Accessibility implementation
-
-### Keyboard interaction
-
-| **Key** | **Action** |
-| --- | --- |
-| `Tab` | Moves focus into the Choicebox group. Focus goes to the selected option; if none is selected, focus goes to the first option. |
-| `Tab` | Moves focus out of the group to the next focusable element on the page. |
-| `Arrow Down` / `Arrow Right` | Moves focus to the next option in the group and selects it. |
-| `Arrow Up` / `Arrow Left` | Moves focus to the previous option in the group and selects it. |
-| `Space` | Selects the focused option if it is not already selected. |
-
-### ARIA
-
-* Role: 
-* Required attributes: 
-* Optional attributes: 
-
-### Dynamic announcements *(if applicable)*
-
-`[aria-live, state changes]`
-
----
-
-## GitHub
 ---
 
 # Design
@@ -1964,250 +2399,6 @@ The Choicebox supports two optional content slots, supporting text and icon, tha
 * **Switch.** Use for binary on/off settings that take effect immediately without a form submission step.
 
 ---
----
-
----
-
-# Code
-## Storybook
-
----
-
-## Accessibility implementation
-
-### Keyboard interaction
-
-| **Key** | **Action** |
-| --- | --- |
-| `Tab` | Moves focus to the next interactive page item |
-| `Shift + Tab` | Moves focus to the previous interactive page item |
-| `Enter` | Activates the focused page item |
-| `Space` | Activates the focused page item (anchor fallback) |
-
-### ARIA
-
-| **Attribute** | **Element** | **Value** | **Notes** |
-| --- | --- | --- | --- |
-| `aria-label` | `<nav>` | `"Pagination"` | Identifies the nav landmark |
-| `aria-current` | `<a>` (active item) | `"page"` | Applied to the current page item only |
-| `aria-disabled` | `<li>` (disabled item) | `"true"` | Applied to disabled prev/next <li> |
-| `aria-hidden` | `<svg>` (icon) | `"true"` | Hides decorative icons from screen readers |
-| `tabindex` | `<a>` (disabled item) | `"-1"` | Removes disabled items from tab order |
-
-### Dynamic announcements *(if applicable)*
-
-`[aria-live, state changes]`
-
----
-
-## GitHub
----
-
-# Design
-## Anatomy
-
-![](zeroheight://image/8505350/29c51a635078c9b6eb5d61c206f1915ee81b3f168747e407a07987fd56f0e8b9)
-
-1. **Previous button** — a directional control that moves the user to the preceding page. Always present. Shown in the disabled state when the user is on the first page.
-2. **Page link item** — a numbered item the user can click to navigate directly to that page.
-3. **Current page item** — the numbered item that represents the page the user is currently on. Always exactly one current page item in the bar.
-4. **Ellipsis item** — a non-interactive item that indicates truncated pages. Appears when the total number of pages exceeds the visible range.
-5. **Next button** — a directional control that moves the user to the following page. Always present. Shown in the disabled state when the user is on the last page.
-
-![](zeroheight://image/8505350/688d87aefe143d2bd5ebcccd784558b5e492f6458bd7ee8871dd9d33bd8b189a)
-
-6. **Grouped previous / next buttons** — a style variant of the previous and next buttons used in minimal paging contexts where no page numbers are shown. 
-
----
-
-## States
-
-### Page link item
-
-| **State** | **Styles and tokens** |
-| --- | --- |
-|  ![](zeroheight://image/8505350/50a5ca1f96d6cd0a9ae8e38ecdb0a7afadfebf661fdfa38f30888e94ef38d854)  |  **Default**   The item is available and can be navigated to. This is the base state for all page items that aren't the current page.   Label: .  |
-|  ![](zeroheight://image/8505350/5bc6892252d885324168da58a4412052dd29977d48da41f0bc3733901c578158)  |  **Hover**   The cursor is over the item.   Page item: . Label: .  |
-|  ![](zeroheight://image/8505350/faeb7bdf6551d6a91d6cd1d5194c9fbfb1cffd484e8c8d68ba3bcc9cccd83a81)  |  **Focus**   The item has received keyboard focus. A visible focus ring appears around the item.   Page item: . Label: .  |
-|  ![](zeroheight://image/8505350/1c10a2e495c1f7909c818213256ff6fe08384098a1ca13d167c4e90230121c41)  |  **Pressed**   The item is being actively clicked or tapped.   Page item: . Label: .  |
-|  ![](zeroheight://image/8505350/5ee0c190f7c3f789cd0d25521cfbe22696d828af7b783e405946f9479b2b6301)  |  **Disabled**   The item can't be interacted with and is removed from the tab order. Only applied to ellipsis or truncation items. Page link items don't use the disabled state — if a page isn't available, remove it from the bar entirely.  Label: .  |
-
-### Current page item
-
-| **State** | **Styles and tokens** |
-| --- | --- |
-|  ![](zeroheight://image/8505350/4c3a3b977254bf6bf45adcdf4a2dc5d2bd033f62382b3ed546285d8393882728)  |  **Default**   Identifies the page the user is currently viewing. There's always exactly one current page item in the bar.   Page item:. Label: .  |
-|  ![](zeroheight://image/8505350/23b0b878a98dba4a3abca16cf5cce68f681892fd970ae4eb632c51b50ac7c0c4)  |  **Hover**   The cursor is over the current page item. The item remains visually distinct as the current page.   Page item: . Label: .  |
-|  ![](zeroheight://image/8505350/3583e46188a79ffa97ca4299a04ba2745b2f57d5b26402ed3500ccd006a7df61)  |  **Focus**   The current page item has received keyboard focus. The focus ring appears on top of the active background.   Page item: . Label: .  |
-|  ![](zeroheight://image/8505350/422b15de39b4950e1d0985b66d68fd861f89d389dab97839583fde372c64915a)  |  **Pressed**   The current page item is being actively clicked or tapped.  Page item: . Label: . |
-
-### Previous and next buttons
-
-| **States** | **Styles and tokens** |
-| --- | --- |
-|  ![](zeroheight://image/8505350/20559500bc48e88a2aa5bafbe45b93aab8b1e67923df97e028ebb63659282146)  |  **Default**   The control is available. Clicking or tapping moves the user one page in the corresponding direction.   Icon: .  |
-|  ![](zeroheight://image/8505350/56701dba595fde5b05046c2b3093896d4c609f6ab42e463b7974c9160d0ed562)  |  **Hover**   The cursor is over the control.   Page item: . Icon .  |
-|  ![](zeroheight://image/8505350/cae5cfa8675cef300cda54d2345894ed15a90732d7cc5b5582eaf14db3e45fec)  |  **Focus**   The control has received keyboard focus. A visible focus ring appears around the item.   Page item: . Icon:.  |
-|  ![](zeroheight://image/8505350/a8dec0cc696601bca1670db706df99c9045a0fc294e731ded3643807751d46d6)  |  **Pressed**   The control is being actively clicked or tapped.   Page item: . Icon: .  |
-|  ![](zeroheight://image/8505350/39e1f2fd23578f613cbb1cc11634714b865d44f80d83bffb6a11450ba9084837)   |  **Disabled**   Applied to the previous button on the first page, and to the next button on the last page. The control is visible but can't be interacted with and is removed from the tab order. Don't hide the control — keeping it visible communicates the boundary of the pagination range.   Icon: . |
-
-### Grouped previous and next buttons
-
-| **States** | **Styles and tokens** |
-| --- | --- |
-|  ![](zeroheight://image/8505350/f5c5e595ae3053dd532aa540bfb2170a11f6df19b9296cd3b0889de940cc5ef1)  |  **Default**   Both controls are available. Clicking or tapping either moves the user one page in the corresponding direction.  Page item: .  |
-|  ![](zeroheight://image/8505350/95f7272542b7f76f8e058687c866c85505701892d9ab189e4aa04b84818dfcab)  |  **Hover**   Only the hovered control changes state — the other remains in its current state.   Page item: . Icon: .  |
-|  ![](zeroheight://image/8505350/dca80a12dee61dbcbef22a00c15897c5c6e24db9602ee674775e8f371c234d4e)  |  **Focus**   The focus ring appears on the focused control individually.  Page item: . Icon: .  |
-|  ![](zeroheight://image/8505350/db48ec89920ca3661e09552d8f2961be11de6ca3ffc8d725f6fa814cc36ddbdc)  |  **Pressed**   Only the pressed control changes state.   Page item: . Icon: .  |
-|  ![](zeroheight://image/8505350/c9b38ceefdc1b51588e3c779585dac07563dc48f6ee6e83e946766ccf7b35d3c)  |  **Disabled**   Applied to the previous button on the first page, and to the next button on the last page. The disabled control renders with muted styles; the other control remains in its default state.   Page item: . Icon: . |
----
-
-# Usage
-## Overview
-
-![](zeroheight://image/8505350/d1dbdac3b49360c8871992b6cef829e09aab846ab45fc8056b93422da16717ba)
-
-Pagination enables users to navigate between content pages, dividing large between pages of content, breaking large sets of content into discrete pages, showing where users are within this set and giving them controls to move to a specific page, or step forward and backward through the sequence. 
-
-Pagination always shows previous and next controls, and optionally shows numbered page items and ellipsis truncation when the total page count exceeds the visible range.
-
----
-
-## When to use
-
-* Use when content is split across a finite, known number of pages.
-* Use when users may want to jump to a specific page — not just move sequentially.
-* Use when the total page count is 2 or more.
-
-<callout background="4" fullWidth="true">
-
-### ❌ When not to use
-
-* Don't use for infinite scroll or load-more patterns — pagination implies a known, finite set.
-* Don't use when there's only 1 page of content.
-* Don't use as a step-by-step navigation indicator — use a stepper or progress indicator instead.
-
-</callout>
-
----
-
-## Variants
-
-### Style
-
-| **Variant** | **When to use** |
-| :--- | :--- |
-|  ![](zeroheight://image/8505350/8837ebe130985041521bef965677b98df49f6d205ad8ca601fbbeb9b7e1ac5df)  |  **Default**  Full pagination bar — previous, page numbers, ellipsis, next. Use this when the total number of pages is known and the user needs to navigate to specific pages. |
-|  ![](zeroheight://image/8505350/45046fa4367dd4219ceb9f149a9a3f98735288879d76a4cd70eba47860c21d95)  |  **Grouped**  Previous and Next buttons as a single unit, without page numbers. Use in compact layouts where there isn't room for the full navigation bar—for example, a pagination bar within a table or feed. |
-
----
-
-## Guidelines
-
-### Ellipsis truncation
-
-* The pagination bar shows a maximum of 9 items between the previous and next controls, including page link items, the current page item, and ellipsis items.
-
-
-![](zeroheight://image/8505350/967410b789934b2d490ea73f507d82dc10926b9446fe8a8400de4628a699c0f3)
-
-* When the total number of pages is 8 or fewer, all pages are shown without truncation.
-
-![](zeroheight://image/8505350/f0735f9a1ee236f7a19b7b30b1a933debe89bf3e55f4df009f9e2101bf0aae15)
-
-* When the total number of pages is 9 or more, ellipsis truncation applies:
-    * **Near the start** — show the first 7 pages, one ellipsis, and the last page.
-    * **In the middle** — show the first page, one ellipsis, 2 pages before the current page, the current page, 2 pages after, one ellipsis, and the last page.
-    * **Near the end** — show the first page, one ellipsis, and the last 7 pages.
-* Don't show ellipsis when all pages fit within 8 items.
-
-### Previous and next controls
-
-* Previous and next must always be present, regardless of total page count or current page position. Disable them — don't hide them — when there are no more pages in that direction.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8505350/f6b77e21e570d542a61b8253772caa1d27f5841df4ca14c7e07e791023cc2c48) |   | Keep the previous button visible but disabled on the first page. |
-| Don't | ![](zeroheight://image/8505350/79b4d5e951fd61ba6b47c262d5c14a0c4584bafcebe038f6478ca8918a98fdcb) |   | Don't hide the previous or next button at the ends of the range. |
-
-### Current page
-
-* Mark exactly 1 page item as active at a time. The active item always reflects the page the user is currently viewing — not a selection or a hover state.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8505350/a0d2599741281a403c25195f7fc4721f5deb62c2cf57ef1c444f6ff32d2bff79) |   | Mark exactly one page item as the current page at a time. |
-| Don't | ![](zeroheight://image/8505350/5bf67896f1ba92f4dcaaa6eb4b91b47a1ae027394839ff3d5281c91e96aa3a7b) |   | Don't show more than one current page item simultaneously. |
-
----
-
-### Content design
-
-#### Content structure and constraints
-
-* Previous and next labels are always visually hidden — only the icon is visible. Screen-reader text must say "Previous page" and "Next page" respectively.
-* Page number labels are integers only. Don't add ordinal suffixes (no "1st", "2nd").
-* Ellipsis renders as the horizontal ellipsis character (…), not 3 separate full stops.
-
-#### Content behaviour
-
-* When total pages change dynamically (e.g. after filtering), update the pagination accordingly. Don't keep the old page count visible.
-* If the current page becomes out of range (e.g. after filtering reduces total pages), navigate to the last available page automatically.
-
-#### Copywriting
-
-* Screen-reader label for the nav container: "Pagination" — keep it short and unambiguous.
-* Screen-reader text for page number items: "Page [n]" (e.g. "Page 1", "Page 4").
-* Don't include "Go to" — it's verbose and redundant.
-
----
-
-### Layout and spacing
-
-* Pagination items are separated by 4px
-* Pagination doesn't set its own width. It wraps to the content width of its items.
-
-![](zeroheight://image/8505350/f0c373294c09ba5b424941e48e19120f91d5aa2ae01556438ac7988da316188a)
-
----
-
-### Breakpoints and responsive behaviour
-
-* Pagination truncates and hides items based on viewport width and ellipsis logic applied to total page count. 
-
-![](zeroheight://image/8505350/a167a237aaa83259c1bb0783ac63366018b88484b89e0ab28398d998415a40e4)
-
-* In narrow containers, the number of page link items between the ellipsis and the current page is reduced on both sides to fit the available width, ensuring the Previous and Next controls, first and/or last page items, ellipsis items, and current page item remain visible.
-    * At viewports of 576px and above, the full 9-item bar is shown.
-    * Below 576px, page link items around the current page are reduced to prevent line wrapping.
-* On mobile (< 576px), consider showing the grouped (prev/next only) style if space is too limited for numbered items.
-
----
-
-### Interaction behaviour
-
-* Minimum tap target for page items: 36x36px.
-
----
-
-### Accessibility guidelines
-
-#### Colour and contrast
-
-* All state colour combinations meet WCAG AA (4.5:1 minimum for text). 
-* Don't use colour alone to indicate the active page — the aria-current="page" attribute communicates current position to screen readers independently of visual styling.
-
-#### Focus
-
-* All interactive page items (numbers, previous, next) must be reachable via Tab and show a visible focus ring. The focus ring uses a 2px border in focus.default with a 1px offset from the item edge.
-* Disabled items must not receive keyboard focus — set tabindex="-1" on the anchor element.
-* Ellipsis items are non-interactive and must not appear in the tab order.
-
-#### Labelling
-
-* The <nav> element must have aria-label="Pagination" so screen readers can identify it as a distinct landmark.
-* The active page item must have aria-current="page" on its anchor element.
-* Previous and next icons are decorative — set aria-hidden="true" on the SVG. Provide visually-hidden text on the anchor for screen readers.
 ---
 
 ---
@@ -3628,31 +3819,21 @@ Breakpoints are the viewport min-widths at which layouts and components can adap
 ### Breakpoints
 ---
 
-# Grid
-## Baseline
-
-* Do you have a baseline grid? Why?
-* Is it ever OK to place something off the grid?
-* Does the baseline grid differ between content and typography?
-
-## **Columns**
-
-* Do you use a column system or a horizontal grid?
-* Are there any best practices around column widths?
-* How do gutters work?
----
-
 ---
 
 # Tokens
 ### Icon size tokens
 
-| Token | Value | Description |
-| --- | --- | --- |
-
-```json
-{}
-```
+| Token | Value |
+| --- | --- |
+| icons.lg | {scale.800} |
+| icons.md | {scale.700} |
+| icons.sm | {scale.600} |
+| icons.xl | {scale.1000} |
+| icons.xs | {scale.400} |
+| icons.xxl | {scale.1100} |
+| icons.xxs | {scale.300} |
+| icons.xxxl | {scale.1200} |
 ---
 
 # Icon library

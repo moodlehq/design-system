@@ -3,5 +3,6 @@ dist/
 storybook-static/
 tokens/
 CHANGELOG.md
+scratch/
 # Auto-generated — formatting would corrupt ZeroHeight content on subsequent syncs
 design-system.instructions.md

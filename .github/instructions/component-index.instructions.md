@@ -1,0 +1,57 @@
+---
+applyTo: 'components/**,index.ts,index.tsx'
+---
+
+# Design System Component Index
+
+Quick reference for AI agents and developers.
+
+## Components
+
+| Component    | Purpose                                                    | Key props                                        |
+| ------------ | ---------------------------------------------------------- | ------------------------------------------------ |
+| ActivityIcon | Activity/resource/file icon with semantic category styling | icon, category, size, container                  |
+| Badge        | Short status, metadata, or count labels                    | type, contrast, style, icon, label               |
+| Button       | Primary and secondary actions                              | variant, size, disabled, startIcon, endIcon      |
+| Checkbox     | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
+| CloseButton  | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
+| Link         | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
+| Pagination   | Page navigation control                                    | totalPages, currentPage, onPageChange, ariaLabel |
+| ProgressBar  | Visual progress indicator with status and label variants   | value, min, max, status, labelVariant, title     |
+| Radio        | Single-select options in a group                           | checked, label, disabled, invalid                |
+
+## Component Links
+
+- [ActivityIcon implementation](../../components/activity-icon/ActivityIcon.tsx)
+- [ActivityIcon stories](../../components/activity-icon/ActivityIcon.stories.tsx)
+- [Badge implementation](../../components/badge/Badge.tsx)
+- [Badge stories](../../components/badge/Badge.stories.tsx)
+- [Button implementation](../../components/button/Button.tsx)
+- [Button stories](../../components/button/Button.stories.tsx)
+- [Checkbox implementation](../../components/checkbox/Checkbox.tsx)
+- [Checkbox stories](../../components/checkbox/Checkbox.stories.tsx)
+- [CloseButton implementation](../../components/close-button/CloseButton.tsx)
+- [CloseButton stories](../../components/close-button/CloseButton.stories.tsx)
+- [Link implementation](../../components/link/Link.tsx)
+- [Link stories](../../components/link/Link.stories.tsx)
+- [Pagination implementation](../../components/pagination/Pagination.tsx)
+- [Pagination stories](../../components/pagination/Pagination.stories.tsx)
+- [ProgressBar implementation](../../components/progress-bar/ProgressBar.tsx)
+- [ProgressBar stories](../../components/progress-bar/ProgressBar.stories.tsx)
+- [Radio implementation](../../components/radio/Radio.tsx)
+- [Radio stories](../../components/radio/Radio.stories.tsx)
+
+## Working Rules
+
+- Prefer existing component patterns before introducing new abstractions.
+- Use published MDS tokens through CSS variables only; avoid hardcoded design values.
+- Treat generated token outputs as read-only and update only source token flows.
+- Keep Storybook variants and tests aligned with component API changes.
+
+## Documentation Routing
+
+- Primary design guidance source: ZeroHeight documentation and MCP lookups.
+- Local fallback for quick orientation: this index and scoped instruction files.
+- Large fallback context file: [Design system fallback instructions](design-system.instructions.md).
+
+Load the large fallback file only when the agent cannot access ZeroHeight guidance and asks for it explicitly.
