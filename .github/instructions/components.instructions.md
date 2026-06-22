@@ -147,7 +147,7 @@ Use `interface`, not `type`, for props. Use `import type` for type-only imports.
 
 ## Runtime validation for constrained props
 
-Props with a fixed set of allowed values must use runtime validation with an `allowedValues` array — TypeScript types alone are not enough, because external consumers can pass any string. Accept the prop as a broad type (`string`) in the interface and resolve to a safe default if an invalid value arrives.
+Props with a fixed set of allowed values must use runtime validation with an `allowedValues` array. Keep the public TypeScript API narrow (for example, union literals) for editor/type safety, and still resolve invalid runtime input to a safe default because external JavaScript consumers can pass any value.
 
 Always pair the silent fallback with a development-mode warning so consumers are alerted without affecting production builds:
 
