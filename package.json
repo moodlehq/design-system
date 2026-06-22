@@ -4,8 +4,6 @@
   "description": "The Moodle Design System",
   "files": [
     "/dist",
-    "/tokens/css",
-    "/tokens/scss",
     "/css.d.ts"
   ],
   "exports": {
@@ -17,18 +15,27 @@
       "types": "./css.d.ts",
       "default": "./dist/index.css"
     },
+    "./components/css": {
+      "default": "./dist/components/index.css"
+    },
+    "./components/scss/legacy": {
+      "default": "./dist/components/_index.legacy.scss"
+    },
     "./components/*": {
       "types": "./dist/components/*/index.d.ts",
       "import": "./dist/components/*/index.js"
     },
+    "./components/*/css": {
+      "default": "./dist/components/*/index.css"
+    },
     "./tokens/css": {
-      "default": "./tokens/css/index.css"
+      "default": "./dist/tokens/css/index.css"
     },
     "./tokens/scss": {
-      "default": "./tokens/scss/_index.scss"
+      "default": "./dist/tokens/scss/_index.scss"
     },
     "./tokens/scss/legacy": {
-      "default": "./tokens/scss/_index.legacy.scss"
+      "default": "./dist/tokens/scss/_index.legacy.scss"
     }
   },
   "type": "module",

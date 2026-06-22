@@ -9,6 +9,7 @@ import { playwright } from '@vitest/browser-playwright';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import type { PluginContext } from 'rollup';
 const dirname =
   typeof __dirname !== 'undefined'
     ? __dirname
@@ -26,9 +27,125 @@ const componentEntries = Object.fromEntries(
     ]),
 );
 
+interface ComponentCssAsset {
+  componentName: string;
+  source: string;
+}
+
+function getComponentCssAssets(): ComponentCssAsset[] {
+  const componentsIndexPath = path.join(dirname, 'components', 'index.css');
+  const indexCss = fs.readFileSync(componentsIndexPath, 'utf8');
+
+  const importRegex = /@import\s+['"](.+?)['"];?/g;
+  const assets: ComponentCssAsset[] = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = importRegex.exec(indexCss)) !== null) {
+    const relativeImportPath = match[1];
+    const absoluteImportPath = path.resolve(
+      path.dirname(componentsIndexPath),
+      relativeImportPath,
+    );
+
+    const componentName = path.posix
+      .normalize(path.dirname(relativeImportPath))
+      .replace(/^\.\//, '');
+
+    assets.push({
+      componentName,
+      source: fs.readFileSync(absoluteImportPath, 'utf8').trim(),
+    });
+  }
+
+  return assets;
+}
+
+function buildComponentsCssManifest(assets: ComponentCssAsset[]): string {
+  const imports = assets.map(
+    (asset) => `@import './${asset.componentName}/index.css';`,
+  );
+
+  return `${imports.join('\n')}\n`;
+}
+
+function buildComponentsLegacyScssManifest(
+  assets: ComponentCssAsset[],
+): string {
+  const sections = assets.map(
+    (asset) => `/* ${asset.componentName}/index.css */\n${asset.source}`,
+  );
+
+  return `${sections.join('\n\n')}\n`;
+}
+
+function emitComponentAssets(ctx: PluginContext): void {
+  const assets = getComponentCssAssets();
+  const componentsManifest = buildComponentsCssManifest(assets);
+  const legacyComponentsManifest = buildComponentsLegacyScssManifest(assets);
+
+  // Component aggregate manifests
+  ctx.emitFile({
+    type: 'asset',
+    fileName: 'components/index.css',
+    source: componentsManifest,
+  });
+
+  // Legacy Sass entrypoint: monolithic inlineable stylesheet for consumers that
+  // compile Sass with legacy import behavior.
+  ctx.emitFile({
+    type: 'asset',
+    fileName: 'components/_index.legacy.scss',
+    source: legacyComponentsManifest,
+  });
+
+  // Per-component CSS files
+  for (const componentAsset of assets) {
+    ctx.emitFile({
+      type: 'asset',
+      fileName: `components/${componentAsset.componentName}/index.css`,
+      source: `${componentAsset.source}\n`,
+    });
+  }
+}
+
+function emitTokenAssets(ctx: PluginContext): void {
+  const tokensCssDir = path.join(dirname, 'tokens', 'css');
+  const tokensScssDir = path.join(dirname, 'tokens', 'scss');
+
+  // Emit every file in tokens/css/ into dist/tokens/css/
+  for (const file of fs.readdirSync(tokensCssDir)) {
+    ctx.emitFile({
+      type: 'asset',
+      fileName: `tokens/css/${file}`,
+      source: fs.readFileSync(path.join(tokensCssDir, file), 'utf8'),
+    });
+  }
+
+  // Emit every file in tokens/scss/ into dist/tokens/scss/
+  for (const file of fs.readdirSync(tokensScssDir)) {
+    ctx.emitFile({
+      type: 'asset',
+      fileName: `tokens/scss/${file}`,
+      source: fs.readFileSync(path.join(tokensScssDir, file), 'utf8'),
+    });
+  }
+}
+
+function emitCssAssets() {
+  return {
+    name: 'emit-css-assets',
+    apply: 'build' as const,
+    generateBundle() {
+      emitComponentAssets(this);
+      emitTokenAssets(this);
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
     react(),
+    emitCssAssets(),
     dts({
       // Exclude dev-only files from the generated type declarations, matching tsconfig.json.
       exclude: ['**/*.stories.tsx', '**/*.test.tsx', '**/*.figma.tsx'],
@@ -49,11 +166,11 @@ export default defineConfig({
       fileName: (_, entryName) => `${entryName}.js`, // Preserve entry path as output filename.
       formats: ['es'], // Specifies the output format (ES modules only).
     },
-    cssCodeSplit: false, // bundle all CSS into a single file
+    cssCodeSplit: false, // Bundle all CSS into a single inlined dist/index.css for full-build direct URL loading.
     rollupOptions: {
       external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
       output: {
-        assetFileNames: 'index.css', // name the CSS file
+        assetFileNames: 'index.css', // Name the full-build inlined CSS bundle.
         // Transpile every source file into its own output file with a stable, predictable
         // path — no chunk splitting, no content hashes. This matches Moodle's loading model
         // where files are served directly by URL without a consumer-side build step.
