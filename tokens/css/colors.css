@@ -47,6 +47,9 @@
   --mds-bg-interactive-secondary-default: var(--mds-color-gray-300);
   --mds-bg-interactive-secondary-disabled: var(--mds-color-gray-200);
   --mds-bg-interactive-secondary-hover: var(--mds-color-gray-400);
+  --mds-bg-nav-pill-hover: var(--mds-color-gray-200);
+  --mds-bg-nav-pill-pressed: var(--mds-color-gray-300);
+  --mds-bg-nav-pill-selected: var(--mds-color-gray-200);
   --mds-bg-surface-default: var(--mds-color-gray-white);
   --mds-bg-surface-strong: var(--mds-color-gray-200);
   --mds-bg-surface-subtle: var(--mds-color-gray-100);

@@ -19,6 +19,9 @@ export type { FavouriteButtonProps } from './favourite-button';
 export { Link } from './link';
 export type { LinkProps } from './link';
 
+export { NavPill } from './nav-pill';
+export type { NavPillProps } from './nav-pill';
+
 export { Pagination } from './pagination';
 export type { PaginationProps } from './pagination';
 
