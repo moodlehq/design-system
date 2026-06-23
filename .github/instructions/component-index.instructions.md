@@ -8,17 +8,18 @@ Quick reference for AI agents and developers.
 
 ## Components
 
-| Component    | Purpose                                                    | Key props                                        |
-| ------------ | ---------------------------------------------------------- | ------------------------------------------------ |
-| ActivityIcon | Activity/resource/file icon with semantic category styling | icon, category, size, container                  |
-| Badge        | Short status, metadata, or count labels                    | type, contrast, style, icon, label               |
-| Button       | Primary and secondary actions                              | variant, size, disabled, startIcon, endIcon      |
-| Checkbox     | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
-| CloseButton  | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
-| Link         | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
-| Pagination   | Page navigation control                                    | totalPages, currentPage, onPageChange, ariaLabel |
-| ProgressBar  | Visual progress indicator with status and label variants   | value, min, max, status, labelVariant, title     |
-| Radio        | Single-select options in a group                           | checked, label, disabled, invalid                |
+| Component       | Purpose                                                    | Key props                                        |
+| --------------- | ---------------------------------------------------------- | ------------------------------------------------ |
+| ActivityIcon    | Activity/resource/file icon with semantic category styling | icon, category, size, container                  |
+| Badge           | Short status, metadata, or count labels                    | type, contrast, style, icon, label               |
+| Button          | Primary and secondary actions                              | variant, size, disabled, startIcon, endIcon      |
+| Checkbox        | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
+| CloseButton     | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
+| FavouriteButton | Icon button to mark/unmark items as favourites             | checked, size, disabled, ariaLabel               |
+| Link            | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
+| Pagination      | Page navigation control                                    | totalPages, currentPage, onPageChange, ariaLabel |
+| ProgressBar     | Visual progress indicator with status and label variants   | value, min, max, status, labelVariant, title     |
+| Radio           | Single-select options in a group                           | checked, label, disabled, invalid                |
 
 ## Component Links
 
@@ -32,6 +33,8 @@ Quick reference for AI agents and developers.
 - [Checkbox stories](../../components/checkbox/Checkbox.stories.tsx)
 - [CloseButton implementation](../../components/close-button/CloseButton.tsx)
 - [CloseButton stories](../../components/close-button/CloseButton.stories.tsx)
+- [FavouriteButton implementation](../../components/favourite-button/FavouriteButton.tsx)
+- [FavouriteButton stories](../../components/favourite-button/FavouriteButton.stories.tsx)
 - [Link implementation](../../components/link/Link.tsx)
 - [Link stories](../../components/link/Link.stories.tsx)
 - [Pagination implementation](../../components/pagination/Pagination.tsx)
