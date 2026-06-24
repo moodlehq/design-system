@@ -14,6 +14,7 @@ Quick reference for AI agents and developers.
 | Badge           | Short status, metadata, or count labels                    | type, contrast, style, icon, label               |
 | Button          | Primary and secondary actions                              | variant, size, disabled, startIcon, endIcon      |
 | Checkbox        | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
+| Choicebox       | Single-select options in a group                           | checked, label, disabled, invalid                |
 | CloseButton     | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
 | FavouriteButton | Icon button to mark/unmark items as favourites             | checked, size, disabled, ariaLabel               |
 | Link            | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
@@ -32,6 +33,8 @@ Quick reference for AI agents and developers.
 - [Button stories](../../components/button/Button.stories.tsx)
 - [Checkbox implementation](../../components/checkbox/Checkbox.tsx)
 - [Checkbox stories](../../components/checkbox/Checkbox.stories.tsx)
+- [Choicebox implementation](../../components/choicebox/Choicebox.tsx)
+- [Choicebox stories](../../components/choicebox/Choicebox.stories.tsx)
 - [CloseButton implementation](../../components/close-button/CloseButton.tsx)
 - [CloseButton stories](../../components/close-button/CloseButton.stories.tsx)
 - [FavouriteButton implementation](../../components/favourite-button/FavouriteButton.tsx)
