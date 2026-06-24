@@ -17,6 +17,7 @@ Quick reference for AI agents and developers.
 | CloseButton     | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
 | FavouriteButton | Icon button to mark/unmark items as favourites             | checked, size, disabled, ariaLabel               |
 | Link            | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
+| NavPill         | Compact pill-style navigation link for section switching   | label, active, disabled, href, ariaLabel         |
 | Pagination      | Page navigation control                                    | totalPages, currentPage, onPageChange, ariaLabel |
 | ProgressBar     | Visual progress indicator with status and label variants   | value, min, max, status, labelVariant, title     |
 | Radio           | Single-select options in a group                           | checked, label, disabled, invalid                |
@@ -37,6 +38,8 @@ Quick reference for AI agents and developers.
 - [FavouriteButton stories](../../components/favourite-button/FavouriteButton.stories.tsx)
 - [Link implementation](../../components/link/Link.tsx)
 - [Link stories](../../components/link/Link.stories.tsx)
+- [NavPill implementation](../../components/nav-pill/NavPill.tsx)
+- [NavPill stories](../../components/nav-pill/NavPill.stories.tsx)
 - [Pagination implementation](../../components/pagination/Pagination.tsx)
 - [Pagination stories](../../components/pagination/Pagination.stories.tsx)
 - [ProgressBar implementation](../../components/progress-bar/ProgressBar.tsx)
