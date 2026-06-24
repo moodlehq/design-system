@@ -1,5 +1,29 @@
 # Changelog
 
+## [5.0.0](https://github.com/moodlehq/design-system/compare/design-system-v4.1.0...design-system-v5.0.0) (2026-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **Components:** Built token files moved from /tokens to /dist/tokens
+* **ActivityIcon:** `variant` prop is now renamed to `container` to be more reflective of its purpose.
+
+### Features
+
+* **AI:** Improve AI Agent context window usage ([#252](https://github.com/moodlehq/design-system/issues/252)) ([210d428](https://github.com/moodlehq/design-system/commit/210d428bed134eaf98f5cdb01315af34817c4e87))
+* **Choicebox:** Introduce Choicebox as a detailed radio input type ([#263](https://github.com/moodlehq/design-system/issues/263)) ([7c8ddd9](https://github.com/moodlehq/design-system/commit/7c8ddd942df53ac3abf67fff4c8ae94e3fa286c2))
+* **Components:** Entrypoint for the component-only styling assets ([#253](https://github.com/moodlehq/design-system/issues/253)) ([524bde6](https://github.com/moodlehq/design-system/commit/524bde6b65ce52ea3936b211956259e8a7494826))
+* **FavouriteButton:** Add new FavouriteButton component ([#259](https://github.com/moodlehq/design-system/issues/259)) ([36d2f74](https://github.com/moodlehq/design-system/commit/36d2f748e74a8260f44043047c9447f751591f2c))
+* **Link:** Add new link component ([#256](https://github.com/moodlehq/design-system/issues/256)) ([6b0c226](https://github.com/moodlehq/design-system/commit/6b0c226ac09473b92727f58d6c094cf33ffa1e0e))
+* **NavPill:** Add new NavPill component ([#261](https://github.com/moodlehq/design-system/issues/261)) ([88d9008](https://github.com/moodlehq/design-system/commit/88d9008d0850ac1f29b6eed6bf94d321be72d667))
+* **Pagination:** Introduce pagination component ([#241](https://github.com/moodlehq/design-system/issues/241)) ([ecc325c](https://github.com/moodlehq/design-system/commit/ecc325c11ffdc52e75730e51a3e4bbc746723cac))
+* **ProgressBar:** Add new ProgressBar component ([#243](https://github.com/moodlehq/design-system/issues/243)) ([b855b6e](https://github.com/moodlehq/design-system/commit/b855b6e898a3d78f5062e9f4a0b5945bcc1eb7b5))
+
+
+### Documentation
+
+* **ActivityIcon:** Improve stories listing in Storybook ([#232](https://github.com/moodlehq/design-system/issues/232)) ([a7a6553](https://github.com/moodlehq/design-system/commit/a7a65534bb9d523d64f9965c10332a37980a4877))
+
 ## [4.1.0](https://github.com/moodlehq/design-system/compare/design-system-v4.0.0...design-system-v4.1.0) (2026-06-11)
 
 
