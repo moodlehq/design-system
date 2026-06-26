@@ -1,4 +1,30 @@
 {
+  "avatars": {
+    "lg": {
+      "$type": "number",
+      "$value": "{scale.1200}"
+    },
+    "md": {
+      "$type": "number",
+      "$value": "{scale.1000}"
+    },
+    "sm": {
+      "$type": "number",
+      "$value": "{scale.800}"
+    },
+    "xl": {
+      "$type": "number",
+      "$value": "{scale.1400}"
+    },
+    "xs": {
+      "$type": "number",
+      "$value": "{scale.600}"
+    },
+    "xxl": {
+      "$type": "number",
+      "$value": "{scale.1700}"
+    }
+  },
   "icons": {
     "lg": {
       "$type": "number",

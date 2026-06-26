@@ -3,6 +3,12 @@
  */
 
 :root {
+  --mds-avatars-lg: var(--mds-scale-1200);
+  --mds-avatars-md: var(--mds-scale-1000);
+  --mds-avatars-sm: var(--mds-scale-800);
+  --mds-avatars-xl: var(--mds-scale-1400);
+  --mds-avatars-xs: var(--mds-scale-600);
+  --mds-avatars-xxl: var(--mds-scale-1700);
   --mds-icons-lg: var(--mds-scale-800);
   --mds-icons-md: var(--mds-scale-700);
   --mds-icons-sm: var(--mds-scale-600);
