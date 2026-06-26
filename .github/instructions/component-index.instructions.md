@@ -11,6 +11,7 @@ Quick reference for AI agents and developers.
 | Component       | Purpose                                                    | Key props                                        |
 | --------------- | ---------------------------------------------------------- | ------------------------------------------------ |
 | ActivityIcon    | Activity/resource/file icon with semantic category styling | icon, category, size, container                  |
+| Avatar          | Circular user/entity identity display — photo or initials  | type, size, initials, imageSrc, imageAlt         |
 | Badge           | Short status, metadata, or count labels                    | type, contrast, style, icon, label               |
 | Button          | Primary and secondary actions                              | variant, size, disabled, startIcon, endIcon      |
 | Checkbox        | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
@@ -27,6 +28,8 @@ Quick reference for AI agents and developers.
 
 - [ActivityIcon implementation](../../components/activity-icon/ActivityIcon.tsx)
 - [ActivityIcon stories](../../components/activity-icon/ActivityIcon.stories.tsx)
+- [Avatar implementation](../../components/avatar/Avatar.tsx)
+- [Avatar stories](../../components/avatar/Avatar.stories.tsx)
 - [Badge implementation](../../components/badge/Badge.tsx)
 - [Badge stories](../../components/badge/Badge.stories.tsx)
 - [Button implementation](../../components/button/Button.tsx)

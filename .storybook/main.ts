@@ -28,4 +28,8 @@ export default {
     name: '@storybook/react-vite',
     options: {},
   },
+  // Serve story-only static assets (e.g. placeholder images) from .storybook/assets/.
+  // Files here are available at the root URL path, e.g. /story-placeholder.svg.
+  // Path is relative to the config directory (.storybook/).
+  staticDirs: ['./assets'],
 } as StorybookConfig;
