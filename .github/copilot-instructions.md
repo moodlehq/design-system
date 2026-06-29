@@ -126,7 +126,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 2. If the context payload is too large, use `get_metadata` to narrow scope and re-fetch the target node.
 3. Treat Figma MCP output as a design reference — translate it to existing component patterns and `--mds-*` token CSS, not final code.
 4. Use any SVG/image assets Figma MCP provides directly; do not add new icon or image packages.
-5. Figma team files: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
+5. For simple single-colour icons, prefer `mask-image`/`-webkit-mask-image` with CSS-driven colour (`background-color` or `currentColor`) instead of `background-image` with hardcoded SVG fills.
+6. Figma team files: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
 
 **When adding a new component:**
 

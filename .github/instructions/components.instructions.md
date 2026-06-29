@@ -267,6 +267,8 @@ const feedbackId = invalid && invalidFeedback ? `${id}-feedback` : undefined;
 
 **Do not add icon, image, or asset packages.** Use SVG/image assets provided directly by Figma MCP (`get_design_context`, `get_screenshot`). Adding new packages for icons or images is not permitted.
 
+**For simple single-color icons, prefer `mask-image` over `background-image`.** Use `mask-image`/`-webkit-mask-image` with `background-color` (or `currentColor`) so icon colour follows tokens and state styles. Use `background-image` for multi-colour artwork, gradients, or photo-like assets.
+
 ## CSS styling
 
 Colocate styles in `component-name.css` (lowercase kebab-case filename, e.g. `button.css` not `Button.css`). Use `--mds-*` CSS custom properties exclusively — no hardcoded colors, spacing, or typography values.

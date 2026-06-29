@@ -32,6 +32,62 @@ interface ComponentCssAsset {
   source: string;
 }
 
+/**
+ * Inline local image URLs in CSS so emitted per-component CSS stays self-contained.
+ * Leaves remote, absolute, hash, and already-inlined URLs untouched.
+ */
+function inlineCssImageUrls(cssSource: string, cssDir: string): string {
+  const mimeByExtension: Record<string, string> = {
+    '.svg': 'image/svg+xml',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.webp': 'image/webp',
+    '.avif': 'image/avif',
+  };
+
+  return cssSource.replace(
+    /url\((['"]?)([^'")]+)\1\)/g,
+    (match, quote: string, rawUrl: string) => {
+      const url = rawUrl.trim();
+
+      if (
+        url.startsWith('data:') ||
+        url.startsWith('/') ||
+        url.startsWith('#') ||
+        url.startsWith('//') ||
+        /^[a-z]+:/i.test(url)
+      ) {
+        return match;
+      }
+
+      const pathWithoutSuffix = url.split(/[?#]/, 1)[0];
+      const extension = path.extname(pathWithoutSuffix).toLowerCase();
+      const mimeType = mimeByExtension[extension];
+
+      if (!mimeType) {
+        return match;
+      }
+
+      const assetPath = path.resolve(cssDir, pathWithoutSuffix);
+
+      if (!fs.existsSync(assetPath) || !fs.statSync(assetPath).isFile()) {
+        return match;
+      }
+
+      const raw = fs.readFileSync(assetPath);
+      const dataUrl =
+        extension === '.svg'
+          ? `data:${mimeType},${encodeURIComponent(raw.toString('utf8').replace(/\s+/g, ' ').trim())}`
+          : `data:${mimeType};base64,${raw.toString('base64')}`;
+
+      const q = quote || '"';
+      return `url(${q}${dataUrl}${q})`;
+    },
+  );
+}
+
 function getComponentCssAssets(): ComponentCssAsset[] {
   const componentsIndexPath = path.join(dirname, 'components', 'index.css');
   const indexCss = fs.readFileSync(componentsIndexPath, 'utf8');
@@ -53,7 +109,10 @@ function getComponentCssAssets(): ComponentCssAsset[] {
 
     assets.push({
       componentName,
-      source: fs.readFileSync(absoluteImportPath, 'utf8').trim(),
+      source: inlineCssImageUrls(
+        fs.readFileSync(absoluteImportPath, 'utf8').trim(),
+        path.dirname(absoluteImportPath),
+      ).trim(),
     });
   }
 

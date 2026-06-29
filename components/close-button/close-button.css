@@ -3,8 +3,17 @@
   block-size: var(--mds-icons-md);
   padding: 0;
   border-radius: var(--mds-border-radius-xs);
-  background-image: url('./close-button.svg');
-  background-size: var(--mds-icons-md) var(--mds-icons-md);
+  color: var(--mds-text-default);
+  background-color: currentColor;
+  background-image: none;
+  mask-image: url('./assets/close-button.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: var(--mds-icons-md) var(--mds-icons-md);
+  -webkit-mask-image: url('./assets/close-button.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: var(--mds-icons-md) var(--mds-icons-md);
   opacity: 0.6;
 }
 
@@ -31,17 +40,20 @@
 .mds-close-button.btn-close.mds-close-button--sm {
   inline-size: var(--mds-icons-sm);
   block-size: var(--mds-icons-sm);
-  background-size: var(--mds-icons-sm) var(--mds-icons-sm);
+  mask-size: var(--mds-icons-sm) var(--mds-icons-sm);
+  -webkit-mask-size: var(--mds-icons-sm) var(--mds-icons-sm);
 }
 
 .mds-close-button.btn-close.mds-close-button--md {
   inline-size: var(--mds-icons-md);
   block-size: var(--mds-icons-md);
-  background-size: var(--mds-icons-md) var(--mds-icons-md);
+  mask-size: var(--mds-icons-md) var(--mds-icons-md);
+  -webkit-mask-size: var(--mds-icons-md) var(--mds-icons-md);
 }
 
 .mds-close-button.btn-close.mds-close-button--lg {
   inline-size: var(--mds-icons-lg);
   block-size: var(--mds-icons-lg);
-  background-size: var(--mds-icons-lg) var(--mds-icons-lg);
+  mask-size: var(--mds-icons-lg) var(--mds-icons-lg);
+  -webkit-mask-size: var(--mds-icons-lg) var(--mds-icons-lg);
 }
