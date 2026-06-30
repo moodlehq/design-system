@@ -2,12 +2,7 @@ import type { HTMLAttributes, ReactElement } from 'react';
 import { isValidElement } from 'react';
 
 type BadgeVariant =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'danger'
-  | 'warning'
-  | 'info';
+  'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
