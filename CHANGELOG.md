@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.1.0](https://github.com/moodlehq/design-system/compare/design-system-v5.0.0...design-system-v5.1.0) (2026-07-01)
+
+
+### Features
+
+* **Tokens:** Add new tokens for avatars ([#270](https://github.com/moodlehq/design-system/issues/270)) ([22101af](https://github.com/moodlehq/design-system/commit/22101afb678de7e05073fe13b88469117c13c1fc))
+
+
+### Bug Fixes
+
+* **Button:** Update border radius tokens for md & lg variants ([#273](https://github.com/moodlehq/design-system/issues/273)) ([2ea27bc](https://github.com/moodlehq/design-system/commit/2ea27bcb2f85fcb1d3e3d5eab86d851dd88582b0))
+* **SVG:** Resolve missing SVGs in the production build ([#269](https://github.com/moodlehq/design-system/issues/269)) ([e3690ed](https://github.com/moodlehq/design-system/commit/e3690ed3dc35c9c8d30fa32715ffb4eb08814dab))
+
 ## [5.0.0](https://github.com/moodlehq/design-system/compare/design-system-v4.1.0...design-system-v5.0.0) (2026-06-24)
 
 
