@@ -5,7 +5,10 @@ import { Avatar } from './Avatar';
 
 // Served from .storybook/assets/ via Storybook's staticDirs — a plain URL keeps the
 // Controls panel readable and works offline without an external image service.
-const PLACEHOLDER_IMG = '/jessica.jpeg';
+// Relative (no leading slash) so it resolves correctly when Storybook is served
+// from a subpath (e.g. GitHub Pages at /design-system/); an absolute /jessica.jpeg
+// would resolve to the domain root and 404 on subpath deployments.
+const PLACEHOLDER_IMG = 'jessica.jpeg';
 
 const meta = {
   title: 'Components/Avatar',
