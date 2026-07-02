@@ -100,9 +100,12 @@ export const Default: Story = {
     // test runner reports a false "page closed unexpectedly" error.
     onClick: fn((e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()),
   },
-  play: async ({ canvas, args, userEvent }) => {
+  play: async ({ canvas, args }) => {
     const link = canvas.getByRole('link', { name: args.label });
-    await userEvent.click(link);
+    // Use fireEvent instead of userEvent.click to avoid Playwright simulating a
+    // real pointer event that causes the browser to navigate before React's
+    // synthetic event (and any preventDefault) can intercept it.
+    fireEvent.click(link);
     await expect(args.onClick).toHaveBeenCalledTimes(1);
   },
 };
