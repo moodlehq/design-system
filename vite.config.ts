@@ -227,7 +227,15 @@ export default defineConfig({
     },
     cssCodeSplit: false, // Bundle all CSS into a single inlined dist/index.css for full-build direct URL loading.
     rollupOptions: {
-      external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
+      external: (id) =>
+        [
+          'react',
+          'react-dom',
+          'react-dom/client',
+          'react/jsx-runtime',
+        ].includes(id) ||
+        id.startsWith('@floating-ui/') ||
+        id === 'tabbable',
       output: {
         assetFileNames: 'index.css', // Name the full-build inlined CSS bundle.
         // Transpile every source file into its own output file with a stable, predictable
