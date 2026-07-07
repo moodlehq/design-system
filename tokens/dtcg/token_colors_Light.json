@@ -116,6 +116,10 @@
         }
       },
       "secondary": {
+        "dark": {
+          "$type": "color",
+          "$value": "{color.gray.800}"
+        },
         "default": {
           "$type": "color",
           "$value": "{color.gray.300}"
