@@ -322,11 +322,11 @@
         },
         "default": {
           "$type": "color",
-          "$value": "{color.gray.500}"
+          "$value": "{color.gray.400}"
         },
         "disabled": {
           "$type": "color",
-          "$value": "{color.gray.500}"
+          "$value": "{color.gray.300}"
         },
         "hover": {
           "$type": "color",
