@@ -29,7 +29,16 @@ const preview = {
        * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#context-parameter
        * to learn more. Typically, this is the CSS selector for the part of the DOM you want to analyze.
        */
-      context: 'body',
+      context: {
+        include: [['body']],
+        // Floating UI's FloatingPortal renders `data-floating-ui-focus-guard`
+        // spans with tabindex="0" and aria-hidden="true" to preserve tab order
+        // when a portal is open. They are intentionally aria-hidden (AT must
+        // not encounter them) yet focusable (needed for Tab-to-dismiss). Using
+        // context.exclude removes these invisible utility elements from ALL axe
+        // scans rather than disabling the aria-hidden-focus rule entirely.
+        exclude: [['[data-floating-ui-focus-guard]']],
+      },
       /*
        * Axe's configuration
        * See https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#api-name-axeconfigure
