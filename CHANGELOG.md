@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.2](https://github.com/moodlehq/design-system/compare/design-system-v5.1.1...design-system-v5.1.2) (2026-07-09)
+
+
+### Miscellaneous Chores
+
+* Release 5.1.2 ([1355f1e](https://github.com/moodlehq/design-system/commit/1355f1e19adad7775a58d143755c889410f7590e))
+
 ## [5.1.1](https://github.com/moodlehq/design-system/compare/design-system-v5.1.0...design-system-v5.1.1) (2026-07-09)
 
 
