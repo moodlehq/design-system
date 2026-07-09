@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.1.1](https://github.com/moodlehq/design-system/compare/design-system-v5.1.0...design-system-v5.1.1) (2026-07-09)
+
+
+### Bug Fixes
+
+* **Avatar:** Update example image declaration ([#274](https://github.com/moodlehq/design-system/issues/274)) ([c2fe0b3](https://github.com/moodlehq/design-system/commit/c2fe0b3bbe6bbd1d68b0384d87da645076741097))
+* **Button:** Change border radius for small button size and update some colors ([#280](https://github.com/moodlehq/design-system/issues/280)) ([3544657](https://github.com/moodlehq/design-system/commit/3544657297c9ab16a40e194729857a4c58c787a0))
+* **FavouriteButton:** Adjust the color from text-default to text-subtle ([#275](https://github.com/moodlehq/design-system/issues/275)) ([74a75b9](https://github.com/moodlehq/design-system/commit/74a75b97f8b600ffbfb413a01a86c5ed4a000c56))
+
 ## [5.1.0](https://github.com/moodlehq/design-system/compare/design-system-v5.0.0...design-system-v5.1.0) (2026-07-02)
 
 
