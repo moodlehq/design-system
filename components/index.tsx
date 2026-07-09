@@ -19,6 +19,31 @@ export type { ChoiceboxProps } from './choicebox';
 export { CloseButton } from './close-button';
 export type { CloseButtonProps } from './close-button';
 
+export {
+  Dropdown,
+  DropdownItemAction,
+  DropdownItemCustom,
+  DropdownItemDivider,
+  DropdownItemExpandable,
+  DropdownItemHeader,
+  DropdownItemMultiselect,
+  DropdownItemSelect,
+  DropdownMenu,
+  DropdownTrigger,
+} from './dropdown';
+export type {
+  DropdownItemActionProps,
+  DropdownItemCustomProps,
+  DropdownItemDividerProps,
+  DropdownItemExpandableProps,
+  DropdownItemHeaderProps,
+  DropdownItemMultiselectProps,
+  DropdownItemSelectProps,
+  DropdownMenuProps,
+  DropdownProps,
+  DropdownTriggerProps,
+} from './dropdown';
+
 export { FavouriteButton } from './favourite-button';
 export type { FavouriteButtonProps } from './favourite-button';
 
