@@ -117,9 +117,7 @@ describe('Button: Unit Test', () => {
       expect(elementChildren).toHaveLength(0);
     });
 
-    it('renders only startIcon and warns when both startIcon and endIcon are passed', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-
+    it('renders both startIcon and endIcon simultaneously', () => {
       render(
         <Button
           label="Button"
@@ -131,16 +129,8 @@ describe('Button: Unit Test', () => {
       );
 
       const button = screen.getByRole('button');
-      const startIcon = screen.getByTestId('start-icon');
-      const endIcon = screen.queryByTestId('end-icon');
-
-      expect(button).toContainElement(startIcon);
-      expect(endIcon).not.toBeInTheDocument();
-      expect(warnSpy).toHaveBeenCalledWith(
-        'Button: pass either startIcon or endIcon, not both. Rendering startIcon only.',
-      );
-
-      warnSpy.mockRestore();
+      expect(button).toContainElement(screen.getByTestId('start-icon'));
+      expect(button).toContainElement(screen.getByTestId('end-icon'));
     });
 
     it('supports icon-only usage with an aria-label', () => {
