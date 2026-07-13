@@ -1,5 +1,5 @@
 import figma from '@figma/code-connect';
-import { Dropdown } from './Dropdown';
+import { Dropdown, DropdownMenu } from './Dropdown';
 import {
   DropdownItemAction,
   DropdownItemCustom,
@@ -9,7 +9,6 @@ import {
   DropdownItemMultiselect,
   DropdownItemSelect,
 } from './DropdownItem';
-import { DropdownMenu } from './DropdownMenu';
 import { DropdownTrigger } from './DropdownTrigger';
 
 const fileUrl = (nodeId: string) =>
@@ -289,3 +288,11 @@ figma.connect(DropdownItemHeader, fileUrl('12515-1986'), {
 figma.connect(DropdownItemDivider, fileUrl('12515-1992'), {
   example: () => <DropdownItemDivider />,
 });
+
+// NOTE: DropdownItemGroup has no Figma Code Connect entry because it is an
+// implementation extension with no dedicated node in the Moodle Design System
+// Figma file. All seven item types published in the ZeroHeight spec (action,
+// selectable, multi-select, expandable, header, divider, custom) are mapped
+// above. DropdownItemGroup exists in code to satisfy the ARIA grouping contract
+// when AT-announced group boundaries are needed; it is documented in Storybook
+// under Components/Dropdown/DropdownItem/Group.

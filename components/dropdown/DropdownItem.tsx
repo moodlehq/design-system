@@ -1,13 +1,30 @@
+import {
+  FloatingFocusManager,
+  FloatingList,
+  type Placement,
+  autoUpdate,
+  flip,
+  offset,
+  shift,
+  useDismiss,
+  useFloating,
+  useInteractions,
+  useListItem,
+  useListNavigation,
+  useMergeRefs,
+  useTypeahead,
+} from '@floating-ui/react';
 import type {
+  AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   HTMLAttributes,
   ReactElement,
   ReactNode,
 } from 'react';
-import { forwardRef, isValidElement, useEffect, useRef, useState } from 'react';
+import { forwardRef, isValidElement, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Checkbox } from '../checkbox';
-import { DropdownMenu } from './DropdownMenu';
+import { DropdownContext, DropdownMenu, useDropdownContext } from './Dropdown';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
@@ -35,6 +52,13 @@ export interface DropdownItemActionProps extends ButtonHTMLAttributes<HTMLButton
   startIcon?: IconElement;
   /** Optional secondary line below the label. Caller-supplied translated string. */
   description?: string;
+  /** When provided, the item renders as an `<a>` element instead of `<button>`,
+   *  navigating to this URL on activation. Suppressed when `disabled` is true. */
+  href?: string;
+  /** Link target (e.g. `_blank`). Only applies when `href` is provided. */
+  target?: string;
+  /** Link relationship. Only applies when `href` is provided. */
+  rel?: string;
 }
 
 /**
@@ -45,15 +69,40 @@ export const DropdownItemAction = forwardRef<
   HTMLButtonElement,
   DropdownItemActionProps
 >(function DropdownItemAction(
-  { label, variant = 'default', startIcon, description, className, ...props },
-  ref,
+  {
+    label,
+    variant = 'default',
+    startIcon,
+    description,
+    href,
+    target,
+    rel,
+    className,
+    disabled,
+    onClick,
+    ...restProps
+  },
+  forwardedRef,
 ) {
+  const { ref: listItemRef, index } = useListItem({ label });
+  const { getItemProps, activeIndex } = useDropdownContext();
+  const ref = useMergeRefs([listItemRef, forwardedRef]);
+
   const resolvedVariant = allowedActionVariants.includes(
     variant as DropdownItemActionVariant,
   )
     ? variant
     : 'default';
   const resolvedStartIcon = isIconElement(startIcon) ? startIcon : null;
+  const isLink = Boolean(href);
+
+  // Automatically inject "noopener" into rel when target="_blank" to prevent
+  // reverse tabnapping (OWASP A05). Consumers should pass rel="noopener noreferrer"
+  // explicitly — the auto-injection is a safety net, not a substitute.
+  const resolvedRel =
+    target === '_blank' && !rel?.includes('noopener')
+      ? [rel, 'noopener'].filter(Boolean).join(' ')
+      : rel;
 
   if (import.meta.env.DEV) {
     if (variant && !allowedActionVariants.includes(variant)) {
@@ -64,6 +113,11 @@ export const DropdownItemAction = forwardRef<
     if (startIcon != null && !resolvedStartIcon) {
       console.error(
         '[MDS DropdownItemAction] `startIcon` must be an <i> or <svg> element.',
+      );
+    }
+    if (target === '_blank' && !rel?.includes('noopener')) {
+      console.warn(
+        '[MDS DropdownItemAction] `target="_blank"` used without `rel` containing "noopener". Injecting "noopener" automatically to prevent tabnapping. Pass `rel="noopener noreferrer"` explicitly to suppress this warning.',
       );
     }
   }
@@ -80,14 +134,8 @@ export const DropdownItemAction = forwardRef<
     classes.push(className);
   }
 
-  return (
-    <button
-      ref={ref}
-      type="button"
-      role="menuitem"
-      className={classes.join(' ')}
-      {...props}
-    >
+  const sharedContent = (
+    <>
       {resolvedStartIcon && (
         <span className="mds-dropdown-item__icon">{resolvedStartIcon}</span>
       )}
@@ -97,6 +145,53 @@ export const DropdownItemAction = forwardRef<
           <span className="mds-dropdown-item__description">{description}</span>
         )}
       </span>
+    </>
+  );
+
+  if (isLink) {
+    return (
+      <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        role="menuitem"
+        // Suppress href when disabled so the anchor is inert.
+        href={disabled ? undefined : href}
+        target={target}
+        rel={resolvedRel}
+        aria-disabled={disabled || undefined}
+        tabIndex={activeIndex === index ? 0 : -1}
+        className={classes.join(' ')}
+        {...(getItemProps({
+          ...(restProps as React.HTMLProps<HTMLElement>),
+          onClick: disabled
+            ? (e: React.MouseEvent) => e.preventDefault()
+            : (onClick as React.MouseEventHandler),
+        }) as AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
+        {sharedContent}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      ref={ref}
+      type="button"
+      role="menuitem"
+      // aria-disabled keeps the item focusable and announced by AT as unavailable,
+      // unlike the native disabled attribute which removes it from the tab sequence.
+      aria-disabled={disabled || undefined}
+      tabIndex={activeIndex === index ? 0 : -1}
+      className={classes.join(' ')}
+      {...(getItemProps({
+        ...(restProps as React.HTMLProps<HTMLElement>),
+        // Swallow keyboard-triggered activations (Enter/Space) when aria-disabled.
+        // pointer-events:none in CSS already blocks mouse clicks.
+        onClick: disabled
+          ? (e: React.MouseEvent) => e.preventDefault()
+          : onClick,
+      }) as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
+      {sharedContent}
     </button>
   );
 });
@@ -120,15 +215,28 @@ export interface DropdownItemSelectProps extends ButtonHTMLAttributes<HTMLButton
 /**
  * Dropdown.item.select — a single-select option row. Only one item in the
  * group should be selected at a time; selection state is controlled by the
- * consumer (radio-like semantics via role="menuitemradio").
+ * consumer (role="menuitemradio" for AT semantics).
  */
 export const DropdownItemSelect = forwardRef<
   HTMLButtonElement,
   DropdownItemSelectProps
 >(function DropdownItemSelect(
-  { label, selected = false, startIcon, description, className, ...props },
-  ref,
+  {
+    label,
+    selected = false,
+    startIcon,
+    description,
+    className,
+    disabled,
+    onClick,
+    ...restProps
+  },
+  forwardedRef,
 ) {
+  const { ref: listItemRef, index } = useListItem({ label });
+  const { getItemProps, activeIndex } = useDropdownContext();
+  const ref = useMergeRefs([listItemRef, forwardedRef]);
+
   const resolvedStartIcon = isIconElement(startIcon) ? startIcon : null;
 
   if (import.meta.env.DEV && startIcon != null && !resolvedStartIcon) {
@@ -154,8 +262,15 @@ export const DropdownItemSelect = forwardRef<
       type="button"
       role="menuitemradio"
       aria-checked={selected}
+      aria-disabled={disabled || undefined}
+      tabIndex={activeIndex === index ? 0 : -1}
       className={classes.join(' ')}
-      {...props}
+      {...(getItemProps({
+        ...(restProps as React.HTMLProps<HTMLElement>),
+        onClick: disabled
+          ? (e: React.MouseEvent) => e.preventDefault()
+          : onClick,
+      }) as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {resolvedStartIcon && (
         <span className="mds-dropdown-item__icon">{resolvedStartIcon}</span>
@@ -166,13 +281,119 @@ export const DropdownItemSelect = forwardRef<
           <span className="mds-dropdown-item__description">{description}</span>
         )}
       </span>
-      {selected && (
-        <span className="mds-dropdown-item__check" aria-hidden="true" />
-      )}
+      {/* Always in DOM — CSS hides it when unselected to preserve trailing-column
+          width and prevent label jitter on selection change (ZeroHeight spec:
+          "the label alignment is preserved"). */}
+      <span className="mds-dropdown-item__check" aria-hidden="true" />
     </button>
   );
 });
 DropdownItemSelect.displayName = 'DropdownItemSelect';
+
+/* ------------------------------------------------------------------ */
+/* Dropdown.item.multiselect                                           */
+/* ------------------------------------------------------------------ */
+
+export interface DropdownItemMultiselectProps extends HTMLAttributes<HTMLDivElement> {
+  /** Visible label text. Must be a caller-supplied translated string. */
+  label: string;
+  /** Whether this item is currently checked. Controlled by the consumer. */
+  checked?: boolean;
+  /** Optional secondary line below the label. Caller-supplied translated string. */
+  description?: string;
+  /** Prevents interaction and renders the item as unavailable. */
+  disabled?: boolean;
+}
+
+/**
+ * Dropdown.item.multiselect — a multi-select row embedding the Checkbox
+ * component as its leading visual indicator. Supports independent
+ * checked/unchecked toggling without closing the menu.
+ *
+ * The outer element carries `role="menuitemcheckbox"` so it participates
+ * correctly in the ARIA menu model. The embedded `<Checkbox>` is
+ * `aria-hidden` and `tabIndex={-1}` — it is purely visual; the div handles
+ * all keyboard interaction and AT announcements.
+ */
+export const DropdownItemMultiselect = forwardRef<
+  HTMLDivElement,
+  DropdownItemMultiselectProps
+>(function DropdownItemMultiselect(
+  {
+    label,
+    checked = false,
+    description,
+    className,
+    disabled,
+    onClick,
+    ...restProps
+  },
+  forwardedRef,
+) {
+  const { ref: listItemRef, index } = useListItem({ label });
+  const { getItemProps, activeIndex } = useDropdownContext();
+  const ref = useMergeRefs([listItemRef, forwardedRef]);
+
+  const classes = ['mds-dropdown-item', 'mds-dropdown-item--multiselect'];
+  if (description) {
+    classes.push('mds-dropdown-item--with-description');
+  }
+  if (className) {
+    classes.push(className);
+  }
+
+  return (
+    <div
+      ref={ref}
+      role="menuitemcheckbox"
+      aria-checked={checked}
+      aria-disabled={disabled || undefined}
+      tabIndex={activeIndex === index ? 0 : -1}
+      className={classes.join(' ')}
+      {...(getItemProps({
+        ...(restProps as React.HTMLProps<HTMLElement>),
+        onClick: disabled
+          ? (e: React.MouseEvent) => e.preventDefault()
+          : (onClick as React.MouseEventHandler),
+        // Divs don't fire click on Space by default — handle it explicitly.
+        onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
+          if (e.key === ' ') {
+            e.preventDefault();
+            if (!disabled) {
+              (e.currentTarget as HTMLElement).click();
+            }
+          }
+          (
+            restProps.onKeyDown as
+              React.KeyboardEventHandler<HTMLDivElement> | undefined
+          )?.(e);
+        },
+      }) as HTMLAttributes<HTMLDivElement>)}
+    >
+      {/* Checkbox is purely visual. The outer `inert` span removes the <input>
+          from both the tab sequence and the accessibility tree, preventing the
+          nested-interactive axe violation. `aria-hidden` adds a second guard
+          for ATs that traverse inert subtrees. */}
+      <span inert aria-hidden="true" className="mds-dropdown-item__checkbox">
+        <Checkbox
+          hideLabel
+          label={label}
+          checked={checked}
+          disabled={disabled}
+          readOnly // purely visual; outer div handles all interaction
+          tabIndex={-1}
+        />
+      </span>
+      <span className="mds-dropdown-item__label-wrap">
+        <span className="mds-dropdown-item__label">{label}</span>
+        {description && (
+          <span className="mds-dropdown-item__description">{description}</span>
+        )}
+      </span>
+    </div>
+  );
+});
+DropdownItemMultiselect.displayName = 'DropdownItemMultiselect';
 
 /* ------------------------------------------------------------------ */
 /* Dropdown.item.expandable                                            */
@@ -188,15 +409,29 @@ export interface DropdownItemExpandableProps extends ButtonHTMLAttributes<HTMLBu
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** Submenu placement relative to the expandable row. Defaults to 'right-start'.
+   *  flip() will invert to the opposite side when space is insufficient. */
+  placement?: Placement;
 }
+
+// Offset the submenu relative to the expandable button:
+//   mainAxis: 4px gap from the button's inline-end edge toward the submenu.
+//   crossAxis: -5px shifts the submenu up (border 1px + padding 4px of the
+//     parent panel) so the first submenu item's text aligns with the
+//     expandable item's text rather than sitting 5px below it.
+const SUBMENU_MAIN_OFFSET = 4;
+const SUBMENU_CROSS_OFFSET = -5;
 
 /**
  * Dropdown.item.expandable — a parent row that opens a nested Dropdown menu.
  *
- * The submenu is top-aligned to this row and offset from the parent menu
- * panel by spacing/xxs. Both the menu panel and the item row clip overflow,
- * so the submenu is portaled to document.body and positioned from live
- * bounding rects (viewport coordinates via position: fixed).
+ * Submenu positioning is delegated to @floating-ui/react (placement='right-start'
+ * + flip + shift), which replaces the previous manual getBoundingClientRect /
+ * scroll-resize-listener approach and handles RTL direction automatically.
+ * The submenu is portaled via createPortal (react-dom) to avoid overflow clipping
+ * and to keep the inline DOM clean — FloatingPortal is intentionally not used here
+ * because it renders an inline span[aria-owns] sibling that would land inside the
+ * parent role="menu" element and trigger aria-required-children violations.
  */
 export const DropdownItemExpandable = forwardRef<
   HTMLButtonElement,
@@ -208,107 +443,88 @@ export const DropdownItemExpandable = forwardRef<
     open: controlledOpen,
     defaultOpen = false,
     onOpenChange,
+    placement = 'right-start',
     onClick,
     className,
     disabled,
-    ...props
+    ...restProps
   },
-  ref,
+  forwardedRef,
 ) {
+  // Register with the parent menu's list navigation
+  const { ref: listItemRef, index } = useListItem({ label });
+  const { getItemProps: parentGetItemProps, activeIndex: parentActiveIndex } =
+    useDropdownContext();
+
+  // Stable id for the label span — used as aria-labelledby on the submenu panel
+  // so AT users hear the parent item's text when they enter the submenu.
+  const labelId = useId();
+
   const hasSubmenu = children != null;
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
-  const open = hasSubmenu && !disabled && (controlledOpen ?? uncontrolledOpen);
+  const isOpen =
+    hasSubmenu && !disabled && (controlledOpen ?? uncontrolledOpen);
 
-  const itemRef = useRef<HTMLButtonElement | null>(null);
-  const submenuRef = useRef<HTMLDivElement | null>(null);
-  const [position, setPosition] = useState<{
-    top: number;
-    left?: number;
-    right?: number;
-  } | null>(null);
+  const [submenuActiveIndex, setSubmenuActiveIndex] = useState<number | null>(
+    null,
+  );
+  const submenuElementsRef = useRef<(HTMLElement | null)[]>([]);
+  const submenuLabelsRef = useRef<(string | null)[]>([]);
 
   const setOpen = (next: boolean) => {
     setUncontrolledOpen(next);
     onOpenChange?.(next);
   };
 
-  // Track both the forwarded ref and the local one used for positioning.
-  const setRefs = (node: HTMLButtonElement | null) => {
-    itemRef.current = node;
-    if (typeof ref === 'function') {
-      ref(node);
-    } else if (ref) {
-      ref.current = node;
-    }
-  };
+  // Position the submenu to the inline-end of this row. flip() mirrors to the
+  // opposite side when space is insufficient; RTL direction is handled
+  // automatically by the placement prop (Floating UI uses logical placement
+  // relative to the writing direction).
+  const {
+    refs: submenuRefs,
+    floatingStyles: submenuFloatingStyles,
+    context: submenuContext,
+  } = useFloating<HTMLButtonElement>({
+    open: isOpen,
+    onOpenChange: setOpen,
+    placement,
+    middleware: [
+      offset({
+        mainAxis: SUBMENU_MAIN_OFFSET,
+        crossAxis: SUBMENU_CROSS_OFFSET,
+      }),
+      flip(),
+      shift({ padding: 8 }),
+    ],
+    whileElementsMounted: autoUpdate,
+  });
 
-  useEffect(() => {
-    if (!open || !itemRef.current) {
-      return;
-    }
-    const update = () => {
-      const item = itemRef.current;
-      if (!item) {
-        return;
-      }
-      const itemRect = item.getBoundingClientRect();
-      // Anchor on the parent menu panel's edge (not the row's own edge, which
-      // sits inset by the panel's padding); fall back to the row when the
-      // item is used standalone. The xxs gap itself is applied in CSS via
-      // margin-inline-start so the token stays the single source of truth.
-      const parentMenu = item.closest('.mds-dropdown-menu');
-      const anchorRect = (parentMenu ?? item).getBoundingClientRect();
-      // In RTL the submenu opens to the inline-end (visual left); pairing a
-      // physical left/right with CSS margin-inline-start keeps the gap
-      // direction-aware without measuring the submenu's own width.
-      const isRtl = getComputedStyle(item).direction === 'rtl';
-      setPosition(
-        isRtl
-          ? {
-              top: itemRect.top,
-              right: document.documentElement.clientWidth - anchorRect.left,
-            }
-          : { top: itemRect.top, left: anchorRect.right },
-      );
-    };
-    update();
-    window.addEventListener('scroll', update, true);
-    window.addEventListener('resize', update);
-    return () => {
-      window.removeEventListener('scroll', update, true);
-      window.removeEventListener('resize', update);
-    };
-  }, [open]);
+  // useDismiss handles Escape (closes submenu, returns focus to this row) and
+  // outside-press (clicking anywhere outside the submenu closes it). A second
+  // Escape press then closes the parent menu via its own useDismiss.
+  const dismiss = useDismiss(submenuContext);
+  const submenuListNavigation = useListNavigation(submenuContext, {
+    listRef: submenuElementsRef,
+    activeIndex: submenuActiveIndex,
+    onNavigate: setSubmenuActiveIndex,
+  });
+  const submenuTypeahead = useTypeahead(submenuContext, {
+    listRef: submenuLabelsRef,
+    activeIndex: submenuActiveIndex,
+    onMatch: setSubmenuActiveIndex,
+  });
 
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-    const onPointerDown = (event: PointerEvent) => {
-      const target = event.target as Node;
-      if (
-        itemRef.current?.contains(target) ||
-        submenuRef.current?.contains(target)
-      ) {
-        return;
-      }
-      setOpen(false);
-    };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('pointerdown', onPointerDown);
-    document.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-    // setOpen is stable enough here: it only wraps state setters and the
-    // onOpenChange callback, and re-subscribing on open toggles suffices.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  const { getFloatingProps, getItemProps: getSubmenuItemProps } =
+    useInteractions([dismiss, submenuListNavigation, submenuTypeahead]);
+
+  // Three refs on one element: the forwarded consumer ref, the parent list-item
+  // ref (so arrow-key navigation can find this row), and the submenu anchor ref
+  // (so Floating UI can compute the submenu's position from this button).
+  const ref = useMergeRefs([
+    forwardedRef,
+    listItemRef,
+    submenuRefs.setReference,
+  ]);
 
   const classes = ['mds-dropdown-item', 'mds-dropdown-item--expandable'];
   if (className) {
@@ -316,127 +532,111 @@ export const DropdownItemExpandable = forwardRef<
   }
 
   return (
-    <>
+    // Re-provide the context with this expandable's own getItemProps and
+    // activeIndex so nested items participate in the submenu's list navigation
+    // rather than the parent menu's.
+    <DropdownContext.Provider
+      value={{
+        getItemProps: getSubmenuItemProps,
+        activeIndex: submenuActiveIndex,
+      }}
+    >
       <button
-        ref={setRefs}
+        ref={ref}
         type="button"
         role="menuitem"
-        aria-haspopup="menu"
-        aria-expanded={open}
+        aria-disabled={disabled || undefined}
         className={classes.join(' ')}
-        disabled={disabled}
-        onClick={(event) => {
-          if (hasSubmenu) {
-            setOpen(!open);
-          }
-          onClick?.(event);
-        }}
-        {...props}
+        tabIndex={parentActiveIndex === index ? 0 : -1}
+        {...restProps}
+        {...(parentGetItemProps({
+          onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
+            // aria-disabled: swallow activation; pointer-events:none covers mouse.
+            if (disabled) {
+              e.preventDefault();
+              return;
+            }
+            if (hasSubmenu) setOpen(!isOpen);
+            onClick?.(e);
+          },
+          // Right Arrow (LTR) / Left Arrow (RTL) opens the submenu and focuses
+          // the first item via FloatingFocusManager. stopPropagation prevents
+          // the parent list navigation from also handling the key.
+          onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
+            if (!hasSubmenu || isOpen) return;
+            const isRtl = getComputedStyle(e.currentTarget).direction === 'rtl';
+            const openKey = isRtl ? 'ArrowLeft' : 'ArrowRight';
+            if (e.key === openKey) {
+              e.preventDefault();
+              e.stopPropagation();
+              setOpen(true);
+            }
+          },
+        }) as ButtonHTMLAttributes<HTMLButtonElement>)}
+        // These must come last — override any conflicting values from spreads above.
+        // Omit popup semantics when no children are provided: an expandable row
+        // with no submenu should behave like a plain menuitem.
+        {...(hasSubmenu
+          ? { 'aria-haspopup': 'menu' as const, 'aria-expanded': isOpen }
+          : {})}
       >
         <span className="mds-dropdown-item__label-wrap">
-          <span className="mds-dropdown-item__label">{label}</span>
+          <span id={labelId} className="mds-dropdown-item__label">
+            {label}
+          </span>
         </span>
         <span className="mds-dropdown-item__chevron-right" aria-hidden="true" />
       </button>
-      {open &&
-        position &&
+      {isOpen &&
         createPortal(
-          <DropdownMenu
-            ref={submenuRef}
-            className="mds-dropdown-item__submenu"
-            style={{ position: 'fixed', ...position }}
+          /* guards={false}: same reason as the parent Dropdown — no focus trapping
+             needed in modal={false} mode; guards cause aria-hidden-focus violations. */
+          <FloatingFocusManager
+            context={submenuContext}
+            modal={false}
+            guards={false}
           >
-            {children}
-          </DropdownMenu>,
+            <FloatingList
+              elementsRef={submenuElementsRef}
+              labelsRef={submenuLabelsRef}
+            >
+              <DropdownMenu
+                ref={submenuRefs.setFloating}
+                style={submenuFloatingStyles}
+                aria-labelledby={labelId}
+                {...getFloatingProps({
+                  // Left Arrow (LTR) / Right Arrow (RTL) closes the submenu and
+                  // returns focus to the expandable row via FloatingFocusManager.
+                  // The submenu is portaled to document.body so e.currentTarget
+                  // won't inherit the app-level dir attribute. Read direction from
+                  // the reference (button) element instead, which is in the correct
+                  // DOM context (e.g. inside a dir="rtl" wrapper).
+                  onKeyDown(e: React.KeyboardEvent) {
+                    const refEl = submenuContext.refs.domReference
+                      .current as HTMLElement | null;
+                    const isRtl =
+                      getComputedStyle(
+                        refEl ?? (e.currentTarget as HTMLElement),
+                      ).direction === 'rtl';
+                    const closeKey = isRtl ? 'ArrowRight' : 'ArrowLeft';
+                    if (e.key === closeKey) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOpen(false);
+                    }
+                  },
+                })}
+              >
+                {children}
+              </DropdownMenu>
+            </FloatingList>
+          </FloatingFocusManager>,
           document.body,
         )}
-    </>
+    </DropdownContext.Provider>
   );
 });
 DropdownItemExpandable.displayName = 'DropdownItemExpandable';
-
-/* ------------------------------------------------------------------ */
-/* Dropdown.item.multiselect                                           */
-/* ------------------------------------------------------------------ */
-
-export interface DropdownItemMultiselectProps extends Omit<
-  HTMLAttributes<HTMLDivElement>,
-  'onChange'
-> {
-  /** Visible label text. Must be a caller-supplied translated string. */
-  label: string;
-  checked?: boolean;
-  /** Called with the next checked state when the row is toggled. */
-  onCheckedChange?: (checked: boolean) => void;
-  disabled?: boolean;
-}
-
-/**
- * Dropdown.item.multiselect — a multi-select row embedding the Checkbox
- * component. Toggling it does not close the menu. The row owns the
- * interaction (role="menuitemcheckbox"); the embedded Checkbox is
- * presentation only, matching the Figma pattern where the whole item is
- * the hit area.
- */
-export const DropdownItemMultiselect = forwardRef<
-  HTMLDivElement,
-  DropdownItemMultiselectProps
->(function DropdownItemMultiselect(
-  {
-    label,
-    checked = false,
-    onCheckedChange,
-    disabled = false,
-    className,
-    onClick,
-    onKeyDown,
-    ...props
-  },
-  ref,
-) {
-  const classes = ['mds-dropdown-item', 'mds-dropdown-item--multiselect'];
-  if (className) {
-    classes.push(className);
-  }
-
-  return (
-    <div
-      ref={ref}
-      role="menuitemcheckbox"
-      aria-checked={checked}
-      aria-disabled={disabled || undefined}
-      tabIndex={disabled ? -1 : 0}
-      className={classes.join(' ')}
-      onClick={(event) => {
-        if (!disabled) {
-          onCheckedChange?.(!checked);
-        }
-        onClick?.(event);
-      }}
-      onKeyDown={(event) => {
-        if (!disabled && (event.key === 'Enter' || event.key === ' ')) {
-          event.preventDefault();
-          onCheckedChange?.(!checked);
-        }
-        onKeyDown?.(event);
-      }}
-      {...props}
-    >
-      {/* aria-hidden + tabIndex -1: the row carries the checkbox semantics;
-          exposing the inner input too would double-announce the control. */}
-      <span className="mds-dropdown-item__checkbox" aria-hidden="true">
-        <Checkbox
-          label={label}
-          checked={checked}
-          disabled={disabled}
-          readOnly
-          tabIndex={-1}
-        />
-      </span>
-    </div>
-  );
-});
-DropdownItemMultiselect.displayName = 'DropdownItemMultiselect';
 
 /* ------------------------------------------------------------------ */
 /* Dropdown.item.header                                                */
@@ -448,8 +648,15 @@ export interface DropdownItemHeaderProps extends HTMLAttributes<HTMLDivElement> 
 }
 
 /**
- * Dropdown.item.header — a non-interactive section label that groups
- * related items. Excluded from keyboard navigation.
+ * Dropdown.item.header — a non-interactive section label for visual grouping only.
+ * Excluded from keyboard navigation.
+ *
+ * This component uses `role="group"` with `aria-label` to expose the header text to
+ * the accessibility tree. Note: items that follow the header are DOM siblings, not
+ * children of the group element — the ARIA grouping contract is therefore not
+ * fulfilled. For semantic grouping where AT should announce the group name as users
+ * navigate into it, use `DropdownItemGroup` instead, which correctly wraps its
+ * children inside the `role="group"` element.
  */
 export const DropdownItemHeader = forwardRef<
   HTMLDivElement,
@@ -461,7 +668,15 @@ export const DropdownItemHeader = forwardRef<
   }
 
   return (
-    <div ref={ref} role="presentation" className={classes.join(' ')} {...props}>
+    // role="group" + aria-label exposes the header as a named group landmark
+    // for AT users, replacing role="presentation" which suppressed all semantics.
+    <div
+      ref={ref}
+      role="group"
+      aria-label={label}
+      className={classes.join(' ')}
+      {...props}
+    >
       <span className="mds-dropdown-item__label">{label}</span>
     </div>
   );
@@ -485,13 +700,7 @@ export const DropdownItemDivider = forwardRef<
   }
 
   return (
-    <div
-      ref={ref}
-      role="separator"
-      aria-hidden="true"
-      className={classes.join(' ')}
-      {...props}
-    />
+    <div ref={ref} role="separator" className={classes.join(' ')} {...props} />
   );
 });
 DropdownItemDivider.displayName = 'DropdownItemDivider';
@@ -524,3 +733,56 @@ export const DropdownItemCustom = forwardRef<
   );
 });
 DropdownItemCustom.displayName = 'DropdownItemCustom';
+
+/* ------------------------------------------------------------------ */
+/* Dropdown.item.group                                                 */
+/* ------------------------------------------------------------------ */
+
+export interface DropdownItemGroupProps extends HTMLAttributes<HTMLDivElement> {
+  /** Group section label. Rendered as visible text and used as the
+   *  accessible name for role="group" via aria-labelledby. */
+  label: string;
+  /** Dropdown item components to include in this group. */
+  children?: ReactNode;
+}
+
+/**
+ * Dropdown.item.group — a semantic wrapper that correctly groups related items.
+ *
+ * Uses role="group" with aria-labelledby so AT users hear the group's name
+ * when they navigate into it. The label is rendered as a visible header row.
+ *
+ * Prefer this over placing DropdownItemHeader alongside ungrouped siblings:
+ * role="group" requires that grouped items are DOM children of the group
+ * element — sibling placement does not satisfy the ARIA grouping contract.
+ * DropdownItemHeader is a visual label only and should be used only when
+ * semantic AT-announced grouping is not required.
+ *
+ * display:contents removes the wrapper div from the visual layout so the
+ * menu panel's own gap applies uniformly across all items and group labels.
+ */
+export const DropdownItemGroup = forwardRef<
+  HTMLDivElement,
+  DropdownItemGroupProps
+>(function DropdownItemGroup({ label, children, className, ...props }, ref) {
+  const labelId = useId();
+
+  const classes = ['mds-dropdown-item-group'];
+  if (className) classes.push(className);
+
+  return (
+    <div
+      ref={ref}
+      role="group"
+      aria-labelledby={labelId}
+      className={classes.join(' ')}
+      {...props}
+    >
+      <span id={labelId} className="mds-dropdown-item-group__label">
+        {label}
+      </span>
+      {children}
+    </div>
+  );
+});
+DropdownItemGroup.displayName = 'DropdownItemGroup';

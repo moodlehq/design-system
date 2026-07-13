@@ -1,5 +1,8 @@
 import type { ButtonHTMLAttributes, ReactElement } from 'react';
 import { forwardRef, isValidElement } from 'react';
+import { Button } from '../button';
+import type { ButtonVariant } from '../button/Button';
+import './dropdown.css';
 
 type DropdownTriggerVariant = 'button' | 'nav-pill';
 type DropdownTriggerAppearance = 'emphasis' | 'default' | 'subtle';
@@ -51,11 +54,11 @@ export interface DropdownTriggerProps extends ButtonHTMLAttributes<HTMLButtonEle
 /**
  * Dropdown.trigger — the clickable affordance that opens a Dropdown menu.
  *
- * Renders a native <button> carrying the Button component's classes rather
- * than wrapping <Button> itself: the trigger needs a leading icon, the label,
- * and a trailing chevron at the same time, while Button intentionally renders
- * only one icon slot (it warns when both are passed). All visual styling
- * still comes from button.css / nav-pill.css via the shared classes.
+ * For the button variant, renders a <Button> with the chevron passed as
+ * endIcon alongside any optional startIcon. For the nav-pill variant, renders
+ * a raw <button> with nav-pill CSS classes — NavPill is intentionally not
+ * reused here because NavPill renders an <a> element (navigation semantics),
+ * whereas a dropdown trigger is a toggle action and must be a <button>.
  */
 export const DropdownTrigger = forwardRef<
   HTMLButtonElement,
@@ -90,6 +93,7 @@ export const DropdownTrigger = forwardRef<
     : 'md';
   const resolvedStartIcon = isIconElement(startIcon) ? startIcon : null;
   const isNavPill = resolvedVariant === 'nav-pill';
+  const isIconOnly = !isNavPill && iconOnly && Boolean(resolvedStartIcon);
 
   if (import.meta.env.DEV) {
     if (variant && !allowedVariants.includes(variant)) {
@@ -129,27 +133,6 @@ export const DropdownTrigger = forwardRef<
     }
   }
 
-  const isIconOnly = !isNavPill && iconOnly && Boolean(resolvedStartIcon);
-
-  const classes = isNavPill
-    ? ['mds-dropdown-trigger', 'mds-nav-pill', 'mds-dropdown-trigger--nav-pill']
-    : [
-        'mds-dropdown-trigger',
-        'mds-btn',
-        'btn',
-        `btn-${appearanceToButtonVariant[resolvedAppearance]}`,
-        `mds-btn--size-${resolvedSize}`,
-      ];
-  if (isIconOnly) {
-    classes.push('mds-btn--icon-only');
-  }
-  if (open) {
-    classes.push('mds-dropdown-trigger--open');
-  }
-  if (className) {
-    classes.push(className);
-  }
-
   // md triggers use the 12×8 chevron; sm and nav-pill use the 8×8 one.
   const chevronClasses = [
     'mds-dropdown-trigger__chevron',
@@ -160,23 +143,71 @@ export const DropdownTrigger = forwardRef<
     .filter(Boolean)
     .join(' ');
 
+  // Button variant: delegate to <Button> so the trigger is composed from the
+  // real Button component rather than duplicating its classes manually.
+  // The chevron is passed as endIcon alongside any optional startIcon — this
+  // requires Button to support both icon slots simultaneously (see Button.tsx).
+  if (!isNavPill) {
+    // Icon-only triggers always use size="lg" — the lg variant changes only
+    // border-radius (md instead of pill), not spacing, so the icon-only trigger
+    // is not fully rounded. Non-icon-only triggers are restricted to sm/md.
+    const buttonSize = isIconOnly ? 'lg' : resolvedSize;
+    return (
+      <Button
+        ref={ref}
+        type={type}
+        variant={appearanceToButtonVariant[resolvedAppearance] as ButtonVariant}
+        size={buttonSize}
+        label={isIconOnly ? undefined : label}
+        startIcon={resolvedStartIcon ?? undefined}
+        // Omit the chevron for icon-only triggers — they show only the action
+        // icon; the open state is conveyed via aria-expanded alone.
+        endIcon={
+          isIconOnly ? undefined : (
+            <i className={chevronClasses} aria-hidden="true" />
+          )
+        }
+        aria-label={isIconOnly ? label : undefined}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className={[
+          'mds-dropdown-trigger',
+          open ? 'mds-dropdown-trigger--open' : null,
+          className,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        {...props}
+      />
+    );
+  }
+
+  // Nav-pill variant: NavPill renders an <a> element and is designed for
+  // navigation, not toggle actions. The trigger must be a <button>, so the
+  // nav-pill CSS classes are applied directly here rather than wrapping NavPill.
+
   return (
     <button
       ref={ref}
-      className={classes.join(' ')}
+      className={[
+        'mds-dropdown-trigger',
+        'mds-nav-pill',
+        'mds-dropdown-trigger--nav-pill',
+        open ? 'mds-dropdown-trigger--open' : null,
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
       type={type}
       aria-haspopup="menu"
       aria-expanded={open}
-      aria-label={isIconOnly ? label : undefined}
       {...props}
     >
-      {!isNavPill && resolvedStartIcon}
-      {isIconOnly ? null : isNavPill ? (
-        <span className="mds-nav-pill__label">{label}</span>
-      ) : (
-        label
-      )}
-      {!isIconOnly && <span className={chevronClasses} aria-hidden="true" />}
+      <span className="mds-nav-pill__label">{label}</span>
+      <i
+        className="mds-dropdown-trigger__chevron mds-dropdown-trigger__chevron--sm"
+        aria-hidden="true"
+      />
     </button>
   );
 });

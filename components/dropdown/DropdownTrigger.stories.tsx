@@ -1,110 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import { Dropdown } from './Dropdown';
+import {
+  DropdownItemAction,
+  DropdownItemDivider,
+  DropdownItemHeader,
+} from './DropdownItem';
 import { DropdownTrigger } from './DropdownTrigger';
 
-const iconMapping = {
-  None: undefined,
-  Smile: <i className="fa-solid fa-face-smile" aria-hidden="true" />,
-  Gear: <i className="fa-solid fa-gear" aria-hidden="true" />,
-  Filter: <i className="fa-solid fa-filter" aria-hidden="true" />,
-};
+const triggerIconSmile = (
+  <i className="fa-solid fa-face-smile" aria-hidden="true" />
+);
+const triggerIconGear = <i className="fa-solid fa-gear" aria-hidden="true" />;
 
-const meta = {
-  title: 'Components/Dropdown/DropdownTrigger',
-  component: DropdownTrigger,
-  parameters: {
-    layout: 'centered',
-  },
-  play: async ({ canvas }) => {
-    const trigger = canvas.getByRole('button');
-    await expect(trigger).toBeVisible();
-    await expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
-  },
-  tags: ['autodocs', 'test', 'beta'],
-  argTypes: {
-    label: {
-      description:
-        'Trigger label. For icon-only triggers it becomes the aria-label.',
-      table: {
-        defaultValue: { summary: '' },
-      },
-    },
-    variant: {
-      control: { type: 'select' },
-      options: ['button', 'nav-pill'],
-      description:
-        'Visual form. The nav-pill variant is constrained to appearance="default" and size="md".',
-      table: {
-        type: { summary: 'button | nav-pill' },
-        defaultValue: { summary: 'button' },
-      },
-    },
-    appearance: {
-      control: { type: 'select' },
-      options: ['emphasis', 'default', 'subtle'],
-      description:
-        'emphasis = filled secondary, default = outlined secondary, subtle = ghost.',
-      table: {
-        type: { summary: 'emphasis | default | subtle' },
-        defaultValue: { summary: 'default' },
-      },
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['sm', 'md'],
-      description: 'Trigger size.',
-      table: {
-        type: { summary: 'sm | md' },
-        defaultValue: { summary: 'md' },
-      },
-    },
-    startIcon: {
-      description:
-        'Icon rendered before the label. Accepts only intrinsic `<i>` or `<svg>` elements. Mark decorative icons with `aria-hidden="true"`.',
-      options: Object.keys(iconMapping),
-      mapping: iconMapping,
-      control: { type: 'select' },
-    },
-    iconOnly: {
-      control: { type: 'boolean' },
-      description:
-        'Renders only the startIcon; the label prop becomes the aria-label.',
-      table: {
-        type: { summary: 'true | false' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    open: {
-      control: { type: 'boolean' },
-      description:
-        'Whether the controlled dropdown is open. Drives aria-expanded and the active visual state.',
-      table: {
-        type: { summary: 'true | false' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-    disabled: {
-      control: { type: 'boolean' },
-      description: 'Disabled state.',
-      table: {
-        type: { summary: 'true | false' },
-        defaultValue: { summary: 'false' },
-      },
-    },
-  },
-  args: {
-    label: 'Label',
-    variant: 'button',
-    appearance: 'default',
-    size: 'md',
-    iconOnly: false,
-    open: false,
-    disabled: false,
-  },
-} satisfies Meta<typeof DropdownTrigger>;
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+// Minimal items reused inside trigger-showcase Dropdowns.
+const triggerItems = (
+  <>
+    <DropdownItemHeader label="Dropdown header" />
+    <DropdownItemDivider />
+    <DropdownItemAction label="Action item" />
+    <DropdownItemAction label="Action item" />
+    <DropdownItemAction label="Action item" />
+  </>
+);
 
 const showcaseInlineStyle = {
   display: 'flex' as const,
@@ -113,81 +31,159 @@ const showcaseInlineStyle = {
   alignItems: 'center' as const,
 };
 
-export const Default: Story = {};
+const showcaseParameters = {
+  controls: { disable: true },
+  docs: { canvas: { sourceState: 'none' as const } },
+} as const;
 
-export const Emphasis: Story = {
-  args: { appearance: 'emphasis' },
-};
-
-export const Subtle: Story = {
-  args: { appearance: 'subtle' },
-};
-
-export const Small: Story = {
-  args: { size: 'sm' },
-};
-
-export const WithStartIcon: Story = {
-  args: { startIcon: iconMapping.Smile },
-};
-
-export const IconOnly: Story = {
+const meta = {
+  title: 'Components/Dropdown/DropdownTrigger',
+  component: DropdownTrigger,
+  parameters: { layout: 'centered' },
+  tags: ['autodocs', 'test', 'stable'],
+  argTypes: {
+    label: { description: 'Trigger label.' },
+    variant: {
+      control: { type: 'select' },
+      options: ['button', 'nav-pill'],
+    },
+    appearance: {
+      // nav-pill is constrained to a single appearance by design — hide the
+      // control so consumers don't try values that have no effect.
+      if: { arg: 'variant', eq: 'button' },
+      control: { type: 'select' },
+      options: ['emphasis', 'default', 'subtle'],
+    },
+    size: {
+      // nav-pill is constrained to md by design.
+      if: { arg: 'variant', eq: 'button' },
+      control: { type: 'select' },
+      options: ['sm', 'md'],
+    },
+    open: { control: { type: 'boolean' } },
+    iconOnly: {
+      // icon-only mode is not supported for nav-pill.
+      if: { arg: 'variant', eq: 'button' },
+      control: { type: 'boolean' },
+    },
+  },
   args: {
-    label: 'Open menu',
-    startIcon: iconMapping.Gear,
-    iconOnly: true,
+    label: 'Label',
+    variant: 'button',
+    appearance: 'default',
+    size: 'md',
   },
-};
-
-export const NavPill: Story = {
-  args: { variant: 'nav-pill' },
-};
-
-export const Open: Story = {
-  args: { open: true },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('button')).toHaveAttribute(
-      'aria-expanded',
-      'true',
-    );
-  },
-};
-
-export const Disabled: Story = {
-  args: { disabled: true },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('button')).toBeDisabled();
-  },
-};
-
-export const AllAppearances: Story = {
-  parameters: {
-    controls: { disable: true },
-  },
-  render: (args) => (
-    <div style={showcaseInlineStyle}>
-      <DropdownTrigger {...args} label="Emphasis" appearance="emphasis" />
-      <DropdownTrigger {...args} label="Default" appearance="default" />
-      <DropdownTrigger {...args} label="Subtle" appearance="subtle" />
-      <DropdownTrigger {...args} label="Nav pill" variant="nav-pill" />
-    </div>
-  ),
-  // Overrides the meta play: this story renders several triggers, so the
-  // single-element getByRole lookup there would throw.
-  play: async ({ canvas }) => {
-    const triggers = canvas.getAllByRole('button');
-    await expect(triggers).toHaveLength(4);
-  },
-};
-
-export const RightToLeft: Story = {
-  tags: ['test', 'beta'],
-  args: { startIcon: iconMapping.Smile },
   decorators: [
-    (Story) => (
-      <div dir="rtl">
+    (Story: React.ComponentType) => (
+      <div style={{ blockSize: '14rem', paddingBlockStart: '2rem' }}>
         <Story />
       </div>
     ),
   ],
+} satisfies Meta<typeof DropdownTrigger>;
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+/** Default trigger — no decoration, outline appearance. */
+export const Default: Story = {
+  play: async ({ canvas }) => {
+    const trigger = canvas.getByRole('button', { name: 'Label' });
+    await expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  },
+};
+
+/**
+ * All trigger appearances, sizes, and icon configurations side-by-side.
+ * Use this as the at-a-glance reference for the trigger's visual range.
+ */
+export const TriggerVariants: Story = {
+  name: 'Trigger variants',
+  parameters: showcaseParameters,
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--mds-spacing-md)',
+      }}
+    >
+      {/* Appearances */}
+      <div style={showcaseInlineStyle}>
+        <Dropdown label="Emphasis" appearance="emphasis">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Default" appearance="default">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Subtle" appearance="subtle">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Nav pill" variant="nav-pill">
+          {triggerItems}
+        </Dropdown>
+      </div>
+      {/* Sizes + icons */}
+      <div style={showcaseInlineStyle}>
+        <Dropdown label="Medium" size="md">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Small" size="sm">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Med + icon" size="md" startIcon={triggerIconSmile}>
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Small + icon" size="sm" startIcon={triggerIconSmile}>
+          {triggerItems}
+        </Dropdown>
+      </div>
+      {/* Special states */}
+      <div style={showcaseInlineStyle}>
+        <Dropdown label="Open" defaultOpen>
+          {triggerItems}
+        </Dropdown>
+        <DropdownTrigger label="Disabled" disabled />
+        <Dropdown label="Open menu" startIcon={triggerIconGear} iconOnly>
+          {triggerItems}
+        </Dropdown>
+      </div>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    const triggers = canvas.getAllByRole('button');
+    for (const trigger of triggers) {
+      await expect(trigger).toBeVisible();
+      await expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+    }
+    await expect(canvas.getByRole('button', { name: 'Open' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
+    await expect(
+      canvas.getByRole('button', { name: 'Disabled' }),
+    ).toBeDisabled();
+  },
+};
+
+export const RightToLeft: Story = {
+  tags: ['test', 'stable'],
+  parameters: showcaseParameters,
+  render: () => (
+    <div dir="rtl" style={showcaseInlineStyle}>
+      <Dropdown label="Label" startIcon={triggerIconSmile}>
+        {triggerItems}
+      </Dropdown>
+      <Dropdown label="Open" defaultOpen>
+        {triggerItems}
+      </Dropdown>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    const triggers = canvas.getAllByRole('button');
+    for (const trigger of triggers) {
+      await expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+    }
+  },
 };

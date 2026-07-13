@@ -1,10 +1,11 @@
-export { Dropdown } from './Dropdown';
-export type { DropdownProps } from './Dropdown';
+export { Dropdown, DropdownMenu } from './Dropdown';
+export type { DropdownMenuProps, DropdownProps } from './Dropdown';
 export {
   DropdownItemAction,
   DropdownItemCustom,
   DropdownItemDivider,
   DropdownItemExpandable,
+  DropdownItemGroup,
   DropdownItemHeader,
   DropdownItemMultiselect,
   DropdownItemSelect,
@@ -14,11 +15,10 @@ export type {
   DropdownItemCustomProps,
   DropdownItemDividerProps,
   DropdownItemExpandableProps,
+  DropdownItemGroupProps,
   DropdownItemHeaderProps,
   DropdownItemMultiselectProps,
   DropdownItemSelectProps,
 } from './DropdownItem';
-export { DropdownMenu } from './DropdownMenu';
-export type { DropdownMenuProps } from './DropdownMenu';
 export { DropdownTrigger } from './DropdownTrigger';
 export type { DropdownTriggerProps } from './DropdownTrigger';

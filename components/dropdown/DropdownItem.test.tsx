@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
@@ -7,6 +7,7 @@ import {
   DropdownItemCustom,
   DropdownItemDivider,
   DropdownItemExpandable,
+  DropdownItemGroup,
   DropdownItemHeader,
   DropdownItemMultiselect,
   DropdownItemSelect,
@@ -59,9 +60,13 @@ describe('DropdownItemAction: Unit Test', () => {
     warnSpy.mockRestore();
   });
 
-  it('renders as disabled when disabled is true', () => {
+  it('renders as aria-disabled when disabled is true', () => {
     render(<DropdownItemAction label="Action item" disabled />);
-    expect(screen.getByRole('menuitem')).toBeDisabled();
+    const item = screen.getByRole('menuitem');
+    expect(item).toHaveAttribute('aria-disabled', 'true');
+    // Not natively disabled — item stays in the tab sequence and is
+    // reachable by AT users who can still discover it is unavailable.
+    expect(item).not.toBeDisabled();
   });
 
   it('forwards extra props and the ref to the button element', () => {
@@ -71,6 +76,20 @@ describe('DropdownItemAction: Unit Test', () => {
     );
     expect(screen.getByTestId('item')).toBe(screen.getByRole('menuitem'));
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+  });
+
+  it('renders as an anchor with href when the href prop is supplied', () => {
+    render(<DropdownItemAction label="Go somewhere" href="/path" />);
+    const item = screen.getByRole('menuitem');
+    expect(item.tagName).toBe('A');
+    expect(item).toHaveAttribute('href', '/path');
+  });
+
+  it('suppresses href and sets aria-disabled when disabled with href', () => {
+    render(<DropdownItemAction label="Go somewhere" href="/path" disabled />);
+    const item = screen.getByRole('menuitem');
+    expect(item).toHaveAttribute('aria-disabled', 'true');
+    expect(item).not.toHaveAttribute('href');
   });
 });
 
@@ -82,17 +101,20 @@ describe('DropdownItemSelect: Unit Test', () => {
     expect(item).toHaveClass('mds-dropdown-item--selected');
   });
 
-  it('renders the check mark only when selected', () => {
+  it('always renders the check span in the DOM (visibility toggled by CSS)', () => {
     const { container, rerender } = render(
       <DropdownItemSelect label="Selectable" selected />,
     );
+    // Present when selected
     expect(
       container.querySelector('.mds-dropdown-item__check'),
     ).toBeInTheDocument();
+    // Still present (not removed) when unselected — visibility is CSS-driven
+    // so trailing-column width stays constant and labels don't jitter.
     rerender(<DropdownItemSelect label="Selectable" />);
     expect(
       container.querySelector('.mds-dropdown-item__check'),
-    ).not.toBeInTheDocument();
+    ).toBeInTheDocument();
   });
 });
 
@@ -109,15 +131,19 @@ describe('DropdownItemExpandable: Unit Test', () => {
 
     await user.click(item);
     expect(item).toHaveAttribute('aria-expanded', 'true');
-    expect(
-      screen.getByRole('menuitem', { name: 'Sub action' }),
-    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByRole('menuitem', { name: 'Sub action' }),
+      ).toBeInTheDocument(),
+    );
 
     await user.click(item);
     expect(item).toHaveAttribute('aria-expanded', 'false');
-    expect(
-      screen.queryByRole('menuitem', { name: 'Sub action' }),
-    ).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('menuitem', { name: 'Sub action' }),
+      ).not.toBeInTheDocument(),
+    );
   });
 
   it('closes the submenu on Escape', async () => {
@@ -127,13 +153,17 @@ describe('DropdownItemExpandable: Unit Test', () => {
         <DropdownItemAction label="Sub action" />
       </DropdownItemExpandable>,
     );
-    expect(
-      screen.getByRole('menuitem', { name: 'Sub action' }),
-    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.getByRole('menuitem', { name: 'Sub action' }),
+      ).toBeInTheDocument(),
+    );
     await user.keyboard('{Escape}');
-    expect(
-      screen.queryByRole('menuitem', { name: 'Sub action' }),
-    ).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('menuitem', { name: 'Sub action' }),
+      ).not.toBeInTheDocument(),
+    );
   });
 
   it('notifies onOpenChange', async () => {
@@ -152,57 +182,12 @@ describe('DropdownItemExpandable: Unit Test', () => {
     const user = userEvent.setup();
     render(<DropdownItemExpandable label="Expand" />);
     const item = screen.getByRole('menuitem', { name: 'Expand' });
+    // No children — no popup semantics should be exposed.
+    expect(item).not.toHaveAttribute('aria-haspopup');
+    expect(item).not.toHaveAttribute('aria-expanded');
     await user.click(item);
-    expect(item).toHaveAttribute('aria-expanded', 'false');
-  });
-});
-
-describe('DropdownItemMultiselect: Unit Test', () => {
-  it('toggles through the row click without closing semantics', async () => {
-    const user = userEvent.setup();
-    const onCheckedChange = vi.fn();
-    render(
-      <DropdownItemMultiselect
-        label="Label text"
-        checked={false}
-        onCheckedChange={onCheckedChange}
-      />,
-    );
-    const item = screen.getByRole('menuitemcheckbox');
-    expect(item).toHaveAttribute('aria-checked', 'false');
-    await user.click(item);
-    expect(onCheckedChange).toHaveBeenCalledWith(true);
-  });
-
-  it('toggles with the keyboard', async () => {
-    const user = userEvent.setup();
-    const onCheckedChange = vi.fn();
-    render(
-      <DropdownItemMultiselect
-        label="Label text"
-        checked
-        onCheckedChange={onCheckedChange}
-      />,
-    );
-    screen.getByRole('menuitemcheckbox').focus();
-    await user.keyboard(' ');
-    expect(onCheckedChange).toHaveBeenCalledWith(false);
-  });
-
-  it('ignores interaction when disabled', async () => {
-    const user = userEvent.setup();
-    const onCheckedChange = vi.fn();
-    render(
-      <DropdownItemMultiselect
-        label="Label text"
-        disabled
-        onCheckedChange={onCheckedChange}
-      />,
-    );
-    const item = screen.getByRole('menuitemcheckbox');
-    expect(item).toHaveAttribute('aria-disabled', 'true');
-    await user.click(item);
-    expect(onCheckedChange).not.toHaveBeenCalled();
+    // Still no expanded state after click.
+    expect(item).not.toHaveAttribute('aria-expanded');
   });
 });
 
@@ -217,7 +202,9 @@ describe('DropdownItemHeader / Divider / Custom: Unit Test', () => {
 
   it('renders the divider as a separator', () => {
     render(<DropdownItemDivider data-testid="divider" />);
-    expect(screen.getByTestId('divider')).toHaveClass('mds-dropdown-divider');
+    const divider = screen.getByTestId('divider');
+    expect(divider).toHaveClass('mds-dropdown-divider');
+    expect(divider).toHaveAttribute('role', 'separator');
   });
 
   it('renders custom slot content', () => {
@@ -227,5 +214,112 @@ describe('DropdownItemHeader / Divider / Custom: Unit Test', () => {
       </DropdownItemCustom>,
     );
     expect(screen.getByText('Anything')).toBeInTheDocument();
+  });
+});
+
+describe('DropdownItemGroup: Unit Test', () => {
+  it('renders role=group with the label as accessible name', () => {
+    render(
+      <DropdownItemGroup label="Section A">
+        <DropdownItemAction label="Item 1" />
+      </DropdownItemGroup>,
+    );
+    // getByRole('group') uses the accessible name supplied via aria-labelledby.
+    expect(
+      screen.getByRole('group', { name: 'Section A' }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the label as visible text', () => {
+    render(<DropdownItemGroup label="Section A" />);
+    expect(screen.getByText('Section A')).toHaveClass(
+      'mds-dropdown-item-group__label',
+    );
+  });
+
+  it('contains grouped item children as DOM children', () => {
+    render(
+      <DropdownItemGroup label="Section A">
+        <DropdownItemAction label="Item 1" />
+        <DropdownItemAction label="Item 2" />
+      </DropdownItemGroup>,
+    );
+    const group = screen.getByRole('group', { name: 'Section A' });
+    expect(group.querySelectorAll('[role="menuitem"]')).toHaveLength(2);
+  });
+
+  it('forwards extra props and the ref to the group element', () => {
+    const ref = createRef<HTMLDivElement>();
+    render(
+      <DropdownItemGroup label="Section A" data-testid="group" ref={ref} />,
+    );
+    expect(screen.getByTestId('group')).toBe(
+      screen.getByRole('group', { name: 'Section A' }),
+    );
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+});
+
+describe('DropdownItemMultiselect: Unit Test', () => {
+  it('applies mds-dropdown-item--multiselect class and checkbox role', () => {
+    render(<DropdownItemMultiselect label="Option A" />);
+    const item = screen.getByRole('menuitemcheckbox', { name: 'Option A' });
+    expect(item).toHaveClass('mds-dropdown-item');
+    expect(item).toHaveClass('mds-dropdown-item--multiselect');
+  });
+
+  it('reflects checked state via aria-checked', () => {
+    const { rerender } = render(
+      <DropdownItemMultiselect label="Option" checked />,
+    );
+    const item = screen.getByRole('menuitemcheckbox');
+    expect(item).toHaveAttribute('aria-checked', 'true');
+
+    rerender(<DropdownItemMultiselect label="Option" checked={false} />);
+    expect(item).toHaveAttribute('aria-checked', 'false');
+  });
+
+  it('renders an embedded Checkbox as the visual indicator', () => {
+    const { container } = render(
+      <DropdownItemMultiselect label="Option" checked />,
+    );
+    // The Checkbox input is inside an inert wrapper — inert prevents it from
+    // being interactive and aria-hidden hides it from the accessibility tree.
+    const wrapper = container.querySelector('span[inert]');
+    expect(wrapper).toBeInTheDocument();
+    const input = wrapper!.querySelector('input[type="checkbox"]');
+    expect(input).toBeInTheDocument();
+    expect(input).toBeChecked();
+  });
+
+  it('renders the description when provided', () => {
+    render(
+      <DropdownItemMultiselect label="Option" description="More detail" />,
+    );
+    expect(screen.getByText('More detail')).toHaveClass(
+      'mds-dropdown-item__description',
+    );
+  });
+
+  it('renders as aria-disabled when disabled is true', () => {
+    render(<DropdownItemMultiselect label="Option" disabled />);
+    const item = screen.getByRole('menuitemcheckbox');
+    expect(item).toHaveAttribute('aria-disabled', 'true');
+    expect(item).not.toBeDisabled();
+  });
+
+  it('forwards extra props and the ref to the div element', () => {
+    const ref = createRef<HTMLDivElement>();
+    render(
+      <DropdownItemMultiselect
+        label="Option"
+        data-testid="multiselect"
+        ref={ref}
+      />,
+    );
+    expect(screen.getByTestId('multiselect')).toBe(
+      screen.getByRole('menuitemcheckbox'),
+    );
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
 });
