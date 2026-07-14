@@ -23,6 +23,7 @@ Quick reference for AI agents and developers.
 | Pagination      | Page navigation control                                    | totalPages, currentPage, onPageChange, ariaLabel |
 | ProgressBar     | Visual progress indicator with status and label variants   | value, min, max, status, labelVariant, title     |
 | Radio           | Single-select options in a group                           | checked, label, disabled, invalid                |
+| Switch          | Binary toggle control for on/off settings                  | checked, label, disabled, onChange               |
 
 ## Component Links
 
@@ -52,6 +53,8 @@ Quick reference for AI agents and developers.
 - [ProgressBar stories](../../components/progress-bar/ProgressBar.stories.tsx)
 - [Radio implementation](../../components/radio/Radio.tsx)
 - [Radio stories](../../components/radio/Radio.stories.tsx)
+- [Switch implementation](../../components/switch/Switch.tsx)
+- [Switch stories](../../components/switch/Switch.stories.tsx)
 
 ## Working Rules
 
