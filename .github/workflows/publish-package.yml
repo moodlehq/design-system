@@ -20,9 +20,7 @@ jobs:
           node-version: 22.22.2
 
       - name: Install dependencies
-        run: |
-          npm install -g npm@latest
-          npm ci
+        run: npm ci
 
       - name: Audit dependencies
         run: npm audit --audit-level=high
