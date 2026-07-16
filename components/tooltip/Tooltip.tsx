@@ -69,10 +69,9 @@ export const Tooltip = ({
   className,
   ...props
 }: TooltipProps) => {
-  // Internal story/test hook: read via cast so it stays out of the public TooltipProps.
-  const dataForcedOpen = (props as Record<string, unknown>)[
-    'data-forced-open'
-  ] as string | undefined;
+  // Internal story/test hook: extract from rest props so it is not forwarded to the wrapper.
+  const { 'data-forced-open': dataForcedOpen, ...wrapperProps } =
+    props as TooltipProps & { 'data-forced-open'?: string };
   const [isOpen, setIsOpen] = useState(false);
   const isForcedOpen = dataForcedOpen !== undefined;
   const isTooltipOpen = isForcedOpen || isOpen;
@@ -125,7 +124,10 @@ export const Tooltip = ({
       shift({ padding: 8, limiter: limitShift() }),
       arrow({ element: arrowEl, padding: 4 }),
     ],
-    whileElementsMounted: autoUpdate,
+    // The isTooltipOpen guard ensures autoUpdate does not unnecessarily attach scroll and
+    // resize listeners to every tooltip on the page — even closed ones. FloatingPortal
+    // keeps the bubble in the DOM at all times, so both elements are always mounted.
+    whileElementsMounted: isTooltipOpen ? autoUpdate : undefined,
   });
 
   const { setReference, setFloating } = refs;
@@ -224,7 +226,7 @@ export const Tooltip = ({
       // consumer-side targeting (e.g. styling the trigger area per variant).
       // Variant-specific bubble styles live on mds-tooltip__bubble--{variant}.
       className={wrapperClassName}
-      {...props}
+      {...wrapperProps}
     >
       {trigger}
       <FloatingPortal>

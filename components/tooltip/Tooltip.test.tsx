@@ -6,31 +6,29 @@ import { Tooltip } from './Tooltip';
 
 describe('Tooltip: Unit Test', () => {
   describe('rendering', () => {
-    it('applies the mds-tooltip class to the host element', () => {
+    it('applies default host class, forwards props, and merges className', () => {
       const { container } = render(
-        <Tooltip label="Info">
+        <Tooltip label="Info" data-testid="my-tooltip" className="custom-class">
           <Button label="Trigger" />
         </Tooltip>,
       );
-      expect(container.firstChild).toHaveClass('mds-tooltip');
-    });
 
-    it('forwards extra props to the host element', () => {
-      const { container } = render(
-        <Tooltip label="Info" data-testid="my-tooltip">
-          <Button label="Trigger" />
-        </Tooltip>,
-      );
       expect(container.firstChild).toHaveAttribute('data-testid', 'my-tooltip');
+      expect(container.firstChild).toHaveClass('mds-tooltip', 'custom-class');
     });
 
-    it('merges a custom className with the default classes', () => {
+    it('keeps data-forced-open on the bubble, not on the wrapper', () => {
       const { container } = render(
-        <Tooltip label="Info" className="custom-class">
+        <Tooltip label="Info" data-forced-open="">
           <Button label="Trigger" />
         </Tooltip>,
       );
-      expect(container.firstChild).toHaveClass('mds-tooltip', 'custom-class');
+
+      const wrapper = container.firstChild as HTMLDivElement;
+      const tooltip = screen.getByRole('tooltip', { hidden: true });
+
+      expect(wrapper).not.toHaveAttribute('data-forced-open');
+      expect(tooltip).toHaveAttribute('data-forced-open', '');
     });
 
     it('renders the tooltip label text in the bubble', () => {
@@ -149,7 +147,7 @@ describe('Tooltip: Unit Test', () => {
       expect(tooltip).not.toHaveAttribute('data-open');
     });
 
-    it('opens on hover and closes on mouse leave', async () => {
+    it('opens on hover, gets positioned, and closes on mouse leave', async () => {
       const user = userEvent.setup();
       render(
         <Tooltip label="Info">
@@ -162,24 +160,10 @@ describe('Tooltip: Unit Test', () => {
 
       await user.hover(trigger);
       await waitFor(() => expect(tooltip).toHaveAttribute('data-open'));
+      await waitFor(() => expect(tooltip).toHaveAttribute('data-positioned'));
 
       await user.unhover(trigger);
       await waitFor(() => expect(tooltip).not.toHaveAttribute('data-open'));
-    });
-
-    it('sets data-positioned once Floating UI has computed a position', async () => {
-      const user = userEvent.setup();
-      render(
-        <Tooltip label="Info">
-          <Button label="Trigger" />
-        </Tooltip>,
-      );
-
-      const trigger = screen.getByRole('button', { name: 'Trigger' });
-      const tooltip = screen.getByRole('tooltip', { hidden: true });
-
-      await user.hover(trigger);
-      await waitFor(() => expect(tooltip).toHaveAttribute('data-positioned'));
     });
 
     it('opens on focus and closes when focus leaves the trigger', async () => {
@@ -206,7 +190,7 @@ describe('Tooltip: Unit Test', () => {
       await waitFor(() => expect(tooltip).not.toHaveAttribute('data-open'));
     });
 
-    it('dismisses on Escape key (WCAG 2.1 SC 1.4.13)', async () => {
+    it('dismisses on Escape key after opening (WCAG 2.1 SC 1.4.13)', async () => {
       const user = userEvent.setup();
       render(
         <Tooltip label="Info">
@@ -224,7 +208,7 @@ describe('Tooltip: Unit Test', () => {
       await waitFor(() => expect(tooltip).not.toHaveAttribute('data-open'));
     });
 
-    it('toggles open/closed on touch tap (touch device tap-to-toggle)', async () => {
+    it('supports touch tap toggle and outside-click dismissal', async () => {
       const user = userEvent.setup();
       render(
         <Tooltip label="Info">
@@ -242,20 +226,9 @@ describe('Tooltip: Unit Test', () => {
       // Second touch tap should close.
       await user.pointer({ keys: '[TouchA]', target: trigger });
       await waitFor(() => expect(tooltip).not.toHaveAttribute('data-open'));
-    });
 
-    it('dismisses on outside click when opened via tap', async () => {
-      const user = userEvent.setup();
-      render(
-        <Tooltip label="Info">
-          <Button label="Trigger" />
-        </Tooltip>,
-      );
-
-      const trigger = screen.getByRole('button', { name: 'Trigger' });
-      const tooltip = screen.getByRole('tooltip', { hidden: true });
-
-      await user.click(trigger);
+      // Re-open via touch and assert outside click dismissal.
+      await user.pointer({ keys: '[TouchA]', target: trigger });
       await waitFor(() => expect(tooltip).toHaveAttribute('data-open'));
 
       await user.click(document.body);
@@ -308,38 +281,49 @@ describe('Tooltip: Unit Test', () => {
   });
 
   describe('variant', () => {
-    it('applies the dark variant class to the bubble by default', () => {
-      render(
-        <Tooltip label="Info">
-          <Button label="Trigger" />
-        </Tooltip>,
-      );
-      expect(screen.getByRole('tooltip', { hidden: true })).toHaveClass(
-        'mds-tooltip__bubble--dark',
-      );
-    });
+    it('applies the expected bubble class for valid and invalid variants', () => {
+      const cases: Array<{
+        name: string;
+        variant?: 'light';
+        expectedClass:
+          'mds-tooltip__bubble--dark' | 'mds-tooltip__bubble--light';
+        unexpectedClass?: 'mds-tooltip__bubble--neon';
+      }> = [
+        {
+          name: 'default variant',
+          expectedClass: 'mds-tooltip__bubble--dark',
+        },
+        {
+          name: 'light variant',
+          variant: 'light',
+          expectedClass: 'mds-tooltip__bubble--light',
+        },
+      ];
 
-    it('applies the light variant class when variant="light"', () => {
-      render(
-        <Tooltip label="Info" variant="light">
-          <Button label="Trigger" />
-        </Tooltip>,
-      );
-      expect(screen.getByRole('tooltip', { hidden: true })).toHaveClass(
-        'mds-tooltip__bubble--light',
-      );
-    });
+      cases.forEach(({ name, variant, expectedClass, unexpectedClass }) => {
+        const { unmount } = render(
+          <Tooltip label="Info" variant={variant}>
+            <Button label="Trigger" />
+          </Tooltip>,
+        );
 
-    it('falls back to dark for an invalid variant value', () => {
+        const tooltip = screen.getByRole('tooltip', { hidden: true });
+        expect(tooltip, name).toHaveClass(expectedClass);
+        if (unexpectedClass) {
+          expect(tooltip, name).not.toHaveClass(unexpectedClass);
+        }
+        unmount();
+      });
+
       render(
         // @ts-expect-error deliberately invalid value
         <Tooltip label="Info" variant="neon">
           <Button label="Trigger" />
         </Tooltip>,
       );
-      const tooltip = screen.getByRole('tooltip', { hidden: true });
-      expect(tooltip).toHaveClass('mds-tooltip__bubble--dark');
-      expect(tooltip).not.toHaveClass('mds-tooltip__bubble--neon');
+      const invalidTooltip = screen.getByRole('tooltip', { hidden: true });
+      expect(invalidTooltip).toHaveClass('mds-tooltip__bubble--dark');
+      expect(invalidTooltip).not.toHaveClass('mds-tooltip__bubble--neon');
     });
   });
 });

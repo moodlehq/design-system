@@ -40,6 +40,11 @@ const meta = {
   },
   tags: ['autodocs', 'test', 'stable'],
   argTypes: {
+    children: {
+      table: {
+        disable: true,
+      },
+    },
     label: {
       control: { type: 'text' },
       description: 'Tooltip text. Must be a caller-supplied translated string.',
