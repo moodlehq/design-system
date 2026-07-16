@@ -43,6 +43,7 @@
   --mds-bg-feedback-primary-default: #{$mds-bg-feedback-primary-default};
   --mds-bg-feedback-primary-light: #{$mds-bg-feedback-primary-light};
   --mds-bg-feedback-primary-subtle: #{$mds-bg-feedback-primary-subtle};
+  --mds-bg-feedback-secondary-dark: #{$mds-bg-feedback-secondary-dark};
   --mds-bg-feedback-secondary-default: #{$mds-bg-feedback-secondary-default};
   --mds-bg-feedback-secondary-subtle: #{$mds-bg-feedback-secondary-subtle};
   --mds-bg-feedback-success-default: #{$mds-bg-feedback-success-default};
@@ -71,6 +72,12 @@
   --mds-bg-surface-default: #{$mds-bg-surface-default};
   --mds-bg-surface-strong: #{$mds-bg-surface-strong};
   --mds-bg-surface-subtle: #{$mds-bg-surface-subtle};
+  --mds-bg-switch-thumb-default: #{$mds-bg-switch-thumb-default};
+  --mds-bg-switch-thumb-disabled: #{$mds-bg-switch-thumb-disabled};
+  --mds-bg-switch-thumb-hover: #{$mds-bg-switch-thumb-hover};
+  --mds-bg-switch-track-default: #{$mds-bg-switch-track-default};
+  --mds-bg-switch-track-disabled: #{$mds-bg-switch-track-disabled};
+  --mds-bg-switch-track-hover: #{$mds-bg-switch-track-hover};
   --mds-border-default: #{$mds-border-default};
   --mds-border-feedback-danger: #{$mds-border-feedback-danger};
   --mds-border-feedback-info: #{$mds-border-feedback-info};
@@ -304,6 +311,7 @@
   --mds-spacing-xs: #{$mds-spacing-xs};
   --mds-spacing-xxl: #{$mds-spacing-xxl};
   --mds-spacing-xxs: #{$mds-spacing-xxs};
+  --mds-switch-track-padding: #{$mds-switch-track-padding};
   --mds-font-family-base: #{$mds-font-family-base};
   --mds-font-family-code: #{$mds-font-family-code};
   --mds-font-size-displays-1: #{$mds-font-size-displays-1};

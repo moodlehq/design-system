@@ -36,5 +36,11 @@
       "$type": "number",
       "$value": "{scale.100}"
     }
+  },
+  "switch": {
+    "track-padding": {
+      "$type": "number",
+      "$value": "{scale.50}"
+    }
   }
 }
