@@ -76,6 +76,7 @@ This repository follows these standards:
 ### Prerequisites
 
 - Node.js v22.22.1 or higher
+- TypeScript 5.0 or higher is required for consumers that type-check this package.
 - npm
 - Git
 
