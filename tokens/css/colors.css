@@ -26,6 +26,7 @@
   --mds-bg-feedback-primary-default: var(--mds-color-blue-500);
   --mds-bg-feedback-primary-light: var(--mds-color-blue-50);
   --mds-bg-feedback-primary-subtle: var(--mds-color-blue-100);
+  --mds-bg-feedback-secondary-dark: var(--mds-color-gray-800);
   --mds-bg-feedback-secondary-default: var(--mds-color-gray-300);
   --mds-bg-feedback-secondary-subtle: var(--mds-color-gray-100);
   --mds-bg-feedback-success-default: var(--mds-color-green-500);
