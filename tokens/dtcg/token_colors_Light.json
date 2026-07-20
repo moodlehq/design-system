@@ -116,6 +116,10 @@
         }
       },
       "secondary": {
+        "dark": {
+          "$type": "color",
+          "$value": "{color.gray.800}"
+        },
         "default": {
           "$type": "color",
           "$value": "{color.gray.300}"
@@ -244,6 +248,36 @@
       "subtle": {
         "$type": "color",
         "$value": "{color.gray.100}"
+      }
+    },
+    "switch": {
+      "thumb": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.gray.700}"
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{color.gray.500}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.gray.700}"
+        }
+      },
+      "track": {
+        "default": {
+          "$type": "color",
+          "$value": "{color.gray.300}"
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{color.gray.200}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{color.gray.400}"
+        }
       }
     }
   },

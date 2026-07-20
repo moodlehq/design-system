@@ -12,4 +12,5 @@
   --mds-spacing-xs: var(--mds-scale-300);
   --mds-spacing-xxl: var(--mds-scale-1200);
   --mds-spacing-xxs: var(--mds-scale-100);
+  --mds-switch-track-padding: var(--mds-scale-50);
 }
