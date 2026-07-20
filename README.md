@@ -107,6 +107,19 @@ import '@moodlehq/design-system/css';
 import { Button } from '@moodlehq/design-system/components/button';
 ```
 
+### Bootstrap Compatibility
+
+MDS couples to Bootstrap **CSS class names** in component JSX and styles.
+This package does **not** import or depend on Bootstrap JavaScript at runtime.
+
+Install a Bootstrap version compatible with your MDS release line:
+
+| MDS release line | Supported Bootstrap version |
+| ---------------- | --------------------------- |
+| 5.x              | 5.3.x                       |
+
+Bootstrap major upgrades that rename or remove CSS classes (for example, `5.x` to `6.x`) require a corresponding MDS major version bump.
+
 ### Fonts
 
 The recommended typeface for Moodle Design System is **[Noto Sans](https://fonts.google.com/specimen/Noto+Sans)**. The package does not bundle font files. Provide Noto Sans in your application:
