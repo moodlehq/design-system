@@ -381,6 +381,30 @@ export const HideLabelFallback: Story = {
 };
 
 /**
+ * When the label text wraps to multiple lines, the radio indicator stays pinned to the
+ * top and aligns with the first line — matching the checkbox behaviour.
+ */
+export const WrappedLabel: Story = {
+  render: (args) => (
+    <div style={{ width: '14rem' }}>
+      <Radio {...args} />
+    </div>
+  ),
+  args: {
+    name: 'contact-wrapped',
+    label:
+      'Select this option so the label wraps naturally when the available viewport width is too small for a single line',
+  },
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole('radio', {
+        name: 'Select this option so the label wraps naturally when the available viewport width is too small for a single line',
+      }),
+    ).toBeVisible();
+  },
+} satisfies Story;
+
+/**
  * Keyboard interaction: Tab to focus the input, then Space to select it.
  */
 export const KeyboardInteraction: Story = {

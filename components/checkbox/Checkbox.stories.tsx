@@ -259,6 +259,39 @@ export const SupportingText: Story = {
   },
 };
 
+export const WrappedLabel: Story = {
+  render: (args) => (
+    <div style={{ width: '14rem' }}>
+      <Checkbox {...args} />
+    </div>
+  ),
+  args: {
+    required: true,
+    label:
+      'Remember this setting so the label wraps naturally when the available viewport width is too small for a single line',
+    supportingText:
+      'This helper text should also wrap cleanly when the viewport is narrow.',
+  },
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole('checkbox', {
+        name: 'Remember this setting so the label wraps naturally when the available viewport width is too small for a single line',
+      }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByText(
+        'Remember this setting so the label wraps naturally when the available viewport width is too small for a single line',
+      ),
+    ).toBeVisible();
+    await expect(
+      canvas.getByText(
+        'This helper text should also wrap cleanly when the viewport is narrow.',
+      ),
+    ).toBeVisible();
+    await expect(canvas.getByText('*')).toBeVisible();
+  },
+} satisfies Story;
+
 export const Indeterminate: Story = {
   args: {
     indeterminate: true,

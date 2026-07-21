@@ -143,6 +143,26 @@ describe('Checkbox: Unit Test', () => {
       expect(screen.getByText('Helper copy')).toBeInTheDocument();
     });
 
+    it('renders supporting text when disabled, even if invalid feedback is also provided', () => {
+      render(
+        <Checkbox
+          id="disabled-supporting-checkbox"
+          label="Option"
+          disabled
+          supportingText="Helper copy"
+          invalid
+          invalidFeedback="Required"
+        />,
+      );
+
+      expect(screen.getByText('Helper copy')).toBeInTheDocument();
+      expect(screen.queryByText('Required')).not.toBeInTheDocument();
+      expect(screen.getByRole('checkbox')).toHaveAttribute(
+        'aria-describedby',
+        'disabled-supporting-checkbox-feedback',
+      );
+    });
+
     it('sets aria-describedby to supporting text when no invalid feedback is active', () => {
       render(
         <Checkbox
@@ -236,6 +256,17 @@ describe('Checkbox: Unit Test', () => {
       expect(screen.getByRole('checkbox')).toHaveAttribute(
         'aria-describedby',
         'test-checkbox-feedback',
+      );
+    });
+
+    it('does not render invalid feedback when disabled', () => {
+      render(
+        <Checkbox label="Option" disabled invalid invalidFeedback="Required" />,
+      );
+
+      expect(screen.queryByText('Required')).not.toBeInTheDocument();
+      expect(screen.getByRole('checkbox')).not.toHaveAttribute(
+        'aria-describedby',
       );
     });
 

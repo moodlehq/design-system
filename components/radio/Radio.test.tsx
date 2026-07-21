@@ -6,9 +6,9 @@ import { fuzzComponent } from '../../tests/utils/fuzzComponent';
 import { type RadioProps, Radio } from './Radio';
 
 describe('Radio: Unit Test', () => {
-  it('applies mds-form-check class to the root wrapper element', () => {
+  it('applies mds-radio class to the root wrapper element', () => {
     const { container } = render(<Radio label="Option" />);
-    expect(container.firstChild).toHaveClass('mds-form-check');
+    expect(container.firstChild).toHaveClass('mds-radio');
   });
 
   it('applies form-check class to the wrapper when hideLabel is false', () => {
@@ -21,9 +21,9 @@ describe('Radio: Unit Test', () => {
     expect(container.firstChild).not.toHaveClass('form-check');
   });
 
-  it('applies mds-form-check-input class to the input', () => {
+  it('applies mds-radio-input class to the input', () => {
     render(<Radio label="Option" />);
-    expect(screen.getByRole('radio')).toHaveClass('mds-form-check-input');
+    expect(screen.getByRole('radio')).toHaveClass('mds-radio-input');
   });
 
   it('renders the label text', () => {
@@ -224,9 +224,9 @@ describe('Radio: Unit Test', () => {
       vi.restoreAllMocks();
     });
 
-    it('applies mds-form-check class to the wrapper even when hideLabel is true', () => {
+    it('applies mds-radio class to the wrapper even when hideLabel is true', () => {
       const { container } = render(<Radio label="Option" hideLabel />);
-      expect(container.firstChild).toHaveClass('mds-form-check');
+      expect(container.firstChild).toHaveClass('mds-radio');
     });
   });
 

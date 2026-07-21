@@ -30,6 +30,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       className,
       label,
       hideLabel = false,
+      disabled,
       ...props
     }: RadioProps,
     ref,
@@ -64,10 +65,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
         );
       }
     }
+
     // Build the class list for the radio wrapper div. mds-form-check is always applied
     // as a stable hook for consumers; form-check and layout classes are added only when
     // the label is visible (Bootstrap label/feedback styling and grid layout).
-    const classes = ['mds-form-check'];
+    const classes = ['mds-radio'];
     if (!hideLabel) {
       classes.push('form-check');
     }
@@ -81,36 +83,38 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
     // Link the input to its feedback text so screen readers announce the error message.
     // The ID is only generated when feedback will actually be rendered.
     const feedbackId =
-      invalidFeedback && !hideLabel && invalid ? `${id}-feedback` : undefined;
+      invalidFeedback && !hideLabel && invalid && !disabled
+        ? `${id}-feedback`
+        : undefined;
 
     return (
       <div className={classes.join(' ')}>
-        <input
-          className={[
-            'mds-form-check-input',
-            'form-check-input',
-            isInvalid ? 'is-invalid' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          type="radio"
-          ref={ref}
-          {...props}
-          aria-invalid={isInvalid ? true : undefined}
-          aria-label={ariaLabel}
-          aria-describedby={feedbackId}
-          id={id} // Ensure we use the generated ID if no ID is provided, so the label can be properly associated with the input for accessibility.
-        />
+        <div className="mds-radio-input-wrapper">
+          <input
+            className={[
+              'mds-radio-input',
+              'form-check-input',
+              isInvalid ? 'is-invalid' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            type="radio"
+            ref={ref}
+            {...props}
+            disabled={disabled}
+            aria-invalid={isInvalid ? true : undefined}
+            aria-label={ariaLabel}
+            aria-describedby={feedbackId}
+            id={id} // Ensure we use the generated ID if no ID is provided, so the label can be properly associated with the input for accessibility.
+          />
+        </div>
         {!hideLabel && (
-          <label className="mds-form-check-label form-check-label" htmlFor={id}>
+          <label className="mds-radio-label form-check-label" htmlFor={id}>
             {label}
           </label>
         )}
         {feedbackId && (
-          <div
-            id={feedbackId}
-            className="mds-form-check-feedback invalid-feedback"
-          >
+          <div id={feedbackId} className="mds-radio-feedback invalid-feedback">
             {invalidFeedback}
           </div>
         )}
