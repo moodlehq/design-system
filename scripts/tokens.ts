@@ -20,9 +20,13 @@ const tokenFiles = fs
   .readdirSync('tokens/dtcg')
   .filter((file) => file.endsWith('.json'));
 
+const generatedTokenDirectories = ['tokens/css', 'tokens/scss'];
+
 /**
  * Custom formatter: css/aggregator
  * Aggregator to create a single CSS file that imports all other generated CSS files.
+ * Retained to support future multi-mode token exports (e.g. dark mode) without script changes.
+ * See: MDSJPD-3 — https://moodle.atlassian.net/jira/polaris/projects/MDSJPD/ideas/view/11860439
  */
 StyleDictionary.registerFormat({
   name: 'css/aggregator',
@@ -38,6 +42,8 @@ StyleDictionary.registerFormat({
 /**
  * Custom formatter: scss/aggregator
  * Aggregator to create a single SCSS file that imports all other generated SCSS files.
+ * Retained to support future multi-mode token exports (e.g. dark mode) without script changes.
+ * See: MDSJPD-3 — https://moodle.atlassian.net/jira/polaris/projects/MDSJPD/ideas/view/11860439
  */
 StyleDictionary.registerFormat({
   name: 'scss/aggregator',
@@ -115,6 +121,27 @@ StyleDictionary.registerTransform({
 });
 
 /**
+ * Custom transform: name/strip-top-level
+ * Removes the first path segment from token names but keeps the mds prefix.
+ */
+StyleDictionary.registerTransform({
+  name: 'name/strip-top-level',
+  type: 'name',
+  transform: (token) => {
+    const [, ...rest] = token.path;
+    const relevantPath = rest.length > 0 ? rest : token.path;
+
+    const normalizedName = relevantPath
+      .join('-')
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .toLowerCase();
+
+    return `mds-${normalizedName}`;
+  },
+});
+
+/**
  * Custom file header: mdsTokensFileHeader
  * Purpose is to customise the content of the file header.
  * While the formatting must remain to be handled by Style Dictionary due to configuration limitations,
@@ -129,6 +156,8 @@ StyleDictionary.registerFileHeader({
 /**
  * Build Style Dictionary
  */
+cleanGeneratedTokenDirectories(generatedTokenDirectories);
+
 new StyleDictionary({
   log: {
     warnings: 'disabled', // Suppress warnings about filtered references
@@ -137,7 +166,7 @@ new StyleDictionary({
   platforms: {
     css: {
       transformGroup: 'css',
-      transforms: ['dimension-px-to-rem'],
+      transforms: ['name/strip-top-level', 'dimension-px-to-rem'],
       prefix: 'mds',
       buildPath: 'tokens/css',
       files: [
@@ -164,7 +193,7 @@ new StyleDictionary({
     },
     scss: {
       transformGroup: 'scss',
-      transforms: ['dimension-px-to-rem'],
+      transforms: ['name/strip-top-level', 'dimension-px-to-rem'],
       prefix: 'mds',
       buildPath: 'tokens/scss',
       files: [
@@ -174,6 +203,7 @@ new StyleDictionary({
           filter: (token: TransformedToken) =>
             token.filePath.endsWith(fileName),
           options: {
+            outputReferences: true,
             fileHeader: 'mdsTokensFileHeader',
             themeable: true,
           },
@@ -212,6 +242,13 @@ new StyleDictionary({
   },
 }).buildAllPlatforms();
 
+function cleanGeneratedTokenDirectories(directories: string[]) {
+  directories.forEach((directory) => {
+    fs.rmSync(directory, { recursive: true, force: true });
+    fs.mkdirSync(directory, { recursive: true });
+  });
+}
+
 /**
  * Helper function to convert JSON file name to a target file name (CSS/SCSS).
  * @param jsonFileName
@@ -224,9 +261,15 @@ function convertJsonFileName(
   prefix: string,
   extension: string,
 ) {
-  return jsonFileName
-    .replace(/^.*_(.+?)_.*\.json$/, `${prefix}$1.${extension}`)
+  const normalizedName = jsonFileName
+    .replace(/\.tokens\.json$/i, '')
+    .replace(/\.json$/i, '')
+    .replace(/^defaultmode[_-]?/i, '')
+    .replace(/[^a-zA-Z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
     .toLowerCase();
+
+  return `${prefix}${normalizedName}.${extension}`;
 }
 /**
  * Helper function to get file header comment.
