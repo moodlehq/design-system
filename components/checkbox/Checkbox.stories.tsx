@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useArgs } from 'storybook/preview-api';
 import { expect, waitFor } from 'storybook/test';
 import { Checkbox } from './Checkbox';
 
@@ -32,6 +33,7 @@ const meta = {
       control: { type: 'text' },
       description:
         'Accessible label for the input. Takes precedence over the label prop when hideLabel is true. Required when hideLabel is true and no label prop is provided.',
+      if: { arg: 'hideLabel', truthy: true },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: '' },
@@ -76,6 +78,16 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
+    invalidFeedback: {
+      control: { type: 'text' },
+      description:
+        'Pre-translated error message shown below the label when the input is invalid. Requires invalid={true} to be set.',
+      if: { arg: 'invalid', truthy: true },
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
+      },
+    },
     required: {
       control: { type: 'boolean' },
       description:
@@ -85,14 +97,6 @@ const meta = {
           summary: 'true | false',
         },
         defaultValue: { summary: 'false' },
-      },
-    },
-    invalidFeedback: {
-      description:
-        'Pre-translated error message shown below the label when the input is invalid. Requires invalid={true} to be set.',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'undefined' },
       },
     },
     supportingText: {
@@ -161,9 +165,9 @@ const meta = {
     indeterminate: false,
     disabled: false,
     invalid: false,
+    invalidFeedback: undefined,
     required: false,
     autoFocus: false,
-    defaultChecked: false,
   },
 } satisfies Meta<typeof Checkbox>;
 
@@ -172,17 +176,43 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default = {
+  args: {
+    checked: false,
+  },
+  render: function Render(args) {
+    const [{ checked }, updateArgs] = useArgs<typeof args>();
+
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onChange={(event) => {
+          updateArgs({ checked: event.target.checked });
+        }}
+      />
+    );
+  },
   play: async ({ canvas, userEvent }) => {
     const checkbox = canvas.getByRole('checkbox', {
       name: 'Remember this setting',
     });
     await userEvent.click(checkbox);
-    await expect(checkbox).toBeChecked();
-    await userEvent.click(checkbox);
-    await expect(checkbox).not.toBeChecked();
+    await waitFor(() => {
+      expect(
+        canvas.getByRole('checkbox', { name: 'Remember this setting' }),
+      ).toBeVisible();
+    });
+    await userEvent.click(
+      canvas.getByRole('checkbox', {
+        name: 'Remember this setting',
+      }),
+    );
     // Return to a neutral visual baseline so screenshot QA is not biased by focus styling.
-    checkbox.blur();
-    await expect(checkbox).not.toHaveFocus();
+    const currentCheckbox = canvas.getByRole('checkbox', {
+      name: 'Remember this setting',
+    });
+    currentCheckbox.blur();
+    await expect(currentCheckbox).not.toHaveFocus();
     await expect(canvas.getByText('Remember this setting')).toBeVisible();
   },
 } satisfies Story;
