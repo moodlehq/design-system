@@ -182,7 +182,7 @@ For components built on a Bootstrap base class (e.g. `btn`): include the Bootstr
 
 For components not built on Bootstrap: the `mds-*` hook is still required; omit Bootstrap classes entirely.
 
-**Apply an `mds-*` hook class to every element that has component-scoped CSS rules**, not just the root. This allows consumers and the CSS to target any element directly without relying on descendant selectors alone. For example, a component with a wrapper, an input, a label, and a feedback element should apply `mds-form-check`, `mds-form-check-input`, `mds-form-check-label`, and `mds-form-check-feedback` respectively. Bootstrap classes are applied alongside the `mds-*` hooks where needed for base styling.
+**Apply an `mds-*` hook class to every element that has component-scoped CSS rules**, not just the root. This allows consumers and the CSS to target any element directly without relying on descendant selectors alone. For example, a component with a wrapper, an input, a label, and a feedback element should apply `mds-radio`, `mds-radio-input`, `mds-radio-label`, and `mds-radio-feedback` respectively. Bootstrap classes are applied alongside the `mds-*` hooks where needed for base styling.
 
 ```tsx
 // Example: component with Bootstrap base

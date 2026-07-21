@@ -66,7 +66,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       }
     }
 
-    // Build the class list for the radio wrapper div. mds-form-check is always applied
+    // Build the class list for the radio wrapper div. mds-radio is always applied
     // as a stable hook for consumers; form-check and layout classes are added only when
     // the label is visible (Bootstrap label/feedback styling and grid layout).
     const classes = ['mds-radio'];

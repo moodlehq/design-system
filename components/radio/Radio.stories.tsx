@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
+import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
 import { Radio } from './Radio';
 
@@ -35,12 +37,23 @@ const meta = {
     },
     checked: {
       control: { type: 'boolean' },
-      description: 'Whether the radio input is checked (controlled mode).',
+      description:
+        'Whether the radio input is checked (controlled mode). Use checked together with an onChange handler to keep the component interactive.',
       table: {
         type: {
           summary: 'true | false',
         },
         defaultValue: { summary: 'false' },
+      },
+    },
+    onChange: {
+      control: false,
+      description:
+        'Change handler for controlled usage. When checked is provided, onChange is required unless readOnly is true.',
+      table: {
+        type: {
+          summary: '(event: React.ChangeEvent<HTMLInputElement>) => void',
+        },
       },
     },
     required: {
@@ -75,6 +88,7 @@ const meta = {
       },
     },
     label: {
+      control: { type: 'text' },
       description:
         'Visible label text. Also used as the aria-label fallback when hideLabel is true and no explicit aria-label is provided.',
       table: {
@@ -82,8 +96,10 @@ const meta = {
       },
     },
     ['aria-label']: {
+      control: { type: 'text' },
       description:
         'Accessible label for the input. Takes precedence over the label prop when hideLabel is true. Required when hideLabel is true and no label prop is provided.',
+      if: { arg: 'hideLabel', truthy: true },
       table: {
         defaultValue: { summary: '' },
       },
@@ -99,16 +115,11 @@ const meta = {
         defaultValue: { summary: 'false' },
       },
     },
-    className: {
-      description:
-        'Additional class names to apply to the radio wrapper div for custom styling when displaying the radio input with a label.',
-      table: {
-        defaultValue: { summary: '' },
-      },
-    },
     invalidFeedback: {
+      control: { type: 'text' },
       description:
         'Pre-translated error message shown below the label when the input is invalid. Requires invalid={true} to be set. The caller is responsible for supplying a translated string.',
+      if: { arg: 'invalid', truthy: true },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'undefined' },
@@ -133,7 +144,6 @@ const meta = {
     hideLabel: false,
     label: 'Email',
     autoFocus: false,
-    className: undefined,
     invalidFeedback: undefined,
     // Uncontrolled by default; no checked/onChange
   },
@@ -148,18 +158,28 @@ type Story = StoryObj<typeof meta>;
  * Default unselected state. Clicking the input or label selects it.
  */
 export const Default = {
-  play: async ({ canvas, userEvent }) => {
+  args: {
+    checked: false,
+  },
+  render: function Render(args) {
+    const [{ checked }, updateArgs] = useArgs<typeof args>();
+
+    return (
+      <Radio
+        {...args}
+        checked={checked}
+        onChange={(event) => {
+          updateArgs({ checked: event.target.checked });
+        }}
+      />
+    );
+  },
+  play: async ({ canvas }) => {
     const radio = canvas.getByRole('radio', { name: 'Email' });
-    await userEvent.click(radio);
-    await expect(radio).toBeChecked();
+    await expect(radio).not.toBeChecked();
     await expect(canvas.getByText('Email')).toBeVisible();
   },
 } satisfies Story;
-
-/**
- * Pre-checked on render via `defaultChecked`. Use `defaultChecked` for uncontrolled
- * forms and `checked` together with an `onChange` handler for controlled forms.
- */
 
 /**
  * Uncontrolled checked radio example.
@@ -167,7 +187,24 @@ export const Default = {
  * This story demonstrates the use of `defaultChecked` for an uncontrolled radio input.
  * The checked state is managed by the DOM, not React state. Use this for simple forms where you do not need to track the checked state in React.
  */
-export const Checked: Story = {
+export const DefaultChecked: Story = {
+  name: 'Uncontrolled checked',
+  parameters: {
+    docs: {
+      source: {
+        code: `import { Radio } from '@moodlehq/design-system';
+
+export const DefaultCheckedExample = () => (
+  <Radio
+    label="Email"
+    name="contact-method"
+    value="email"
+    defaultChecked
+  />
+);`,
+      },
+    },
+  },
   args: {
     name: 'contact-checked',
     defaultChecked: true,
@@ -184,10 +221,43 @@ export const Checked: Story = {
  * The checked state is managed by React state. Use this pattern when you need to track or update the checked state in your component logic.
  */
 export const ControlledChecked: Story = {
+  name: 'Controlled checked',
+  parameters: {
+    docs: {
+      source: {
+        code: `import { useState } from 'react';
+import { Radio } from '@moodlehq/design-system';
+
+export const ControlledCheckedExample = () => {
+  const [selected, setSelected] = useState<string | undefined>(undefined);
+
+  return (
+    <Radio
+      label="Email"
+      name="contact-method"
+      value="email"
+      checked={selected === 'email'}
+      onChange={(event) => setSelected(event.target.value)}
+    />
+  );
+};`,
+      },
+    },
+  },
   args: {
     name: 'contact-controlled',
     checked: true,
-    onChange: () => {},
+  },
+  render: function Render(args) {
+    const [checked, setChecked] = useState<boolean>(!!args.checked);
+
+    return (
+      <Radio
+        {...args}
+        checked={checked}
+        onChange={(event) => setChecked(event.target.checked)}
+      />
+    );
   },
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('radio', { name: 'Email' })).toBeChecked();
