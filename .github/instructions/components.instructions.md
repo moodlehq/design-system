@@ -324,9 +324,7 @@ All MDS components must use `outline` + `outline-offset` for focus rings — **n
 }
 .mds-component:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
-  outline-offset: var(
-    --mds-stroke-weight-sm
-  ); /* replace with --mds-focus-ring-offset once token is created */
+  outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
 }
 ```
@@ -336,7 +334,7 @@ For components with an error/invalid state, use the danger border token for the 
 ```css
 .mds-component.is-invalid:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-border-feedback-danger);
-  outline-offset: var(--mds-stroke-weight-sm);
+  outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
 }
 ```
@@ -346,4 +344,3 @@ For components with an error/invalid state, use the danger border token for the 
 - Do not use `box-shadow` or `border` to implement focus rings. The double-layer shadow pattern (`0 0 0 Xpx surface-colour, 0 0 0 Ypx focus-colour`) is Bootstrap's approach and must not be reintroduced. Figma handoff data may also suggest border-based focus rings — these must not be used.
 - Do not suppress `outline` on `:focus-visible` — setting `outline: none` on this selector removes the ring entirely.
 - The `box-shadow: none` reset on `:focus-visible` is required to neutralise any Bootstrap shadow that may be applied by the `:focus` cascade.
-- Once `--mds-focus-ring-offset` is added to the token library, replace all interim `var(--mds-stroke-weight-sm)` usages in `outline-offset` with it.

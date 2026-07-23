@@ -1,4 +1,4 @@
-/* Use [class] to match Bootstrap selector strength. */
+/* Use [class] to outrank Bootstrap selectors like .form-check .form-check-input */
 .mds-checkbox[class] {
   display: inline-grid;
   grid-template-columns: auto auto;
@@ -20,9 +20,8 @@
   border-radius: var(--mds-border-radius-xs);
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-secondary-default);
-}
-
-.mds-checkbox[class] .mds-checkbox-input {
+  /* Disable Bootstrap's state transitions to avoid a one-frame focus colour flash. */
+  transition: none;
   /* Bootstrap applies float/offset styles to .form-check-input for indented label layouts.
      Match selector specificity and reset float/margins for the grid-based sibling layout. */
   margin: 0;
@@ -154,10 +153,6 @@
   line-height: var(--mds-line-height-paragraph-xs);
 }
 
-.mds-checkbox[class] .mds-checkbox-feedback.mds-checkbox-supporting-text {
-  margin: 0;
-}
-
 .mds-checkbox[class] .invalid-feedback {
   color: var(--mds-text-danger);
 }
@@ -165,6 +160,7 @@
 /* In the default state supporting text is subtle. In the invalid state use danger to match
    the label colour \u2014 matching Figma where the label container sets the colour for both. */
 .mds-checkbox[class] .mds-checkbox-feedback.mds-checkbox-supporting-text {
+  margin: 0;
   color: var(--mds-text-subtle);
 }
 
