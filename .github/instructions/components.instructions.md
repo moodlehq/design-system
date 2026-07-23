@@ -261,6 +261,71 @@ const feedbackId = invalid && invalidFeedback ? `${id}-feedback` : undefined;
 )}
 ```
 
+## Overlay / portaled component pattern
+
+Components that open a floating surface (menus, dropdowns, tooltips, popovers) must use [`@floating-ui/react`](https://floating-ui.com/docs/react) for positioning, portal rendering, and keyboard interaction. Do not reimplement these manually.
+
+### Required hooks and wrappers
+
+| Concern                                                 | Hook / wrapper                                                               |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Floating position + auto-update                         | `useFloating` + `autoUpdate` with `flip()`, `shift()`, `offset()` middleware |
+| Portal (avoids overflow clipping)                       | `FloatingPortal` wrapping the menu surface                                   |
+| Focus trapping inside the surface                       | `FloatingFocusManager` wrapping the menu content                             |
+| List registration (enables arrow-key nav and typeahead) | `FloatingList` on the menu, `useListItem` in each item                       |
+| Open/close on trigger click                             | `useClick`                                                                   |
+| Close on outside click or Escape                        | `useDismiss`                                                                 |
+| Arrow-key navigation                                    | `useListNavigation` with a `listRef` and `activeIndex` state                 |
+| Character typeahead                                     | `useTypeahead` with a `listContentRef` (array of item labels)                |
+| Merge all interaction prop getters                      | `useInteractions`                                                            |
+
+Use `useInteractions` to merge `getReferenceProps`, `getFloatingProps`, and `getItemProps` before spreading onto the trigger, menu surface, and items respectively.
+
+### Context for nested surfaces
+
+When a component owns a floating context that its children need (e.g. items need `getItemProps` and `activeIndex`), export a React context from the orchestrating component. Name it `<ComponentName>Context` and export a `use<ComponentName>Context` hook that returns a safe passthrough fallback when called outside the provider — this allows items to work in isolation in unit tests and standalone stories without throwing.
+
+```tsx
+// Provide in the orchestrating component (e.g. Dropdown)
+export const DropdownContext = createContext<DropdownContextValue | null>(null);
+
+const fallbackCtx: DropdownContextValue = {
+  getItemProps: (p) => (p as Record<string, unknown>) ?? {},
+  activeIndex: null,
+};
+
+export function useDropdownContext(): DropdownContextValue {
+  return useContext(DropdownContext) ?? fallbackCtx;
+}
+```
+
+For nested floating surfaces (e.g. an expandable item that opens a submenu), create a second independent `useFloating` + `useListNavigation` instance inside the item. Use the exported context to re-provide a new `DropdownContext` value scoped to the submenu's own `getItemProps` and `activeIndex`. Both the parent menu and submenus use `FloatingPortal` to avoid clipping at any nesting level.
+
+### Keyboard interaction requirements
+
+Any component using `useListNavigation` must satisfy the WAI-ARIA `menu` keyboard contract:
+
+- **Arrow Up / Down** — move focus between items (handled by `useListNavigation`).
+- **Home / End** — jump to first / last item (set `loop: false` unless the design calls for wraparound).
+- **Character keys** — focus the nearest matching item (handled by `useTypeahead`).
+- **Escape** — close the menu and return focus to the trigger (handled by `useDismiss`).
+- **Enter / Space** — activate the focused item (default button/anchor behaviour; no extra wiring needed).
+- **Right Arrow / Left Arrow** — for expandable items that open a submenu: Right opens the submenu and moves focus into it; Left closes the submenu and returns focus to the parent trigger item. Wire this in the item's `onKeyDown` handler.
+
+### Placement prop convention
+
+Floating components that accept a `placement` prop must type it as `Placement` imported from `@floating-ui/react` (re-export from `@floating-ui/core`). Always apply `flip()` and `shift()` middleware so the surface repositions automatically when it would overflow the viewport.
+
+```tsx
+import type { Placement } from '@floating-ui/react';
+
+interface DropdownItemExpandableProps {
+  /** Floating UI placement for the submenu. Defaults to 'right-start'.
+   *  flip() and shift() are applied, so edge-constrained submenus reposition automatically. */
+  placement?: Placement;
+}
+```
+
 ## Agent guardrails
 
 **Do not remove or rename exports from `components/index.tsx`.** Every named export is part of the public API — removing one is a breaking change with no compile-time error in the library build (story/test files are excluded from `tsconfig.json`). Only add exports; never remove or rename without an explicit breaking-change task.

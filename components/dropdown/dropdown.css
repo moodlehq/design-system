@@ -1,0 +1,405 @@
+/*
+ * Dropdown — trigger, menu panel, and item rows.
+ * Figma: "Dropdown" component set (file MvAObVzHaB9QZ5JGaP8sO2).
+ *
+ * The trigger reuses button.css / nav-pill.css via shared classes; rules here
+ * only add what the Dropdown needs on top (chevron, open state, menu, items).
+ * Depends on button.css and nav-pill.css being loaded (both are part of
+ * components/index.css, which precedes this file).
+ */
+
+/* ------------------------------------------------------------------ */
+/* Trigger                                                             */
+/* ------------------------------------------------------------------ */
+
+/* Chevron — masked so the glyph follows the trigger's text color across
+   hover/active/disabled states. md triggers use the 12×8 glyph.
+   Always points downward (no rotation). */
+.mds-dropdown-trigger__chevron {
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: var(--mds-icons-xs);
+  block-size: var(--mds-icons-xxs);
+  background-color: currentColor;
+  mask-image: url('./assets/dropdown-chevron-down.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url('./assets/dropdown-chevron-down.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* sm and nav-pill triggers use the 8×8 glyph. */
+.mds-dropdown-trigger__chevron--sm {
+  inline-size: var(--mds-icons-xxs);
+  mask-image: url('./assets/dropdown-chevron-down-sm.svg');
+  -webkit-mask-image: url('./assets/dropdown-chevron-down-sm.svg');
+}
+
+/* Open (Figma State=active): filled appearances keep the active fill and gain
+   a 1px inside ring. The inset box-shadow is a pressed-state ring, not a
+   focus ring — focus rings remain outline-based per the focus ring pattern. */
+.mds-dropdown-trigger--open.mds-btn.btn.btn-secondary,
+.mds-dropdown-trigger--open.mds-btn.btn.btn-ghost {
+  background-color: var(--mds-bg-interactive-secondary-active);
+  color: var(--mds-text-subtle);
+  box-shadow: inset 0 0 0 var(--mds-stroke-weight-sm)
+    var(--mds-border-interactive-secondary-active);
+}
+
+/* Open outlined appearance: solid dark fill with inverse text. */
+.mds-dropdown-trigger--open.mds-btn.btn.btn-outline-secondary {
+  border-color: var(--mds-border-interactive-secondary-active);
+  background-color: var(--mds-border-interactive-secondary-active);
+  color: var(--mds-text-inverse);
+}
+
+/* nav-pill trigger renders a <button>; nav-pill.css already resets border and
+   background for the class, so only layout inherited from Bootstrap's button
+   normalisation needs neutralising. */
+.mds-dropdown-trigger--nav-pill {
+  font-family: var(--mds-font-family-base);
+}
+
+.mds-dropdown-trigger--open.mds-nav-pill {
+  background-color: var(--mds-bg-nav-pill-pressed);
+}
+
+/* ------------------------------------------------------------------ */
+/* Menu panel                                                          */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+  align-items: stretch;
+  min-inline-size: 13.5625rem; /* 217px per Figma; grows with content */
+  padding: var(--mds-spacing-xxs);
+  background-color: var(--mds-bg-surface-default);
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
+  border-radius: var(--mds-border-radius-md);
+  overflow: clip;
+}
+
+/* ------------------------------------------------------------------ */
+/* Item rows — shared chrome                                           */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-item {
+  display: flex;
+  gap: var(--mds-spacing-xs);
+  align-items: center;
+  inline-size: 100%;
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+  border: none;
+  border-radius: var(--mds-border-radius-xs);
+  background: none;
+  margin: 0;
+  text-align: start;
+  cursor: pointer;
+  font-family: var(--mds-font-family-base);
+  color: var(--mds-text-subtle);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.mds-dropdown-item:disabled,
+.mds-dropdown-item[aria-disabled='true'] {
+  cursor: default;
+  pointer-events: none;
+  color: var(--mds-text-muted);
+}
+
+/* Rows with a description top-align their content. */
+.mds-dropdown-item--with-description {
+  align-items: flex-start;
+}
+
+.mds-dropdown-item:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.mds-dropdown-item:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(
+    --mds-stroke-weight-sm
+  ); /* replace with --mds-focus-ring-offset once token is created */
+  box-shadow: none;
+}
+
+.mds-dropdown-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mds-dropdown-item__icon i,
+.mds-dropdown-item__icon svg {
+  inline-size: var(--mds-icons-xs);
+  block-size: var(--mds-icons-xs);
+  font-size: var(--mds-icons-xs);
+  line-height: 1;
+}
+
+.mds-dropdown-item__label-wrap {
+  display: flex;
+  flex: 1 0 0;
+  min-inline-size: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.mds-dropdown-item--with-description .mds-dropdown-item__label-wrap {
+  gap: var(--mds-spacing-xs);
+}
+
+.mds-dropdown-item__label {
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-xs);
+  white-space: nowrap;
+}
+
+.mds-dropdown-item__description {
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-small);
+  color: var(--mds-text-muted);
+  white-space: normal;
+}
+
+/* Figma: on hover (and disabled) the description matches the row color. */
+.mds-dropdown-item:hover .mds-dropdown-item__description,
+.mds-dropdown-item:disabled .mds-dropdown-item__description,
+.mds-dropdown-item[aria-disabled='true'] .mds-dropdown-item__description {
+  color: inherit;
+}
+
+/* ------------------------------------------------------------------ */
+/* Action item                                                         */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-item--action:hover:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item--action:active:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item--action.mds-dropdown-item--danger {
+  color: var(--mds-text-danger);
+}
+
+.mds-dropdown-item--action.mds-dropdown-item--danger:hover:not(:disabled) {
+  background-color: var(--mds-bg-interactive-danger-default-light);
+}
+
+.mds-dropdown-item--action.mds-dropdown-item--danger:active:not(:disabled) {
+  background-color: var(--mds-bg-interactive-danger-default-light);
+}
+
+.mds-dropdown-item--action.mds-dropdown-item--danger:disabled,
+.mds-dropdown-item--action.mds-dropdown-item--danger[aria-disabled='true'] {
+  color: var(--mds-text-danger-disabled);
+}
+
+.mds-dropdown-item--action.mds-dropdown-item--danger:focus-visible {
+  outline-color: var(--mds-focus-danger);
+}
+
+/* ------------------------------------------------------------------ */
+/* Select item                                                         */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-item--select:hover:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item--select:active:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item--select.mds-dropdown-item--selected {
+  background-color: var(--mds-bg-surface-subtle);
+}
+
+/* Hover wins over the selected fill, matching the Figma state matrix. */
+.mds-dropdown-item--select.mds-dropdown-item--selected:hover:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+/* Check mark — Figma color/theme/primary; text-link token carries the same
+   semantic primary color for glyph-on-surface use. */
+.mds-dropdown-item__check {
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: var(--mds-icons-xs);
+  block-size: var(--mds-icons-xxs);
+  background-color: var(--mds-text-link-primary-default);
+  mask-image: url('./assets/dropdown-check.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url('./assets/dropdown-check.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* Check is always in the DOM to preserve trailing-column width across
+   selection state changes. Hide it visually when the row is unselected. */
+.mds-dropdown-item--select:not(.mds-dropdown-item--selected)
+  .mds-dropdown-item__check {
+  visibility: hidden;
+}
+
+.mds-dropdown-item:disabled .mds-dropdown-item__check,
+.mds-dropdown-item[aria-disabled='true'] .mds-dropdown-item__check {
+  background-color: var(--mds-text-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Expandable item                                                     */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-item--expandable:hover:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item--expandable:active:not(:disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item__chevron-right {
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: var(--mds-icons-xxs);
+  block-size: var(--mds-icons-xs);
+  background-color: var(--mds-text-subtle);
+  mask-image: url('./assets/dropdown-chevron-right.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url('./assets/dropdown-chevron-right.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* Mirror the submenu chevron under RTL so it keeps pointing towards the
+   inline-end where the submenu opens. */
+[dir='rtl'] .mds-dropdown-item__chevron-right {
+  transform: scaleX(-1);
+}
+
+/* Disabled expandable row: mute the chevron to match the label color. */
+.mds-dropdown-item[aria-disabled='true'] .mds-dropdown-item__chevron-right {
+  background-color: var(--mds-text-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Header item                                                         */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-item--header {
+  cursor: default;
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-dropdown-item--header .mds-dropdown-item__label {
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+  color: var(--mds-text-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Divider                                                             */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-divider {
+  inline-size: 100%;
+  block-size: var(--mds-stroke-weight-sm);
+  background-color: var(--mds-border-default);
+  border-radius: var(--mds-border-radius-pill);
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Multiselect item                                                    */
+/* ------------------------------------------------------------------ */
+
+/* Figma: py=4px, px=8px — the embedded Checkbox's HitArea adds its own
+   4px internal padding so the effective visual height matches other rows. */
+.mds-dropdown-item--multiselect {
+  padding: var(--mds-spacing-xxs) var(--mds-spacing-xs);
+}
+
+.mds-dropdown-item--multiselect:hover:not([aria-disabled='true']) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-dropdown-item--multiselect:active:not([aria-disabled='true']) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+/* The inert wrapper span for the Checkbox visual indicator — remove from
+   layout flow so the Checkbox's own form-check structure sits inline. */
+.mds-dropdown-item__checkbox {
+  display: contents;
+}
+
+/* ------------------------------------------------------------------ */
+/* Custom item (slot)                                                  */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown-item--custom {
+  cursor: default;
+}
+
+.mds-dropdown-item__slot {
+  flex: 1 0 0;
+  min-inline-size: 0;
+}
+
+/* ------------------------------------------------------------------ */
+
+/* Group wrapper                                                       */
+/* ------------------------------------------------------------------ */
+
+/* display:contents removes the wrapper from layout flow so the menu
+   panel's gap applies uniformly across group labels and items. */
+.mds-dropdown-item-group {
+  display: contents;
+}
+
+/* Styled to match DropdownItemHeader visually. */
+.mds-dropdown-item-group__label {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+  color: var(--mds-text-muted);
+  line-height: var(--mds-line-height-paragraph-xs);
+  box-sizing: border-box;
+  cursor: default;
+}
+
+/* ------------------------------------------------------------------ */
+/* Composed Dropdown                                                   */
+/* ------------------------------------------------------------------ */
+
+.mds-dropdown {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* No position:relative needed — the menu is portaled via FloatingPortal */
+}

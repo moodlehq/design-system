@@ -17,6 +17,7 @@ Quick reference for AI agents and developers.
 | Checkbox        | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
 | Choicebox       | Single-select options in a group                           | checked, label, disabled, invalid                |
 | CloseButton     | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
+| Dropdown        | Trigger + menu of action/select/expandable/checkbox items  | label, variant, appearance, size, open, children |
 | FavouriteButton | Icon button to mark/unmark items as favourites             | checked, size, disabled, ariaLabel               |
 | Link            | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
 | NavPill         | Compact pill-style navigation link for section switching   | label, active, disabled, href, ariaLabel         |
@@ -40,6 +41,8 @@ Quick reference for AI agents and developers.
 - [Choicebox stories](../../components/choicebox/Choicebox.stories.tsx)
 - [CloseButton implementation](../../components/close-button/CloseButton.tsx)
 - [CloseButton stories](../../components/close-button/CloseButton.stories.tsx)
+- [Dropdown implementation](../../components/dropdown/Dropdown.tsx)
+- [Dropdown stories](../../components/dropdown/Dropdown.stories.tsx)
 - [FavouriteButton implementation](../../components/favourite-button/FavouriteButton.tsx)
 - [FavouriteButton stories](../../components/favourite-button/FavouriteButton.stories.tsx)
 - [Link implementation](../../components/link/Link.tsx)

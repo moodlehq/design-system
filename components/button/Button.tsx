@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactElement } from 'react';
 import { forwardRef, isValidElement } from 'react';
 
-type ButtonVariant =
+export type ButtonVariant =
   | 'primary'
   | 'secondary'
   | 'danger'
@@ -88,11 +88,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           `[MDS Button] Invalid size "${size}". Falling back to "md". Allowed: ${allowedSizes.join(', ')}`,
         );
       }
-      if (resolvedStartIcon && resolvedEndIcon) {
-        console.warn(
-          'Button: pass either startIcon or endIcon, not both. Rendering startIcon only.',
-        );
-      }
       if (!label && !resolvedStartIcon && !resolvedEndIcon) {
         console.warn(
           'Button: provide a label or icon so the button does not render as visually empty.',
@@ -120,7 +115,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <>
           {resolvedStartIcon}
           {label}
-          {resolvedStartIcon ? null : resolvedEndIcon}
+          {resolvedEndIcon}
         </>
       </button>
     );
