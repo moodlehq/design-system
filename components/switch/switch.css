@@ -1,0 +1,239 @@
+.mds-switch {
+  display: flex;
+  align-self: start;
+}
+
+.mds-switch-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+  cursor: pointer;
+}
+
+.mds-switch--label-start .mds-switch-control {
+  flex-direction: row-reverse;
+}
+
+.mds-switch-label {
+  color: var(--mds-text-default);
+  user-select: none;
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-xs);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+.mds-switch-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mds-switch-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--mds-spacing-xxs);
+  inline-size: 40px; /* Figma Fixed indicator frame width. */
+  flex-shrink: 0;
+}
+
+.mds-switch-focus-ring {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  border-radius: var(--mds-border-radius-pill);
+}
+
+.mds-switch-track {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: var(--mds-switch-track-padding);
+  border-radius: var(--mds-border-radius-pill);
+  background-color: var(--mds-bg-switch-track-default);
+  color: var(--mds-bg-switch-track-default);
+  transition:
+    background-color 0.15s linear,
+    color 0.15s linear;
+}
+
+.mds-switch-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 14px; /* Figma Fixed thumb size. */
+  block-size: 14px; /* Figma Fixed thumb size. */
+  border-radius: var(--mds-border-radius-pill);
+  background-color: var(--mds-bg-switch-thumb-default);
+  transform: translateX(0);
+  transition:
+    background-color 0.15s linear,
+    transform 0.15s cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+.mds-switch-icon {
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.mds-switch-icon-item {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: block;
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  /* auto uses the SVG's declared width/height rather than scaling to fill */
+  mask-size: auto;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: auto;
+  transition: opacity 0.15s linear;
+}
+
+.mds-switch-icon-item--checked {
+  opacity: 0;
+}
+
+.mds-switch--variant-enablement .mds-switch-icon-item--unchecked {
+  inline-size: 6px; /* Figma fixed SVG bounds. */
+  block-size: 6px; /* Figma fixed SVG bounds. */
+  mask-image: url('./assets/switch-x.svg');
+  -webkit-mask-image: url('./assets/switch-x.svg');
+}
+
+.mds-switch--variant-enablement .mds-switch-icon-item--checked {
+  inline-size: 9px; /* Figma fixed SVG bounds. */
+  block-size: 6px; /* Figma fixed SVG bounds. */
+  mask-image: url('./assets/switch-check.svg');
+  -webkit-mask-image: url('./assets/switch-check.svg');
+}
+
+.mds-switch--variant-visibility .mds-switch-icon-item--unchecked {
+  inline-size: 10px; /* Figma fixed SVG bounds. */
+  block-size: 8px; /* Figma fixed SVG bounds. */
+  mask-image: url('./assets/switch-eye-slash.svg');
+  -webkit-mask-image: url('./assets/switch-eye-slash.svg');
+}
+
+.mds-switch--variant-visibility .mds-switch-icon-item--checked {
+  inline-size: 9px; /* Figma fixed SVG bounds. */
+  block-size: 7px; /* Figma fixed SVG bounds. */
+  mask-image: url('./assets/switch-eye.svg');
+  -webkit-mask-image: url('./assets/switch-eye.svg');
+}
+
+.mds-switch--variant-lock .mds-switch-icon-item--unchecked {
+  inline-size: 9px; /* Figma fixed SVG bounds. */
+  block-size: 8px; /* Figma fixed SVG bounds. */
+  mask-image: url('./assets/switch-lock-open.svg');
+  -webkit-mask-image: url('./assets/switch-lock-open.svg');
+}
+
+.mds-switch--variant-lock .mds-switch-icon-item--checked {
+  inline-size: 7px; /* Figma fixed SVG bounds. */
+  block-size: 8px; /* Figma fixed SVG bounds. */
+  mask-image: url('./assets/switch-lock.svg');
+  -webkit-mask-image: url('./assets/switch-lock.svg');
+}
+
+.mds-switch-input:not(:disabled) + .mds-switch-control:hover .mds-switch-track {
+  background-color: var(--mds-bg-switch-track-hover);
+  color: var(--mds-bg-switch-track-hover);
+}
+
+.mds-switch-input:not(:disabled) + .mds-switch-control:hover .mds-switch-thumb {
+  background-color: var(--mds-bg-switch-thumb-hover);
+}
+
+.mds-switch-input:checked + .mds-switch-control .mds-switch-track {
+  background-color: var(--mds-bg-interactive-primary-default);
+  color: var(--mds-bg-interactive-primary-default);
+}
+
+.mds-switch-input:checked + .mds-switch-control .mds-switch-thumb {
+  /* 14px travel matches the fixed thumb width and Figma track geometry. */
+  transform: translateX(14px);
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+/* RTL: checked state still moves toward inline-end, which is left in RTL contexts. */
+[dir='rtl'] .mds-switch-input:checked + .mds-switch-control .mds-switch-thumb,
+:dir(rtl) .mds-switch-input:checked + .mds-switch-control .mds-switch-thumb {
+  /* Mirror the same 14px travel toward inline-end in RTL. */
+  transform: translateX(-14px);
+}
+
+.mds-switch-input:checked + .mds-switch-control:hover .mds-switch-track {
+  background-color: var(--mds-bg-interactive-primary-hover);
+  color: var(--mds-bg-interactive-primary-hover);
+}
+
+/* Override the generic hover thumb rule — checked+hover thumb stays light blue */
+.mds-switch-input:checked:not(:disabled)
+  + .mds-switch-control:hover
+  .mds-switch-thumb {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-switch-input:checked
+  + .mds-switch-control
+  .mds-switch-icon-item--unchecked {
+  opacity: 0;
+}
+
+.mds-switch-input:checked + .mds-switch-control .mds-switch-icon-item--checked {
+  opacity: 1;
+}
+
+.mds-switch-input:disabled + .mds-switch-control {
+  cursor: not-allowed;
+}
+
+.mds-switch-input:disabled + .mds-switch-control .mds-switch-label {
+  color: var(--mds-text-muted);
+}
+
+.mds-switch-input:disabled + .mds-switch-control .mds-switch-track {
+  background-color: var(--mds-bg-switch-track-disabled);
+  color: var(--mds-bg-switch-track-disabled);
+}
+
+.mds-switch-input:disabled + .mds-switch-control .mds-switch-thumb {
+  background-color: var(--mds-bg-switch-thumb-disabled);
+}
+
+.mds-switch-input:checked:disabled + .mds-switch-control .mds-switch-track {
+  background-color: var(--mds-bg-interactive-primary-disabled);
+  color: var(--mds-bg-interactive-primary-disabled);
+}
+
+.mds-switch-input:checked:disabled + .mds-switch-control .mds-switch-thumb {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+.mds-switch-input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.mds-switch-input:focus-visible + .mds-switch-control .mds-switch-focus-ring {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(--mds-spacing-offset);
+  box-shadow: none;
+}
