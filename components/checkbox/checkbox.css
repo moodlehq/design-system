@@ -1,4 +1,5 @@
-.mds-checkbox {
+/* Use [class] to outrank Bootstrap selectors like .form-check .form-check-input */
+.mds-checkbox[class] {
   display: inline-grid;
   grid-template-columns: auto auto;
   align-items: center;
@@ -15,13 +16,12 @@
   letter-spacing: var(--mds-letter-spacing-default);
 }
 
-.mds-checkbox-input {
+.mds-checkbox[class] .mds-checkbox-input {
   border-radius: var(--mds-border-radius-xs);
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-secondary-default);
-}
-
-.mds-checkbox .mds-checkbox-input {
+  /* Disable Bootstrap's state transitions to avoid a one-frame focus colour flash. */
+  transition: none;
   /* Bootstrap applies float/offset styles to .form-check-input for indented label layouts.
      Match selector specificity and reset float/margins for the grid-based sibling layout. */
   margin: 0;
@@ -29,61 +29,61 @@
   background-color: var(--mds-bg-surface-default);
 }
 
-.mds-checkbox-input:checked {
+.mds-checkbox[class] .mds-checkbox-input:checked {
   background-color: var(--mds-bg-interactive-primary-default);
   border-color: transparent;
 }
 
-.mds-checkbox-input:indeterminate {
+.mds-checkbox[class] .mds-checkbox-input:indeterminate {
   background-color: var(--mds-bg-interactive-primary-default);
   border-color: transparent;
 }
 
-.mds-checkbox-input:disabled {
+.mds-checkbox[class] .mds-checkbox-input:disabled {
   border-color: var(--mds-border-interactive-secondary-disabled);
 }
 
-.mds-checkbox-input:disabled:checked {
+.mds-checkbox[class] .mds-checkbox-input:disabled:checked {
   background-color: var(--mds-bg-interactive-primary-disabled);
   border-color: transparent;
 }
 
-.mds-checkbox-input:disabled:indeterminate {
+.mds-checkbox[class] .mds-checkbox-input:disabled:indeterminate {
   background-color: var(--mds-bg-interactive-primary-disabled);
   border-color: transparent;
 }
 
-.mds-checkbox-input.is-invalid {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid {
   border-color: var(--mds-border-interactive-danger-default);
 }
 
-.mds-checkbox-input.is-invalid:checked {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:checked {
   background-color: var(--mds-bg-interactive-danger-default);
   border-color: transparent;
 }
 
-.mds-checkbox-input.is-invalid:indeterminate {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:indeterminate {
   background-color: var(--mds-bg-interactive-danger-default);
   border-color: transparent;
 }
 
-.mds-checkbox-input.is-invalid:disabled {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:disabled {
   background-color: var(--mds-bg-interactive-secondary-disabled);
   border-color: var(--mds-border-interactive-secondary-disabled);
 }
 
-.mds-checkbox-input.is-invalid:disabled:checked {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:disabled:checked {
   background-color: var(--mds-bg-interactive-primary-disabled);
   border-color: transparent;
 }
 
-.mds-checkbox-input.is-invalid:disabled:indeterminate {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:disabled:indeterminate {
   background-color: var(--mds-bg-interactive-primary-disabled);
   border-color: transparent;
 }
 
-.mds-checkbox-input:focus,
-.mds-checkbox-input.is-invalid:focus {
+.mds-checkbox[class] .mds-checkbox-input:focus,
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:focus {
   /* Reset Bootstrap's :focus box-shadow; our ring is applied on :focus-visible only */
   box-shadow: none;
   outline: none;
@@ -91,28 +91,29 @@
 
 /* Bootstrap also sets border-color on :focus. Restore the correct border for each state,
    excluding checked/indeterminate which keep their transparent border. */
-.mds-checkbox-input:focus:not(:checked):not(:indeterminate) {
+.mds-checkbox[class]
+  .mds-checkbox-input:focus:not(:checked):not(:indeterminate) {
   border-color: var(--mds-border-interactive-secondary-default);
 }
 
-.mds-checkbox-input.is-invalid:focus:not(:checked):not(:indeterminate) {
+.mds-checkbox[class]
+  .mds-checkbox-input.is-invalid:focus:not(:checked):not(:indeterminate) {
   border-color: var(--mds-border-interactive-danger-default);
 }
 
-.mds-checkbox-input:focus-visible {
+.mds-checkbox[class] .mds-checkbox-input:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
   outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
 }
 
-.mds-checkbox-input.is-invalid:focus-visible {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-border-feedback-danger);
   outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
 }
 
-.mds-checkbox .form-check-label,
-.mds-checkbox .mds-checkbox-label {
+.mds-checkbox[class] .mds-checkbox-label {
   display: flex;
   align-items: center;
   /* In the radio-style sibling layout, the checkbox should align to the label text line,
@@ -121,61 +122,54 @@
   color: var(--mds-text-default);
 }
 
-.mds-checkbox .mds-checkbox-label-text {
+.mds-checkbox[class] .mds-checkbox-label-text {
   min-width: 0;
 }
 
-.mds-checkbox .mds-checkbox-input:disabled ~ .form-check-label,
-.mds-checkbox .mds-checkbox-input:disabled ~ .mds-checkbox-label {
+.mds-checkbox[class] .mds-checkbox-input:disabled ~ .mds-checkbox-label {
   color: var(--mds-text-muted);
 }
 
-.mds-checkbox .mds-checkbox-input.is-invalid ~ .form-check-label,
-.mds-checkbox .mds-checkbox-input.is-invalid ~ .mds-checkbox-label {
+.mds-checkbox[class] .mds-checkbox-input.is-invalid ~ .mds-checkbox-label {
   color: var(--mds-text-danger);
 }
 
 /* Disabled takes precedence over invalid — restore muted colour when both are active. */
-.mds-checkbox .mds-checkbox-input.is-invalid:disabled ~ .form-check-label,
-.mds-checkbox .mds-checkbox-input.is-invalid:disabled ~ .mds-checkbox-label {
+.mds-checkbox[class]
+  .mds-checkbox-input.is-invalid:disabled
+  ~ .mds-checkbox-label {
   color: var(--mds-text-muted);
 }
 
-.mds-checkbox-required {
+.mds-checkbox[class] .mds-checkbox-required {
   color: var(--mds-text-danger);
   margin-inline-start: var(--mds-spacing-xxs);
 }
 
-.mds-checkbox .invalid-feedback,
-.mds-checkbox .mds-checkbox-feedback {
+.mds-checkbox[class] .mds-checkbox-feedback {
   grid-column: 2;
   font-size: var(--mds-font-size-paragraph-small);
   font-weight: var(--mds-font-weight-medium);
   line-height: var(--mds-line-height-paragraph-xs);
 }
 
-.mds-checkbox .invalid-feedback,
-.mds-checkbox .mds-checkbox-feedback.mds-checkbox-supporting-text {
-  margin: 0;
-}
-
-.mds-checkbox .invalid-feedback {
+.mds-checkbox[class] .invalid-feedback {
   color: var(--mds-text-danger);
 }
 
 /* In the default state supporting text is subtle. In the invalid state use danger to match
    the label colour \u2014 matching Figma where the label container sets the colour for both. */
-.mds-checkbox .mds-checkbox-feedback.mds-checkbox-supporting-text {
+.mds-checkbox[class] .mds-checkbox-feedback.mds-checkbox-supporting-text {
+  margin: 0;
   color: var(--mds-text-subtle);
 }
 
-.mds-checkbox
+.mds-checkbox[class]
   .mds-checkbox-input.is-invalid
   ~ .mds-checkbox-feedback.mds-checkbox-supporting-text {
   color: var(--mds-text-danger);
 }
 
-.mds-checkbox .mds-checkbox-input:disabled ~ .invalid-feedback,
-.mds-checkbox .mds-checkbox-input:disabled ~ .mds-checkbox-feedback {
+.mds-checkbox[class] .mds-checkbox-input:disabled ~ .mds-checkbox-feedback {
   opacity: 0.5;
 }

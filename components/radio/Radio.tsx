@@ -64,10 +64,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
         );
       }
     }
+
     // Build the class list for the radio wrapper div. mds-form-check is always applied
     // as a stable hook for consumers; form-check and layout classes are added only when
     // the label is visible (Bootstrap label/feedback styling and grid layout).
-    const classes = ['mds-form-check'];
+    const classes = ['mds-radio'];
     if (!hideLabel) {
       classes.push('form-check');
     }
@@ -87,7 +88,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       <div className={classes.join(' ')}>
         <input
           className={[
-            'mds-form-check-input',
+            'mds-radio-input',
             'form-check-input',
             isInvalid ? 'is-invalid' : '',
           ]
@@ -102,15 +103,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
           id={id} // Ensure we use the generated ID if no ID is provided, so the label can be properly associated with the input for accessibility.
         />
         {!hideLabel && (
-          <label className="mds-form-check-label form-check-label" htmlFor={id}>
+          <label className="mds-radio-label form-check-label" htmlFor={id}>
             {label}
           </label>
         )}
         {feedbackId && (
-          <div
-            id={feedbackId}
-            className="mds-form-check-feedback invalid-feedback"
-          >
+          <div id={feedbackId} className="mds-radio-feedback invalid-feedback">
             {invalidFeedback}
           </div>
         )}

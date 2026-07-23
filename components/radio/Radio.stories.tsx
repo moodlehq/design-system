@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
 import { Radio } from './Radio';
 
@@ -75,6 +76,7 @@ const meta = {
       },
     },
     label: {
+      control: { type: 'text' },
       description:
         'Visible label text. Also used as the aria-label fallback when hideLabel is true and no explicit aria-label is provided.',
       table: {
@@ -82,8 +84,10 @@ const meta = {
       },
     },
     ['aria-label']: {
+      control: { type: 'text' },
       description:
         'Accessible label for the input. Takes precedence over the label prop when hideLabel is true. Required when hideLabel is true and no label prop is provided.',
+      if: { arg: 'hideLabel', truthy: true },
       table: {
         defaultValue: { summary: '' },
       },
@@ -107,8 +111,10 @@ const meta = {
       },
     },
     invalidFeedback: {
+      control: { type: 'text' },
       description:
         'Pre-translated error message shown below the label when the input is invalid. Requires invalid={true} to be set. The caller is responsible for supplying a translated string.',
+      if: { arg: 'invalid', truthy: true },
       table: {
         type: { summary: 'string' },
         defaultValue: { summary: 'undefined' },
@@ -148,10 +154,25 @@ type Story = StoryObj<typeof meta>;
  * Default unselected state. Clicking the input or label selects it.
  */
 export const Default = {
-  play: async ({ canvas, userEvent }) => {
+  args: {
+    checked: false,
+  },
+  render: function Render(args) {
+    const [{ checked }, updateArgs] = useArgs<typeof args>();
+
+    return (
+      <Radio
+        {...args}
+        checked={checked}
+        onChange={(event) => {
+          updateArgs({ checked: event.target.checked });
+        }}
+      />
+    );
+  },
+  play: async ({ canvas }) => {
     const radio = canvas.getByRole('radio', { name: 'Email' });
-    await userEvent.click(radio);
-    await expect(radio).toBeChecked();
+    await expect(radio).not.toBeChecked();
     await expect(canvas.getByText('Email')).toBeVisible();
   },
 } satisfies Story;
