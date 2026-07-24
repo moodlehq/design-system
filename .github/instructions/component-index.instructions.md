@@ -13,6 +13,7 @@ Quick reference for AI agents and developers.
 | ActivityIcon    | Activity/resource/file icon with semantic category styling                                | icon, category, size, container                  |
 | Avatar          | Circular user/entity identity display — photo or initials                                 | type, size, initials, imageSrc, imageAlt         |
 | Badge           | Short status, metadata, or count labels                                                   | type, contrast, style, icon, label               |
+| Breadcrumb      | Hierarchical page trail with truncation and overflow support                              | items, ariaLabel, overflowAriaLabel              |
 | Button          | Primary and secondary actions                                                             | variant, size, disabled, startIcon, endIcon      |
 | Checkbox        | Independent multi-select controls                                                         | checked, label, disabled, invalid, indeterminate |
 | Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text)      | checked, label, disabled, invalid                |
@@ -50,6 +51,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [ActivityIcon stories](../../components/activity-icon/ActivityIcon.stories.tsx)
 - [Avatar implementation](../../components/avatar/Avatar.tsx)
 - [Avatar stories](../../components/avatar/Avatar.stories.tsx)
+- [Breadcrumb implementation](../../components/breadcrumb/Breadcrumb.tsx)
+- [Breadcrumb stories](../../components/breadcrumb/Breadcrumb.stories.tsx)
 - [Badge implementation](../../components/badge/Badge.tsx)
 - [Badge stories](../../components/badge/Badge.stories.tsx)
 - [Button implementation](../../components/button/Button.tsx)

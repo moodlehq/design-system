@@ -124,6 +124,8 @@ const PURPOSES: Record<string, string> = {
     'Activity/resource/file icon with semantic category styling.',
   avatar: 'Circular user/entity identity display — photo or initials.',
   badge: 'Short status, metadata, or count labels.',
+  breadcrumb:
+    'Hierarchical navigation path with optional truncation and overflow support.',
   button: 'Primary and secondary actions.',
   checkbox:
     'Independent multi-select controls. No group wrapper is provided — see the Group story for consumer-supplied layout.',
