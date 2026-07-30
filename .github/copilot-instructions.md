@@ -109,7 +109,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 
 - Commits must follow [Conventional Commits](https://www.conventionalcommits.org/).
 - Allowed types: `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `style`.
-- Subject must use sentence-case.
+- Scope and subject must use sentence-case: `feat(Button): Add icon support`.
 
 ## Guardrails
 
