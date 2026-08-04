@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.2.0](https://github.com/moodlehq/design-system/compare/design-system-v5.1.2...design-system-v5.2.0) (2026-08-04)
+
+
+### Features
+
+* **Tokens:** Add new tokens for Tooltip and Switch component ([#293](https://github.com/moodlehq/design-system/issues/293)) ([f9b8d79](https://github.com/moodlehq/design-system/commit/f9b8d7963ae9572354bf9296da9ab2d9272ba0f2))
+* **Tokens:** Provide Noto Sans JP font token for consumers ([#301](https://github.com/moodlehq/design-system/issues/301)) ([c6e41b7](https://github.com/moodlehq/design-system/commit/c6e41b7bc47144377ff834a1eea2a8c7f451de26))
+
+
+### Bug Fixes
+
+* **Typescript:** Add optional TypeScript peer dependency ([#292](https://github.com/moodlehq/design-system/issues/292)) ([4a71341](https://github.com/moodlehq/design-system/commit/4a71341ecc87f829e16e74af481ab0ab9645394b))
+
 ## [5.1.2](https://github.com/moodlehq/design-system/compare/design-system-v5.1.1...design-system-v5.1.2) (2026-07-09)
 
 
