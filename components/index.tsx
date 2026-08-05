@@ -37,5 +37,8 @@ export type { ProgressBarProps } from './progress-bar';
 export { Radio } from './radio';
 export type { RadioProps } from './radio';
 
+export { Switch } from './switch';
+export type { SwitchProps } from './switch';
+
 export { Tooltip } from './tooltip';
 export type { TooltipProps } from './tooltip';
