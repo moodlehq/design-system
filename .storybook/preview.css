@@ -31,7 +31,7 @@
 /* All components — default focus ring */
 .mds-btn.btn.pseudo-focus-visible,
 .mds-checkbox-input.pseudo-focus-visible,
-.mds-form-check-input.pseudo-focus-visible,
+.mds-radio-input.pseudo-focus-visible,
 .mds-pagination__button.pseudo-focus-visible:not(:disabled),
 .mds-pagination__page.pseudo-focus-visible:not(:disabled) {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
@@ -55,6 +55,6 @@
 
 /* Checkbox / radio invalid — outline color override */
 .mds-checkbox-input.is-invalid.pseudo-focus-visible,
-.mds-form-check-input.is-invalid.pseudo-focus-visible {
+.mds-radio-input.is-invalid.pseudo-focus-visible {
   outline-color: var(--mds-border-feedback-danger);
 }

@@ -17,15 +17,15 @@ export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   /** Marks the input as invalid: applies danger border/label colour and sets aria-invalid.
    *  Independent of invalidFeedback — invalid styling can be shown without a message. */
   invalid?: boolean;
+  /** Pre-translated error message rendered below the label. Requires invalid={true} and
+   *  hideLabel={false} to be displayed. */
+  invalidFeedback?: string;
   /** Renders the checkbox in a mixed state, typically for "select all" parent controls.
    *  This state is visual/semantic and should usually be controlled by parent logic. */
   indeterminate?: boolean;
   /** Optional supporting/helper text shown below the label in non-error state.
    *  Hidden when hideLabel is true. */
   supportingText?: string;
-  /** Pre-translated error message rendered below the label. Requires invalid={true} and
-   *  hideLabel={false} to be displayed. */
-  invalidFeedback?: string;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -40,6 +40,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       hideLabel = false,
       id: idProp,
       required,
+      disabled,
       'aria-label': ariaLabelProp,
       ...inputProps
     }: CheckboxProps,
@@ -49,6 +50,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const id = idProp ?? generatedId;
     const hasVisibleLabel = !hideLabel;
     const isInvalid = !!invalid;
+    const isDisabled = !!disabled;
     const isIndeterminate = !!indeterminate;
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -89,42 +91,45 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     const ariaLabel = hideLabel ? (ariaLabelProp ?? label) : undefined;
     const messageText = hasVisibleLabel
-      ? isInvalid && invalidFeedback
+      ? isInvalid && !isDisabled && invalidFeedback
         ? invalidFeedback
         : supportingText
       : undefined;
     const hasInvalidFeedback =
-      hasVisibleLabel && isInvalid && !!invalidFeedback;
+      hasVisibleLabel && isInvalid && !isDisabled && !!invalidFeedback;
     const feedbackId = messageText ? `${id}-feedback` : undefined;
 
     return (
       <div className={classes.join(' ')}>
-        <input
-          className={[
-            'mds-checkbox-input',
-            'form-check-input',
-            isInvalid ? 'is-invalid' : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
-          ref={(node) => {
-            // Keep a local ref for the native indeterminate property while still forwarding refs.
-            inputRef.current = node;
-            if (typeof ref === 'function') {
-              ref(node);
-            } else if (ref) {
-              ref.current = node;
-            }
-          }}
-          {...inputProps}
-          type="checkbox"
-          required={required}
-          aria-invalid={isInvalid ? true : undefined}
-          aria-label={ariaLabel}
-          aria-checked={isIndeterminate ? 'mixed' : undefined}
-          aria-describedby={feedbackId}
-          id={id}
-        />
+        <div className="mds-checkbox-input-wrapper">
+          <input
+            className={[
+              'mds-checkbox-input',
+              'form-check-input',
+              isInvalid ? 'is-invalid' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            ref={(node) => {
+              // Keep a local ref for the native indeterminate property while still forwarding refs.
+              inputRef.current = node;
+              if (typeof ref === 'function') {
+                ref(node);
+              } else if (ref) {
+                ref.current = node;
+              }
+            }}
+            {...inputProps}
+            type="checkbox"
+            required={required}
+            disabled={disabled}
+            aria-invalid={isInvalid ? true : undefined}
+            aria-label={ariaLabel}
+            aria-checked={isIndeterminate ? 'mixed' : undefined}
+            aria-describedby={feedbackId}
+            id={id}
+          />
+        </div>
         {hasVisibleLabel && (
           <label className="mds-checkbox-label form-check-label" htmlFor={id}>
             <span className="mds-checkbox-label-text">{label}</span>
