@@ -18,9 +18,14 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22.22.2
+          registry-url: 'https://registry.npmjs.org' # required for npm to attempt OIDC trusted publishing
 
       - name: Install dependencies
         run: npm ci
+
+      # Trusted publishing (OIDC) requires npm CLI >= 11.5.1; the version bundled with Node 22.22.2 is older.
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Audit dependencies
         run: npm audit --audit-level=high

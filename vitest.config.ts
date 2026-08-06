@@ -1,52 +1,18 @@
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
-const dirname =
-  typeof __dirname !== 'undefined'
-    ? __dirname
-    : path.dirname(fileURLToPath(import.meta.url));
-
-const isStorybook = process.env.VITEST_STORYBOOK === 'true';
+const dirname = import.meta.dirname;
 
 export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react/jsx-dev-runtime'],
   },
-  plugins: isStorybook
-    ? [
-        storybookTest({
-          configDir: path.resolve(dirname, '.storybook'),
-          tags: {
-            include: ['test'],
-            exclude: ['experimental'],
-          },
-        }),
-      ]
-    : [],
   test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: isStorybook ? [] : ['./tests/setupTests.ts'],
-    include: !isStorybook
-      ? ['components/**/*.{test,spec}.{js,ts,jsx,tsx}']
-      : undefined,
-    exclude: isStorybook
-      ? ['components/**/*.{test,spec}.{js,ts,jsx,tsx}']
-      : ['**/*.stories.*', '.storybook/**', '**/.storybook/**'],
-    browser: isStorybook
-      ? {
-          enabled: true,
-          headless: true,
-          provider: playwright({}),
-          instances: [{ browser: 'chromium' }],
-        }
-      : undefined,
     coverage: {
       provider: 'istanbul',
-      include: !isStorybook ? ['components/**/*.{ts,tsx,js,jsx}'] : undefined,
+      include: ['components/**/*.{ts,tsx,js,jsx}'],
       exclude: [
         '**/*.stories.*',
         '**/*.figma.*',
@@ -54,11 +20,51 @@ export default defineConfig({
         '**/.storybook/**',
         'components/**/*.{test,spec}.{js,ts,jsx,tsx}',
       ],
-      watermarks: !isStorybook
-        ? {
-            statements: [50, 80],
-          }
-        : undefined,
+      watermarks: {
+        statements: [50, 80],
+      },
+      // Watermarks above only color the report; thresholds are what actually
+      // fail the run, enforcing the documented 50% statement coverage minimum.
+      thresholds: {
+        statements: 50,
+      },
     },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          globals: true,
+          environment: 'jsdom',
+          setupFiles: ['./tests/setupTests.ts'],
+          include: ['components/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+        },
+      },
+      {
+        extends: true,
+        plugins: [
+          storybookTest({
+            configDir: path.resolve(dirname, '.storybook'),
+            tags: {
+              include: ['test'],
+              exclude: ['experimental'],
+            },
+          }),
+        ],
+        test: {
+          name: 'storybook',
+          globals: true,
+          environment: 'jsdom',
+          setupFiles: [],
+          exclude: ['components/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            instances: [{ browser: 'chromium' }],
+          },
+        },
+      },
+    ],
   },
 });

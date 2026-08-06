@@ -71,9 +71,8 @@ These MCP servers are useful when working in this repo. Configure them in your A
 - Unit tests: `npm run test-unit` (Vitest + jsdom, component tests only).
 - Storybook interaction/a11y tests: `npm run test-storybook` (Vitest browser mode + Playwright + Storybook addon plugin).
 - Coverage for unit tests: `npm run test-unit-coverage` (Istanbul thresholds: 50% minimum, 80% target for statement coverage — configured in `vitest.config.ts`).
-- Run a single unit test file: `VITEST_STORYBOOK=false npx vitest run components/button/Button.test.tsx`.
-- The `VITEST_STORYBOOK` env var switches vitest: `false` runs `components/**/*.{test,spec}.*` in jsdom; `true` runs stories tagged `test` via Playwright/Chromium headless.
-- Test configuration lives in `vitest.config.ts`. `vite.config.ts` also defines a Storybook Vitest project (browser + Playwright) as part of the build config — do not edit that block for test configuration changes.
+- Run a single unit test file: `npx vitest run --project unit components/button/Button.test.tsx`.
+- `vitest.config.ts` defines two Vitest projects: `unit` (jsdom, `components/**/*.{test,spec}.*`) and `storybook` (Playwright/Chromium, stories tagged `test`). Filter with `--project unit` or `--project storybook`; omitting the flag runs both. `vite.config.ts` also defines its own Storybook Vitest project (browser + Playwright) as part of the build config, used by the Storybook UI's own test integration — do not edit that block for CLI test configuration changes.
 - Reuse `tests/utils/fuzzComponent.ts` + `fast-check` for property-based fuzz tests where inputs have broad permutations.
 - Story files should include `tags: ['autodocs', 'test', 'stable']` unless intentionally excluding from Storybook Vitest runs.
 
@@ -119,6 +118,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 2. If a matching token exists → use it via `var(--mds-*)`.
 3. When using an existing `--mds-*` token, do not add a fallback literal in `var(...)` (for example, avoid `var(--mds-token, 1rem)` and use `var(--mds-token)` instead).
 4. If no token exists → do not invent an ad-hoc value. Ask contributors to request one at https://design.moodle.com/.
+
+**Fonts are not bundled:** `--mds-font-family-base` resolves to `Noto Sans` with no CSS fallback chain. When scaffolding a consuming app (not the library itself), always include the README's "Fonts" instructions (Google Fonts link or self-hosted `@font-face`) — otherwise text silently renders in the browser default font with no warning.
+
+**When multiple `Radio`, `Checkbox`, or `NavPill` instances are rendered together:** none of these components ships a layout wrapper. Lay them out with a consumer-provided container (for example, flex) and a `--mds-spacing-*` gap token — see each component's stories for the reference pattern.
 
 **When working from a Figma design:**
 

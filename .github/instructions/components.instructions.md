@@ -113,6 +113,10 @@ import { Card, CardHeader, CardBody } from '@moodlehq/design-system';
 
 Each sub-component follows the same file structure rules as any other component and must have its own stories and tests.
 
+## Group / multi-instance composition (Radio, Checkbox, NavPill)
+
+`Radio`, `Checkbox`, and `NavPill` are single-instance components — none ships a group wrapper, layout, or spacing. When multiple instances are rendered together (for example, a radio group sharing a `name`, a related checkbox set, or a row of navigation pills), the consumer supplies the container and its layout direction (for example, a flex container with a `--mds-spacing-*` gap token). Do not add a new wrapper component or hardcode spacing inside `Radio`/`Checkbox`/`NavPill` to solve this — follow each component's stories for the reference pattern.
+
 ## Breaking change guardrail
 
 The following changes to a component's public API are breaking and must not be made without a major version bump:

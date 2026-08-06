@@ -27,11 +27,13 @@ export function fuzzComponent<T>(
 ) {
   fc.assert(
     fc.property(arb, (props) => {
-      // Render the component with random props
-      render(React.createElement(Component, props));
-      // Assert that the key text is present in the rendered output
+      // Unmount after each run — otherwise renders accumulate in the DOM across
+      // all numRuns iterations, making later getAllByText queries progressively
+      // slower and prone to timing out on slower machines.
+      const { unmount } = render(React.createElement(Component, props));
       const matches = screen.getAllByText(getText(props));
       expect(matches.length).toBeGreaterThan(0);
+      unmount();
     }),
     options,
   );
