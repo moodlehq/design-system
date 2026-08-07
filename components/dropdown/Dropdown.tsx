@@ -13,12 +13,21 @@ import {
   useFloating,
   useInteractions,
   useListNavigation,
+  useMergeRefs,
   useTypeahead,
 } from '@floating-ui/react';
-import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
+import type {
+  HTMLAttributes,
+  ReactElement,
+  ReactNode,
+  Ref,
+  RefAttributes,
+} from 'react';
 import {
+  cloneElement,
   createContext,
   forwardRef,
+  isValidElement,
   useContext,
   useId,
   useRef,
@@ -28,6 +37,9 @@ import type { DropdownTriggerProps } from './DropdownTrigger';
 import { DropdownTrigger } from './DropdownTrigger';
 
 type IconElement = ReactElement<'i' | 'svg'>;
+type CustomTriggerProps = React.HTMLProps<HTMLElement> &
+  RefAttributes<HTMLElement>;
+type CustomTriggerElement = ReactElement<CustomTriggerProps>;
 
 // ── Context ──────────────────────────────────────────────────────────────────
 
@@ -98,18 +110,30 @@ DropdownMenu.displayName = 'DropdownMenu';
 // ── Dropdown ─────────────────────────────────────────────────────────────────
 
 export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
-  /** Trigger label. Must be a caller-supplied translated string. */
-  label: string;
-  /** Trigger form — see DropdownTrigger. */
+  /** Trigger label. Must be a caller-supplied translated string. Required
+   *  unless `trigger` is provided. */
+  label?: string;
+  /** Trigger form — see DropdownTrigger. Ignored when `trigger` is provided. */
   variant?: DropdownTriggerProps['variant'];
-  /** Trigger appearance — see DropdownTrigger. */
+  /** Trigger appearance — see DropdownTrigger. Ignored when `trigger` is provided. */
   appearance?: DropdownTriggerProps['appearance'];
-  /** Trigger size — see DropdownTrigger. */
+  /** Trigger size — see DropdownTrigger. Ignored when `trigger` is provided. */
   size?: DropdownTriggerProps['size'];
-  /** Optional leading trigger icon. Accepts only intrinsic `<i>` or `<svg>` elements. */
+  /** Optional leading trigger icon. Accepts only intrinsic `<i>` or `<svg>` elements.
+   *  Ignored when `trigger` is provided. */
   startIcon?: IconElement;
-  /** Renders an icon-only trigger; the label becomes its aria-label. */
+  /** Renders an icon-only trigger; the label becomes its aria-label.
+   *  Ignored when `trigger` is provided. */
   iconOnly?: boolean;
+  /**
+   * Escape hatch for a fully custom trigger element when none of the built-in
+   * DropdownTrigger visual variants fit (e.g. a link-styled trigger). The
+   * element is cloned with the floating reference ref plus the ARIA and
+   * interaction props Dropdown needs — it must forward its `ref` to a
+   * focusable host element. When provided, `label`, `variant`, `appearance`,
+   * `size`, `startIcon` and `iconOnly` are ignored.
+   */
+  trigger?: CustomTriggerElement;
   /** Controlled open state; leave undefined for uncontrolled behavior. */
   open?: boolean;
   defaultOpen?: boolean;
@@ -117,6 +141,9 @@ export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
   /** Menu placement relative to the trigger. Defaults to 'bottom-start'.
    *  flip() will invert to the opposite side when space is insufficient. */
   placement?: Placement;
+  /** Whether the menu may flip to an alternate placement when space is
+   *  insufficient. Defaults to true. */
+  allowPlacementFlip?: boolean;
   /** When true, the menu panel grows to be at least as wide as the trigger.
    *  Useful when the trigger label is wider than the default 217px minimum. */
   matchTriggerWidth?: boolean;
@@ -136,10 +163,12 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       size: triggerSize,
       startIcon,
       iconOnly,
+      trigger,
       open: controlledOpen,
       defaultOpen = false,
       onOpenChange,
       placement = 'bottom-start',
+      allowPlacementFlip = true,
       matchTriggerWidth = false,
       className,
       children,
@@ -155,6 +184,11 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     // Stable id used to label the menu panel with the trigger text.
     const triggerId = useId();
 
+    const customTrigger = isValidElement<CustomTriggerProps>(trigger)
+      ? trigger
+      : null;
+    const customTriggerRef = customTrigger?.props.ref as Ref<HTMLElement>;
+
     const setOpen = (next: boolean) => {
       setUncontrolledOpen(next);
       onOpenChange?.(next);
@@ -168,7 +202,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         // Separate the menu from the trigger by --mds-spacing-xxs.
         offset(MENU_OFFSET),
         // Auto-flip to the opposite side when vertical space is insufficient.
-        flip(),
+        ...(allowPlacementFlip ? [flip()] : []),
         // Slide along the cross-axis to stay within the viewport.
         shift({ padding: 8 }),
         // Match the trigger width when matchTriggerWidth=true.
@@ -188,6 +222,12 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       whileElementsMounted: autoUpdate,
     });
     const { setReference, setFloating } = refs;
+    // Always called (Rules of Hooks) — only used when a custom `trigger` is
+    // supplied, to merge the caller's own ref with the floating reference ref.
+    const mergedCustomTriggerRef = useMergeRefs([
+      setReference,
+      customTriggerRef,
+    ]);
 
     // FloatingPortal mounts under document.body, so the menu does not inherit
     // direction from a local dir wrapper. Mirror the trigger's computed
@@ -214,24 +254,51 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     const { getReferenceProps, getFloatingProps, getItemProps } =
       useInteractions([click, dismiss, listNavigation, typeahead]);
 
+    if (import.meta.env.DEV) {
+      if (!customTrigger && !label) {
+        console.error(
+          '[MDS Dropdown] Either `label` or `trigger` must be provided.',
+        );
+      }
+    }
+
     const classes = ['mds-dropdown'];
     if (className) classes.push(className);
+
+    // When `trigger` is provided, clone it with the floating reference ref and
+    // the same ARIA/interaction wiring the built-in DropdownTrigger gets —
+    // this is how consumers with a non-Button visual trigger (e.g. Breadcrumb's
+    // link-styled overflow button) reuse Dropdown's floating-ui orchestration
+    // instead of reimplementing it.
+    const renderedTrigger = customTrigger ? (
+      cloneElement(customTrigger, {
+        ref: mergedCustomTriggerRef,
+        id: triggerId,
+        'aria-haspopup': 'menu',
+        'aria-expanded': open,
+        ...(getReferenceProps(
+          customTrigger.props as React.HTMLProps<HTMLElement>,
+        ) as Record<string, unknown>),
+      })
+    ) : (
+      <DropdownTrigger
+        ref={setReference}
+        id={triggerId}
+        label={label ?? ''}
+        variant={variant}
+        appearance={appearance}
+        size={triggerSize}
+        startIcon={startIcon}
+        iconOnly={iconOnly}
+        open={open}
+        {...(getReferenceProps() as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+      />
+    );
 
     return (
       <DropdownContext.Provider value={{ getItemProps, activeIndex }}>
         <div ref={ref} className={classes.join(' ')} {...props}>
-          <DropdownTrigger
-            ref={setReference}
-            id={triggerId}
-            label={label}
-            variant={variant}
-            appearance={appearance}
-            size={triggerSize}
-            startIcon={startIcon}
-            iconOnly={iconOnly}
-            open={open}
-            {...(getReferenceProps() as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-          />
+          {renderedTrigger}
           {open && (
             <FloatingPortal>
               {/* modal={false}: the menu is not a dialog — focus can leave via Tab.

@@ -137,6 +137,15 @@ const meta = {
         defaultValue: { summary: 'bottom-start' },
       },
     },
+    allowPlacementFlip: {
+      control: { type: 'boolean' },
+      description:
+        'When false, keeps the requested placement when the available space is constrained.',
+      table: {
+        type: { summary: 'true | false' },
+        defaultValue: { summary: 'true' },
+      },
+    },
     children: {
       control: { disable: true },
       description:
