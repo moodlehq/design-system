@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
 import { type JSX } from 'react';
