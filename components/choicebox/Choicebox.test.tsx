@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fc from 'fast-check';
@@ -131,7 +130,6 @@ describe('Choicebox: Unit Tests', () => {
   it('silently ignores an invalid icon element and does not render the icon slot', () => {
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const { container } = render(
-      // @ts-expect-error — intentional invalid type for test
       <Choicebox label="Option A" icon={<span>not-an-icon</span>} />,
     );
     expect(
@@ -262,19 +260,17 @@ describe('Choicebox: Unit Tests', () => {
   it('renders without throwing for arbitrary label/supportingText strings', () => {
     fuzzComponent(
       Choicebox,
-      fc.record<ChoiceboxProps>({
+      fc.record({
         label: fc
           .array(fc.constantFrom(...fuzzLabelCharacters.split('')), {
             minLength: 1,
             maxLength: 50,
           })
-          .map((chars) => chars.join('')) as unknown as fc.Arbitrary<
-          ChoiceboxProps['label']
-        >,
+          .map((chars) => chars.join('')),
         supportingText: fc.oneof(fc.constant(undefined), fc.string()),
         disabled: fc.boolean(),
         checked: fc.boolean(),
-      } as unknown as Record<keyof ChoiceboxProps, fc.Arbitrary<unknown>>),
+      }) as unknown as fc.Arbitrary<ChoiceboxProps>,
       (props) => props.label,
     );
   });
