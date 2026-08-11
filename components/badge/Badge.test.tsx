@@ -157,7 +157,6 @@ describe('Badge: Unit Test', () => {
       <i className="fa fa-star" data-testid="end-icon" aria-hidden="true" />
     );
 
-    // @ts-expect-error — intentional invalid icon to verify resolved-only conflict warning
     render(<Badge label="Label" startIcon={<div />} endIcon={end} />);
 
     expect(warn).not.toHaveBeenCalledWith(
@@ -171,7 +170,6 @@ describe('Badge: Unit Test', () => {
 
   it('ignores an invalid startIcon value and logs an error', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
-    // @ts-expect-error — intentional invalid icon
     render(<Badge label="Label" startIcon={<div />} />);
     expect(error).toHaveBeenCalledWith(expect.stringContaining('startIcon'));
     vi.restoreAllMocks();
@@ -179,7 +177,6 @@ describe('Badge: Unit Test', () => {
 
   it('ignores an invalid endIcon value and logs an error', () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
-    // @ts-expect-error — intentional invalid icon
     render(<Badge label="Label" endIcon={<div />} />);
     expect(error).toHaveBeenCalledWith(expect.stringContaining('endIcon'));
     expect(screen.queryByTestId('end-icon')).not.toBeInTheDocument();

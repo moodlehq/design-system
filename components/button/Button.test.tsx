@@ -45,6 +45,7 @@ describe('Button: Unit Test', () => {
 
     it('falls back to primary and warns in development for an invalid variant', () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      // @ts-expect-error deliberately invalid value to verify runtime fallback
       render(<Button label="Button" variant="invalid" />);
       expect(screen.getByRole('button')).toHaveClass('btn-primary');
       expect(warnSpy).toHaveBeenCalledWith(
@@ -73,6 +74,7 @@ describe('Button: Unit Test', () => {
 
     it('falls back to md and warns in development for an invalid size', () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      // @ts-expect-error deliberately invalid value to verify runtime fallback
       render(<Button label="Button" size="invalid" />);
       expect(screen.getByRole('button')).toHaveClass('mds-btn--size-md');
       expect(warnSpy).toHaveBeenCalledWith(
@@ -263,7 +265,7 @@ describe('Button: Unit Test', () => {
 
   describe('accessibility', () => {
     it('warns in dev when no label, aria-label, or aria-labelledby', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button />);
       expect(warnSpy).toHaveBeenCalledWith(
         'Button: provide a label, aria-label, or aria-labelledby for accessibility.',
@@ -272,7 +274,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('warns in dev when no label and no icons (visually empty)', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button />);
       expect(warnSpy).toHaveBeenCalledWith(
         'Button: provide a label or icon so the button does not render as visually empty.',
@@ -281,7 +283,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('does not warn about visual emptiness when label is provided', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button label="Button" />);
       expect(warnSpy).not.toHaveBeenCalledWith(
         'Button: provide a label or icon so the button does not render as visually empty.',
@@ -290,7 +292,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('does not warn about visual emptiness when icon is provided', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(
         <Button startIcon={<i aria-hidden="true" />} aria-label="Action" />,
       );
@@ -301,7 +303,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('does not warn when only aria-label is provided', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button aria-label="Close" />);
       expect(warnSpy).not.toHaveBeenCalledWith(
         'Button: provide a label, aria-label, or aria-labelledby for accessibility.',
@@ -310,7 +312,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('does not warn when only aria-labelledby is provided', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button aria-labelledby="some-id" />);
       expect(warnSpy).not.toHaveBeenCalledWith(
         'Button: provide a label, aria-label, or aria-labelledby for accessibility.',
@@ -319,7 +321,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('warns when aria-label is an empty string', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button aria-label="" />);
       expect(warnSpy).toHaveBeenCalledWith(
         'Button: provide a label, aria-label, or aria-labelledby for accessibility.',
@@ -328,7 +330,7 @@ describe('Button: Unit Test', () => {
     });
 
     it('warns when aria-labelledby is an empty string', () => {
-      const warnSpy = vi.spyOn(console, 'warn').mockImplementation();
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<Button aria-labelledby="" />);
       expect(warnSpy).toHaveBeenCalledWith(
         'Button: provide a label, aria-label, or aria-labelledby for accessibility.',
@@ -370,7 +372,7 @@ describe('Button: Unit Test', () => {
           }) as unknown as fc.Arbitrary<ButtonProps['size']>,
         }),
         // For each generated prop set, assert that the generated label text is present.
-        (props: ButtonProps) => props.label,
+        (props: ButtonProps) => props.label ?? '',
         // Run 100 generated cases for a good speed/coverage balance.
         { numRuns: 100 },
       );

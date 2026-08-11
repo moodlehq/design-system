@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import type { PaginationProps } from './Pagination';
@@ -11,7 +12,12 @@ const defaultProps: PaginationProps = {
   onPageChange: () => {},
 };
 
-function renderPagination(overrides: Partial<PaginationProps> = {}) {
+type PaginationRenderOverrides = Partial<PaginationProps> &
+  ComponentPropsWithoutRef<'nav'> & {
+    [key: `data-${string}`]: string;
+  };
+
+function renderPagination(overrides: PaginationRenderOverrides = {}) {
   return render(<Pagination {...defaultProps} {...overrides} />);
 }
 
@@ -377,9 +383,14 @@ describe('Pagination: Unit Tests', () => {
   );
 
   it('does not submit a surrounding form when a pagination button is clicked', async () => {
-    const handleSubmit = vi.fn((e: SubmitEvent) => e.preventDefault());
+    const handleSubmit = vi.fn();
     render(
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(e);
+        }}
+      >
         <Pagination {...defaultProps} currentPage={2} />
       </form>,
     );

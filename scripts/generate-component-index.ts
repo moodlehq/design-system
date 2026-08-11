@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 interface ComponentIndexItem {
   name: string;
   slug: string;
+  purpose: string;
   exportPath: string;
   implementationPath: string;
   storyPath?: string;
@@ -27,6 +28,32 @@ const OUTPUT_DIR = path.join(ROOT_DIR, 'dist');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'component-index.json');
 
 const RESERVED_DIR_NAMES = new Set(['assets']);
+
+// One-line "when to use" guidance per component, kept in sync with
+// .github/instructions/component-index.instructions.md. Ships in the published
+// package so agents that only install @moodlehq/design-system (without the source
+// repo's instruction files) still get decision guidance, not just file paths.
+const PURPOSES: Record<string, string> = {
+  'activity-icon':
+    'Activity/resource/file icon with semantic category styling.',
+  avatar: 'Circular user/entity identity display — photo or initials.',
+  badge: 'Short status, metadata, or count labels.',
+  button: 'Primary and secondary actions.',
+  checkbox:
+    'Independent multi-select controls. No group wrapper is provided — see the Group story for consumer-supplied layout.',
+  choicebox:
+    'Single-select options as larger, card-style choices (icon + label + supporting text). Not interchangeable with Radio — use for options that benefit from extra visual weight or a supporting description.',
+  'close-button': 'Icon-only dismiss action for temporary UI surfaces.',
+  'favourite-button': 'Icon button to mark/unmark items as favourites.',
+  link: 'Anchor element with variant and optional icon support.',
+  'nav-pill': 'Compact pill-style navigation link for section switching.',
+  pagination: 'Page navigation control.',
+  'progress-bar': 'Visual progress indicator with status and label variants.',
+  radio:
+    'Single-select options in a compact list (native radio input, label only). No group wrapper is provided — see the Group story for consumer-supplied layout.',
+  switch: 'Binary toggle control for on/off settings.',
+  tooltip: 'Contextual label anchored to a trigger element.',
+};
 
 function toPosix(filePath: string): string {
   return filePath.split(path.sep).join('/');
@@ -70,9 +97,17 @@ function collectComponent(slug: string): ComponentIndexItem | null {
 
   const rel = (fullPath: string) => toPosix(path.relative(ROOT_DIR, fullPath));
 
+  const purpose = PURPOSES[slug];
+  if (!purpose) {
+    throw new Error(
+      `No purpose text defined for component "${slug}" in PURPOSES — add one in scripts/generate-component-index.ts.`,
+    );
+  }
+
   return {
     name: componentName,
     slug,
+    purpose,
     exportPath: `@moodlehq/design-system/components/${slug}`,
     implementationPath: rel(implementation),
     storyPath: story ? rel(story) : undefined,

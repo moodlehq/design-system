@@ -8,23 +8,23 @@ Quick reference for AI agents and developers.
 
 ## Components
 
-| Component       | Purpose                                                    | Key props                                        |
-| --------------- | ---------------------------------------------------------- | ------------------------------------------------ |
-| ActivityIcon    | Activity/resource/file icon with semantic category styling | icon, category, size, container                  |
-| Avatar          | Circular user/entity identity display — photo or initials  | type, size, initials, imageSrc, imageAlt         |
-| Badge           | Short status, metadata, or count labels                    | type, contrast, style, icon, label               |
-| Button          | Primary and secondary actions                              | variant, size, disabled, startIcon, endIcon      |
-| Checkbox        | Independent multi-select controls                          | checked, label, disabled, invalid, indeterminate |
-| Choicebox       | Single-select options in a group                           | checked, label, disabled, invalid                |
-| CloseButton     | Icon-only dismiss action for temporary UI surfaces         | size, disabled, ariaLabel                        |
-| FavouriteButton | Icon button to mark/unmark items as favourites             | checked, size, disabled, ariaLabel               |
-| Link            | Anchor element with variant and optional icon support      | label, variant, disabled, startIcon, endIcon     |
-| NavPill         | Compact pill-style navigation link for section switching   | label, active, disabled, href, ariaLabel         |
-| Pagination      | Page navigation control                                    | totalPages, currentPage, onPageChange, ariaLabel |
-| ProgressBar     | Visual progress indicator with status and label variants   | value, min, max, status, labelVariant, title     |
-| Radio           | Single-select options in a group                           | checked, label, disabled, invalid                |
-| Switch          | Binary toggle control for on/off settings                  | checked, label, disabled, onChange               |
-| Tooltip         | Contextual label anchored to a trigger element             | label, placement, variant, children              |
+| Component       | Purpose                                                                              | Key props                                        |
+| --------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| ActivityIcon    | Activity/resource/file icon with semantic category styling                           | icon, category, size, container                  |
+| Avatar          | Circular user/entity identity display — photo or initials                            | type, size, initials, imageSrc, imageAlt         |
+| Badge           | Short status, metadata, or count labels                                              | type, contrast, style, icon, label               |
+| Button          | Primary and secondary actions                                                        | variant, size, disabled, startIcon, endIcon      |
+| Checkbox        | Independent multi-select controls                                                    | checked, label, disabled, invalid, indeterminate |
+| Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text) | checked, label, disabled, invalid                |
+| CloseButton     | Icon-only dismiss action for temporary UI surfaces                                   | size, disabled, ariaLabel                        |
+| FavouriteButton | Icon button to mark/unmark items as favourites                                       | checked, size, disabled, ariaLabel               |
+| Link            | Anchor element with variant and optional icon support                                | label, variant, disabled, startIcon, endIcon     |
+| NavPill         | Compact pill-style navigation link for section switching                             | label, active, disabled, href, ariaLabel         |
+| Pagination      | Page navigation control                                                              | totalPages, currentPage, onPageChange, ariaLabel |
+| ProgressBar     | Visual progress indicator with status and label variants                             | value, min, max, status, labelVariant, title     |
+| Radio           | Single-select options in a compact list (native radio input, label only)             | checked, label, disabled, invalid                |
+| Switch          | Binary toggle control for on/off settings                                            | checked, label, disabled, onChange               |
+| Tooltip         | Contextual label anchored to a trigger element                                       | label, placement, variant, children              |
 
 ## Component Links
 
@@ -65,6 +65,9 @@ Quick reference for AI agents and developers.
 - Use published MDS tokens through CSS variables only; avoid hardcoded design values.
 - Treat generated token outputs as read-only and update only source token flows.
 - Keep Storybook variants and tests aligned with component API changes.
+- `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
+- `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
+- This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing
 

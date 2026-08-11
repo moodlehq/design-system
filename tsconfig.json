@@ -19,7 +19,7 @@
     "noUnusedParameters": true, // Flags unused function parameters.
     "noFallthroughCasesInSwitch": true, // Requires handling all cases in a switch statement.
     "declaration": true, // Generates declaration files for TypeScript.
-    "types": ["vite/client"] // Provides ImportMeta.env typings from Vite.
+    "types": ["vite/client"] // Provides ImportMeta.env typings from Vite; test matcher types come from vitest.shims.d.ts.
   },
   "include": ["components", "index.ts"], // Specifies the directory to include when searching for TypeScript files.
   "exclude": [

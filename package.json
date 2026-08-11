@@ -118,11 +118,11 @@
     "vitest": "^4.0.4"
   },
   "scripts": {
-    "test-unit": "VITEST_STORYBOOK=false vitest run",
-    "test-unit-coverage": "VITEST_STORYBOOK=false vitest run --coverage",
-    "test-storybook": "VITEST_STORYBOOK=true vitest run",
+    "test-unit": "vitest run --project unit",
+    "test-unit-coverage": "vitest run --project unit --coverage",
+    "test-storybook": "vitest run --project storybook",
     "storybook": "storybook dev -p 6006",
-    "build": "npm run build-component-index && npm run build-tokens && tsc && vite build",
+    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index",
     "build-component-index": "tsx scripts/generate-component-index.ts",
     "build-storybook": "storybook build",
     "build-docs": "tsx scripts/build-docs.ts",
