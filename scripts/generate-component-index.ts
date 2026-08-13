@@ -12,6 +12,15 @@ interface ComponentIndexItem {
   testPath?: string;
   figmaPath?: string;
   cssPath?: string;
+  subcomponents?: ComponentSubcomponentIndexItem[];
+}
+
+interface ComponentSubcomponentIndexItem {
+  name: string;
+  purpose: string;
+  exportName: string;
+  implementationPath: string;
+  storyPath?: string;
 }
 
 interface ComponentIndex {
@@ -29,6 +38,83 @@ const OUTPUT_FILE = path.join(OUTPUT_DIR, 'component-index.json');
 
 const RESERVED_DIR_NAMES = new Set(['assets']);
 
+const SUBCOMPONENTS: Record<string, ComponentSubcomponentIndexItem[]> = {
+  dropdown: [
+    {
+      name: 'DropdownTrigger',
+      purpose: 'Trigger button that opens/closes the menu panel.',
+      exportName: 'DropdownTrigger',
+      implementationPath: 'components/dropdown/DropdownTrigger.tsx',
+      storyPath: 'components/dropdown/DropdownTrigger.stories.tsx',
+    },
+    {
+      name: 'DropdownMenu',
+      purpose: 'Menu container that hosts dropdown items.',
+      exportName: 'DropdownMenu',
+      implementationPath: 'components/dropdown/Dropdown.tsx',
+    },
+    {
+      name: 'DropdownItemAction',
+      purpose: 'Standard clickable action item (button or link behavior).',
+      exportName: 'DropdownItemAction',
+      implementationPath: 'components/dropdown/DropdownItemAction.tsx',
+      storyPath: 'components/dropdown/DropdownItemAction.stories.tsx',
+    },
+    {
+      name: 'DropdownItemSelect',
+      purpose:
+        'Single-select item with selected state (menuitemradio semantics).',
+      exportName: 'DropdownItemSelect',
+      implementationPath: 'components/dropdown/DropdownItemSelect.tsx',
+      storyPath: 'components/dropdown/DropdownItemSelect.stories.tsx',
+    },
+    {
+      name: 'DropdownItemMultiselect',
+      purpose:
+        'Multi-select item with checked state (menuitemcheckbox semantics).',
+      exportName: 'DropdownItemMultiselect',
+      implementationPath: 'components/dropdown/DropdownItemMultiselect.tsx',
+      storyPath: 'components/dropdown/DropdownItemMultiselect.stories.tsx',
+    },
+    {
+      name: 'DropdownItemExpandable',
+      purpose: 'Item that opens a nested submenu.',
+      exportName: 'DropdownItemExpandable',
+      implementationPath: 'components/dropdown/DropdownItemExpandable.tsx',
+      storyPath: 'components/dropdown/DropdownItemExpandable.stories.tsx',
+    },
+    {
+      name: 'DropdownItemHeader',
+      purpose: 'Non-interactive section heading within the menu.',
+      exportName: 'DropdownItemHeader',
+      implementationPath: 'components/dropdown/DropdownItemHeader.tsx',
+      storyPath: 'components/dropdown/DropdownItemHeader.stories.tsx',
+    },
+    {
+      name: 'DropdownItemDivider',
+      purpose: 'Visual separator between groups of items.',
+      exportName: 'DropdownItemDivider',
+      implementationPath: 'components/dropdown/DropdownItemDivider.tsx',
+      storyPath: 'components/dropdown/DropdownItemDivider.stories.tsx',
+    },
+    {
+      name: 'DropdownItemCustom',
+      purpose:
+        'Wrapper for custom menu content when built-in item variants are not enough.',
+      exportName: 'DropdownItemCustom',
+      implementationPath: 'components/dropdown/DropdownItemCustom.tsx',
+      storyPath: 'components/dropdown/DropdownItemCustom.stories.tsx',
+    },
+    {
+      name: 'DropdownItemGroup',
+      purpose: 'Semantic grouping container for related menu items.',
+      exportName: 'DropdownItemGroup',
+      implementationPath: 'components/dropdown/DropdownItemGroup.tsx',
+      storyPath: 'components/dropdown/DropdownItemGroup.stories.tsx',
+    },
+  ],
+};
+
 // One-line "when to use" guidance per component, kept in sync with
 // .github/instructions/component-index.instructions.md. Ships in the published
 // package so agents that only install @moodlehq/design-system (without the source
@@ -44,6 +130,8 @@ const PURPOSES: Record<string, string> = {
   choicebox:
     'Single-select options as larger, card-style choices (icon + label + supporting text). Not interchangeable with Radio — use for options that benefit from extra visual weight or a supporting description.',
   'close-button': 'Icon-only dismiss action for temporary UI surfaces.',
+  dropdown:
+    'Composable trigger + menu container for action, select, expandable, and multiselect dropdown items.',
   'favourite-button': 'Icon button to mark/unmark items as favourites.',
   link: 'Anchor element with variant and optional icon support.',
   'nav-pill': 'Compact pill-style navigation link for section switching.',
@@ -114,6 +202,7 @@ function collectComponent(slug: string): ComponentIndexItem | null {
     testPath: test ? rel(test) : undefined,
     figmaPath: figma ? rel(figma) : undefined,
     cssPath: css ? rel(css) : undefined,
+    subcomponents: SUBCOMPONENTS[slug],
   };
 }
 
