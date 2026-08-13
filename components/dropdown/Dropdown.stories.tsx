@@ -2,15 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, screen, waitFor } from 'storybook/test';
 import { Dropdown, DropdownMenu } from './Dropdown';
-import {
-  DropdownItemAction,
-  DropdownItemDivider,
-  DropdownItemExpandable,
-  DropdownItemHeader,
-  DropdownItemList,
-  DropdownItemMultiselect,
-  DropdownItemSelect,
-} from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemDivider } from './DropdownItemDivider';
+import { DropdownItemExpandable } from './DropdownItemExpandable';
+import { DropdownItemHeader } from './DropdownItemHeader';
+import { DropdownItemList } from './DropdownItemList';
+import { DropdownItemMultiselect } from './DropdownItemMultiselect';
+import { DropdownItemSelect } from './DropdownItemSelect';
 
 // The composed stories need vertical room for the open menu panel.
 const menuRoomDecorator = (Story: React.ComponentType) => (

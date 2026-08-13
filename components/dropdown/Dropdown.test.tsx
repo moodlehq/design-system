@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { Dropdown, DropdownMenu } from './Dropdown';
-import { DropdownItemAction } from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
 
 const renderDropdown = (props = {}) =>
   render(

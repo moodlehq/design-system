@@ -1,15 +1,13 @@
 import figma from '@figma/code-connect';
 import { Dropdown, DropdownMenu } from './Dropdown';
-import {
-  DropdownItemAction,
-  DropdownItemCustom,
-  DropdownItemDivider,
-  DropdownItemExpandable,
-  DropdownItemHeader,
-  DropdownItemList,
-  DropdownItemMultiselect,
-  DropdownItemSelect,
-} from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemCustom } from './DropdownItemCustom';
+import { DropdownItemDivider } from './DropdownItemDivider';
+import { DropdownItemExpandable } from './DropdownItemExpandable';
+import { DropdownItemHeader } from './DropdownItemHeader';
+import { DropdownItemList } from './DropdownItemList';
+import { DropdownItemMultiselect } from './DropdownItemMultiselect';
+import { DropdownItemSelect } from './DropdownItemSelect';
 import { DropdownTrigger } from './DropdownTrigger';
 
 const dropdownNodeUrl =
