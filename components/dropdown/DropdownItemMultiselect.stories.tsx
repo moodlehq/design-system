@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useArgs } from 'storybook/preview-api';
 import { expect, screen } from 'storybook/test';
 import { DropdownMenu } from './Dropdown';
-import { DropdownItemMultiselect } from './DropdownItem';
+import { DropdownItemMultiselect } from './DropdownItemMultiselect';
 
 const showcaseParameters = {
   controls: { disable: true },

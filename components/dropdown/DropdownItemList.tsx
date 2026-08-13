@@ -19,7 +19,7 @@ export const DropdownItemList = forwardRef<
   HTMLDivElement,
   DropdownItemListProps
 >(function DropdownItemList(
-  { label, variant = 'todo', className },
+  { label, variant = 'todo', className, ...props },
   forwardedRef,
 ) {
   const { ref: listItemRef, index } = useListItem({ label });
@@ -39,6 +39,7 @@ export const DropdownItemList = forwardRef<
       aria-disabled="true"
       tabIndex={activeIndex === index ? 0 : -1}
       className={classes.join(' ')}
+      {...props}
       {...(getItemProps({
         // Swallow clicks — pointer-events:none in CSS blocks mouse, but
         // getItemProps may attach a click handler for keyboard activation.

@@ -4,13 +4,11 @@ import { expect } from 'storybook/test';
 import { Checkbox } from '../checkbox';
 import { Choicebox } from '../choicebox';
 import { DropdownMenu } from './Dropdown';
-import {
-  DropdownItemAction,
-  DropdownItemCustom,
-  DropdownItemDivider,
-  DropdownItemExpandable,
-  DropdownItemSelect,
-} from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemCustom } from './DropdownItemCustom';
+import { DropdownItemDivider } from './DropdownItemDivider';
+import { DropdownItemExpandable } from './DropdownItemExpandable';
+import { DropdownItemSelect } from './DropdownItemSelect';
 
 const meta = {
   title: 'Components/Dropdown/DropdownItemCustom',

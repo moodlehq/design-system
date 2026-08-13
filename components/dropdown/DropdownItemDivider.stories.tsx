@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { DropdownMenu } from './Dropdown';
-import { DropdownItemAction, DropdownItemDivider } from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemDivider } from './DropdownItemDivider';
 
 const meta = {
   title: 'Components/Dropdown/DropdownItemDivider',

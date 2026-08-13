@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { DropdownMenu } from './Dropdown';
-import {
-  DropdownItemAction,
-  DropdownItemDivider,
-  DropdownItemGroup,
-  DropdownItemHeader,
-} from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemDivider } from './DropdownItemDivider';
+import { DropdownItemGroup } from './DropdownItemGroup';
+import { DropdownItemHeader } from './DropdownItemHeader';
 
 const showcaseParameters = {
   controls: { disable: true },

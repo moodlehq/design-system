@@ -2,11 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
 import { Dropdown } from './Dropdown';
-import {
-  DropdownItemAction,
-  DropdownItemDivider,
-  DropdownItemHeader,
-} from './DropdownItem';
+import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemDivider } from './DropdownItemDivider';
+import { DropdownItemHeader } from './DropdownItemHeader';
 import { DropdownTrigger } from './DropdownTrigger';
 
 const iconMapping = {
