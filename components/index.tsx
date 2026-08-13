@@ -1,6 +1,9 @@
 export { ActivityIcon } from './activity-icon';
 export type { ActivityIconProps } from './activity-icon';
 
+export { Breadcrumb } from './breadcrumb';
+export type { BreadcrumbItem, BreadcrumbProps } from './breadcrumb';
+
 export { Avatar } from './avatar';
 export type { AvatarProps, AvatarSize } from './avatar';
 
