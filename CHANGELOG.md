@@ -1,5 +1,20 @@
 # Changelog
 
+## [5.3.0](https://github.com/moodlehq/design-system/compare/design-system-v5.2.0...design-system-v5.3.0) (2026-08-14)
+
+
+### Features
+
+* **Breadcrumb:** Introduce new component ([#305](https://github.com/moodlehq/design-system/issues/305)) ([dfa864c](https://github.com/moodlehq/design-system/commit/dfa864cc6e8526df9a08b5cb71c4cecc195d2852))
+* **Dropdown:** Add Dropdown component suite ([#281](https://github.com/moodlehq/design-system/issues/281)) ([548b325](https://github.com/moodlehq/design-system/commit/548b3253f6184cb4f5d054fc84e65b64c63ad4c3))
+* **Switch:** Add new Switch component ([#291](https://github.com/moodlehq/design-system/issues/291)) ([d03e4cb](https://github.com/moodlehq/design-system/commit/d03e4cb7a723ebd3c3c981f22a414bda19074f9e))
+* **Tooltip:** Add new Tooltip component ([#279](https://github.com/moodlehq/design-system/issues/279)) ([5646f8a](https://github.com/moodlehq/design-system/commit/5646f8abfda87ba39b00926dc276942b471a7cba))
+
+
+### Bug Fixes
+
+* **Radio, Checkbox:** Fix alignment issues ([#299](https://github.com/moodlehq/design-system/issues/299)) ([6f06fd8](https://github.com/moodlehq/design-system/commit/6f06fd89ae0f32ad1c078b871b4df5a6e1494638))
+
 ## [5.2.0](https://github.com/moodlehq/design-system/compare/design-system-v5.1.2...design-system-v5.2.0) (2026-08-04)
 
 
