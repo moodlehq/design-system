@@ -79,6 +79,25 @@
   color: var(--mds-text-default);
 }
 
+/* Inline links stay underlined at rest and inherit surrounding paragraph type. */
+.mds-link[class].mds-link--inline {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+}
+
+.mds-link[class].mds-link--inline .mds-link__label {
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-position: from-font;
+}
+
+/* Inline focus uses only the focus stroke (no stacked underline). */
+.mds-link[class].mds-link--inline:focus-visible .mds-link__label {
+  text-decoration: none;
+}
+
 .mds-link[class].mds-link--disabled,
 .mds-link[class].mds-link--disabled:hover,
 .mds-link[class].mds-link--disabled:active {
