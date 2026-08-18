@@ -19,6 +19,11 @@ describe('Link: Unit Test', () => {
       expect(screen.getByRole('link')).toHaveClass('mds-link--secondary');
     });
 
+    it('renders the inline variant class', () => {
+      render(<Link label="Inline link" href="#docs" variant="inline" />);
+      expect(screen.getByRole('link')).toHaveClass('mds-link--inline');
+    });
+
     it('falls back to primary and warns in development for an invalid variant', () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
@@ -58,7 +63,7 @@ describe('Link: Unit Test', () => {
       expect(screen.getByTestId('end-icon')).toBeInTheDocument();
     });
 
-    it('renders only the start icon and warns when both icons are passed', () => {
+    it('renders only the start icon and warns when both icons are passed for non-inline variants', () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
       render(
@@ -75,6 +80,51 @@ describe('Link: Unit Test', () => {
       expect(screen.getByTestId('start-icon')).toBeInTheDocument();
       expect(screen.queryByTestId('end-icon')).not.toBeInTheDocument();
       expect(warnSpy).toHaveBeenCalledWith(
+        'Link: pass either startIcon or endIcon, not both. Rendering startIcon only.',
+      );
+
+      warnSpy.mockRestore();
+    });
+
+    it('ignores startIcon for inline variant and warns', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      render(
+        <Link
+          label="Inline link"
+          href="#docs"
+          variant="inline"
+          startIcon={<i data-testid="start-icon" aria-hidden="true" />}
+        />,
+      );
+
+      expect(screen.queryByTestId('start-icon')).not.toBeInTheDocument();
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Link: `inline` variant supports endIcon only. Ignoring startIcon.',
+      );
+
+      warnSpy.mockRestore();
+    });
+
+    it('prefers endIcon for inline variant when both icons are passed', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      render(
+        <Link
+          label="Inline link"
+          href="#docs"
+          variant="inline"
+          startIcon={<i data-testid="start-icon" aria-hidden="true" />}
+          endIcon={<i data-testid="end-icon" aria-hidden="true" />}
+        />,
+      );
+
+      expect(screen.queryByTestId('start-icon')).not.toBeInTheDocument();
+      expect(screen.getByTestId('end-icon')).toBeInTheDocument();
+      expect(warnSpy).toHaveBeenCalledWith(
+        'Link: `inline` variant supports endIcon only. Ignoring startIcon.',
+      );
+      expect(warnSpy).not.toHaveBeenCalledWith(
         'Link: pass either startIcon or endIcon, not both. Rendering startIcon only.',
       );
 
