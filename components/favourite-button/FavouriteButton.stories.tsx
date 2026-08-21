@@ -77,6 +77,41 @@ const showcaseStyle = {
   gap: 'var(--mds-spacing-sm)',
 };
 
+const matrixContainerStyle = {
+  display: 'grid',
+  gap: 'var(--mds-spacing-xs)',
+  justifyContent: 'center',
+};
+
+const matrixGridStyle = {
+  display: 'grid',
+  gridTemplateColumns: '7rem repeat(2, 6rem)',
+  alignItems: 'center',
+  columnGap: 'var(--mds-spacing-xs)',
+  rowGap: 'var(--mds-spacing-xxs)',
+};
+
+const matrixLabelCellStyle = {
+  color: 'var(--mds-text-subtle)',
+  fontSize: 'var(--mds-font-size-paragraph-small)',
+  fontFamily: 'var(--mds-font-family-base)',
+  fontWeight: 'var(--mds-font-weight-medium)',
+};
+
+const matrixCenteredCellStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
+const matrixStates = [
+  { key: 'default', label: 'Default' },
+  { key: 'hover', label: 'Hover' },
+  { key: 'pressed', label: 'Pressed' },
+  { key: 'focus-visible', label: 'Focus visible' },
+  { key: 'disabled', label: 'Disabled' },
+] as const;
+
 export const Default = {
   render: function Render(args) {
     const [{ selected }, updateArgs] = useArgs<typeof args>();
@@ -134,5 +169,85 @@ export const Disabled = {
       'aria-pressed',
       'true',
     );
+  },
+} satisfies Story;
+
+export const StateMatrix = {
+  parameters: {
+    layout: 'padded',
+    controls: { disable: true },
+    docs: {
+      canvas: { sourceState: 'none' as const },
+      description: {
+        story:
+          'State matrix for visual regression review across FavouriteButton selected/unselected variants. Hover, pressed, and focus-visible cells are driven by the Storybook pseudo-states addon.',
+      },
+    },
+    pseudo: {
+      hover: "[data-matrix-state='hover'] .mds-favourite-button",
+      active: "[data-matrix-state='pressed'] .mds-favourite-button",
+      focusVisible: "[data-matrix-state='focus-visible'] .mds-favourite-button",
+    },
+  },
+  render: () => (
+    <div style={matrixContainerStyle}>
+      <div style={matrixGridStyle}>
+        <span style={matrixLabelCellStyle}>State</span>
+        <span style={{ ...matrixLabelCellStyle, textAlign: 'center' }}>
+          Unselected
+        </span>
+        <span style={{ ...matrixLabelCellStyle, textAlign: 'center' }}>
+          Selected
+        </span>
+      </div>
+      {matrixStates.map((state) => {
+        const isDisabled = state.key === 'disabled';
+        return (
+          <div
+            key={state.key}
+            data-matrix-state={state.key}
+            style={matrixGridStyle}
+          >
+            <span style={matrixLabelCellStyle}>{state.label}</span>
+            <div style={matrixCenteredCellStyle}>
+              <FavouriteButton
+                aria-label={`Add to favourites ${state.label}`}
+                disabled={isDisabled}
+              />
+            </div>
+            <div style={matrixCenteredCellStyle}>
+              <FavouriteButton
+                aria-label={`Remove from favourites ${state.label}`}
+                selected
+                disabled={isDisabled}
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    const defaultUnselected = canvas.getByRole('button', {
+      name: 'Add to favourites Default',
+    });
+    const defaultSelected = canvas.getByRole('button', {
+      name: 'Remove from favourites Default',
+    });
+    const disabledUnselected = canvas.getByRole('button', {
+      name: 'Add to favourites Disabled',
+    });
+    const disabledSelected = canvas.getByRole('button', {
+      name: 'Remove from favourites Disabled',
+    });
+
+    await expect(defaultUnselected).toBeEnabled();
+    await expect(defaultUnselected).toHaveAttribute('aria-pressed', 'false');
+    await expect(defaultSelected).toBeEnabled();
+    await expect(defaultSelected).toHaveAttribute('aria-pressed', 'true');
+    await expect(disabledUnselected).toBeDisabled();
+    await expect(disabledUnselected).toHaveAttribute('aria-pressed', 'false');
+    await expect(disabledSelected).toBeDisabled();
+    await expect(disabledSelected).toHaveAttribute('aria-pressed', 'true');
   },
 } satisfies Story;

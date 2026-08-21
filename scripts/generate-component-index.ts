@@ -122,6 +122,8 @@ const SUBCOMPONENTS: Record<string, ComponentSubcomponentIndexItem[]> = {
 const PURPOSES: Record<string, string> = {
   'activity-icon':
     'Activity/resource/file icon with semantic category styling.',
+  alert:
+    'Persistent inline status banner with semantic variants and optional actions/dismiss.',
   avatar: 'Circular user/entity identity display — photo or initials.',
   badge: 'Short status, metadata, or count labels.',
   breadcrumb:

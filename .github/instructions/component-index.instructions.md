@@ -8,25 +8,26 @@ Quick reference for AI agents and developers.
 
 ## Components
 
-| Component       | Purpose                                                                                   | Key props                                        |
-| --------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| ActivityIcon    | Activity/resource/file icon with semantic category styling                                | icon, category, size, container                  |
-| Avatar          | Circular user/entity identity display — photo or initials                                 | type, size, initials, imageSrc, imageAlt         |
-| Badge           | Short status, metadata, or count labels                                                   | type, contrast, style, icon, label               |
-| Breadcrumb      | Hierarchical page trail with truncation and overflow support                              | items, ariaLabel, overflowAriaLabel              |
-| Button          | Primary and secondary actions                                                             | variant, size, disabled, startIcon, endIcon      |
-| Checkbox        | Independent multi-select controls                                                         | checked, label, disabled, invalid, indeterminate |
-| Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text)      | checked, label, disabled, invalid                |
-| CloseButton     | Icon-only dismiss action for temporary UI surfaces                                        | size, disabled, ariaLabel                        |
-| Dropdown        | Composable trigger + menu container for action, select, expandable, and multiselect items | label, variant, appearance, size, open, children |
-| FavouriteButton | Icon button to mark/unmark items as favourites                                            | checked, size, disabled, ariaLabel               |
-| Link            | Anchor element with variant and optional icon support                                     | label, variant, disabled, startIcon, endIcon     |
-| NavPill         | Compact pill-style navigation link for section switching                                  | label, active, disabled, href, ariaLabel         |
-| Pagination      | Page navigation control                                                                   | totalPages, currentPage, onPageChange, ariaLabel |
-| ProgressBar     | Visual progress indicator with status and label variants                                  | value, min, max, status, labelVariant, title     |
-| Radio           | Single-select options in a compact list (native radio input, label only)                  | checked, label, disabled, invalid                |
-| Switch          | Binary toggle control for on/off settings                                                 | checked, label, disabled, onChange               |
-| Tooltip         | Contextual label anchored to a trigger element                                            | label, placement, variant, children              |
+| Component       | Purpose                                                                                   | Key props                                         |
+| --------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| ActivityIcon    | Activity/resource/file icon with semantic category styling                                | icon, category, size, container                   |
+| Alert           | Persistent inline status banner with semantic variants and optional actions/dismiss       | type, title, message, isDismissible, isActionable |
+| Avatar          | Circular user/entity identity display — photo or initials                                 | type, size, initials, imageSrc, imageAlt          |
+| Badge           | Short status, metadata, or count labels                                                   | type, contrast, style, icon, label                |
+| Breadcrumb      | Hierarchical page trail with truncation and overflow support                              | items, ariaLabel, overflowAriaLabel               |
+| Button          | Primary and secondary actions                                                             | variant, size, disabled, startIcon, endIcon       |
+| Checkbox        | Independent multi-select controls                                                         | checked, label, disabled, invalid, indeterminate  |
+| Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text)      | checked, label, disabled, invalid                 |
+| CloseButton     | Icon-only dismiss action for temporary UI surfaces                                        | size, disabled, ariaLabel                         |
+| Dropdown        | Composable trigger + menu container for action, select, expandable, and multiselect items | label, variant, appearance, size, open, children  |
+| FavouriteButton | Icon button to mark/unmark items as favourites                                            | checked, size, disabled, ariaLabel                |
+| Link            | Anchor element with variant and optional icon support                                     | label, variant, disabled, startIcon, endIcon      |
+| NavPill         | Compact pill-style navigation link for section switching                                  | label, active, disabled, href, ariaLabel          |
+| Pagination      | Page navigation control                                                                   | totalPages, currentPage, onPageChange, ariaLabel  |
+| ProgressBar     | Visual progress indicator with status and label variants                                  | value, min, max, status, labelVariant, title      |
+| Radio           | Single-select options in a compact list (native radio input, label only)                  | checked, label, disabled, invalid                 |
+| Switch          | Binary toggle control for on/off settings                                                 | checked, label, disabled, onChange                |
+| Tooltip         | Contextual label anchored to a trigger element                                            | label, placement, variant, children               |
 
 ## Dropdown Subcomponents
 
@@ -49,6 +50,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 
 - [ActivityIcon implementation](../../components/activity-icon/ActivityIcon.tsx)
 - [ActivityIcon stories](../../components/activity-icon/ActivityIcon.stories.tsx)
+- [Alert implementation](../../components/alert/Alert.tsx)
+- [Alert stories](../../components/alert/Alert.stories.tsx)
 - [Avatar implementation](../../components/avatar/Avatar.tsx)
 - [Avatar stories](../../components/avatar/Avatar.stories.tsx)
 - [Breadcrumb implementation](../../components/breadcrumb/Breadcrumb.tsx)
