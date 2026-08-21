@@ -70,5 +70,8 @@ export type { RadioProps } from './radio';
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
 
+export { Textarea } from './textarea';
+export type { TextareaProps } from './textarea';
+
 export { Tooltip } from './tooltip';
 export type { TooltipProps } from './tooltip';
