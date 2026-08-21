@@ -3,9 +3,11 @@ import { expect, fireEvent, fn } from 'storybook/test';
 import { Link } from './Link';
 
 const iconMapping = {
-  None: undefined,
   'Arrow Left': <i className="fa-solid fa-arrow-left" aria-hidden="true" />,
   'Arrow Right': <i className="fa-solid fa-arrow-right" aria-hidden="true" />,
+  'External Link': (
+    <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
+  ),
 };
 
 const meta = {
@@ -28,19 +30,20 @@ const meta = {
     },
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'inline'],
       description: 'Link visual variant.',
       table: {
-        type: { summary: 'primary | secondary' },
+        type: { summary: 'primary | secondary | inline' },
         defaultValue: { summary: 'primary' },
       },
     },
     startIcon: {
       description:
-        'Icon rendered before the label. Accepts only intrinsic `<i>` or `<svg>` elements.',
+        'Icon rendered before the label. Accepts only intrinsic `<i>` or `<svg>` elements. Not supported for the `inline` variant.',
       options: Object.keys(iconMapping),
       mapping: iconMapping,
       control: { type: 'select' },
+      if: { arg: 'variant', neq: 'inline' },
     },
     endIcon: {
       description:
@@ -119,7 +122,28 @@ export const Variants: Story = {
     <div style={{ display: 'flex', gap: 'var(--mds-spacing-xl)' }}>
       <Link label="Primary" href="#storybook-link" />
       <Link label="Secondary" href="#storybook-link" variant="secondary" />
+      <Link label="Inline" href="#storybook-link" variant="inline" />
     </div>
+  ),
+};
+
+export const InlineInParagraph: Story = {
+  parameters: {
+    controls: { disable: true },
+    docs: { canvas: { sourceState: 'none' } },
+  },
+  render: () => (
+    <p
+      style={{
+        fontSize: 'var(--mds-font-size-paragraph-default)',
+        lineHeight: 'var(--mds-line-height-paragraph-default)',
+        margin: 0,
+      }}
+    >
+      Review the assessment guide in the{' '}
+      <Link label="course handbook" href="#storybook-link" variant="inline" />{' '}
+      before submitting your assignment.
+    </p>
   ),
 };
 
@@ -200,14 +224,16 @@ const matrixStateCellStyle = {
   display: 'inline-flex' as const,
   alignItems: 'center' as const,
   justifyContent: 'flex-start' as const,
+  lineHeight: 'var(--mds-line-height-paragraph-xs)',
 };
 
 const linkMatrixVariants = [
   { label: 'Primary', variant: 'primary' as const },
   { label: 'Secondary', variant: 'secondary' as const },
+  { label: 'Inline', variant: 'inline' as const },
 ];
 
-const linkMatrixUsages = [
+const defaultLinkMatrixUsages = [
   { label: 'No icon', startIcon: undefined, endIcon: undefined },
   {
     label: 'Start icon',
@@ -218,6 +244,15 @@ const linkMatrixUsages = [
     label: 'End icon',
     startIcon: undefined,
     endIcon: iconMapping['Arrow Right'],
+  },
+];
+
+const inlineLinkMatrixUsages = [
+  { label: 'No icon', startIcon: undefined, endIcon: undefined },
+  {
+    label: 'End icon',
+    startIcon: undefined,
+    endIcon: iconMapping['External Link'],
   },
 ];
 
@@ -260,8 +295,13 @@ export const StateMatrix: Story = {
       </div>
 
       {/* Data rows: variant × icon usage */}
-      {linkMatrixVariants.flatMap((variantDef) =>
-        linkMatrixUsages.map((usage) => (
+      {linkMatrixVariants.flatMap((variantDef) => {
+        const usages =
+          variantDef.variant === 'inline'
+            ? inlineLinkMatrixUsages
+            : defaultLinkMatrixUsages;
+
+        return usages.map((usage) => (
           <div
             key={`${variantDef.variant}-${usage.label}`}
             style={matrixGridStyle}
@@ -288,8 +328,8 @@ export const StateMatrix: Story = {
               );
             })}
           </div>
-        )),
-      )}
+        ));
+      })}
     </div>
   ),
 };
