@@ -7,73 +7,85 @@ const url =
 const variant = figma.enum('Variant', {
   Primary: 'primary',
   Secondary: 'secondary',
+  Inline: 'inline',
 });
 
 const linkLabel = 'Label';
 const linkHref = '#';
 
-figma.connect(Link, url, {
-  variant: { State: 'default', Link: 'none' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link label={linkLabel} href={linkHref} variant={variant} />
-  ),
-});
+const states = ['default', 'hover', 'pressed', 'focus', 'disabled'] as const;
+const standardVariants = ['Primary', 'Secondary'] as const;
 
-figma.connect(Link, url, {
-  variant: { State: 'hover', Link: 'none' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link label={linkLabel} href={linkHref} variant={variant} />
-  ),
-});
+for (const selectedVariant of standardVariants) {
+  for (const state of states) {
+    figma.connect(Link, url, {
+      variant: { Variant: selectedVariant, State: state, Link: 'none' },
+      props: { variant: variant },
+      example: ({ variant }) => (
+        <Link
+          label={linkLabel}
+          href={linkHref}
+          variant={variant}
+          disabled={state === 'disabled'}
+        />
+      ),
+    });
+  }
+}
 
-figma.connect(Link, url, {
-  variant: { State: 'pressed', Link: 'none' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link label={linkLabel} href={linkHref} variant={variant} />
-  ),
-});
+for (const selectedVariant of standardVariants) {
+  figma.connect(Link, url, {
+    variant: { Variant: selectedVariant, State: 'default', Link: 'startIcon' },
+    props: { variant: variant },
+    example: ({ variant }) => (
+      <Link
+        label={linkLabel}
+        href={linkHref}
+        variant={variant}
+        startIcon={<i className="fa-solid fa-arrow-left" />}
+      />
+    ),
+  });
 
-figma.connect(Link, url, {
-  variant: { State: 'focus', Link: 'none' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link label={linkLabel} href={linkHref} variant={variant} />
-  ),
-});
+  figma.connect(Link, url, {
+    variant: { Variant: selectedVariant, State: 'default', Link: 'endIcon' },
+    props: { variant: variant },
+    example: ({ variant }) => (
+      <Link
+        label={linkLabel}
+        href={linkHref}
+        variant={variant}
+        endIcon={<i className="fa-solid fa-arrow-right" />}
+      />
+    ),
+  });
+}
 
-figma.connect(Link, url, {
-  variant: { State: 'disabled', Link: 'none' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link label={linkLabel} href={linkHref} variant={variant} disabled />
-  ),
-});
+for (const state of states) {
+  figma.connect(Link, url, {
+    variant: { Variant: 'Inline', State: state, Link: 'none' },
+    props: { variant: variant },
+    example: ({ variant }) => (
+      <Link
+        label={linkLabel}
+        href={linkHref}
+        variant={variant}
+        disabled={state === 'disabled'}
+      />
+    ),
+  });
 
-figma.connect(Link, url, {
-  variant: { State: 'default', Link: 'startIcon' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link
-      label={linkLabel}
-      href={linkHref}
-      variant={variant}
-      startIcon={<i className="fa-solid fa-arrow-left" />}
-    />
-  ),
-});
-
-figma.connect(Link, url, {
-  variant: { State: 'default', Link: 'endIcon' },
-  props: { variant: variant },
-  example: ({ variant }) => (
-    <Link
-      label={linkLabel}
-      href={linkHref}
-      variant={variant}
-      endIcon={<i className="fa-solid fa-arrow-right" />}
-    />
-  ),
-});
+  figma.connect(Link, url, {
+    variant: { Variant: 'Inline', State: state, Link: 'endIcon' },
+    props: { variant: variant },
+    example: ({ variant }) => (
+      <Link
+        label={linkLabel}
+        href={linkHref}
+        variant={variant}
+        disabled={state === 'disabled'}
+        endIcon={<i className="fa-solid fa-arrow-up-right-from-square" />}
+      />
+    ),
+  });
+}

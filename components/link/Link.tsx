@@ -1,7 +1,7 @@
 import type { AnchorHTMLAttributes, MouseEvent, ReactElement } from 'react';
 import { forwardRef, isValidElement } from 'react';
 
-type LinkVariant = 'primary' | 'secondary';
+type LinkVariant = 'primary' | 'secondary' | 'inline';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
@@ -13,7 +13,7 @@ export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   endIcon?: IconElement;
 }
 
-const allowedVariants: LinkVariant[] = ['primary', 'secondary'];
+const allowedVariants: LinkVariant[] = ['primary', 'secondary', 'inline'];
 
 const isIconElement = (el: unknown, propName: string): el is IconElement => {
   const valid = isValidElement(el) && (el.type === 'i' || el.type === 'svg');
@@ -49,6 +49,14 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     ? startIcon
     : null;
   const resolvedEndIcon = isIconElement(endIcon, 'endIcon') ? endIcon : null;
+  const isInlineVariant = resolvedVariant === 'inline';
+  const hasStartIcon = resolvedStartIcon !== null;
+  const hasEndIcon = resolvedEndIcon !== null;
+
+  const renderedStartIcon =
+    !isInlineVariant && hasStartIcon ? resolvedStartIcon : null;
+  const renderedEndIcon =
+    isInlineVariant || !hasStartIcon ? resolvedEndIcon : null;
 
   if (import.meta.env.DEV) {
     const hasAccessibleName =
@@ -68,7 +76,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       );
     }
 
-    if (resolvedStartIcon && resolvedEndIcon) {
+    if (isInlineVariant && hasStartIcon) {
+      console.warn(
+        'Link: `inline` variant supports endIcon only. Ignoring startIcon.',
+      );
+    }
+
+    if (!isInlineVariant && hasStartIcon && hasEndIcon) {
       console.warn(
         'Link: pass either startIcon or endIcon, not both. Rendering startIcon only.',
       );
@@ -119,15 +133,15 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       role={disabled ? (role ?? 'link') : role}
       onClick={handleClick}
     >
-      {resolvedStartIcon ? (
+      {renderedStartIcon ? (
         <span className="mds-link__icon" aria-hidden="true">
-          {resolvedStartIcon}
+          {renderedStartIcon}
         </span>
       ) : null}
       <span className="mds-link__label">{label}</span>
-      {resolvedStartIcon ? null : resolvedEndIcon ? (
+      {renderedEndIcon ? (
         <span className="mds-link__icon" aria-hidden="true">
-          {resolvedEndIcon}
+          {renderedEndIcon}
         </span>
       ) : null}
     </a>
