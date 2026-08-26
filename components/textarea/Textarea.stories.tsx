@@ -53,12 +53,51 @@ const meta = {
       description: 'Helper text shown below the field in non-error state.',
       control: { type: 'text' },
     },
+    infoTooltipLabel: {
+      description:
+        'Accessible label for the info tooltip button shown beside the visible label.',
+      control: { type: 'text' },
+      if: { arg: 'hideLabel', eq: false },
+    },
     showCounter: {
       description:
         'Shows a live character counter. Requires maxLength to be set.',
       control: { type: 'boolean' },
       table: { defaultValue: { summary: 'false' } },
-      if: { arg: 'maxLength', truthy: true },
+      if: { arg: 'maxLength', exists: true },
+    },
+    counterAriaLabel: {
+      description:
+        'Optional i18n text (static string) or formatter for the counter aria-label. Formatter receives (currentLength, maxLength).',
+      control: false,
+      table: {
+        type: {
+          summary:
+            'string | ((currentLength: number, maxLength: number) => string)',
+        },
+      },
+    },
+    counterRemainingAnnouncement: {
+      description:
+        'Optional i18n text (static string) or formatter for remaining-character milestone announcements. Formatter receives (remaining, maxLength).',
+      control: false,
+      table: {
+        type: {
+          summary:
+            'string | ((remaining: number, maxLength: number) => string)',
+        },
+      },
+    },
+    counterOverLimitAnnouncement: {
+      description:
+        'Optional i18n text (static string) or formatter for over-limit announcements. Formatter receives (overLimitBy, maxLength).',
+      control: false,
+      table: {
+        type: {
+          summary:
+            'string | ((overLimitBy: number, maxLength: number) => string)',
+        },
+      },
     },
     resizable: {
       description:
@@ -67,20 +106,24 @@ const meta = {
       table: { defaultValue: { summary: 'true' } },
     },
     disabled: {
-      description: 'Disables the textarea, preventing all interaction.',
+      description:
+        'Use when input is unavailable. Pair with supportingText to explain why the field is disabled.',
       control: { type: 'boolean' },
       table: { defaultValue: { summary: 'false' } },
     },
     readOnly: {
       description:
-        'Makes the textarea read-only — focusable and selectable but not editable.',
+        'Use when existing content should stay readable/copyable while editing is blocked.',
       control: { type: 'boolean' },
       table: { defaultValue: { summary: 'false' } },
     },
     maxLength: {
       description:
-        'Maximum number of characters. Used with showCounter to display the counter.',
-      control: { type: 'number' },
+        'Maximum number of characters. Provide a non-negative integer (0 allowed). Clear/reset this control to remove the limit and hide showCounter.',
+      control: { type: 'number', min: 0, step: 1 },
+      table: {
+        type: { summary: 'number' },
+      },
     },
     rows: {
       description: 'The number of visible text lines.',
@@ -155,6 +198,15 @@ export const WithSupportingTextAndCounter: Story = {
     supportingText: 'Supporting text',
     showCounter: true,
     maxLength: 100,
+  },
+};
+
+export const WithInfoButton: Story = {
+  args: {
+    label: 'Course description',
+    placeholder: 'Describe the course aims and outcomes…',
+    infoTooltipLabel:
+      'Enter a brief overview of what learners will gain from this course.',
   },
 };
 
@@ -268,12 +320,40 @@ export const LiveCharacterCount: Story = {
   },
 };
 
-export const WithInfoButton: Story = {
+export const LocalizedCounterAccessibility: Story = {
+  render: function Render(args) {
+    const [value, setValue] = useState('');
+    return (
+      <Textarea
+        {...args}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  },
   args: {
-    label: 'Course description',
-    placeholder: 'Describe the course aims and outcomes…',
-    infoTooltipLabel:
-      'Enter a brief overview of what learners will gain from this course.',
+    label: 'Nachricht',
+    placeholder: 'Hier schreiben…',
+    showCounter: true,
+    maxLength: 20,
+    counterAriaLabel: (current, max) =>
+      `${current} von ${max} Zeichen verwendet`,
+    counterRemainingAnnouncement: (remaining, max) =>
+      `${remaining} von ${max} Zeichen verbleibend`,
+    counterOverLimitAnnouncement: (over, max) =>
+      `${over} über dem Limit von ${max} Zeichen`,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const textarea = canvas.getByRole('textbox');
+    await userEvent.type(textarea, '123456789012345');
+    await expect(canvas.getByText('15 / 20')).toHaveAttribute(
+      'aria-label',
+      '15 von 20 Zeichen verwendet',
+    );
+    await expect(canvas.getByRole('status')).toHaveTextContent(
+      '5 von 20 Zeichen verbleibend',
+    );
   },
 };
 

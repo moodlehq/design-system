@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
@@ -35,7 +35,7 @@ describe('Textarea: Unit Test', () => {
     expect(screen.queryByText('Hidden')).not.toBeInTheDocument();
   });
 
-  it('does not render invalidFeedback when hideLabel is true', () => {
+  it('renders invalidFeedback when hideLabel is true', () => {
     render(
       <Textarea
         label="Field"
@@ -44,7 +44,7 @@ describe('Textarea: Unit Test', () => {
         invalidFeedback="Error message"
       />,
     );
-    expect(screen.queryByText('Error message')).not.toBeInTheDocument();
+    expect(screen.getByText('Error message')).toBeInTheDocument();
   });
 
   it('uses aria-label from label prop when hideLabel is true', () => {
@@ -65,8 +65,12 @@ describe('Textarea: Unit Test', () => {
 
   it('renders the required asterisk when required is true', () => {
     render(<Textarea label="Required field" required />);
-    expect(screen.getByText('*')).toBeInTheDocument();
-    expect(screen.getByText('*')).toHaveAttribute('aria-hidden', 'true');
+    const label = screen.getByText('Required field').closest('label');
+    expect(label).toBeInTheDocument();
+
+    const requiredIndicator = within(label as HTMLLabelElement).getByText('*');
+    expect(requiredIndicator).toBeInTheDocument();
+    expect(requiredIndicator).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('does not render the asterisk when required is false', () => {
@@ -177,6 +181,81 @@ describe('Textarea: Unit Test', () => {
     expect(screen.getByText('5 / 100')).toBeInTheDocument();
   });
 
+  it('applies custom counter aria-label formatter when provided', () => {
+    render(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={100}
+        value="hello"
+        onChange={() => {}}
+        counterAriaLabel={(current, max) =>
+          `${current} von ${max} Zeichen verwendet`
+        }
+      />,
+    );
+
+    expect(screen.getByText('5 / 100')).toHaveAttribute(
+      'aria-label',
+      '5 von 100 Zeichen verwendet',
+    );
+  });
+
+  it('does not add default English aria-label when no formatter is provided', () => {
+    render(<Textarea label="Field" showCounter maxLength={100} />);
+    expect(screen.getByText('0 / 100')).not.toHaveAttribute('aria-label');
+  });
+
+  it('announces remaining-character milestones using custom formatter', async () => {
+    const user = userEvent.setup();
+    render(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={10}
+        counterRemainingAnnouncement={(remaining, max) =>
+          `Il reste ${remaining} sur ${max}`
+        }
+      />,
+    );
+
+    await user.type(screen.getByRole('textbox'), 'abcde');
+
+    expect(screen.getByRole('status')).toHaveTextContent('Il reste 5 sur 10');
+  });
+
+  it('announces over-limit text using custom formatter', () => {
+    const { rerender } = render(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={5}
+        value="abcde"
+        onChange={() => {}}
+        counterOverLimitAnnouncement={(over, max) =>
+          `${over} au-dessus de la limite de ${max}`
+        }
+      />,
+    );
+
+    rerender(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={5}
+        value="abcdef"
+        onChange={() => {}}
+        counterOverLimitAnnouncement={(over, max) =>
+          `${over} au-dessus de la limite de ${max}`
+        }
+      />,
+    );
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '1 au-dessus de la limite de 5',
+    );
+  });
+
   it('applies mds-textarea-field--no-resize class when resizable is false', () => {
     render(<Textarea label="Field" resizable={false} />);
     expect(screen.getByRole('textbox')).toHaveClass(
@@ -247,6 +326,17 @@ describe('Textarea: Unit Test', () => {
     render(<Textarea label="Field" showCounter />);
     expect(warn).toHaveBeenCalledWith(
       expect.stringContaining('showCounter=true requires maxLength'),
+    );
+    vi.restoreAllMocks();
+  });
+
+  it('warns in dev mode when disabled is true without supportingText', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(<Textarea label="Field" disabled />);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining(
+        'disabled fields should include supportingText that explains why input is unavailable',
+      ),
     );
     vi.restoreAllMocks();
   });
@@ -331,5 +421,178 @@ describe('Textarea: Unit Test', () => {
     expect(ids.length).toBe(2);
     expect(document.getElementById(ids[0])).toHaveTextContent('Error');
     expect(document.getElementById(ids[1])).toHaveTextContent('0 / 100');
+  });
+
+  it('merges consumer aria-describedby with generated ids', () => {
+    render(
+      <>
+        <span id="external-hint">External hint</span>
+        <Textarea
+          label="Field"
+          aria-describedby="external-hint"
+          invalid
+          invalidFeedback="Error"
+          showCounter
+          maxLength={100}
+        />
+      </>,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    const describedBy = textarea.getAttribute('aria-describedby') ?? '';
+    const ids = describedBy.split(' ');
+
+    expect(ids).toContain('external-hint');
+    expect(ids.length).toBe(3);
+    expect(document.getElementById('external-hint')).toHaveTextContent(
+      'External hint',
+    );
+    expect(document.getElementById(ids[1])).toHaveTextContent('Error');
+    expect(document.getElementById(ids[2])).toHaveTextContent('0 / 100');
+  });
+
+  it('links hidden-label invalid feedback via aria-describedby', () => {
+    render(
+      <Textarea
+        hideLabel
+        aria-label="Field"
+        invalid
+        invalidFeedback="Hidden label error"
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox', { name: 'Field' });
+    const feedbackId = textarea.getAttribute('aria-describedby');
+
+    expect(screen.queryByText('Field')).not.toBeInTheDocument();
+    expect(feedbackId).toBeTruthy();
+    expect(document.getElementById(feedbackId!)).toHaveTextContent(
+      'Hidden label error',
+    );
+  });
+
+  it('merges consumer aria-describedby when hideLabel is true', () => {
+    render(
+      <>
+        <span id="external-description">External description</span>
+        <Textarea
+          hideLabel
+          aria-label="Field"
+          aria-describedby="external-description"
+          invalid
+          invalidFeedback="Error"
+        />
+      </>,
+    );
+
+    const textarea = screen.getByRole('textbox', { name: 'Field' });
+    const describedBy = textarea.getAttribute('aria-describedby') ?? '';
+    const ids = describedBy.split(' ');
+
+    expect(ids).toContain('external-description');
+    expect(ids.length).toBe(2);
+    expect(document.getElementById('external-description')).toHaveTextContent(
+      'External description',
+    );
+    expect(document.getElementById(ids[1])).toHaveTextContent('Error');
+  });
+
+  it('only applies pointer-focus class for pointer-initiated focus', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <button type="button">Before</button>
+        <Textarea label="Field" />
+      </>,
+    );
+
+    const textarea = screen.getByRole('textbox');
+
+    await user.tab();
+    await user.tab();
+    expect(textarea).toHaveFocus();
+    expect(textarea).not.toHaveClass('mds-textarea-field--pointer-focus');
+
+    fireEvent.blur(textarea);
+    fireEvent.pointerDown(textarea);
+    fireEvent.focus(textarea);
+
+    expect(textarea).toHaveClass('mds-textarea-field--pointer-focus');
+
+    fireEvent.blur(textarea);
+    expect(textarea).not.toHaveClass('mds-textarea-field--pointer-focus');
+  });
+
+  it('keeps no-resize behavior when readOnly is enabled', () => {
+    render(<Textarea label="Field" readOnly resizable={false} />);
+
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toHaveClass('mds-textarea-field--readonly');
+    expect(textarea).toHaveClass('mds-textarea-field--no-resize');
+    expect(textarea).toHaveAttribute('readonly');
+  });
+
+  it('shows supporting guidance instead of invalid feedback when disabled', () => {
+    render(
+      <Textarea
+        label="Field"
+        disabled
+        invalid
+        invalidFeedback="Error message"
+        supportingText="Guidance text"
+      />,
+    );
+
+    expect(screen.getByText('Guidance text')).toBeInTheDocument();
+    expect(screen.queryByText('Error message')).not.toBeInTheDocument();
+  });
+
+  it('shows controlled values above maxLength in the counter display', () => {
+    const { rerender } = render(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={5}
+        value="abcde"
+        onChange={() => {}}
+      />,
+    );
+
+    expect(screen.getByText('5 / 5')).toBeInTheDocument();
+
+    rerender(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={5}
+        value="abcdef"
+        onChange={() => {}}
+      />,
+    );
+
+    expect(screen.getByText('6 / 5')).toBeInTheDocument();
+  });
+
+  it('announces milestone text only when a threshold is crossed', async () => {
+    const user = userEvent.setup();
+    render(
+      <Textarea
+        label="Field"
+        showCounter
+        maxLength={25}
+        counterRemainingAnnouncement={(remaining, max) =>
+          `${remaining} characters left out of ${max}`
+        }
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    const status = screen.getByRole('status');
+
+    await user.type(textarea, 'abcd');
+    expect(status).toHaveTextContent('');
+
+    await user.type(textarea, 'e');
+    expect(status).toHaveTextContent('20 characters left out of 25');
   });
 }) as unknown as void;

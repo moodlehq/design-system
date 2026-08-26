@@ -10,6 +10,9 @@ import {
 import { Button } from '../button';
 import { Tooltip } from '../tooltip';
 
+type CounterMessageFormatter =
+  string | ((value: number, maxLength: number) => string);
+
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** Visible label text. When hideLabel is true this also serves as the aria-label
    *  fallback if no explicit aria-label prop is provided. */
@@ -26,6 +29,12 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   /** Optional supporting/helper text shown in the footer row when the field is not
    *  in the invalid+feedback state. */
   supportingText?: string;
+  /** Use disabled only when the field is unavailable for input.
+   *  Provide supportingText to explain why the control is disabled. */
+  disabled?: boolean;
+  /** Use readOnly when existing content must remain readable/copyable
+   *  but should not be editable. */
+  readOnly?: boolean;
   /** When true the textarea renders a native resize handle (CSS resize: vertical).
    *  Defaults to true. */
   resizable?: boolean;
@@ -37,6 +46,15 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
    *  or focusing it reveals a tooltip with this text. Only shown when the label is
    *  visible (`hideLabel` is false or omitted). */
   infoTooltipLabel?: string;
+  /** Accessible label for the visible counter text (for example,
+   *  "12 of 100 characters") as a translated string or formatter callback. */
+  counterAriaLabel?: CounterMessageFormatter;
+  /** Live-region announcement for remaining-character milestones (20, 10, 5, 0)
+   *  as a translated string or formatter callback. */
+  counterRemainingAnnouncement?: CounterMessageFormatter;
+  /** Live-region announcement for over-limit state as a translated string or
+   *  formatter callback. */
+  counterOverLimitAnnouncement?: CounterMessageFormatter;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -50,6 +68,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       resizable = true,
       showCounter = false,
       infoTooltipLabel,
+      counterAriaLabel,
+      counterRemainingAnnouncement,
+      counterOverLimitAnnouncement,
       className,
       id: idProp,
       required,
@@ -64,6 +85,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onFocus,
       onBlur,
       'aria-label': ariaLabelProp,
+      'aria-describedby': ariaDescribedByProp,
       ...textareaProps
     }: TextareaProps,
     ref,
@@ -74,11 +96,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const hasVisibleLabel = !hideLabel;
     const ariaLabel = hideLabel ? (ariaLabelProp ?? label) : undefined;
 
-    // Invalid feedback is suppressed when the label is hidden — it requires a
-    // visible label to provide context. Supporting text and the counter are
-    // independent of label visibility and remain shown.
-    const showFeedback =
-      hasVisibleLabel && isInvalid && !disabled && !!invalidFeedback;
+    // Invalid feedback is tied to invalid state (and not disabled), independent
+    // of label visibility. Supporting text is replaced when feedback is shown.
+    const showFeedback = isInvalid && !disabled && !!invalidFeedback;
     const footerText = showFeedback ? invalidFeedback : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
 
@@ -88,7 +108,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const counterId = showCounterEl ? `${id}-counter` : undefined;
     // Combine feedback and counter IDs so both are announced on field focus.
     const describedBy =
-      [feedbackId, counterId].filter(Boolean).join(' ') || undefined;
+      [ariaDescribedByProp, feedbackId, counterId]
+        .filter((id): id is string => Boolean(id && id.trim().length > 0))
+        .join(' ') || undefined;
 
     const [currentLength, setCurrentLength] = useState(
       value != null
@@ -112,16 +134,71 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     // thresholds so the counter does not announce on every keystroke.
     const [announcement, setAnnouncement] = useState('');
 
+    const resolveCounterMessage = (
+      formatter: CounterMessageFormatter | undefined,
+      value: number,
+      max: number,
+    ) => {
+      if (!formatter) return undefined;
+      return typeof formatter === 'function'
+        ? formatter(value, max)
+        : formatter;
+    };
+
+    const updateAnnouncementForRemaining = (
+      remaining: number,
+      prev: number | null,
+    ) => {
+      if (prev === null || maxLength == null) return;
+
+      // Announce only at meaningful milestones (ZeroHeight: throttle
+      // announcements — not on every keystroke).
+      if (remaining < 0) {
+        const overLimitText = resolveCounterMessage(
+          counterOverLimitAnnouncement,
+          Math.abs(remaining),
+          maxLength,
+        );
+        if (overLimitText) setAnnouncement(overLimitText);
+        return;
+      }
+
+      const milestones = [20, 10, 5, 0];
+      for (const threshold of milestones) {
+        if (prev > threshold && remaining <= threshold) {
+          const remainingText = resolveCounterMessage(
+            counterRemainingAnnouncement,
+            remaining,
+            maxLength,
+          );
+          if (remainingText) setAnnouncement(remainingText);
+          break;
+        }
+      }
+    };
+
     useEffect(() => {
       if (value != null) {
+        const nextLength = String(value).length;
+        const nextRemaining =
+          showCounterEl && maxLength != null ? maxLength - nextLength : null;
+        const prevRemaining = prevRemainingRef.current;
+
         setCurrentLength(String(value).length);
         // Keep prevRemainingRef in sync with controlled value updates so the
         // milestone logic in handleChange uses the correct previous baseline.
-        if (showCounterEl && maxLength != null) {
-          prevRemainingRef.current = maxLength - String(value).length;
+        if (nextRemaining != null) {
+          updateAnnouncementForRemaining(nextRemaining, prevRemaining);
+          prevRemainingRef.current = nextRemaining;
         }
       }
-    }, [value, maxLength, showCounterEl]);
+    }, [
+      value,
+      maxLength,
+      showCounterEl,
+      counterOverLimitAnnouncement,
+      counterRemainingAnnouncement,
+    ]);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       if (showCounterEl) {
@@ -132,26 +209,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           const remaining = maxLength - newLength;
           const prev = prevRemainingRef.current;
           prevRemainingRef.current = remaining;
-
-          // Announce only at meaningful milestones (ZeroHeight: throttle
-          // announcements — not on every keystroke).
-          if (prev !== null) {
-            if (remaining < 0) {
-              setAnnouncement(
-                `${Math.abs(remaining)} over the ${maxLength} character limit`,
-              );
-            } else {
-              const milestones = [20, 10, 5, 0];
-              for (const threshold of milestones) {
-                if (prev > threshold && remaining <= threshold) {
-                  setAnnouncement(
-                    `${remaining} of ${maxLength} characters remaining`,
-                  );
-                  break;
-                }
-              }
-            }
-          }
+          updateAnnouncementForRemaining(remaining, prev);
         }
       }
 
@@ -172,6 +230,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       if (showCounter && maxLength == null) {
         console.warn(
           'Textarea: showCounter=true requires maxLength to be set so the counter can display a maximum.',
+        );
+      }
+      if (disabled && !supportingText?.trim()) {
+        console.warn(
+          'Textarea: disabled fields should include supportingText that explains why input is unavailable.',
         );
       }
     }
@@ -278,7 +341,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                   id={counterId}
                   className="mds-textarea-counter"
                   dir="ltr"
-                  aria-label={`${currentLength} of ${maxLength} characters`}
+                  aria-label={resolveCounterMessage(
+                    counterAriaLabel,
+                    currentLength,
+                    maxLength,
+                  )}
                 >
                   {currentLength} / {maxLength}
                 </span>

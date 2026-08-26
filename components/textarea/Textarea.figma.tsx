@@ -2,7 +2,7 @@ import figma from '@figma/code-connect';
 import { Textarea } from './Textarea';
 
 const url =
-  'https://www.figma.com/design/6u22h9GzDI0wWL5yHwQ1jx/Text-area?node-id=13934-4878';
+  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=13934-4878';
 
 const baseProps = {
   label: figma.string('Supporting text#13940:21'),

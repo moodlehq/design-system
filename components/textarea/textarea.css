@@ -162,7 +162,15 @@
 }
 
 .mds-textarea[class] .mds-textarea-field.is-invalid[class]:focus-visible {
-  outline-color: var(--mds-border-interactive-danger-default);
+  outline-color: var(--mds-focus-danger);
+  border-color: var(--mds-focus-danger);
+}
+
+/* Pointer-initiated focus on an invalid field: keep the strong danger border
+   (no ring) rather than the pale focus-danger tone reserved for keyboard focus. */
+.mds-textarea[class]
+  .mds-textarea-field--pointer-focus.is-invalid[class]:focus-visible {
+  outline: none;
   border-color: var(--mds-border-interactive-danger-default);
 }
 
@@ -180,7 +188,6 @@
   background-color: var(--mds-bg-surface-default);
   border-color: var(--mds-border-interactive-secondary-default);
   color: var(--mds-text-muted);
-  resize: none;
 }
 
 /* --- Footer row (supporting text + counter) --------------------------------- */
