@@ -1,7 +1,8 @@
 @import './activity-icon/activity-icon.css';
-@import './breadcrumb/breadcrumb.css';
+@import './alert/alert.css';
 @import './avatar/avatar.css';
 @import './badge/badge.css';
+@import './breadcrumb/breadcrumb.css';
 @import './button/button.css';
 @import './checkbox/checkbox.css';
 @import './choicebox/choicebox.css';

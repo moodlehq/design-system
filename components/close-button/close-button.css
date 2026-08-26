@@ -1,20 +1,31 @@
 .mds-close-button.btn-close {
   inline-size: var(--mds-icons-md);
   block-size: var(--mds-icons-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0;
   border-radius: var(--mds-border-radius-xs);
   color: var(--mds-text-default);
-  background-color: currentColor;
+  background-color: transparent;
   background-image: none;
+  opacity: 0.6;
+}
+
+.mds-close-button.btn-close::before {
+  content: '';
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: currentColor;
   mask-image: url('./assets/close-button.svg');
   mask-repeat: no-repeat;
   mask-position: center;
-  mask-size: var(--mds-icons-md) var(--mds-icons-md);
+  mask-size: 100% 100%;
   -webkit-mask-image: url('./assets/close-button.svg');
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
-  -webkit-mask-size: var(--mds-icons-md) var(--mds-icons-md);
-  opacity: 0.6;
+  -webkit-mask-size: 100% 100%;
 }
 
 .mds-close-button.btn-close:hover {
@@ -23,6 +34,7 @@
 
 .mds-close-button.btn-close:focus {
   box-shadow: none;
+  outline: none;
 }
 
 .mds-close-button.btn-close:focus-visible {
@@ -40,20 +52,14 @@
 .mds-close-button.btn-close.mds-close-button--sm {
   inline-size: var(--mds-icons-sm);
   block-size: var(--mds-icons-sm);
-  mask-size: var(--mds-icons-sm) var(--mds-icons-sm);
-  -webkit-mask-size: var(--mds-icons-sm) var(--mds-icons-sm);
 }
 
 .mds-close-button.btn-close.mds-close-button--md {
   inline-size: var(--mds-icons-md);
   block-size: var(--mds-icons-md);
-  mask-size: var(--mds-icons-md) var(--mds-icons-md);
-  -webkit-mask-size: var(--mds-icons-md) var(--mds-icons-md);
 }
 
 .mds-close-button.btn-close.mds-close-button--lg {
   inline-size: var(--mds-icons-lg);
   block-size: var(--mds-icons-lg);
-  mask-size: var(--mds-icons-lg) var(--mds-icons-lg);
-  -webkit-mask-size: var(--mds-icons-lg) var(--mds-icons-lg);
 }

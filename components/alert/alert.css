@@ -1,0 +1,134 @@
+.mds-alert {
+  display: flex;
+  gap: var(--mds-spacing-md);
+  align-items: flex-start;
+  inline-size: 100%;
+  padding: var(--mds-spacing-md);
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-feedback-primary);
+  border-radius: var(--mds-border-radius-md);
+  background-color: var(--mds-bg-feedback-primary-light);
+  color: var(--mds-text-feedback-primary);
+}
+
+.mds-alert--success {
+  background-color: var(--mds-bg-feedback-success-light);
+  border-color: var(--mds-border-feedback-success);
+  color: var(--mds-text-feedback-success);
+}
+
+.mds-alert--warning {
+  background-color: var(--mds-bg-feedback-warning-light);
+  border-color: var(--mds-border-feedback-warning);
+  color: var(--mds-text-feedback-warning);
+}
+
+.mds-alert--danger {
+  background-color: var(--mds-bg-feedback-danger-light);
+  border-color: var(--mds-border-feedback-danger);
+  color: var(--mds-text-feedback-danger);
+}
+
+.mds-alert-icon-wrap {
+  display: flex;
+  flex-shrink: 0;
+  inline-size: 20px; /* Figma defines icon frame as fixed 20x20. */
+  block-size: 20px; /* Figma defines icon frame as fixed 20x20. */
+}
+
+.mds-alert--no-title .mds-alert-icon-wrap {
+  block-size: 24px; /* Figma no-title variant uses a 20x24 icon frame. */
+}
+
+.mds-alert-icon {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: var(--mds-bg-feedback-primary-default);
+  mask-image: url('./assets/alert-info.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url('./assets/alert-info.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.mds-alert--success .mds-alert-icon {
+  background-color: var(--mds-bg-feedback-success-default);
+  mask-image: url('./assets/alert-success.svg');
+  -webkit-mask-image: url('./assets/alert-success.svg');
+}
+
+.mds-alert--warning .mds-alert-icon {
+  background-color: var(--mds-bg-feedback-warning-default);
+  mask-image: url('./assets/alert-warning.svg');
+  -webkit-mask-image: url('./assets/alert-warning.svg');
+}
+
+.mds-alert--danger .mds-alert-icon {
+  background-color: var(--mds-bg-feedback-danger-default);
+  mask-image: url('./assets/alert-danger.svg');
+  -webkit-mask-image: url('./assets/alert-danger.svg');
+}
+
+.mds-alert-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--mds-spacing-md);
+  min-inline-size: 0;
+}
+
+.mds-alert-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xs);
+}
+
+.mds-alert-title {
+  margin: 0;
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-headings-6);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: var(--mds-line-height-headings-6);
+  color: inherit;
+}
+
+.mds-alert-message {
+  margin: 0;
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-default);
+  color: inherit;
+}
+
+.mds-alert-message a,
+.mds-alert-custom a {
+  color: var(--mds-text-link-primary-default);
+  text-decoration: underline;
+}
+
+.mds-alert-custom {
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-default);
+  color: inherit;
+}
+
+.mds-alert-actions {
+  display: flex;
+}
+
+.mds-alert-dismiss {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.mds-alert-dismiss-button {
+  color: inherit;
+}
