@@ -46,20 +46,6 @@
   font-weight: var(--mds-font-weight-medium);
 }
 
-/* Info icon-button beside the label — reuses Button ghost sm for the hit area,
-   focus ring, and hover/active fills. Button icon-only sm forces icons.xxs;
-   override restores the spec-correct icons.xs size. Padding is zeroed so the
-   button stays 16px tall and aligns flush with the label row height. */
-.mds-textarea[class] .mds-textarea-info-button.mds-btn {
-  padding: 0;
-}
-
-.mds-textarea[class] .mds-textarea-info-button.mds-btn i {
-  font-size: var(--mds-icons-xs);
-  inline-size: var(--mds-icons-xs);
-  block-size: var(--mds-icons-xs);
-}
-
 /* --- Textarea field --------------------------------------------------------- */
 
 /* Wrapper provides position context for the absolutely-placed invalid icon. */
