@@ -352,7 +352,7 @@ describe('Textarea: Unit Test', () => {
     render(<Textarea label="Field" infoTooltipLabel="More about this field" />);
     expect(
       screen.getByRole('button', { name: 'More about this field' }),
-    ).toBeInTheDocument();
+    ).toHaveClass('mds-field-info-button');
   });
 
   it('does not render the info button when hideLabel is true', () => {

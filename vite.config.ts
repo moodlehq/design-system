@@ -16,7 +16,7 @@ const dirname = import.meta.dirname;
 const componentEntries = Object.fromEntries(
   fs
     .readdirSync(path.join(dirname, 'components'), { withFileTypes: true })
-    .filter((d) => d.isDirectory())
+    .filter((d) => d.isDirectory() && !d.name.startsWith('_'))
     .map((d) => [
       `components/${d.name}/index`,
       `./components/${d.name}/index.tsx`,
@@ -25,6 +25,7 @@ const componentEntries = Object.fromEntries(
 
 interface ComponentCssAsset {
   componentName: string;
+  isInternal: boolean;
   source: string;
 }
 
@@ -102,9 +103,13 @@ function getComponentCssAssets(): ComponentCssAsset[] {
     const componentName = path.posix
       .normalize(path.dirname(relativeImportPath))
       .replace(/^\.\//, '');
+    const isInternal = componentName
+      .split('/')
+      .some((segment) => segment.startsWith('_'));
 
     assets.push({
       componentName,
+      isInternal,
       source: inlineCssImageUrls(
         fs.readFileSync(absoluteImportPath, 'utf8').trim(),
         path.dirname(absoluteImportPath),
@@ -116,11 +121,14 @@ function getComponentCssAssets(): ComponentCssAsset[] {
 }
 
 function buildComponentsCssManifest(assets: ComponentCssAsset[]): string {
-  const imports = assets.map(
-    (asset) => `@import './${asset.componentName}/index.css';`,
-  );
+  const imports = assets
+    .filter((asset) => !asset.isInternal)
+    .map((asset) => `@import './${asset.componentName}/index.css';`);
+  const internalSources = assets
+    .filter((asset) => asset.isInternal)
+    .map((asset) => asset.source);
 
-  return `${imports.join('\n')}\n`;
+  return `${[...imports, ...internalSources].join('\n')}\n`;
 }
 
 function buildComponentsLegacyScssManifest(
@@ -154,7 +162,7 @@ function emitComponentAssets(ctx: PluginContext): void {
   });
 
   // Per-component CSS files
-  for (const componentAsset of assets) {
+  for (const componentAsset of assets.filter((asset) => !asset.isInternal)) {
     ctx.emitFile({
       type: 'asset',
       fileName: `components/${componentAsset.componentName}/index.css`,
