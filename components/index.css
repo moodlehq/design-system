@@ -10,6 +10,8 @@
 @import './close-button/close-button.css';
 @import './dropdown/dropdown.css';
 @import './favourite-button/favourite-button.css';
+@import './input/input.css';
+@import './input/password-input.css';
 @import './link/link.css';
 @import './nav-pill/nav-pill.css';
 @import './pagination/pagination.css';
