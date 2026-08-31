@@ -1,0 +1,223 @@
+/* Input component
+  Single-line text-like field with label and feedback/support text.
+  Shared field layout classes are also reused by PasswordInput. */
+
+.mds-input[class] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+}
+
+.mds-input[class] .mds-input-label-row {
+  display: flex;
+  align-items: center;
+  min-height: 16px;
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-input[class] .mds-input-label {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: var(--mds-line-height-paragraph-xs);
+  color: var(--mds-text-subtle);
+}
+
+.mds-input[class] .mds-input-required {
+  color: var(--mds-text-danger);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+}
+
+.mds-input[class] .mds-input-field-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.mds-input[class] .mds-input-field[class] {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-default);
+  letter-spacing: var(--mds-letter-spacing-default);
+  color: var(--mds-text-default);
+
+  background-color: transparent;
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
+  border-radius: var(--mds-border-radius-sm);
+  transition: background-color 150ms ease;
+}
+
+.mds-input[class] .mds-input-field[class]::placeholder {
+  color: var(--mds-text-muted);
+  opacity: 1;
+}
+
+/* Hide the native number spin buttons; consumers add their own stepper
+   actions via mds-input-actions when needed. */
+.mds-input[class] .mds-input-field[class]::-webkit-outer-spin-button,
+.mds-input[class] .mds-input-field[class]::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.mds-input[class] .mds-input-field[type="number"][class] {
+  -moz-appearance: textfield;
+}
+
+.mds-input[class] .mds-input-field[class]:hover:not(:disabled):not(:focus) {
+  background-color: var(--mds-bg-surface-default);
+}
+
+.mds-input[class]
+  .mds-input-field[class]:active:not(:disabled):not(
+    .mds-input-field--readonly
+  ):not(.is-invalid) {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-primary-default);
+}
+
+.mds-input[class]
+  .mds-input-field.is-invalid[class]:active:not(:disabled):not(
+    .mds-input-field--readonly
+  ) {
+  background-color: var(--mds-bg-surface-default);
+}
+
+.mds-input[class] .mds-input-field[class]:focus {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-default);
+  box-shadow: none;
+  outline: none;
+}
+
+.mds-input[class] .mds-input-field[class]:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: 0;
+  border-color: var(--mds-focus-default);
+}
+
+.mds-input[class] .mds-input-field--pointer-focus[class]:focus-visible {
+  outline: none;
+  border-color: var(--mds-border-interactive-primary-default);
+}
+
+.mds-input[class] .mds-input-field.is-invalid[class] {
+  border-color: var(--mds-border-interactive-danger-default);
+  background-image: none;
+}
+
+.mds-input[class] .mds-input-field.is-invalid[class]:focus-visible {
+  outline-color: var(--mds-focus-danger);
+  border-color: var(--mds-focus-danger);
+}
+
+.mds-input[class]
+  .mds-input-field--pointer-focus.is-invalid[class]:focus-visible {
+  outline: none;
+  border-color: var(--mds-border-interactive-danger-default);
+}
+
+.mds-input[class] .mds-input-field--readonly[class] {
+  border-color: var(--mds-border-default);
+  color: var(--mds-text-muted);
+}
+
+.mds-input[class] .mds-input-field[class]:disabled {
+  background-color: var(--mds-bg-surface-strong);
+  border-color: var(--mds-border-interactive-secondary-default);
+  color: var(--mds-text-muted);
+  cursor: not-allowed;
+}
+
+.mds-input[class] .mds-input-field--with-status[class] {
+  padding-inline-end: calc(var(--mds-spacing-sm) * 2 + var(--mds-icons-xs));
+}
+
+.mds-input[class] .mds-input-field--with-action[class] {
+  padding-inline-end: calc(
+    var(--mds-spacing-sm) * 2 + var(--mds-icons-sm) + var(--mds-icons-xs)
+  );
+}
+
+/* Status icon and action button render side by side. Their combined padding
+   must reserve the with-status cushion (text-to-icon clearance) plus the
+   action button's own width, plus a spacing-xs gap between the two icons —
+   matching the uniform flex gap Figma uses between all elements in this row. */
+.mds-input[class]
+  .mds-input-field--with-status.mds-input-field--with-action[class] {
+  padding-inline-end: calc(
+    var(--mds-spacing-sm) * 2 + var(--mds-icons-xs) + var(--mds-spacing-xs) +
+      var(--mds-icons-sm) + var(--mds-icons-xs)
+  );
+}
+
+.mds-input[class] .mds-input-field--with-start-icon[class] {
+  padding-inline-start: calc(var(--mds-spacing-sm) * 2 + var(--mds-icons-xs));
+}
+
+.mds-input[class] .mds-input-start-icon {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: var(--mds-spacing-sm);
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  color: var(--mds-text-default);
+  font-size: var(--mds-icons-xs);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.mds-input[class] .mds-input-actions {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--mds-spacing-sm);
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-input[class] .mds-input-invalid-icon {
+  color: var(--mds-text-danger);
+  font-size: var(--mds-icons-xs);
+  line-height: 1;
+}
+
+.mds-input[class] .mds-input-supporting-text,
+.mds-input[class] .mds-input-feedback {
+  margin: 0;
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-small);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+.mds-input[class] .mds-input-supporting-text {
+  color: var(--mds-text-muted);
+}
+
+/* Supporting text remains visible without invalid feedback, so it adopts the
+   invalid field colour to clearly communicate the validation state. */
+.mds-input[class]:has(.mds-input-field.is-invalid:not(:disabled))
+  .mds-input-supporting-text {
+  color: var(--mds-text-danger);
+}
+
+.mds-input[class] .mds-input-feedback {
+  color: var(--mds-text-danger);
+}
