@@ -192,7 +192,7 @@ export const WithIcon: Story = {
     label: 'Label text',
     icon: <i className="fa-solid fa-star" />,
   },
-  tags: ['autodocs', 'test', 'beta'],
+  tags: ['autodocs', 'test'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('radio');
