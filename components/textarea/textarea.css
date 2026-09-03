@@ -1,0 +1,253 @@
+/* ==========================================================================
+   Textarea component
+   Builds on Bootstrap .form-control base; all visual overrides use --mds-*
+   tokens so they remain consistent with the Moodle Design System token set.
+   ========================================================================== */
+
+/* --- Wrapper ---------------------------------------------------------------- */
+
+.mds-textarea[class] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+}
+
+/* --- Label ------------------------------------------------------------------ */
+
+/* Flex row that holds the <label> and the optional info icon-button side by side. */
+.mds-textarea[class] .mds-textarea-label-row {
+  display: flex;
+  align-items: center;
+  min-height: 16px; /* hardcoded as per Figma Fixed spec */
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-textarea[class] .mds-textarea-label {
+  /* Reset Bootstrap's form-label bottom-margin — gap on the wrapper handles spacing. */
+  margin-bottom: 0;
+
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: var(--mds-line-height-paragraph-xs);
+  color: var(--mds-text-subtle);
+}
+
+.mds-textarea[class] .mds-textarea-required {
+  color: var(--mds-text-danger);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+}
+
+/* Info icon-button beside the label — reuses Button ghost sm for the hit area,
+   focus ring, and hover/active fills. Button icon-only sm forces icons.xxs;
+   override restores the spec-correct icons.xs size. Padding is zeroed so the
+   button stays 16px tall and aligns flush with the label row height. */
+.mds-textarea[class] .mds-textarea-info-button.mds-btn {
+  padding: 0;
+}
+
+.mds-textarea[class] .mds-textarea-info-button.mds-btn i {
+  font-size: var(--mds-icons-xs);
+  inline-size: var(--mds-icons-xs);
+  block-size: var(--mds-icons-xs);
+}
+
+/* --- Textarea field --------------------------------------------------------- */
+
+/* Wrapper provides position context for the absolutely-placed invalid icon. */
+.mds-textarea[class] .mds-textarea-field-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Use [class] to outrank Bootstrap's .form-control specificity */
+.mds-textarea[class] .mds-textarea-field[class] {
+  display: block;
+  width: 100%;
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+  resize: vertical;
+
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-default);
+  letter-spacing: var(--mds-letter-spacing-default);
+  color: var(--mds-text-default);
+
+  /* Default container fill is transparent (design spec: hover transitions to
+     bg.surface.default to signal interactivity without changing the border). */
+  background-color: transparent;
+  border: var(--mds-stroke-weight-sm) solid
+    var(--mds-border-interactive-secondary-default);
+  border-radius: var(--mds-border-radius-sm);
+
+  /* Animate default -> hover fill; border state changes remain immediate. */
+  transition: background-color 150ms ease;
+}
+
+.mds-textarea[class] .mds-textarea-field--no-resize[class] {
+  resize: none;
+}
+
+/* Placeholder text */
+.mds-textarea[class] .mds-textarea-field[class]::placeholder {
+  color: var(--mds-text-muted);
+  opacity: 1; /* Firefox reduces opacity by default */
+}
+
+/* Hover — fill transitions from transparent to surface; border stays unchanged
+   (design spec: hover is a subtle interactive cue, not a state indicator). */
+.mds-textarea[class]
+  .mds-textarea-field[class]:hover:not(:disabled):not(:focus) {
+  background-color: var(--mds-bg-surface-default);
+}
+
+/* Active / pressed — primary accent border marks the field being edited. */
+.mds-textarea[class] .mds-textarea-field[class]:active:not(:disabled) {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-primary-default);
+}
+
+/* Focus — reset Bootstrap's box-shadow; apply MDS focus ring on focus-visible only */
+.mds-textarea[class] .mds-textarea-field[class]:focus {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-secondary-default);
+  box-shadow: none;
+  outline: none;
+}
+
+.mds-textarea[class] .mds-textarea-field[class]:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: 0;
+  border-color: var(--mds-focus-default);
+}
+
+/* Pointer-initiated focus (mouse/touch): suppress the ring — the primary border
+   signals the selected/typing state. The ring is reserved for keyboard navigation. */
+.mds-textarea[class] .mds-textarea-field--pointer-focus[class]:focus-visible {
+  outline: none;
+  border-color: var(--mds-border-interactive-primary-default);
+}
+
+/* Invalid */
+.mds-textarea[class] .mds-textarea-field.is-invalid[class] {
+  border-color: var(--mds-border-interactive-danger-default);
+  /* Extra right padding prevents entered text from sliding under the
+     circle-exclamation icon that is absolutely positioned inside the wrapper. */
+  padding-inline-end: calc(
+    var(--mds-icons-xs) + var(--mds-spacing-sm) + var(--mds-spacing-xxs)
+  );
+  /* Suppress Bootstrap's background validation icon on textareas — MDS renders
+     the circle-exclamation icon as a positioned element instead. */
+  background-image: none;
+}
+
+/* Absolutely-positioned circle-exclamation icon within .mds-textarea-field-wrapper. */
+.mds-textarea[class] .mds-textarea-invalid-icon {
+  position: absolute;
+  top: var(--mds-spacing-xs);
+  inset-inline-end: var(--mds-spacing-sm);
+  color: var(--mds-text-danger);
+  font-size: var(--mds-icons-xs);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.mds-textarea[class] .mds-textarea-field.is-invalid[class]:focus-visible {
+  outline-color: var(--mds-focus-danger);
+  border-color: var(--mds-focus-danger);
+}
+
+/* Pointer-initiated focus on an invalid field: keep the strong danger border
+   (no ring) rather than the pale focus-danger tone reserved for keyboard focus. */
+.mds-textarea[class]
+  .mds-textarea-field--pointer-focus.is-invalid[class]:focus-visible {
+  outline: none;
+  border-color: var(--mds-border-interactive-danger-default);
+}
+
+/* Disabled */
+.mds-textarea[class] .mds-textarea-field[class]:disabled {
+  background-color: var(--mds-bg-surface-strong);
+  border-color: var(--mds-border-interactive-secondary-default);
+  color: var(--mds-text-muted);
+  resize: none;
+  cursor: not-allowed;
+}
+
+/* Read-only */
+.mds-textarea[class] .mds-textarea-field--readonly[class] {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-secondary-default);
+  color: var(--mds-text-muted);
+}
+
+/* --- Footer row (supporting text + counter) --------------------------------- */
+
+.mds-textarea[class] .mds-textarea-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--mds-spacing-xs);
+
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-small);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+.mds-textarea[class] .mds-textarea-footer-spacer {
+  flex: 1 0 0;
+}
+
+.mds-textarea[class] .mds-textarea-supporting-text {
+  flex: 1 0 0;
+  color: var(--mds-text-muted);
+}
+
+/* Supporting text is danger-coloured when invalid (not disabled), matching the border and label. */
+.mds-textarea[class]:has(.mds-textarea-field.is-invalid:not(:disabled))
+  .mds-textarea-supporting-text {
+  color: var(--mds-text-danger);
+}
+
+/* Not using Bootstrap's invalid-feedback class: its display: none + block
+   toggle relies on a sibling selector off .is-invalid, but .is-invalid sits
+   on the textarea inside .mds-textarea-field-wrapper while this element is a
+   sibling of that wrapper, so the selector never matches. We control
+   visibility ourselves by conditionally rendering the element instead. */
+.mds-textarea[class] .mds-textarea-invalid-feedback {
+  display: block;
+  flex: 1 0 0;
+  margin-top: 0;
+  font-size: var(--mds-font-size-paragraph-small);
+  color: var(--mds-text-danger);
+}
+
+.mds-textarea[class] .mds-textarea-counter {
+  flex-shrink: 0;
+  color: var(--mds-text-subtle);
+  text-align: end;
+  unicode-bidi: isolate;
+  /* Reserve enough space for "NNN / NNN" to prevent layout shift. */
+  min-width: 4rem;
+}
+
+/* Visually hides the milestone live region while keeping it accessible to AT.
+   Uses clip-path to avoid the position:absolute approach which would require
+   a positioned ancestor on .mds-textarea. */
+.mds-textarea[class] .mds-textarea-counter-announcement {
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
