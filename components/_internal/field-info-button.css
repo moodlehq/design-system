@@ -1,0 +1,10 @@
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-sm.mds-field-info-button {
+  padding: 0;
+}
+
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-sm.mds-field-info-button i,
+.mds-btn.btn.mds-btn--icon-only.mds-btn--size-sm.mds-field-info-button svg {
+  inline-size: var(--mds-icons-xs);
+  block-size: var(--mds-icons-xs);
+  font-size: var(--mds-icons-xs);
+}

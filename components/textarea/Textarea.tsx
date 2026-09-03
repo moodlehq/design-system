@@ -8,8 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Button } from '../button';
-import { Tooltip } from '../tooltip';
+import { FieldInfoButton } from '../_internal/FieldInfoButton';
 
 type CounterMessageFormatter =
   string | ((value: number, maxLength: number) => string);
@@ -261,19 +260,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 </span>
               )}
             </label>
-            {infoTooltipLabel && (
-              <Tooltip label={infoTooltipLabel} variant="light">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="mds-textarea-info-button"
-                  aria-label={infoTooltipLabel}
-                  startIcon={
-                    <i className="fa-solid fa-circle-info" aria-hidden="true" />
-                  }
-                />
-              </Tooltip>
-            )}
+            {infoTooltipLabel && <FieldInfoButton label={infoTooltipLabel} />}
           </div>
         )}
         <div className="mds-textarea-field-wrapper">
