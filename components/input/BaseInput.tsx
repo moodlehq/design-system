@@ -80,10 +80,13 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
     // even if the consumer never passed the invalid prop.
-    const effectiveInvalid = invalid || !!nativeMessage;
+    // Disabled and read-only fields don't carry an invalid state — invalid is only
+    // ever a modifier on top of default/hover/active/focus per the design spec.
+    const effectiveInvalid =
+      (invalid || !!nativeMessage) && !disabled && !readOnly;
 
     const showInvalidFeedback =
-      effectiveInvalid && !disabled && !!(invalidFeedback || nativeMessage);
+      effectiveInvalid && !!(invalidFeedback || nativeMessage);
     const footerText = showInvalidFeedback
       ? (invalidFeedback ?? nativeMessage)
       : supportingText;
@@ -230,7 +233,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
               className="mds-input-actions"
               aria-hidden={trailingAction ? undefined : true}
             >
-              {effectiveInvalid && !disabled && (
+              {effectiveInvalid && (
                 <i
                   className="mds-input-invalid-icon fa-solid fa-circle-exclamation"
                   aria-hidden="true"

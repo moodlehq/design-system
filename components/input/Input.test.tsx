@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { Input } from './Input';
 
@@ -99,6 +99,41 @@ describe('Input: Unit Test', () => {
     expect(screen.getByText('This field is required.')).toBeInTheDocument();
   });
 
+  it('does not apply invalid styling when invalid is true and disabled', () => {
+    const { container } = render(
+      <Input label="Label" disabled invalid supportingText="Unavailable" />,
+    );
+
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    expect(input).not.toHaveClass('is-invalid');
+    expect(input).not.toHaveAttribute('aria-invalid');
+    expect(container.querySelector('.mds-input-invalid-icon')).toBeNull();
+  });
+
+  it('does not apply invalid styling when invalid is true and readOnly', () => {
+    const { container } = render(<Input label="Label" readOnly invalid />);
+
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    expect(input).not.toHaveClass('is-invalid');
+    expect(input).not.toHaveAttribute('aria-invalid');
+    expect(container.querySelector('.mds-input-invalid-icon')).toBeNull();
+  });
+
+  it('does not render invalidFeedback when invalid is true and readOnly', () => {
+    render(
+      <Input
+        label="Label"
+        readOnly
+        invalid
+        invalidFeedback="Error message"
+        supportingText="Guidance text"
+      />,
+    );
+
+    expect(screen.getByText('Guidance text')).toBeInTheDocument();
+    expect(screen.queryByText('Error message')).not.toBeInTheDocument();
+  });
+
   it('renders telephone input when type is tel', () => {
     render(<Input label="Telephone" type="tel" />);
     expect(screen.getByLabelText('Telephone')).toHaveAttribute('type', 'tel');
@@ -146,5 +181,41 @@ describe('Input: Unit Test', () => {
     expect(screen.queryByTestId('bad-start-icon')).not.toBeInTheDocument();
 
     errorSpy.mockRestore();
+  });
+
+  it('surfaces the native validation message on blur when invalidFeedback is not supplied, then clears it once the value becomes valid', () => {
+    render(<Input label="Label" required />);
+    const input = screen.getByRole('textbox', { name: 'Label' });
+
+    fireEvent.blur(input);
+
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    const nativeMessage = input.validationMessage;
+    expect(nativeMessage).not.toBe('');
+    expect(screen.getByText(nativeMessage)).toBeInTheDocument();
+
+    fireEvent.change(input, { target: { value: 'some value' } });
+
+    expect(input).not.toHaveAttribute('aria-invalid');
+    expect(screen.queryByText(nativeMessage)).not.toBeInTheDocument();
+  });
+
+  it('applies the pointer-focus class when focus follows a pointerdown', () => {
+    render(<Input label="Label" />);
+    const input = screen.getByRole('textbox', { name: 'Label' });
+
+    fireEvent.pointerDown(input);
+    fireEvent.focus(input);
+
+    expect(input).toHaveClass('mds-input-field--pointer-focus');
+  });
+
+  it('does not apply the pointer-focus class for a plain keyboard focus', () => {
+    render(<Input label="Label" />);
+    const input = screen.getByRole('textbox', { name: 'Label' });
+
+    fireEvent.focus(input);
+
+    expect(input).not.toHaveClass('mds-input-field--pointer-focus');
   });
 });

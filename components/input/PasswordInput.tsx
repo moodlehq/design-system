@@ -1,4 +1,4 @@
-import { forwardRef, useState, type ForwardedRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { Button } from '../button/Button';
 import { Tooltip } from '../tooltip/Tooltip';
 import type { BaseInputProps } from './BaseInput';
@@ -22,61 +22,61 @@ const lockIcon = (
   />
 );
 
-function PasswordInputImpl(
-  {
-    className,
-    disabled,
-    passwordToggleShowLabel,
-    passwordToggleHideLabel,
-    ...props
-  }: PasswordInputProps,
-  ref: ForwardedRef<HTMLInputElement>,
-) {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  const classes = ['mds-password-input'];
-  if (className) classes.push(className);
-
-  const toggleLabel = isPasswordVisible
-    ? passwordToggleHideLabel
-    : passwordToggleShowLabel;
-
-  const toggleButton = (
-    <Tooltip label={toggleLabel} variant="light">
-      <Button
-        type="button"
-        variant="ghost"
-        className="mds-input-password-toggle"
-        onClick={() => setIsPasswordVisible((prev) => !prev)}
-        aria-label={toggleLabel}
-        disabled={disabled}
-        startIcon={
-          <i
-            className={
-              isPasswordVisible ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'
-            }
-            aria-hidden="true"
-          />
-        }
-      />
-    </Tooltip>
-  );
-
-  return (
-    <BaseInput
-      ref={ref}
-      inputType={isPasswordVisible ? 'text' : 'password'}
-      startIcon={lockIcon}
-      trailingAction={toggleButton}
-      className={classes.join(' ')}
-      disabled={disabled}
-      {...props}
-    />
-  );
-}
-
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  PasswordInputImpl,
+  function PasswordInput(
+    {
+      className,
+      disabled,
+      passwordToggleShowLabel,
+      passwordToggleHideLabel,
+      ...props
+    },
+    ref,
+  ) {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const classes = ['mds-password-input'];
+    if (className) classes.push(className);
+
+    const toggleLabel = isPasswordVisible
+      ? passwordToggleHideLabel
+      : passwordToggleShowLabel;
+
+    const toggleButton = (
+      <Tooltip label={toggleLabel} variant="light">
+        <Button
+          type="button"
+          variant="ghost"
+          className="mds-input-password-toggle"
+          onClick={() => setIsPasswordVisible((prev) => !prev)}
+          aria-label={toggleLabel}
+          disabled={disabled}
+          startIcon={
+            <i
+              className={
+                isPasswordVisible
+                  ? 'mds-input-password-toggle-icon mds-input-password-toggle-icon--visible'
+                  : 'mds-input-password-toggle-icon mds-input-password-toggle-icon--hidden'
+              }
+              aria-hidden="true"
+            />
+          }
+        />
+      </Tooltip>
+    );
+
+    return (
+      <BaseInput
+        ref={ref}
+        inputType={isPasswordVisible ? 'text' : 'password'}
+        startIcon={lockIcon}
+        trailingAction={toggleButton}
+        className={classes.join(' ')}
+        disabled={disabled}
+        {...props}
+      />
+    );
+  },
 );
 
 PasswordInput.displayName = 'PasswordInput';
