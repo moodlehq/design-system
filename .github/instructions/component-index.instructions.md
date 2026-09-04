@@ -8,27 +8,29 @@ Quick reference for AI agents and developers.
 
 ## Components
 
-| Component       | Purpose                                                                                   | Key props                                                               |
-| --------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| ActivityIcon    | Activity/resource/file icon with semantic category styling                                | icon, category, size, container                                         |
-| Alert           | Persistent inline status banner with semantic variants and optional actions/dismiss       | type, title, message, isDismissible, isActionable                       |
-| Avatar          | Circular user/entity identity display — photo or initials                                 | type, size, initials, imageSrc, imageAlt                                |
-| Badge           | Short status, metadata, or count labels                                                   | type, contrast, style, icon, label                                      |
-| Breadcrumb      | Hierarchical page trail with truncation and overflow support                              | items, ariaLabel, overflowAriaLabel                                     |
-| Button          | Primary and secondary actions                                                             | variant, size, disabled, startIcon, endIcon                             |
-| Checkbox        | Independent multi-select controls                                                         | checked, label, disabled, invalid, indeterminate                        |
-| Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text)      | checked, label, disabled, invalid                                       |
-| CloseButton     | Icon-only dismiss action for temporary UI surfaces                                        | size, disabled, ariaLabel                                               |
-| Dropdown        | Composable trigger + menu container for action, select, expandable, and multiselect items | label, variant, appearance, size, open, children                        |
-| FavouriteButton | Icon button to mark/unmark items as favourites                                            | checked, size, disabled, ariaLabel                                      |
-| Link            | Anchor element with variant and optional icon support                                     | label, variant, disabled, startIcon, endIcon                            |
-| NavPill         | Compact pill-style navigation link for section switching                                  | label, active, disabled, href, ariaLabel                                |
-| Pagination      | Page navigation control                                                                   | totalPages, currentPage, onPageChange, ariaLabel                        |
-| ProgressBar     | Visual progress indicator with status and label variants                                  | value, min, max, status, labelVariant, title                            |
-| Radio           | Single-select options in a compact list (native radio input, label only)                  | checked, label, disabled, invalid                                       |
-| Switch          | Binary toggle control for on/off settings                                                 | checked, label, disabled, onChange                                      |
-| Textarea        | Multi-line text input with label, supporting text, counter, and validation                | label, invalid, invalidFeedback, supportingText, showCounter, resizable |
-| Tooltip         | Contextual label anchored to a trigger element                                            | label, placement, variant, children                                     |
+| Component       | Purpose                                                                                                       | Key props                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| ActivityIcon    | Activity/resource/file icon with semantic category styling                                                    | icon, category, size, container                                                                   |
+| Alert           | Persistent inline status banner with semantic variants and optional actions/dismiss                           | type, title, message, isDismissible, isActionable                                                 |
+| Avatar          | Circular user/entity identity display — photo or initials                                                     | type, size, initials, imageSrc, imageAlt                                                          |
+| Badge           | Short status, metadata, or count labels                                                                       | type, contrast, style, icon, label                                                                |
+| Breadcrumb      | Hierarchical page trail with truncation and overflow support                                                  | items, ariaLabel, overflowAriaLabel                                                               |
+| Button          | Primary and secondary actions                                                                                 | variant, size, disabled, startIcon, endIcon                                                       |
+| Checkbox        | Independent multi-select controls                                                                             | checked, label, disabled, invalid, indeterminate                                                  |
+| Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text)                          | checked, label, disabled, invalid                                                                 |
+| CloseButton     | Icon-only dismiss action for temporary UI surfaces                                                            | size, disabled, ariaLabel                                                                         |
+| Dropdown        | Composable trigger + menu container for action, select, expandable, and multiselect items                     | label, variant, appearance, size, open, children                                                  |
+| FavouriteButton | Icon button to mark/unmark items as favourites                                                                | checked, size, disabled, ariaLabel                                                                |
+| Input           | Single-line text input with label, supporting text, and validation feedback for non-password text-like values | type, label, invalid, invalidFeedback, supportingText                                             |
+| Link            | Anchor element with variant and optional icon support                                                         | label, variant, disabled, startIcon, endIcon                                                      |
+| NavPill         | Compact pill-style navigation link for section switching                                                      | label, active, disabled, href, ariaLabel                                                          |
+| Pagination      | Page navigation control                                                                                       | totalPages, currentPage, onPageChange, ariaLabel                                                  |
+| PasswordInput   | Single-line password input built on Input, with a lock icon and show/hide visibility toggle                   | label, invalid, invalidFeedback, supportingText, passwordToggleShowLabel, passwordToggleHideLabel |
+| ProgressBar     | Visual progress indicator with status and label variants                                                      | value, min, max, status, labelVariant, title                                                      |
+| Radio           | Single-select options in a compact list (native radio input, label only)                                      | checked, label, disabled, invalid                                                                 |
+| Switch          | Binary toggle control for on/off settings                                                                     | checked, label, disabled, onChange                                                                |
+| Textarea        | Multi-line text input with label, supporting text, counter, and validation                                    | label, invalid, invalidFeedback, supportingText, showCounter, resizable                           |
+| Tooltip         | Contextual label anchored to a trigger element                                                                | label, placement, variant, children                                                               |
 
 ## Dropdown Subcomponents
 
@@ -90,12 +92,16 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [DropdownItemGroup stories](../../components/dropdown/DropdownItemGroup.stories.tsx)
 - [FavouriteButton implementation](../../components/favourite-button/FavouriteButton.tsx)
 - [FavouriteButton stories](../../components/favourite-button/FavouriteButton.stories.tsx)
+- [Input implementation](../../components/input/Input.tsx)
+- [Input stories](../../components/input/Input.stories.tsx)
 - [Link implementation](../../components/link/Link.tsx)
 - [Link stories](../../components/link/Link.stories.tsx)
 - [NavPill implementation](../../components/nav-pill/NavPill.tsx)
 - [NavPill stories](../../components/nav-pill/NavPill.stories.tsx)
 - [Pagination implementation](../../components/pagination/Pagination.tsx)
 - [Pagination stories](../../components/pagination/Pagination.stories.tsx)
+- [PasswordInput implementation](../../components/input/PasswordInput.tsx)
+- [PasswordInput stories](../../components/input/PasswordInput.stories.tsx)
 - [ProgressBar implementation](../../components/progress-bar/ProgressBar.tsx)
 - [ProgressBar stories](../../components/progress-bar/ProgressBar.stories.tsx)
 - [Radio implementation](../../components/radio/Radio.tsx)
