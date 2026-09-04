@@ -539,6 +539,43 @@ describe('Textarea: Unit Test', () => {
     expect(screen.queryByText('Error message')).not.toBeInTheDocument();
   });
 
+  it('does not apply invalid styling when invalid is true and disabled', () => {
+    const { container } = render(<Textarea label="Field" disabled invalid />);
+
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).not.toHaveClass('is-invalid');
+    expect(textarea).not.toHaveAttribute('aria-invalid');
+    expect(
+      container.querySelector('.mds-textarea-invalid-icon'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not apply invalid styling when invalid is true and readOnly', () => {
+    const { container } = render(<Textarea label="Field" readOnly invalid />);
+
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).not.toHaveClass('is-invalid');
+    expect(textarea).not.toHaveAttribute('aria-invalid');
+    expect(
+      container.querySelector('.mds-textarea-invalid-icon'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not render invalidFeedback when invalid is true and readOnly', () => {
+    render(
+      <Textarea
+        label="Field"
+        readOnly
+        invalid
+        invalidFeedback="Error message"
+        supportingText="Guidance text"
+      />,
+    );
+
+    expect(screen.getByText('Guidance text')).toBeInTheDocument();
+    expect(screen.queryByText('Error message')).not.toBeInTheDocument();
+  });
+
   it('shows controlled values above maxLength in the counter display', () => {
     const { rerender } = render(
       <Textarea
