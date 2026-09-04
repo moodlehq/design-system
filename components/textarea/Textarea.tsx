@@ -21,7 +21,8 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
    *  accessibly via aria-label (prop) → label (prop) in that order of precedence. */
   hideLabel?: boolean;
   /** Marks the field as invalid: applies danger border colour and sets aria-invalid.
-   *  Independent of invalidFeedback — invalid styling can be shown without a message. */
+   *  Independent of invalidFeedback — invalid styling can be shown without a message.
+   *  Has no effect when disabled or readOnly — those states don't carry an invalid state. */
   invalid?: boolean;
   /** Pre-translated error message rendered below the field. Requires invalid={true}
    *  to be displayed. */
@@ -92,13 +93,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const generatedId = useId();
     const id = idProp ?? generatedId;
-    const isInvalid = !!invalid;
+    // Disabled and read-only fields don't carry an invalid state — invalid is only
+    // ever a modifier on top of default/hover/active/focus per the design spec.
+    const isInvalid = !!invalid && !disabled && !readOnly;
     const hasVisibleLabel = !hideLabel;
     const ariaLabel = hideLabel ? (ariaLabelProp ?? label) : undefined;
 
-    // Invalid feedback is tied to invalid state (and not disabled), independent
-    // of label visibility. Supporting text is replaced when feedback is shown.
-    const showInvalidFeedback = isInvalid && !disabled && !!invalidFeedback;
+    // Invalid feedback is tied to invalid state, independent of label visibility.
+    // Supporting text is replaced when feedback is shown.
+    const showInvalidFeedback = isInvalid && !!invalidFeedback;
     const footerText = showInvalidFeedback ? invalidFeedback : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
 
@@ -296,7 +299,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             }}
             {...textareaProps}
           />
-          {isInvalid && !disabled && (
+          {isInvalid && (
             /* circle-exclamation icon: invalid state must not rely on colour alone (WCAG 1.4.1) */
             <i
               className="fa-solid fa-circle-exclamation mds-textarea-invalid-icon"
