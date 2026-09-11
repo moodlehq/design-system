@@ -55,8 +55,13 @@ export type {
 export { FavouriteButton } from './favourite-button';
 export type { FavouriteButtonProps } from './favourite-button';
 
-export { Input, PasswordInput } from './input';
-export type { InputProps, InputType, PasswordInputProps } from './input';
+export { Input, PasswordInput, SearchInput } from './input';
+export type {
+  InputProps,
+  InputType,
+  PasswordInputProps,
+  SearchInputProps,
+} from './input';
 
 export { Link } from './link';
 export type { LinkProps } from './link';

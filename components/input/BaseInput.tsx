@@ -32,6 +32,15 @@ export interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   inputType?: InputHTMLAttributes<HTMLInputElement>['type'];
   startIcon?: IconElement;
   trailingAction?: ReactNode;
+  /**
+   * When true, native constraint-validation failures (e.g. `pattern`,
+   * `required`) don't drive the invalid state — only the `invalid` prop
+   * does. Lets consumers (e.g. SearchInput's "invalid only while Empty"
+   * rule) gate ALL invalid sources consistently, since native validation
+   * attrs pass straight through `...props` to the native `<input>` outside
+   * any consumer-level gate.
+   */
+  suppressNativeInvalid?: boolean;
 }
 
 export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
@@ -46,6 +55,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
       inputType = 'text',
       startIcon,
       trailingAction,
+      suppressNativeInvalid = false,
       className,
       id: idProp,
       required,
@@ -79,16 +89,20 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     );
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
-    // even if the consumer never passed the invalid prop.
+    // even if the consumer never passed the invalid prop — unless the consumer opts out
+    // via suppressNativeInvalid (e.g. SearchInput's "invalid only while Empty" rule).
     // Disabled and read-only fields don't carry an invalid state — invalid is only
     // ever a modifier on top of default/hover/active/focus per the design spec.
+    const activeNativeMessage = suppressNativeInvalid
+      ? undefined
+      : nativeMessage;
     const effectiveInvalid =
-      (invalid || !!nativeMessage) && !disabled && !readOnly;
+      (invalid || !!activeNativeMessage) && !disabled && !readOnly;
 
     const showInvalidFeedback =
-      effectiveInvalid && !!(invalidFeedback || nativeMessage);
+      effectiveInvalid && !!(invalidFeedback || activeNativeMessage);
     const footerText = showInvalidFeedback
-      ? (invalidFeedback ?? nativeMessage)
+      ? (invalidFeedback ?? activeNativeMessage)
       : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
 

@@ -37,16 +37,37 @@
   font-weight: var(--mds-font-weight-medium);
 }
 
+/* This wrapper (not the <input>) carries the field's visual chrome —
+   border, radius, background — because the start icon, input, and trailing
+   action are laid out as real flex siblings inside it. That keeps each
+   element's hit box matching what it looks like, rather than the previous
+   approach of absolutely-positioning icons on top of the input's full-width
+   box, which let clicks/hover meant for the input land "through" the
+   overlaid trailing action and vice versa. Interactive state (hover, focus,
+   invalid, disabled, ...) is still driven by the <input>'s own
+   pseudo-classes, projected onto the wrapper via :has(). */
 .mds-input[class] .mds-input-field-wrapper {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xs);
   width: 100%;
+  height: 42px;
+  padding-inline: var(--mds-spacing-sm);
+
+  background-color: transparent;
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
+  border-radius: var(--mds-border-radius-sm);
+  transition: background-color 150ms ease;
 }
 
 .mds-input[class] .mds-input-field[class] {
+  flex: 1 1 auto;
+  min-width: 0;
   display: block;
   width: 100%;
-  min-height: 40px;
-  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+  /* Resets Bootstrap's .form-control padding-inline (0.75rem) — horizontal
+     spacing is now owned entirely by the wrapper's padding-inline + gap. */
+  padding: var(--mds-spacing-xs) 0;
 
   font-family: var(--mds-font-family-base);
   font-size: var(--mds-font-size-paragraph-default);
@@ -56,9 +77,15 @@
   color: var(--mds-text-default);
 
   background-color: transparent;
-  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
-  border-radius: var(--mds-border-radius-sm);
-  transition: background-color 150ms ease;
+  border: none;
+}
+
+/* Reset Bootstrap's .form-control:focus box-shadow (border-color is moot
+   since the field's own border is always none) — focus visuals now live on
+   the wrapper via :has(), not on the field itself. */
+.mds-input[class] .mds-input-field[class]:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .mds-input[class] .mds-input-field[class]::placeholder {
@@ -78,116 +105,112 @@
   -moz-appearance: textfield;
 }
 
-.mds-input[class] .mds-input-field[class]:hover:not(:disabled):not(:focus) {
+.mds-input[class]
+  .mds-input-field-wrapper:has(
+    .mds-input-field[class]:hover:not(:disabled):not(:focus)
+  ) {
   background-color: var(--mds-bg-surface-default);
 }
 
 .mds-input[class]
-  .mds-input-field[class]:active:not(:disabled):not(
-    .mds-input-field--readonly
-  ):not(.is-invalid) {
+  .mds-input-field-wrapper:has(
+    .mds-input-field[class]:active:not(:disabled):not(
+        .mds-input-field--readonly
+      ):not(.is-invalid)
+  ) {
   background-color: var(--mds-bg-surface-default);
   border-color: var(--mds-border-interactive-primary-default);
 }
 
 .mds-input[class]
-  .mds-input-field.is-invalid[class]:active:not(:disabled):not(
-    .mds-input-field--readonly
+  .mds-input-field-wrapper:has(
+    .mds-input-field.is-invalid[class]:active:not(:disabled):not(
+        .mds-input-field--readonly
+      )
   ) {
   background-color: var(--mds-bg-surface-default);
 }
 
-.mds-input[class] .mds-input-field[class]:focus {
+.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field[class]:focus) {
   background-color: var(--mds-bg-surface-default);
   border-color: var(--mds-border-default);
-  box-shadow: none;
-  outline: none;
 }
 
-.mds-input[class] .mds-input-field[class]:focus-visible {
+.mds-input[class]
+  .mds-input-field-wrapper:has(.mds-input-field[class]:focus-visible) {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
   outline-offset: 0;
   border-color: var(--mds-focus-default);
 }
 
-.mds-input[class] .mds-input-field--pointer-focus[class]:focus-visible {
+.mds-input[class]
+  .mds-input-field-wrapper:has(
+    .mds-input-field--pointer-focus[class]:focus-visible
+  ) {
   outline: none;
   border-color: var(--mds-border-interactive-primary-default);
 }
 
+/* Overrides Bootstrap's own .form-control.is-invalid validation icon —
+   this component renders its own invalid icon as a flex sibling instead,
+   spaced by the wrapper's gap. */
 .mds-input[class] .mds-input-field.is-invalid[class] {
-  border-color: var(--mds-border-interactive-danger-default);
   background-image: none;
 }
 
-.mds-input[class] .mds-input-field.is-invalid[class]:focus-visible {
+.mds-input[class]
+  .mds-input-field-wrapper:has(.mds-input-field.is-invalid[class]) {
+  border-color: var(--mds-border-interactive-danger-default);
+}
+
+.mds-input[class]
+  .mds-input-field-wrapper:has(
+    .mds-input-field.is-invalid[class]:focus-visible
+  ) {
   outline-color: var(--mds-focus-danger);
   border-color: var(--mds-focus-danger);
 }
 
 .mds-input[class]
-  .mds-input-field--pointer-focus.is-invalid[class]:focus-visible {
+  .mds-input-field-wrapper:has(
+    .mds-input-field--pointer-focus.is-invalid[class]:focus-visible
+  ) {
   outline: none;
   border-color: var(--mds-border-interactive-danger-default);
 }
 
 .mds-input[class] .mds-input-field--readonly[class] {
-  border-color: var(--mds-border-default);
   color: var(--mds-text-muted);
 }
 
+.mds-input[class]
+  .mds-input-field-wrapper:has(.mds-input-field--readonly[class]) {
+  border-color: var(--mds-border-default);
+}
+
 .mds-input[class] .mds-input-field[class]:disabled {
-  background-color: var(--mds-bg-surface-strong);
-  border-color: var(--mds-border-interactive-secondary-default);
   color: var(--mds-text-muted);
   cursor: not-allowed;
 }
 
-.mds-input[class] .mds-input-field--with-status[class] {
-  padding-inline-end: calc(var(--mds-spacing-sm) * 2 + var(--mds-icons-xs));
-}
-
-.mds-input[class] .mds-input-field--with-action[class] {
-  padding-inline-end: calc(
-    var(--mds-spacing-sm) * 2 + var(--mds-icons-sm) + var(--mds-icons-xs)
-  );
-}
-
-/* Status icon and action button render side by side. Their combined padding
-   must reserve the with-status cushion (text-to-icon clearance) plus the
-   action button's own width, plus a spacing-xs gap between the two icons —
-   matching the uniform flex gap Figma uses between all elements in this row. */
 .mds-input[class]
-  .mds-input-field--with-status.mds-input-field--with-action[class] {
-  padding-inline-end: calc(
-    var(--mds-spacing-sm) * 2 + var(--mds-icons-xs) + var(--mds-spacing-xs) +
-      var(--mds-icons-sm) + var(--mds-icons-xs)
-  );
-}
-
-.mds-input[class] .mds-input-field--with-start-icon[class] {
-  padding-inline-start: calc(var(--mds-spacing-sm) * 2 + var(--mds-icons-xs));
+  .mds-input-field-wrapper:has(.mds-input-field[class]:disabled) {
+  background-color: var(--mds-bg-surface-strong);
+  border-color: var(--mds-border-interactive-secondary-default);
 }
 
 .mds-input[class] .mds-input-start-icon {
-  position: absolute;
-  top: 50%;
-  inset-inline-start: var(--mds-spacing-sm);
-  transform: translateY(-50%);
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   color: var(--mds-text-default);
   font-size: var(--mds-icons-xs);
   line-height: 1;
-  pointer-events: none;
 }
 
 .mds-input[class] .mds-input-actions {
-  position: absolute;
-  top: 50%;
-  inset-inline-end: var(--mds-spacing-sm);
-  transform: translateY(-50%);
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: var(--mds-spacing-xxs);
 }

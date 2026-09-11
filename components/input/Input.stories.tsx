@@ -18,8 +18,13 @@ const meta = {
   },
   tags: ['autodocs', 'test', 'stable'],
   decorators: [
-    (Story) => (
-      <div style={{ width: 'min(395px, 95vw)' }}>
+    (Story, context) => (
+      <div
+        style={{
+          width:
+            context.name === 'States' ? 'min(48rem, 95vw)' : 'min(395px, 95vw)',
+        }}
+      >
         <Story />
       </div>
     ),
@@ -152,7 +157,153 @@ const withShowcaseDocs = (story: string) => ({
   },
 });
 
+const showcaseTableStyle = {
+  borderCollapse: 'collapse' as const,
+  tableLayout: 'fixed' as const,
+  inlineSize: '100%',
+  minInlineSize: '32rem',
+};
+
+const showcaseHeaderCellStyle = {
+  padding: 'var(--mds-spacing-xs) var(--mds-spacing-sm)',
+  textAlign: 'center' as const,
+  color: 'var(--mds-text-subtle)',
+  fontSize: 'var(--mds-font-size-paragraph-small)',
+  fontFamily: 'var(--mds-font-family-base)',
+  fontWeight: 'var(--mds-font-weight-medium)',
+};
+
+const showcaseRowHeaderCellStyle = {
+  padding: 'var(--mds-spacing-xs) var(--mds-spacing-sm)',
+  textAlign: 'start' as const,
+  fontFamily: 'var(--mds-font-family-base)',
+  fontWeight: 'var(--mds-font-weight-medium)',
+  inlineSize: '6rem',
+};
+
+const showcaseStatesCellStyle = {
+  padding: 'var(--mds-spacing-xs) var(--mds-spacing-sm)',
+  verticalAlign: 'middle' as const,
+};
+
 export const Default: Story = {};
+
+export const States: Story = {
+  parameters: {
+    ...showcaseParameters,
+    docs: {
+      ...showcaseParameters.docs,
+      description: {
+        story:
+          'State table for visual regression review. Hover, active, and focus-visible cells are driven by the Storybook pseudo-states addon.',
+      },
+    },
+    pseudo: {
+      hover: "[data-input-state='hover'] .mds-input-field",
+      active: "[data-input-state='active'] .mds-input-field",
+      focusVisible: "[data-input-state='focus-visible'] .mds-input-field",
+    },
+  },
+  render: (args) => (
+    <table style={showcaseTableStyle}>
+      <thead>
+        <tr>
+          <th
+            style={{ ...showcaseHeaderCellStyle, inlineSize: '6rem' }}
+            scope="col"
+          >
+            State
+          </th>
+          <th style={showcaseHeaderCellStyle} scope="col">
+            Empty
+          </th>
+          <th style={showcaseHeaderCellStyle} scope="col">
+            Filled
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Default
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Input {...args} label="Default empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Input
+              {...args}
+              label="Default filled"
+              hideLabel
+              defaultValue="Introduction to biology"
+            />
+          </td>
+        </tr>
+
+        <tr data-input-state="hover">
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Hover
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Input {...args} label="Hover empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Input
+              {...args}
+              label="Hover filled"
+              hideLabel
+              defaultValue="Introduction to biology"
+            />
+          </td>
+        </tr>
+
+        <tr data-input-state="active">
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Active
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Input {...args} label="Active empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Input
+              {...args}
+              label="Active filled"
+              hideLabel
+              defaultValue="Introduction to biology"
+            />
+          </td>
+        </tr>
+
+        <tr data-input-state="focus-visible">
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Focus
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Input {...args} label="Focus empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Input
+              {...args}
+              label="Focus filled"
+              hideLabel
+              defaultValue="Introduction to biology"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  ),
+  play: async ({ canvas }) => {
+    expect(canvas.getByLabelText('Default empty')).toBeVisible();
+    expect(canvas.getByLabelText('Default filled')).toHaveValue(
+      'Introduction to biology',
+    );
+    expect(canvas.getByLabelText('Hover empty')).toBeVisible();
+    expect(canvas.getByLabelText('Active empty')).toBeVisible();
+    expect(canvas.getByLabelText('Focus empty')).toBeVisible();
+  },
+};
 
 export const Types: Story = {
   parameters: withShowcaseDocs(
