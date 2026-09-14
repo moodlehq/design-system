@@ -39,6 +39,16 @@ const OUTPUT_FILE = path.join(OUTPUT_DIR, 'component-index.json');
 const RESERVED_DIR_NAMES = new Set(['assets']);
 
 const SUBCOMPONENTS: Record<string, ComponentSubcomponentIndexItem[]> = {
+  input: [
+    {
+      name: 'PasswordInput',
+      purpose:
+        'Password-specific input with a built-in visibility toggle and shared form-field states.',
+      exportName: 'PasswordInput',
+      implementationPath: 'components/input/PasswordInput.tsx',
+      storyPath: 'components/input/PasswordInput.stories.tsx',
+    },
+  ],
   dropdown: [
     {
       name: 'DropdownTrigger',
@@ -137,6 +147,8 @@ const PURPOSES: Record<string, string> = {
   dropdown:
     'Composable trigger + menu container for action, select, expandable, and multiselect dropdown items.',
   'favourite-button': 'Icon button to mark/unmark items as favourites.',
+  input:
+    'Single-line text input with label, supporting text, and validation feedback for non-password text-like values.',
   link: 'Anchor element with variant and optional icon support.',
   'nav-pill': 'Compact pill-style navigation link for section switching.',
   pagination: 'Page navigation control.',
