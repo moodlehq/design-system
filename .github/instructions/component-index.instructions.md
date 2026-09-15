@@ -27,6 +27,7 @@ Quick reference for AI agents and developers.
 | Pagination      | Page navigation control                                                                                       | totalPages, currentPage, onPageChange, ariaLabel                                                  |
 | PasswordInput   | Single-line password input built on Input, with a lock icon and show/hide visibility toggle                   | label, invalid, invalidFeedback, supportingText, passwordToggleShowLabel, passwordToggleHideLabel |
 | ProgressBar     | Visual progress indicator with status and label variants                                                      | value, min, max, status, labelVariant, title                                                      |
+| SearchInput     | Single-line search input built on Input, with a magnifying-glass icon and a clear-value button                | label, invalid, invalidFeedback, supportingText, clearLabel                                       |
 | Radio           | Single-select options in a compact list (native radio input, label only)                                      | checked, label, disabled, invalid                                                                 |
 | Switch          | Binary toggle control for on/off settings                                                                     | checked, label, disabled, onChange                                                                |
 | Textarea        | Multi-line text input with label, supporting text, counter, and validation                                    | label, invalid, invalidFeedback, supportingText, showCounter, resizable                           |
@@ -102,6 +103,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [Pagination stories](../../components/pagination/Pagination.stories.tsx)
 - [PasswordInput implementation](../../components/input/PasswordInput.tsx)
 - [PasswordInput stories](../../components/input/PasswordInput.stories.tsx)
+- [SearchInput implementation](../../components/input/SearchInput.tsx)
+- [SearchInput stories](../../components/input/SearchInput.stories.tsx)
 - [ProgressBar implementation](../../components/progress-bar/ProgressBar.tsx)
 - [ProgressBar stories](../../components/progress-bar/ProgressBar.stories.tsx)
 - [Radio implementation](../../components/radio/Radio.tsx)
