@@ -209,7 +209,6 @@ export const Alert = ({
       {showDismissControl && (
         <div className="mds-alert-dismiss">
           <CloseButton
-            size="lg"
             aria-label={dismissAriaLabel}
             className="mds-alert-dismiss-button"
             onClick={handleDismiss}
