@@ -10,4 +10,4 @@ const meta: Meta = {
 };
 
 export default meta;
-export const Changelog: StoryObj = { render: () => <></>, tags: ['!dev'] };
+export const Releases: StoryObj = { render: () => <></>, tags: ['!dev'] };
