@@ -76,6 +76,7 @@ This repository follows these standards:
 ### Prerequisites
 
 - Node.js v22.22.1 or higher
+- React 19.2.4 or higher, with a matching `react-dom` version (required peer dependencies)
 - TypeScript 5.0 or higher is required for consumers that type-check this package.
 - npm
 - Git
