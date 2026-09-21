@@ -117,6 +117,10 @@ Each sub-component follows the same file structure rules as any other component 
 
 `Radio`, `Checkbox`, and `NavPill` are single-instance components — none ships a group wrapper, layout, or spacing. When multiple instances are rendered together (for example, a radio group sharing a `name`, a related checkbox set, or a row of navigation pills), the consumer supplies the container and its layout direction (for example, a flex container with a `--mds-spacing-*` gap token). Do not add a new wrapper component or hardcode spacing inside `Radio`/`Checkbox`/`NavPill` to solve this — follow each component's stories for the reference pattern.
 
+## Cross-axis sizing (Badge, Tag)
+
+`Badge` and `Tag` are `display: inline-flex` and set `align-self: flex-start` in their own CSS, so each holds its own intrinsic (content + padding) height regardless of taller siblings — unlike the Radio/Checkbox/NavPill group pattern above, this is **not** left to the consumer. Without the guard, a flex container's default `align-items: stretch` would stretch a short `Badge`/`Tag` to match a taller sibling in the same row (e.g. next to a `Button`, or next to a `Tag` with more populated text lines). Keep this guard in both components' base rule; do not remove it or push the fix out to consumer markup.
+
 ## Breaking change guardrail
 
 The following changes to a component's public API are breaking and must not be made without a major version bump:
