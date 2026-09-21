@@ -31,6 +31,14 @@ We aim to acknowledge your report within 3 business days and provide a resolutio
 
 Duplicate or low-severity issues may be closed with an explanation.
 
+## Private Development Branches
+
+Once a report is validated, we develop the fix using [GitHub Security Advisories' temporary private fork](https://docs.github.com/en/code-security/security-advisories/working-with-repository-security-advisories/collaborating-in-a-temporary-private-fork-to-resolve-a-repository-security-vulnerability), which restricts access to the security and core maintainer teams by default without any extra repo configuration.
+
+- Branch name: `security/<advisory-id>` (e.g. `security/GHSA-xxxx-xxxx-xxxx`), matching the GitHub Security Advisory that tracks the issue.
+- The branch and its fork stay private until the advisory is published; the fix merges via the advisory's own PR, which is what triggers disclosure.
+- If a fix needs to land outside the advisory flow (e.g. no advisory was raised yet), use the same `security/<short-description>` pattern directly on this repo, restricted to the security and core maintainer teams via branch protection.
+
 ## Supported Versions
 
 We provide security updates for the latest major version. Older versions may not receive security fixes.
