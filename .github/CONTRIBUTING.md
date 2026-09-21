@@ -14,6 +14,7 @@ Thank you for your interest in contributing to the Moodle Design System! This pr
 - [Documentation Contributions](#documentation-contributions)
 - [Review Process](#review-process)
 - [Release Process](#release-process)
+- [Dependency Update Policy](#dependency-update-policy)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Getting Help](#getting-help)
 
@@ -108,6 +109,14 @@ Improvements to documentation are welcome! Please update relevant markdown files
 
 - Releases are automated using [Release Please](https://github.com/googleapis/release-please).
 - See the [CHANGELOG](CHANGELOG.md) for release history and updates.
+
+## Dependency Update Policy
+
+- [Dependabot](https://docs.github.com/en/code-security/dependabot) scans npm dependencies weekly and opens PRs automatically.
+- Minor and patch updates are grouped into a single PR and are safe to merge once CI passes — they should not introduce breaking changes.
+- Major version updates are **not** opened automatically. They carry a higher risk of breaking changes and are evaluated and upgraded manually, on a case-by-case basis, when there's a clear reason to move (a needed feature, a security fix, or an EOL deadline).
+- GitHub Actions dependencies follow the same weekly schedule but are grouped together regardless of update type, since action pins are SHA-based and lower risk.
+- Security updates are handled outside this schedule — see [SECURITY.md](SECURITY.md).
 
 ## Getting Help
 
