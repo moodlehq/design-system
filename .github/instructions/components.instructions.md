@@ -244,6 +244,26 @@ return <button>Save</button>;
 
 Direction-neutral properties (`top`, `bottom`, `height`, `width`, `margin-top`, `padding-top`, etc.) do not need changing.
 
+**`[dir='rtl']` override pattern:** Some properties have no logical-property equivalent — `transform` (translation/scale on the inline axis), `animation-name`, and gradient direction in `background-image` (e.g. `linear-gradient` angle). For these, add an explicit `[dir='rtl'] .mds-component` rule immediately after the LTR rule rather than duplicating the whole ruleset.
+
+```css
+.mds-link[class]:hover:not(:focus-visible) .mds-link__icon:last-child {
+  transform: translateX(calc(-1 * var(--mds-spacing-xxs)));
+}
+
+[dir='rtl']
+  .mds-link[class]:hover:not(:focus-visible)
+  .mds-link__icon:last-child {
+  transform: translateX(var(--mds-spacing-xxs));
+}
+```
+
+Reference implementations for each override category:
+
+- **`Link`** (`components/link/link.css`) — mirrors icon `transform: translateX(...)` slide direction.
+- **`Pagination`** (`components/pagination/pagination.css`) — flips chevron icons with `transform: scaleX(-1)`.
+- **`ProgressBar`** (`components/progress-bar/progress-bar.css`) — reverses striped `linear-gradient` angle and swaps `animation-name` to an RTL-mirrored `@keyframes`.
+
 **`dir` attribute:** No explicit forwarding needed — writing direction is inherited from the document or nearest ancestor. Because `...props` is always spread on the host element, consumers can pass `dir` directly if needed.
 
 **Locale-aware formatting:** This library is presentation-only and does not format dates, numbers, or currency. Components accept pre-formatted strings; locale-aware formatting is the consumer's responsibility.
