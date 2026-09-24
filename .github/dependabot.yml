@@ -13,11 +13,10 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
-      major:
-        patterns:
-          - '*'
+    ignore:
+      - dependency-name: '*'
         update-types:
-          - 'major'
+          - 'version-update:semver-major'
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
