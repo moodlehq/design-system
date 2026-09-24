@@ -243,7 +243,7 @@ See [CHANGELOG](CHANGELOG.md) for release history and updates.
 For any contributions, issues, or support, please reach out to the Moodle HQ Design System team through the following channels:
 
 - Submit a [GitHub Issue](https://github.com/moodlehq/design-system/issues)
-- Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link)
+- Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link) (we're currently investigating bridging this with our other messaging provider)
 - Join the [Moodle Design System PAG course](https://moodle.org/course/view.php?id=17258)
 
 Pull requests are our suggested method for contributing to the design system. Please ensure that your contributions adhere to our contribution guidelines. See [CONTRIBUTING](CONTRIBUTING) for more information.

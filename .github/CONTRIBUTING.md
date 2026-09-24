@@ -123,7 +123,7 @@ Improvements to documentation are welcome! Please update relevant markdown files
 For any contributions, issues, or support, please reach out to the Moodle HQ Design System team through the following channels:
 
 - Submit an issue on [GitHub Issues](https://github.com/moodlehq/design-system/issues)
-- Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link)
+- Join our [Matrix channel](https://matrix.to/#/!BmKCxoEFOvaJrscitV:moodle.com?via=moodle.com&via=matrix.org&via=lern.link) (we're currently investigating bridging this with our other messaging provider)
 - Join the [Moodle Design System PAG course](https://moodle.org/course/view.php?id=17258)
 
 Thank you for helping improve the Moodle Design System!
