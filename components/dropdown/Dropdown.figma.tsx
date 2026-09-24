@@ -15,7 +15,7 @@ const dropdownNodeUrl =
 const dropdownTriggerNodeUrl =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12381-3057&m=dev';
 const dropdownMenuNodeUrl =
-  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12573-1086&m=dev';
+  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12573-1290&m=dev';
 const dropdownItemNodeUrl =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12563-2532&m=dev';
 const dropdownItemActionNodeUrl =

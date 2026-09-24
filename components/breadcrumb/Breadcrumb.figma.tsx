@@ -1,11 +1,8 @@
 import figma from '@figma/code-connect';
 import { Breadcrumb } from './Breadcrumb';
 
-// NOTE: This file uses the main Moodle Design System file key (bPRkRtSszcbWw9f9p9rXvA)
-// with the node created on the MDS-533-Breadcrumb branch. Update this URL once the
-// branch is merged into the main file.
 const url =
-  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12126-23';
+  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=13170-296';
 
 // Items: 2
 figma.connect(Breadcrumb, url, {
