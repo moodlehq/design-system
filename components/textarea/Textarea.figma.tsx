@@ -5,12 +5,12 @@ const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=13934-4878';
 
 const baseProps = {
-  label: figma.string('Supporting text#13940:21'),
-  required: figma.boolean('Required#13940:15'),
+  label: figma.string('Supporting text'),
+  required: figma.boolean('Required'),
   // "Show Label" is the inverse of hideLabel
-  hideLabel: figma.boolean('Show Label#13940:13', { true: false, false: true }),
-  resizable: figma.boolean('Resizable#13963:21'),
-  infoTooltipLabel: figma.boolean('Info#13950:34', {
+  hideLabel: figma.boolean('Show Label', { true: false, false: true }),
+  resizable: figma.boolean('Resizable'),
+  infoTooltipLabel: figma.boolean('Info', {
     true: 'Additional information about this field',
     false: undefined,
   }),
