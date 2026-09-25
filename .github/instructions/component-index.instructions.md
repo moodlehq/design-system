@@ -27,7 +27,7 @@ Quick reference for AI agents and developers.
 | Pagination      | Page navigation control                                                                                       | totalPages, currentPage, onPageChange, ariaLabel                                                     |
 | PasswordInput   | Single-line password input built on Input, with a lock icon and show/hide visibility toggle                   | label, invalid, invalidFeedback, supportingText, passwordToggleShowLabel, passwordToggleHideLabel    |
 | ProgressBar     | Visual progress indicator with status and label variants                                                      | value, min, max, status, labelVariant, title                                                         |
-| SearchInput     | Single-line search input built on Input, with a magnifying-glass icon and a clear-value button                | label, invalid, invalidFeedback, supportingText, clearLabel, onDebouncedChange, debounceMs, landmark |
+| SearchInput     | Search field (`type="search"`) with magnifier and clear button — never Input with a magnifier icon            | label, invalid, invalidFeedback, supportingText, clearLabel, onDebouncedChange, debounceMs, landmark |
 | Radio           | Single-select options in a compact list (native radio input, label only)                                      | checked, label, disabled, invalid                                                                    |
 | Switch          | Binary toggle control for on/off settings                                                                     | checked, label, disabled, onChange                                                                   |
 | Textarea        | Multi-line text input with label, supporting text, counter, and validation                                    | label, invalid, invalidFeedback, supportingText, showCounter, resizable                              |
@@ -124,6 +124,12 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - Keep Storybook variants and tests aligned with component API changes.
 - `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
 - `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
+- Choosing between `Input`, `Textarea`, `SearchInput`, and a combobox — ask: **after the user types, do they pick a row from a list, and does that pick get saved with the form?**
+  - No to both → `SearchInput`. The query finds or filters content shown elsewhere, even when results update as you type.
+  - Yes to both → a combobox. MDS has no combobox yet — flag the need rather than composing `SearchInput` with a `Dropdown`.
+  - Not picked from a list, but saved with the form → `Input` (or `PasswordInput` when it must be masked); `Textarea` when it spans multiple lines.
+- A search field is `SearchInput`, which renders `<input type="search">`. Never build one from `Input` with a magnifying-glass `startIcon` — that reports as a plain text field, not a searchbox. Moodle's own templates mostly use `type="text"` for search, so don't copy them.
+- Pass `landmark` to `SearchInput` only for a page- or site-level search. Leave it off for filters in tables, toolbars, or panels, and when the field is already inside `<search>` or `<form role="search">`.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing
