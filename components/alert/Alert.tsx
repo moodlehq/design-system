@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { useRef, useState } from 'react';
+import { getNextFocusableElement } from '../_internal/focus';
 import type { ButtonProps } from '../button';
 import { Button } from '../button';
 import { CloseButton } from '../close-button';
@@ -46,58 +47,11 @@ export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
 
 const allowedTypes: AlertType[] = ['info', 'success', 'warning', 'danger'];
 
-const focusableSelector = [
-  'a[href]:not([tabindex="-1"])',
-  'button:not([disabled]):not([tabindex="-1"])',
-  'input:not([disabled]):not([tabindex="-1"])',
-  'select:not([disabled]):not([tabindex="-1"])',
-  'textarea:not([disabled]):not([tabindex="-1"])',
-  '[tabindex]:not([tabindex="-1"])',
-].join(',');
-
 const roleByType: Record<AlertType, 'alert' | 'status'> = {
   info: 'status',
   success: 'status',
   warning: 'alert',
   danger: 'alert',
-};
-
-const getNextFocusableElement = (
-  root: HTMLElement | null,
-  activeElement: Element | null,
-): HTMLElement | null => {
-  if (!root) {
-    return null;
-  }
-
-  const focusable = Array.from(
-    document.querySelectorAll<HTMLElement>(focusableSelector),
-  );
-
-  if (activeElement) {
-    const activeIndex = focusable.indexOf(activeElement as HTMLElement);
-    if (activeIndex >= 0) {
-      for (let index = activeIndex + 1; index < focusable.length; index += 1) {
-        const candidate = focusable[index];
-        if (!root.contains(candidate)) {
-          return candidate;
-        }
-      }
-    }
-  }
-
-  for (const candidate of focusable) {
-    if (root.contains(candidate)) {
-      continue;
-    }
-
-    const relation = root.compareDocumentPosition(candidate);
-    if (relation & Node.DOCUMENT_POSITION_FOLLOWING) {
-      return candidate;
-    }
-  }
-
-  return null;
 };
 
 export const Alert = ({
