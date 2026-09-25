@@ -1,5 +1,25 @@
 # Changelog
 
+## [5.4.0](https://github.com/moodlehq/design-system/compare/design-system-v5.3.0...design-system-v5.4.0) (2026-09-25)
+
+
+### Features
+
+* **Alert:** Add new Alert component ([#318](https://github.com/moodlehq/design-system/issues/318)) ([2919cfb](https://github.com/moodlehq/design-system/commit/2919cfbddcb7eda747d51f0223915c2de04537eb))
+* **Input, PasswordInput:** Add new components ([#329](https://github.com/moodlehq/design-system/issues/329)) ([725da6e](https://github.com/moodlehq/design-system/commit/725da6e4b29727b7fad4e63759d868ea40885ca4))
+* **Link:** Add new Inline variant ([#319](https://github.com/moodlehq/design-system/issues/319)) ([1470419](https://github.com/moodlehq/design-system/commit/14704193c4c684b4fd32e0e99704ffb7dbefe22d))
+* **SearchInput:** Add new SearchInput component ([#338](https://github.com/moodlehq/design-system/issues/338)) ([32772cf](https://github.com/moodlehq/design-system/commit/32772cf6b8f81eec0ae0598fe8a6a32830d5e019))
+* **Textarea:** Add new Textarea component ([#321](https://github.com/moodlehq/design-system/issues/321)) ([7b2b680](https://github.com/moodlehq/design-system/commit/7b2b680f42e26b43d9faee25b4ec7683b52ba421))
+
+
+### Bug Fixes
+
+* **Badge, Link:** Increase specificity on the class selectors ([#322](https://github.com/moodlehq/design-system/issues/322)) ([3d356fd](https://github.com/moodlehq/design-system/commit/3d356fd39eeda7b4f51547ed5e74ce045b1d88ae))
+* **ci:** Use sentence-case commit message in ZeroHeight docs sync ([#343](https://github.com/moodlehq/design-system/issues/343)) ([0530ed8](https://github.com/moodlehq/design-system/commit/0530ed89bab03a3cf45155ea72a40ec8096dc8ee))
+* **CloseButton:** Replace opacity states with colour tokens ([#337](https://github.com/moodlehq/design-system/issues/337)) ([ac0c733](https://github.com/moodlehq/design-system/commit/ac0c7330ebaef2ba12151b3e65ff4ed47a37a067))
+* **PasswordInput:** Align eye icon canvas size for consistent toggle sizing ([#341](https://github.com/moodlehq/design-system/issues/341)) ([b9a735e](https://github.com/moodlehq/design-system/commit/b9a735e7c6be01d9bbe22e91308ff3e51c8c2f9f))
+* **Textarea:** Suppress invalid state when disabled or readOnly ([#333](https://github.com/moodlehq/design-system/issues/333)) ([7a97c81](https://github.com/moodlehq/design-system/commit/7a97c814394ddf342f5961c2aff0372454acd530))
+
 ## [5.3.0](https://github.com/moodlehq/design-system/compare/design-system-v5.2.0...design-system-v5.3.0) (2026-08-14)
 
 
