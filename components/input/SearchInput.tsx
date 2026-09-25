@@ -195,6 +195,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         event.preventDefault();
         handleClear();
       }
+
+      // Enter on an empty (or whitespace-only) field would otherwise trigger
+      // the parent form's implicit submission and send a blank query.
+      // Cancelling the keydown blocks that, and reads the live DOM value so
+      // it holds for both controlled and uncontrolled use.
+      if (event.key === 'Enter' && !event.currentTarget.value.trim()) {
+        event.preventDefault();
+      }
     };
 
     // Per design, invalid only applies while the field is empty — once the

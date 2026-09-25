@@ -321,6 +321,60 @@ describe('SearchInput: Unit Test', () => {
     expect(handleDebouncedChange).toHaveBeenCalledExactlyOnceWith('');
   });
 
+  it('prevents implicit form submission on Enter when the field is empty or whitespace-only', async () => {
+    const user = userEvent.setup();
+    const handleSubmit = vi.fn((event: SubmitEvent) => event.preventDefault());
+
+    render(
+      <form
+        onSubmit={(event) => handleSubmit(event.nativeEvent as SubmitEvent)}
+      >
+        <SearchInput label="Search" clearLabel="Clear search" />
+        <button type="submit">Submit</button>
+      </form>,
+    );
+
+    const input = screen.getByLabelText('Search');
+    await user.type(input, '{Enter}');
+    expect(handleSubmit).not.toHaveBeenCalled();
+
+    await user.type(input, '   {Enter}');
+    expect(handleSubmit).not.toHaveBeenCalled();
+  });
+
+  it('allows implicit form submission on Enter when the field has a value', async () => {
+    const user = userEvent.setup();
+    const handleSubmit = vi.fn((event: SubmitEvent) => event.preventDefault());
+
+    render(
+      <form
+        onSubmit={(event) => handleSubmit(event.nativeEvent as SubmitEvent)}
+      >
+        <SearchInput label="Search" clearLabel="Clear search" />
+        <button type="submit">Submit</button>
+      </form>,
+    );
+
+    await user.type(screen.getByLabelText('Search'), 'course{Enter}');
+    expect(handleSubmit).toHaveBeenCalledOnce();
+  });
+
+  it('still calls the consumer onKeyDown handler for Enter on an empty field', async () => {
+    const user = userEvent.setup();
+    const handleKeyDown = vi.fn();
+
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        onKeyDown={handleKeyDown}
+      />,
+    );
+
+    await user.type(screen.getByLabelText('Search'), '{Enter}');
+    expect(handleKeyDown).toHaveBeenCalledOnce();
+  });
+
   it('calls the consumer onChange handler while typing', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
