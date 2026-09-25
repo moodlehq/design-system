@@ -27,7 +27,7 @@ Quick reference for AI agents and developers.
 | Pagination      | Page navigation control                                                                                             | totalPages, currentPage, onPageChange, ariaLabel                                                                     |
 | PasswordInput   | Single-line password input built on Input, with a lock icon and show/hide visibility toggle                         | label, invalid, invalidFeedback, supportingText, passwordToggleShowLabel, passwordToggleHideLabel                    |
 | ProgressBar     | Visual progress indicator with status and label variants                                                            | value, min, max, status, labelVariant, title                                                                         |
-| SearchInput     | Single-line search input built on Input, with a magnifying-glass icon and a clear-value button                      | label, invalid, invalidFeedback, supportingText, clearLabel, onDebouncedChange, debounceMs, landmark                 |
+| SearchInput     | Search field (`type="search"`) with magnifier and clear button — never Input with a magnifier icon                  | label, invalid, invalidFeedback, supportingText, clearLabel, onDebouncedChange, debounceMs, landmark                 |
 | Radio           | Single-select options in a compact list (native radio input, label only)                                            | checked, label, disabled, invalid                                                                                    |
 | Switch          | Binary toggle control for on/off settings                                                                           | checked, label, disabled, onChange                                                                                   |
 | Tag             | Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise) | content, type, disabled; link: href, variant; removable: onRemove, removeLabel, username, email, institution, avatar |
@@ -141,6 +141,12 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - `Textarea` is a plain-text field for multi-line free text (comments, descriptions, feedback). Use `Input` for single-line values. It is not a rich text editor — it has no toolbar, formatting, or HTML output:
   - When content needs formatting, links, images, or embedded media, use Moodle's own editor (the editor API, e.g. TinyMCE). MDS doesn't provide an editor component — don't build one by adding formatting controls around `Textarea`.
   - Don't treat an editor field as a `Textarea` because its markup looks the same. The editor mounts on its own `<textarea class="form-control">`, and a site setting can switch a field between the two, but only the plain-text field is `Textarea`.
+- Choosing between `Input`, `Textarea`, `SearchInput`, and a combobox — ask: **after the user types, do they pick a row from a list, and does that pick get saved with the form?**
+  - No to both → `SearchInput`. The query finds or filters content shown elsewhere, even when results update as you type.
+  - Yes to both → a combobox. MDS has no combobox yet — flag the need rather than composing `SearchInput` with a `Dropdown`.
+  - Not picked from a list, but saved with the form → `Input` (or `PasswordInput` when it must be masked); `Textarea` when it spans multiple lines.
+- A search field is `SearchInput`, which renders `<input type="search">`. Never build one from `Input` with a magnifying-glass `startIcon` — that reports as a plain text field, not a searchbox. Moodle's own templates mostly use `type="text"` for search, so don't copy them.
+- Pass `landmark` to `SearchInput` only for a page- or site-level search. Leave it off for filters in tables, toolbars, or panels, and when the field is already inside `<search>` or `<form role="search">`.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing

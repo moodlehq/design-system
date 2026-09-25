@@ -48,6 +48,14 @@ const SUBCOMPONENTS: Record<string, ComponentSubcomponentIndexItem[]> = {
       implementationPath: 'components/input/PasswordInput.tsx',
       storyPath: 'components/input/PasswordInput.stories.tsx',
     },
+    {
+      name: 'SearchInput',
+      purpose:
+        'Search field (<input type="search">) for finding or filtering content shown elsewhere, with a fixed magnifier, clear button, and debounced onDebouncedChange. Use instead of Input with a magnifier icon. If the user picks a row from a list that is saved with the form, it is a combobox, not SearchInput. Pass landmark only for page- or site-level search.',
+      exportName: 'SearchInput',
+      implementationPath: 'components/input/SearchInput.tsx',
+      storyPath: 'components/input/SearchInput.stories.tsx',
+    },
   ],
   dropdown: [
     {
@@ -148,7 +156,7 @@ const PURPOSES: Record<string, string> = {
     'Composable trigger + menu container for action, select, expandable, and multiselect dropdown items.',
   'favourite-button': 'Icon button to mark/unmark items as favourites.',
   input:
-    'Single-line text input with label, supporting text, and validation feedback for non-password text-like values.',
+    'Single-line text input with label, supporting text, and validation feedback for non-password text-like values that are saved with a form. Not for search — use SearchInput. Multi-line text uses Textarea.',
   link: 'Anchor element with variant and optional icon support.',
   'nav-pill': 'Compact pill-style navigation link for section switching.',
   pagination: 'Page navigation control.',
