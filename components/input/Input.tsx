@@ -8,7 +8,7 @@ const allowedTypes: InputType[] = ['email', 'number', 'tel', 'text', 'url'];
 
 export interface InputProps extends Omit<
   BaseInputProps,
-  'inputType' | 'trailingAction' | 'suppressNativeInvalid'
+  'inputType' | 'trailingAction' | 'suppressNativeInvalid' | 'wrapperProps'
 > {
   /** Restricts input type to design-system-supported non-password text-like types. */
   type?: InputType;

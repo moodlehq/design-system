@@ -39,6 +39,115 @@ describe('SearchInput: Unit Test', () => {
     );
   });
 
+  it('does not render a search landmark by default', () => {
+    render(<SearchInput label="Search" clearLabel="Clear search" />);
+    expect(screen.queryByRole('search')).not.toBeInTheDocument();
+  });
+
+  it('renders the root as a search landmark named by the label when landmark is true', () => {
+    const { container } = render(
+      <SearchInput label="Search courses" clearLabel="Clear search" landmark />,
+    );
+
+    const landmark = screen.getByRole('search', { name: 'Search courses' });
+    expect(landmark).toBe(container.firstElementChild);
+    expect(landmark).toHaveClass('mds-search-input');
+    expect(landmark).toContainElement(screen.getByRole('searchbox'));
+  });
+
+  it('names the landmark with aria-label when the label is hidden', () => {
+    render(
+      <SearchInput
+        label="Search"
+        aria-label="Search site"
+        hideLabel
+        clearLabel="Clear search"
+        landmark
+      />,
+    );
+
+    expect(
+      screen.getByRole('search', { name: 'Search site' }),
+    ).toBeInTheDocument();
+  });
+
+  it('names the landmark with aria-labelledby when the field is named by another element', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <>
+        <h2 id="forum-heading">Forum posts</h2>
+        <SearchInput
+          aria-labelledby="forum-heading"
+          hideLabel
+          clearLabel="Clear search"
+          landmark
+        />
+      </>,
+    );
+
+    const landmark = screen.getByRole('search', { name: 'Forum posts' });
+    expect(landmark).not.toHaveAttribute('aria-label');
+    expect(screen.getByRole('searchbox', { name: 'Forum posts' })).toBe(
+      screen.getByRole('searchbox'),
+    );
+    expect(warnSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('required for accessibility'),
+    );
+    expect(warnSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('landmark needs a name'),
+    );
+    warnSpy.mockRestore();
+  });
+
+  it('keeps multiple landmarks distinguishable by their names', () => {
+    render(
+      <>
+        <SearchInput
+          label="Search courses"
+          hideLabel
+          clearLabel="Clear search"
+          landmark
+        />
+        <SearchInput
+          label="Search people"
+          hideLabel
+          clearLabel="Clear search"
+          landmark
+        />
+      </>,
+    );
+
+    expect(
+      screen.getByRole('search', { name: 'Search courses' }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('search', { name: 'Search people' }),
+    ).toBeInTheDocument();
+  });
+
+  it('warns in development when the landmark has no name', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(<SearchInput hideLabel clearLabel="Clear search" landmark />);
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('SearchInput: landmark needs a name'),
+    );
+    warnSpy.mockRestore();
+  });
+
+  it('does not warn about the landmark name when landmark is off', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(<SearchInput hideLabel clearLabel="Clear search" />);
+
+    expect(warnSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('landmark needs a name'),
+    );
+    warnSpy.mockRestore();
+  });
+
   it('does not render the clear button when the field is empty', () => {
     render(<SearchInput label="Search" clearLabel="Clear search" />);
     expect(

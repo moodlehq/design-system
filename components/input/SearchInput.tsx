@@ -25,9 +25,21 @@ export interface SearchInputProps extends Omit<
   | 'type'
   | 'readOnly'
   | 'suppressNativeInvalid'
+  | 'wrapperProps'
 > {
   /** Accessible label for the button that clears the field's current value. */
   clearLabel: string;
+  /**
+   * Renders the field's root as a `role="search"` landmark, named by the
+   * field's accessible name (`aria-labelledby`, `label`, or `aria-label`
+   * when the label is hidden). Give each landmark on a page a unique name
+   * so they can be told apart. Use for a page- or site-level search. Leave off for
+   * filters inside a table, toolbar, or panel, and when the consumer already
+   * wraps the field in `<search>` or `<form role="search">`, so the page
+   * doesn't collect redundant or nested landmarks.
+   * @default false
+   */
+  landmark?: boolean;
   /**
    * Called with the field's current value `debounceMs` after the user stops
    * typing — use this (not `onChange`) to trigger the actual search/filter
@@ -79,6 +91,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       onDebouncedChange,
       debounceMs = DEFAULT_DEBOUNCE_MS,
       invalid,
+      landmark = false,
       ...props
     },
     ref,
@@ -221,9 +234,34 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       />
     ) : undefined;
 
+    // The landmark takes the same name as the field so multiple search
+    // landmarks on one page stay distinguishable. Mirrors the input's own
+    // name resolution: aria-labelledby wins outright, then the visible label,
+    // or the aria-label used when the label is hidden.
+    const labelledBy = props['aria-labelledby'];
+    const landmarkLabel = labelledBy
+      ? undefined
+      : props.hideLabel
+        ? (props['aria-label'] ?? props.label)
+        : props.label;
+    const wrapperProps = landmark
+      ? {
+          role: 'search',
+          'aria-labelledby': labelledBy,
+          'aria-label': landmarkLabel,
+        }
+      : undefined;
+
+    if (import.meta.env.DEV && landmark && !labelledBy && !landmarkLabel) {
+      console.warn(
+        'SearchInput: landmark needs a name (label, aria-label, or aria-labelledby). Unnamed search landmarks are indistinguishable when a page has more than one.',
+      );
+    }
+
     return (
       <BaseInput
         ref={setRefs}
+        wrapperProps={wrapperProps}
         inputType="search"
         startIcon={searchIcon}
         trailingAction={clearButton}
