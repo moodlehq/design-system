@@ -3,12 +3,12 @@ import type {
   AriaRole,
   HTMLAttributes,
   MouseEvent,
-  ReactNode,
   Ref,
 } from 'react';
-import { forwardRef } from 'react';
-import type { AvatarProps, AvatarSize } from '../avatar';
-import { Avatar } from '../avatar';
+import { forwardRef, useRef } from 'react';
+import { getNextFocusableElement } from '../_internal/focus';
+import type { TagContentAvatar } from '../_internal/TagContent';
+import { countTagContentLines, TagContent } from '../_internal/TagContent';
 import { CloseButton } from '../close-button';
 
 /**
@@ -23,17 +23,25 @@ export type TagVariant = 'default' | 'danger';
 const allowedVariants: readonly TagVariant[] = ['default', 'danger'];
 
 /**
- * Avatar sub-fields accepted by Tag. Derived from `AvatarProps` so it stays
- * in sync with Avatar's own contract. `size` is deliberately excluded —
- * Tag derives it itself from how many text lines are populated (see
- * `resolveAvatarSize`).
+ * Avatar sub-fields accepted by Tag. `size` is deliberately excluded — it's
+ * derived from how many text lines are populated. Aliased from the shared
+ * content helper so Tag and the future Combobox accept the same shape.
  */
-export type TagAvatar = Pick<AvatarProps, 'imageSrc' | 'alt' | 'initials'>;
+export type TagAvatar = TagContentAvatar;
 
 interface TagSharedProps {
   /** Position 1 — the tag's name/category label. Always rendered first. Required. */
   content: string;
 
+  /** Disables the whole tag. In removable mode this also disables the nested CloseButton. */
+  disabled?: boolean;
+}
+
+/**
+ * Identity fields — removable mode only. Figma/ZeroHeight define Link as a
+ * single-line label, so multi-line content would collide with its pill ends.
+ */
+interface TagIdentityProps {
   /**
    * Position 2 — a short supporting identifier, shown after `content`.
    * Named "Username / short name" in Figma/ZeroHeight: a person's username
@@ -64,14 +72,6 @@ interface TagSharedProps {
    * announce the same identity twice.
    */
   avatar?: TagAvatar;
-
-  /**
-   * Disables the whole tag. In removable mode this also disables the nested
-   * CloseButton. Has no effect when `nonRemovable` is set — a non-removable
-   * tag has no interactive element left to disable, so the combination is
-   * ignored (with a dev-mode warning) rather than rendered.
-   */
-  disabled?: boolean;
 }
 
 /** The two interaction modes a Tag can render. Never both at once. */
@@ -93,10 +93,19 @@ export interface TagLinkProps
 }
 
 export interface TagRemovableProps
-  extends TagSharedProps, Omit<HTMLAttributes<HTMLSpanElement>, 'content'> {
+  extends
+    TagSharedProps,
+    TagIdentityProps,
+    Omit<HTMLAttributes<HTMLSpanElement>, 'content'> {
   /** Discriminant — selects the removable-mode prop shape. Renders a `<span>` with a nested CloseButton. */
   type: Extract<TagType, 'removable'>;
-  /** Callback fired when the nested CloseButton is activated. */
+  /**
+   * Callback fired when the nested CloseButton is activated. Removable mode
+   * always renders the CloseButton — ZeroHeight treats it as required, and a
+   * value the user can't remove should use Badge or plain text instead. The
+   * non-removable identity layout used by Combobox rows is shared through
+   * `_internal/TagContent` rather than a Tag prop (see the reasoning there).
+   */
   onRemove: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
    * Accessible name passed to the nested CloseButton, e.g. "Remove Ana Silva".
@@ -104,13 +113,6 @@ export interface TagRemovableProps
    * Required because CloseButton's own `aria-label` is required.
    */
   removeLabel: string;
-  /**
-   * When true, renders no CloseButton at all — the value is fixed and
-   * cannot be removed. Not combinable with `disabled` — see its doc comment.
-   */
-  nonRemovable?: boolean;
-  /** Marks the tag's value as failing validation after selection. */
-  invalid?: boolean;
 }
 
 /** The strongly-typed shape used for all internal destructuring/Omit logic. */
@@ -124,54 +126,17 @@ type TagKnownProps = TagLinkProps | TagRemovableProps;
 export type TagProps = TagKnownProps;
 
 /**
- * Scales the leading avatar with how many of the three text lines are
- * populated — `content` is always present, so this only varies with
- * whether Position 2 and/or `institution` are also filled.
- */
-const resolveAvatarSize = (
-  hasSupportingText: boolean,
-  hasInstitution: boolean,
-): AvatarSize => {
-  const filledLines =
-    1 + (hasSupportingText ? 1 : 0) + (hasInstitution ? 1 : 0);
-  if (filledLines >= 3) return 'lg';
-  if (filledLines === 2) return 'md';
-  return 'xs';
-};
-
-/**
  * Scales the removable-mode surface (radius/padding/gap) with the same
- * filled-lines count as `resolveAvatarSize`, matching the Figma/ZeroHeight
- * content-density spec: `sm` radius for the label alone, `md` once a second
- * line (Position 2 or institution) is added, `lg` once all three lines are
- * filled. Figma never actually built a Position-2-less "content +
- * institution only" state, so this deliberately mirrors `resolveAvatarSize`'s
- * line-count logic rather than treating `institution` as special — content
- * + institution alone is a 2-line tag, same as content + username alone.
- * Link mode is unaffected — it's always pill-shaped regardless of content.
+ * filled-lines count the shared content helper uses to size the avatar,
+ * matching the Figma/ZeroHeight content-density spec: `sm` radius for the
+ * label alone, `md` once a second line (Position 2 or institution) is added,
+ * `lg` once all three lines are filled. Figma never built a
+ * Position-2-less "content + institution only" state, so institution isn't
+ * treated as special — content + institution alone is a 2-line tag, same as
+ * content + username alone. Link mode is unaffected — it's always
+ * pill-shaped regardless of content.
  */
-const resolveDensity = (
-  hasSupportingText: boolean,
-  hasInstitution: boolean,
-): 'sm' | 'md' | 'lg' => {
-  const filledLines =
-    1 + (hasSupportingText ? 1 : 0) + (hasInstitution ? 1 : 0);
-  if (filledLines >= 3) return 'lg';
-  if (filledLines === 2) return 'md';
-  return 'sm';
-};
-
-const renderAvatar = (avatar: TagAvatar | undefined, size: AvatarSize) =>
-  avatar ? (
-    <Avatar
-      size={size}
-      imageSrc={avatar.imageSrc}
-      alt={avatar.alt}
-      initials={avatar.initials}
-      className="mds-tag__avatar"
-      aria-hidden="true"
-    />
-  ) : null;
+const densityByLines = { 1: 'sm', 2: 'md', 3: 'lg' } as const;
 
 const resolveVariant = (
   variant: string | undefined,
@@ -189,70 +154,13 @@ const resolveVariant = (
   return undefined;
 };
 
-/**
- * Renders the three stacked lines: line 1 is `content`, line 2 is the
- * Position 2 bucket (its own items divider-separated when there's more
- * than one), and line 3 is `institution` — visible independently of
- * whether line 2 has any content.
- */
-const TagBody = ({
-  content,
-  supportingText,
-  institution,
-}: {
-  content: string;
-  supportingText: string[];
-  institution?: string;
-}) => {
-  const supportingItems: ReactNode[] = [];
-  supportingText.forEach((text, index) => {
-    if (index > 0) {
-      supportingItems.push(
-        <span
-          key={`divider-${index}`}
-          className="mds-tag__divider"
-          aria-hidden="true"
-        />,
-      );
-    }
-    supportingItems.push(
-      <span key={`supporting-${index}`} className="mds-tag__supporting-text">
-        {text}
-      </span>,
-    );
-  });
-
-  return (
-    <span className="mds-tag__content">
-      <span className="mds-tag__name">{content}</span>
-      {supportingItems.length > 0 && (
-        <span className="mds-tag__supporting-row">{supportingItems}</span>
-      )}
-      {institution && (
-        <span className="mds-tag__institution">{institution}</span>
-      )}
-    </span>
-  );
-};
-
 export const Tag = forwardRef<HTMLAnchorElement | HTMLSpanElement, TagProps>(
   (rawProps, ref) => {
     const props = rawProps as unknown as TagKnownProps;
-    const {
-      content,
-      username,
-      email,
-      institution,
-      avatar,
-      disabled = false,
-      className,
-      type,
-      ...rest
-    } = props;
-
-    const supportingText = [username, email].filter((value): value is string =>
-      Boolean(value),
-    );
+    // Called before the link/removable branch so hook order stays stable
+    // if a consumer switches `type` between renders.
+    const removableRef = useRef<HTMLSpanElement | null>(null);
+    const { content, disabled = false, className, type, ...rest } = props;
 
     if (import.meta.env.DEV && type !== 'link' && type !== 'removable') {
       console.warn(
@@ -262,13 +170,27 @@ export const Tag = forwardRef<HTMLAnchorElement | HTMLSpanElement, TagProps>(
     const resolvedType: TagType = type === 'link' ? 'link' : 'removable';
 
     if (resolvedType === 'link') {
-      const { href, variant, onClick, tabIndex, role, ...domProps } =
-        rest as Omit<TagLinkProps, keyof TagSharedProps | 'type'>;
-      const resolvedVariant = resolveVariant(variant, 'Tag');
-      const avatarNode = renderAvatar(
+      // Identity fields aren't part of the link contract, but JS consumers
+      // can still pass them — pull them out so they never reach the <a>.
+      const {
+        href,
+        variant,
+        onClick,
+        tabIndex,
+        role,
+        username,
+        email,
+        institution,
         avatar,
-        resolveAvatarSize(supportingText.length > 0, !!institution),
-      );
+        ...domProps
+      } = rest as Omit<TagLinkProps, keyof TagSharedProps | 'type'> &
+        TagIdentityProps;
+      if (import.meta.env.DEV && (username || email || institution || avatar)) {
+        console.warn(
+          '[MDS Tag] "username", "email", "institution" and "avatar" are removable mode only. Ignoring them in link mode.',
+        );
+      }
+      const resolvedVariant = resolveVariant(variant, 'Tag');
 
       const classes = ['mds-tag', 'mds-tag--link'];
       // 'default' needs no modifier class — the base .mds-tag--link rule
@@ -303,70 +225,76 @@ export const Tag = forwardRef<HTMLAnchorElement | HTMLSpanElement, TagProps>(
           onClick={handleClick}
           {...domProps}
         >
-          {avatarNode}
-          <TagBody
-            content={content}
-            supportingText={supportingText}
-            institution={institution}
-          />
+          <TagContent content={content} />
         </a>
       );
     }
 
     const {
+      username,
+      email,
+      institution,
+      avatar,
       onRemove,
       removeLabel,
-      nonRemovable = false,
-      invalid = false,
       ...domProps
     } = rest as Omit<TagRemovableProps, keyof TagSharedProps | 'type'>;
 
-    // A non-removable tag has no CloseButton and its body is already inert,
-    // so there's nothing left for `disabled` to disable — the combination
-    // isn't a valid state. Ignore `disabled` rather than rendering a
-    // disabled-looking tag with no interactive element underneath it.
-    if (import.meta.env.DEV && nonRemovable && disabled) {
-      console.warn(
-        '[MDS Tag] "disabled" has no effect when "nonRemovable" is set — a non-removable tag has no interactive element to disable. Ignoring "disabled".',
-      );
-    }
-    const effectiveDisabled = nonRemovable ? false : disabled;
+    const density =
+      densityByLines[countTagContentLines({ username, email, institution })];
 
-    const avatarNode = renderAvatar(
-      avatar,
-      resolveAvatarSize(supportingText.length > 0, !!institution),
-    );
-    const density = resolveDensity(supportingText.length > 0, !!institution);
+    const setRemovableRef = (node: HTMLSpanElement | null) => {
+      removableRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) ref.current = node;
+    };
+
+    const handleRemove = (event: MouseEvent<HTMLButtonElement>) => {
+      const root = removableRef.current;
+      const nextFocusableElement = getNextFocusableElement(
+        root,
+        document.activeElement,
+      );
+
+      onRemove(event);
+
+      // Removal is consumer-owned, so only step in once the tag has actually
+      // unmounted and left focus stranded on <body>. A consumer that moves
+      // focus itself (e.g. back to a chip input's field) is never overridden.
+      requestAnimationFrame(() => {
+        if (
+          root &&
+          !root.isConnected &&
+          nextFocusableElement?.isConnected &&
+          (document.activeElement === document.body ||
+            document.activeElement === null)
+        ) {
+          nextFocusableElement.focus();
+        }
+      });
+    };
 
     const classes = ['mds-tag', 'mds-tag--removable'];
     if (density !== 'sm') classes.push(`mds-tag--density-${density}`);
-    if (effectiveDisabled) classes.push('mds-tag--disabled');
-    if (nonRemovable) classes.push('mds-tag--non-removable');
-    if (invalid) classes.push('is-invalid');
+    if (disabled) classes.push('mds-tag--disabled');
     if (className) classes.push(className);
 
     return (
-      <span
-        ref={ref as Ref<HTMLSpanElement>}
-        className={classes.join(' ')}
-        aria-invalid={invalid || undefined}
-        {...domProps}
-      >
-        {avatarNode}
-        <TagBody
+      <span ref={setRemovableRef} className={classes.join(' ')} {...domProps}>
+        <TagContent
           content={content}
-          supportingText={supportingText}
+          username={username}
+          email={email}
           institution={institution}
+          avatar={avatar}
         />
-        {!nonRemovable && (
-          <CloseButton
-            size="sm"
-            aria-label={removeLabel}
-            onClick={onRemove}
-            disabled={effectiveDisabled}
-            className="mds-tag__remove"
-          />
-        )}
+        <CloseButton
+          size="sm"
+          aria-label={removeLabel}
+          onClick={handleRemove}
+          disabled={disabled}
+          className="mds-tag__remove"
+        />
       </span>
     );
   },

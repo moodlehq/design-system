@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { createRef } from 'react';
-import { describe, expect, it, vi } from 'vitest';
+import { createRef, useRef, useState } from 'react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Tag } from './Tag';
 
 describe('Tag: Unit Test', () => {
@@ -25,32 +25,6 @@ describe('Tag: Unit Test', () => {
       expect(screen.getByText('Course')).toBeInTheDocument();
     });
 
-    it('renders username and email as Position 2 content, username first', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          username="ana.silva"
-          email="ana@example.com"
-        />,
-      );
-      expect(screen.getByText('ana.silva')).toBeInTheDocument();
-      expect(screen.getByText('ana@example.com')).toBeInTheDocument();
-    });
-
-    it('does not forward username/email (treated as content) to the DOM element', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          username="ana.silva"
-        />,
-      );
-      expect(screen.getByRole('link')).not.toHaveAttribute('username');
-    });
-
     it('still forwards reserved-name string attributes to the DOM element rather than treating them as content', () => {
       render(
         <Tag
@@ -65,125 +39,6 @@ describe('Tag: Unit Test', () => {
       expect(link).toHaveAttribute('title', 'Course tag');
       expect(link).toHaveAttribute('data-tracking', 'tag-course');
       expect(screen.queryByText('Course tag')).not.toBeInTheDocument();
-    });
-
-    it('renders institution independently of extra content props', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          institution="Moodle HQ"
-        />,
-      );
-      expect(screen.getByText('Moodle HQ')).toBeInTheDocument();
-    });
-
-    it('renders content, Position 2, and institution as three separate lines', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Ana Silva"
-          username="ana.silva"
-          institution="Moodle HQ"
-        />,
-      );
-      const name = screen.getByText('Ana Silva');
-      const supporting = screen.getByText('ana.silva');
-      const institution = screen.getByText('Moodle HQ');
-
-      expect(name).toHaveClass('mds-tag__name');
-      expect(supporting.closest('.mds-tag__supporting-row')).not.toBeNull();
-      expect(institution).toHaveClass('mds-tag__institution');
-      // Each is its own row within the content block, not inline siblings.
-      expect(name.parentElement).toHaveClass('mds-tag__content');
-      expect(supporting.parentElement).toHaveClass('mds-tag__supporting-row');
-      expect(institution.parentElement).toHaveClass('mds-tag__content');
-    });
-
-    it('renders an avatar when supplied', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
-        />,
-      );
-      expect(screen.getByLabelText('Ana Silva')).toBeInTheDocument();
-    });
-
-    it('does not render an avatar when omitted', () => {
-      render(<Tag type="link" href="/tags/course" content="Course" />);
-      expect(document.querySelector('.mds-tag__avatar')).toBeNull();
-    });
-
-    it('renders the avatar aria-hidden, since its identity is already conveyed by the visible content text', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
-        />,
-      );
-      expect(document.querySelector('.mds-tag__avatar')).toHaveAttribute(
-        'aria-hidden',
-        'true',
-      );
-    });
-
-    it('sizes the avatar xs when only content is filled', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
-        />,
-      );
-      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--xs');
-    });
-
-    it('sizes the avatar md when content plus Position 2 are filled', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          username="ana.silva"
-          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
-        />,
-      );
-      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--md');
-    });
-
-    it('sizes the avatar md when content plus institution are filled', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          institution="Moodle HQ"
-          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
-        />,
-      );
-      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--md');
-    });
-
-    it('sizes the avatar lg when content, Position 2, and institution are all filled', () => {
-      render(
-        <Tag
-          type="link"
-          href="/tags/course"
-          content="Course"
-          username="ana.silva"
-          institution="Moodle HQ"
-          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
-        />,
-      );
-      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--lg');
     });
 
     it('appends consumer className after the mds classes', () => {
@@ -223,7 +78,181 @@ describe('Tag: Unit Test', () => {
     });
   });
 
+  describe('identity content (removable mode)', () => {
+    it('renders username and email as Position 2 content, username first', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          username="ana.silva"
+          email="ana@example.com"
+        />,
+      );
+      expect(screen.getByText('ana.silva')).toBeInTheDocument();
+      expect(screen.getByText('ana@example.com')).toBeInTheDocument();
+    });
+
+    it('renders institution independently of extra content props', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          institution="Moodle HQ"
+        />,
+      );
+      expect(screen.getByText('Moodle HQ')).toBeInTheDocument();
+    });
+
+    it('renders content, Position 2, and institution as three separate lines', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Ana Silva"
+          username="ana.silva"
+          institution="Moodle HQ"
+        />,
+      );
+      const name = screen.getByText('Ana Silva');
+      const supporting = screen.getByText('ana.silva');
+      const institution = screen.getByText('Moodle HQ');
+
+      expect(name).toHaveClass('mds-tag__name');
+      expect(supporting.closest('.mds-tag__supporting-row')).not.toBeNull();
+      expect(institution).toHaveClass('mds-tag__institution');
+      // Each is its own row within the content block, not inline siblings.
+      expect(name.parentElement).toHaveClass('mds-tag__content');
+      expect(supporting.parentElement).toHaveClass('mds-tag__supporting-row');
+      expect(institution.parentElement).toHaveClass('mds-tag__content');
+    });
+
+    it('renders an avatar when supplied', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      expect(screen.getByLabelText('Ana Silva')).toBeInTheDocument();
+    });
+
+    it('does not render an avatar when omitted', () => {
+      render(
+        <Tag
+          type="removable"
+          content="Course"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+        />,
+      );
+      expect(document.querySelector('.mds-tag__avatar')).toBeNull();
+    });
+
+    it('renders the avatar aria-hidden, since its identity is already conveyed by the visible content text', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      expect(document.querySelector('.mds-tag__avatar')).toHaveAttribute(
+        'aria-hidden',
+        'true',
+      );
+    });
+
+    it('sizes the avatar xs when only content is filled', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--xs');
+    });
+
+    it('sizes the avatar md when content plus Position 2 are filled', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          username="ana.silva"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--md');
+    });
+
+    it('sizes the avatar md when content plus institution are filled', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          institution="Moodle HQ"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--md');
+    });
+
+    it('sizes the avatar lg when content, Position 2, and institution are all filled', () => {
+      render(
+        <Tag
+          type="removable"
+          removeLabel="Remove Course"
+          onRemove={() => {}}
+          content="Course"
+          username="ana.silva"
+          institution="Moodle HQ"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      expect(screen.getByLabelText('Ana Silva')).toHaveClass('mds-avatar--lg');
+    });
+  });
+
   describe('link mode', () => {
+    it('ignores identity fields in link mode with a warning, keeping them off the DOM', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <Tag
+          type="link"
+          href="/tags/course"
+          content="Course"
+          // @ts-expect-error — identity fields are removable mode only; verifies the runtime guard
+          username="ana.silva"
+          avatar={{ initials: 'AS', alt: 'Ana Silva' }}
+        />,
+      );
+      const link = screen.getByRole('link');
+      expect(link).not.toHaveAttribute('username');
+      expect(link).not.toHaveAttribute('avatar');
+      expect(screen.queryByText('ana.silva')).not.toBeInTheDocument();
+      expect(document.querySelector('.mds-tag__avatar')).toBeNull();
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('removable mode only'),
+      );
+      warn.mockRestore();
+    });
+
     it('renders a real anchor with the given href', () => {
       render(<Tag type="link" href="/tags/course" content="Course" />);
       expect(screen.getByRole('link', { name: 'Course' })).toHaveAttribute(
@@ -405,45 +434,6 @@ describe('Tag: Unit Test', () => {
       expect(handleRemove).not.toHaveBeenCalled();
     });
 
-    it('nonRemovable renders no CloseButton at all', () => {
-      render(
-        <Tag
-          type="removable"
-          content="Fixed value"
-          removeLabel="Remove Fixed value"
-          onRemove={() => {}}
-          nonRemovable
-        />,
-      );
-      expect(screen.queryByRole('button')).not.toBeInTheDocument();
-      expect(screen.getByText('Fixed value').closest('.mds-tag')).toHaveClass(
-        'mds-tag--non-removable',
-      );
-    });
-
-    it('ignores and warns on disabled + nonRemovable together — a non-removable tag has nothing left to disable', () => {
-      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-      render(
-        <Tag
-          type="removable"
-          content="Fixed value"
-          removeLabel="Remove Fixed value"
-          onRemove={() => {}}
-          nonRemovable
-          disabled
-        />,
-      );
-      expect(warn).toHaveBeenCalledWith(
-        expect.stringContaining(
-          '"disabled" has no effect when "nonRemovable" is set',
-        ),
-      );
-      expect(
-        screen.getByText('Fixed value').closest('.mds-tag'),
-      ).not.toHaveClass('mds-tag--disabled');
-      vi.restoreAllMocks();
-    });
-
     it('disabled applies the disabled class and disables the CloseButton', () => {
       render(
         <Tag
@@ -460,21 +450,6 @@ describe('Tag: Unit Test', () => {
       expect(
         screen.getByRole('button', { name: 'Remove Ana Silva' }),
       ).toBeDisabled();
-    });
-
-    it('invalid sets aria-invalid and the is-invalid class', () => {
-      render(
-        <Tag
-          type="removable"
-          content="Ana Silva"
-          removeLabel="Remove Ana Silva"
-          onRemove={() => {}}
-          invalid
-        />,
-      );
-      const tag = screen.getByText('Ana Silva').closest('.mds-tag');
-      expect(tag).toHaveClass('is-invalid');
-      expect(tag).toHaveAttribute('aria-invalid', 'true');
     });
 
     it('applies no density modifier when only content is filled', () => {
@@ -562,6 +537,117 @@ describe('Tag: Unit Test', () => {
         />,
       );
       expect(ref.current).toBeInstanceOf(HTMLSpanElement);
+    });
+  });
+
+  describe('focus after remove', () => {
+    // Queue rAF callbacks rather than running them inline: the focus fallback
+    // must only run after the consumer's state update has unmounted the tag.
+    const queueAnimationFrames = () => {
+      const callbacks: FrameRequestCallback[] = [];
+      vi.spyOn(window, 'requestAnimationFrame').mockImplementation(
+        (callback: FrameRequestCallback) => {
+          callbacks.push(callback);
+          return callbacks.length;
+        },
+      );
+      return () => callbacks.splice(0).forEach((callback) => callback(0));
+    };
+
+    const RemovableList = ({ focusOnRemove }: { focusOnRemove?: boolean }) => {
+      const [visible, setVisible] = useState(true);
+      const fieldRef = useRef<HTMLInputElement>(null);
+      return (
+        <>
+          <input ref={fieldRef} aria-label="Search people" />
+          {visible && (
+            <Tag
+              type="removable"
+              content="Ana Silva"
+              removeLabel="Remove Ana Silva"
+              onRemove={() => {
+                setVisible(false);
+                if (focusOnRemove) fieldRef.current?.focus();
+              }}
+            />
+          )}
+          <button type="button">Next focus target</button>
+        </>
+      );
+    };
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it('moves focus to the next focusable element once the tag unmounts', () => {
+      const flushAnimationFrames = queueAnimationFrames();
+      render(<RemovableList />);
+
+      const removeButton = screen.getByRole('button', {
+        name: 'Remove Ana Silva',
+      });
+      removeButton.focus();
+      fireEvent.click(removeButton);
+      flushAnimationFrames();
+
+      expect(
+        screen.getByRole('button', { name: 'Next focus target' }),
+      ).toHaveFocus();
+    });
+
+    it('does not override focus the consumer placed itself', () => {
+      const flushAnimationFrames = queueAnimationFrames();
+      render(<RemovableList focusOnRemove />);
+
+      const removeButton = screen.getByRole('button', {
+        name: 'Remove Ana Silva',
+      });
+      removeButton.focus();
+      fireEvent.click(removeButton);
+      flushAnimationFrames();
+
+      expect(
+        screen.getByRole('textbox', { name: 'Search people' }),
+      ).toHaveFocus();
+    });
+
+    it('leaves focus alone when the consumer keeps the tag mounted', () => {
+      const flushAnimationFrames = queueAnimationFrames();
+      render(
+        <>
+          <Tag
+            type="removable"
+            content="Ana Silva"
+            removeLabel="Remove Ana Silva"
+            onRemove={() => {}}
+          />
+          <button type="button">Next focus target</button>
+        </>,
+      );
+
+      const removeButton = screen.getByRole('button', {
+        name: 'Remove Ana Silva',
+      });
+      removeButton.focus();
+      fireEvent.click(removeButton);
+      flushAnimationFrames();
+
+      expect(removeButton).toHaveFocus();
+    });
+
+    it('still forwards the ref in removable mode', () => {
+      const ref = vi.fn();
+      render(
+        <Tag
+          ref={ref}
+          type="removable"
+          content="Ana Silva"
+          removeLabel="Remove Ana Silva"
+          onRemove={() => {}}
+        />,
+      );
+      expect(ref).toHaveBeenCalledWith(expect.any(HTMLSpanElement));
     });
   });
 });
