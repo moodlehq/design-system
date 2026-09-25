@@ -1,0 +1,12 @@
+/* SearchInput component
+   Wrapper hook class for search-specific composition over Input. */
+
+/* Suppresses the native browser affordances for type="search" (Chrome/Safari's
+   built-in clear "x" and any decorative padding) so only the custom clear
+   button renders. */
+.mds-search-input[class] .mds-input-field[class]::-webkit-search-cancel-button,
+.mds-search-input[class] .mds-input-field[class]::-webkit-search-decoration {
+  display: none;
+  -webkit-appearance: none;
+  appearance: none;
+}

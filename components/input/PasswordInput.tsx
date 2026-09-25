@@ -6,7 +6,11 @@ import { BaseInput } from './BaseInput';
 
 export interface PasswordInputProps extends Omit<
   BaseInputProps,
-  'inputType' | 'startIcon' | 'trailingAction' | 'type'
+  | 'inputType'
+  | 'startIcon'
+  | 'trailingAction'
+  | 'type'
+  | 'suppressNativeInvalid'
 > {
   /** Accessible label for the visibility toggle when the password is hidden. */
   passwordToggleShowLabel: string;
