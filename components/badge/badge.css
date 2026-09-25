@@ -1,6 +1,10 @@
 .mds-badge[class] {
   display: inline-flex;
   align-items: center;
+  /* Holds its own intrinsic height regardless of taller flex siblings —
+     without this, a parent flex container's default align-items: stretch
+     would stretch the badge to match the tallest sibling in the row. */
+  align-self: flex-start;
   gap: 0;
   padding: var(--mds-spacing-xxs) var(--mds-spacing-xs);
   border-radius: var(--mds-border-radius-sm);

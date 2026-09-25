@@ -76,6 +76,16 @@ export type { RadioProps } from './radio';
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
 
+export { Tag } from './tag';
+export type {
+  TagAvatar,
+  TagLinkProps,
+  TagProps,
+  TagRemovableProps,
+  TagType,
+  TagVariant,
+} from './tag';
+
 export { Textarea } from './textarea';
 export type { TextareaProps } from './textarea';
 

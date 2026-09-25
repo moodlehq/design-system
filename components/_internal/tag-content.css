@@ -1,0 +1,62 @@
+/* Layout for Tag's identity content (avatar + up to three text lines),
+   shared with the future Combobox's menu rows via TagContent.tsx — see the
+   comment there for why this is a shared helper rather than a Tag prop.
+
+   Deliberately host-agnostic: no cursor, no container chrome and no
+   disabled colours live here. Typography (font, size, line height) and the
+   name's colour are inherited from the host element, and each host applies
+   its own disabled treatment through these hooks (Tag's is in tag.css). */
+
+.mds-tag__avatar[class] {
+  flex-shrink: 0;
+}
+
+/* Three stacked lines: name, then the Position 2 bucket, then institution.
+   Each line is its own row so it can truncate independently. */
+.mds-tag__content {
+  display: inline-flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--mds-spacing-xxs);
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+.mds-tag__name,
+.mds-tag__institution {
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Line 2 — a single row holding the Position 2 items, divider-separated
+   from each other when there is more than one. */
+.mds-tag__supporting-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+  max-inline-size: 100%;
+  overflow: hidden;
+}
+
+.mds-tag__supporting-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-inline-size: 0;
+}
+
+.mds-tag__supporting-text,
+.mds-tag__institution {
+  color: var(--mds-text-subtle);
+  font-weight: var(--mds-font-weight-regular);
+}
+
+.mds-tag__divider {
+  flex-shrink: 0;
+  inline-size: var(--mds-stroke-weight-sm);
+  block-size: var(--mds-font-size-paragraph-small);
+  background-color: var(--mds-border-subtle);
+}

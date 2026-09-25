@@ -1,0 +1,122 @@
+.mds-tag[class] {
+  display: inline-flex;
+  align-items: center;
+  /* Holds its own intrinsic height regardless of taller flex siblings —
+     without this, a parent flex container's default align-items: stretch
+     would stretch the tag to match the tallest sibling in the row. */
+  align-self: flex-start;
+  gap: var(--mds-spacing-xs);
+  max-inline-size: 18.75rem;
+  padding: var(--mds-spacing-xxs) var(--mds-spacing-xs);
+  border-radius: var(--mds-border-radius-sm);
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-feedback-secondary);
+  background-color: var(--mds-bg-surface-default);
+
+  font-family: var(--mds-font-family-base);
+  font-weight: var(--mds-font-weight-medium);
+  font-size: var(--mds-font-size-paragraph-small);
+  /* -small, not -xs — -xs (0.75rem) is shorter than the 0.875rem font
+     size itself, which clips descenders (y/g/q tails) on the text lines
+     below, since each line also sets overflow: hidden for truncation. */
+  line-height: var(--mds-line-height-paragraph-small);
+  letter-spacing: var(--mds-letter-spacing-default);
+  color: var(--mds-text-emphasis);
+  text-decoration: none;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* Link mode is pill-shaped and tinted primary by default, matching the
+   Figma default instance — there is no untinted "neutral link" state. */
+.mds-tag[class].mds-tag--link {
+  border-radius: var(--mds-border-radius-pill);
+  background-color: var(--mds-bg-feedback-primary-light);
+  border-color: var(--mds-border-feedback-primary);
+  color: var(--mds-text-feedback-secondary);
+  cursor: pointer;
+}
+
+.mds-tag[class].mds-tag--link:hover {
+  background-color: var(--mds-bg-feedback-primary-subtle);
+}
+
+.mds-tag[class].mds-tag--link:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.mds-tag[class].mds-tag--link:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(--mds-spacing-offset);
+  box-shadow: none;
+}
+
+.mds-tag[class].mds-tag--link:active {
+  background-color: var(--mds-bg-feedback-primary-subtle);
+}
+
+/* Colour variant modifier — link mode only. Removable mode has no colour
+   axis and always renders its neutral surface (see `.mds-tag--removable`
+   base rule above); `variant` isn't even an accepted prop there.
+   `Default` needs no modifier class — the base `.mds-tag--link` rule above
+   already renders it. `Danger` is the only other variant Figma/ZeroHeight
+   have actually designed for Tag; see the components.instructions.md MSE
+   note for why the rest of Badge's variant axis isn't offered here. */
+.mds-tag[class].mds-tag--link.mds-tag--danger {
+  background-color: var(--mds-bg-feedback-danger-light);
+  border-color: var(--mds-border-feedback-danger);
+  color: var(--mds-text-feedback-danger);
+}
+
+/* Danger's interactive states repeat the Default rules above with danger
+   tokens. The extra :pseudo lifts specificity above the resting danger rule. */
+.mds-tag[class].mds-tag--link.mds-tag--danger:hover,
+.mds-tag[class].mds-tag--link.mds-tag--danger:active {
+  background-color: var(--mds-bg-feedback-danger-subtle);
+}
+
+.mds-tag[class].mds-tag--link.mds-tag--danger:focus-visible {
+  outline-color: var(--mds-focus-danger);
+}
+
+.mds-tag[class].mds-tag--removable {
+  cursor: default;
+}
+
+/* Content-density scaling for removable mode — radius, gap and padding grow
+   as more identity lines are populated, matching the Figma/ZeroHeight spec.
+   The base rule above already matches the label-only (sm) tier; these two
+   modifiers cover the md (one supporting line) and lg (institution present)
+   tiers. Link mode is unaffected — it's always pill-shaped. */
+.mds-tag[class].mds-tag--removable.mds-tag--density-md {
+  gap: var(--mds-spacing-sm);
+  border-radius: var(--mds-border-radius-md);
+}
+
+.mds-tag[class].mds-tag--removable.mds-tag--density-lg {
+  gap: var(--mds-spacing-sm);
+  padding: var(--mds-spacing-xs);
+  border-radius: var(--mds-border-radius-lg);
+}
+
+.mds-tag[class].mds-tag--disabled {
+  color: var(--mds-text-subtle);
+  background-color: var(--mds-bg-surface-subtle);
+  border-color: var(--mds-border-subtle);
+}
+
+.mds-tag[class].mds-tag--link.mds-tag--disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Disabled steps each line down one level: the name inherits text-subtle
+   from the root rule, so the supporting rows drop to text-muted. */
+.mds-tag[class].mds-tag--disabled .mds-tag__supporting-text,
+.mds-tag[class].mds-tag--disabled .mds-tag__institution {
+  color: var(--mds-text-muted);
+}
+
+.mds-tag__remove[class] {
+  flex-shrink: 0;
+}
