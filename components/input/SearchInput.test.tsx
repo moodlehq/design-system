@@ -39,6 +39,38 @@ describe('SearchInput: Unit Test', () => {
     );
   });
 
+  it('does not render a search landmark by default', () => {
+    render(<SearchInput label="Search" clearLabel="Clear search" />);
+    expect(screen.queryByRole('search')).not.toBeInTheDocument();
+  });
+
+  it('renders the root as a search landmark named by the label when landmark is true', () => {
+    const { container } = render(
+      <SearchInput label="Search courses" clearLabel="Clear search" landmark />,
+    );
+
+    const landmark = screen.getByRole('search', { name: 'Search courses' });
+    expect(landmark).toBe(container.firstElementChild);
+    expect(landmark).toHaveClass('mds-search-input');
+    expect(landmark).toContainElement(screen.getByRole('searchbox'));
+  });
+
+  it('names the landmark with aria-label when the label is hidden', () => {
+    render(
+      <SearchInput
+        label="Search"
+        aria-label="Search site"
+        hideLabel
+        clearLabel="Clear search"
+        landmark
+      />,
+    );
+
+    expect(
+      screen.getByRole('search', { name: 'Search site' }),
+    ).toBeInTheDocument();
+  });
+
   it('does not render the clear button when the field is empty', () => {
     render(<SearchInput label="Search" clearLabel="Clear search" />);
     expect(
