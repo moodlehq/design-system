@@ -295,13 +295,13 @@ export const States: Story = {
     </table>
   ),
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Default empty')).toBeVisible();
-    expect(canvas.getByLabelText('Default filled')).toHaveValue(
+    await expect(canvas.getByLabelText('Default empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Default filled')).toHaveValue(
       'Introduction to biology',
     );
-    expect(canvas.getByLabelText('Hover empty')).toBeVisible();
-    expect(canvas.getByLabelText('Active empty')).toBeVisible();
-    expect(canvas.getByLabelText('Focus empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Hover empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Active empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Focus empty')).toBeVisible();
   },
 };
 
@@ -327,9 +327,9 @@ export const WithStartIcon: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByRole('textbox', { name: 'Label text' })).toHaveClass(
-      'mds-input-field--with-start-icon',
-    );
+    await expect(
+      canvas.getByRole('textbox', { name: 'Label text' }),
+    ).toHaveClass('mds-input-field--with-start-icon');
   },
 };
 
@@ -356,8 +356,10 @@ export const Invalid: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox', { name: 'Label text' });
-    expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(canvas.getByText('This field is required.')).toBeInTheDocument();
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(
+      canvas.getByText('This field is required.'),
+    ).toBeInTheDocument();
   },
 };
 
@@ -409,8 +411,8 @@ export const NativeValidationDemo: Story = {
     await userEvent.click(input);
     await userEvent.tab();
 
-    expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(
       canvas.getByText('Please include an', { exact: false }),
     ).toBeInTheDocument();
   },
@@ -436,10 +438,10 @@ export const RightToLeft: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByRole('textbox', { name: 'التسمية النصية' });
-    expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(canvas.getByText('*')).toBeInTheDocument();
-    expect(canvas.getByText('هذا الحقل مطلوب')).toBeInTheDocument();
-    expect(
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(canvas.getByText('*')).toBeInTheDocument();
+    await expect(canvas.getByText('هذا الحقل مطلوب')).toBeInTheDocument();
+    await expect(
       canvas.getByRole('button', { name: 'معلومات إضافية حول هذا الحقل' }),
     ).toBeInTheDocument();
   },

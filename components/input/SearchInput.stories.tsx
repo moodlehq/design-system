@@ -268,13 +268,13 @@ export const States: Story = {
     </table>
   ),
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Default empty')).toBeVisible();
-    expect(canvas.getByLabelText('Default filled')).toHaveValue(
+    await expect(canvas.getByLabelText('Default empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Default filled')).toHaveValue(
       'Introduction to biology',
     );
-    expect(canvas.getByLabelText('Hover empty')).toBeVisible();
-    expect(canvas.getByLabelText('Active empty')).toBeVisible();
-    expect(canvas.getByLabelText('Focus empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Hover empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Active empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Focus empty')).toBeVisible();
   },
 };
 
@@ -330,17 +330,17 @@ export const ClearValue: Story = {
     const input = canvas.getByLabelText('Search');
     const clearButton = canvas.getByRole('button', { name: 'Clear search' });
 
-    expect(input).toHaveValue('Introduction to biology');
+    await expect(input).toHaveValue('Introduction to biology');
 
     await userEvent.click(clearButton);
 
-    expect(input).toHaveValue('');
+    await expect(input).toHaveValue('');
     await waitFor(() =>
       expect(
         canvas.queryByRole('button', { name: 'Clear search' }),
       ).not.toBeInTheDocument(),
     );
-    expect(input).toHaveFocus();
+    await expect(input).toHaveFocus();
   },
 };
 
@@ -361,18 +361,18 @@ export const ClearValueWithEscape: Story = {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText('Search');
 
-    expect(input).toHaveValue('Introduction to biology');
+    await expect(input).toHaveValue('Introduction to biology');
 
     input.focus();
     await userEvent.keyboard('{Escape}');
 
-    expect(input).toHaveValue('');
+    await expect(input).toHaveValue('');
     await waitFor(() =>
       expect(
         canvas.queryByRole('button', { name: 'Clear search' }),
       ).not.toBeInTheDocument(),
     );
-    expect(input).toHaveFocus();
+    await expect(input).toHaveFocus();
   },
 };
 
@@ -419,14 +419,14 @@ export const NativeValidationRespectsEmptyOnlyRule: Story = {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText('Search');
 
-    expect(input).toHaveValue('not-a-number');
-    expect(input).not.toHaveAttribute('aria-invalid', 'true'); // Filled — should stay valid
+    await expect(input).toHaveValue('not-a-number');
+    await expect(input).not.toHaveAttribute('aria-invalid', 'true'); // Filled — should stay valid
 
     input.focus();
     await userEvent.tab(); // blur — triggers BaseInput's checkValidity()
 
-    expect(input).not.toHaveAttribute('aria-invalid', 'true'); // still Filled — stays valid
-    expect(input).toHaveValue('not-a-number');
+    await expect(input).not.toHaveAttribute('aria-invalid', 'true'); // still Filled — stays valid
+    await expect(input).toHaveValue('not-a-number');
   },
 };
 
@@ -451,17 +451,17 @@ export const RightToLeftInvalid: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText(/^بحث\s*\*?\s*$/);
-    expect(input).toHaveValue('');
-    expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(
+    await expect(input).toHaveValue('');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(
       canvas.getByText('لا توجد مقررات مطابقة لهذا البحث.'),
     ).toBeInTheDocument();
-    expect(
+    await expect(
       canvas.getByRole('button', {
         name: 'يطابق البحث عناوين المقررات ورموزها.',
       }),
     ).toBeInTheDocument();
-    expect(
+    await expect(
       canvas.queryByRole('button', { name: 'مسح البحث' }),
     ).not.toBeInTheDocument();
   },
@@ -487,14 +487,14 @@ export const RightToLeftFilled: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText(/^بحث\s*\*?\s*$/);
-    expect(input).toHaveValue('مقدمة في الأحياء');
-    expect(input).not.toHaveAttribute('aria-invalid');
-    expect(
+    await expect(input).toHaveValue('مقدمة في الأحياء');
+    await expect(input).not.toHaveAttribute('aria-invalid');
+    await expect(
       canvas.getByRole('button', {
         name: 'يطابق البحث عناوين المقررات ورموزها.',
       }),
     ).toBeInTheDocument();
-    expect(
+    await expect(
       canvas.getByRole('button', { name: 'مسح البحث' }),
     ).toBeInTheDocument();
   },
