@@ -266,11 +266,13 @@ export const States: Story = {
     </table>
   ),
   play: async ({ canvas }) => {
-    expect(canvas.getByLabelText('Default empty')).toBeVisible();
-    expect(canvas.getByLabelText('Default filled')).toHaveValue('Sup3rSecret!');
-    expect(canvas.getByLabelText('Hover empty')).toBeVisible();
-    expect(canvas.getByLabelText('Active empty')).toBeVisible();
-    expect(canvas.getByLabelText('Focus empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Default empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Default filled')).toHaveValue(
+      'Sup3rSecret!',
+    );
+    await expect(canvas.getByLabelText('Hover empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Active empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Focus empty')).toBeVisible();
   },
 };
 
@@ -311,13 +313,13 @@ export const ReadOnly: Story = {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText('Password');
 
-    expect(input).toHaveAttribute('type', 'password');
-    expect(input).toHaveAttribute('readonly');
+    await expect(input).toHaveAttribute('type', 'password');
+    await expect(input).toHaveAttribute('readonly');
 
     const toggle = canvas.getByRole('button', { name: 'Show password' });
     await userEvent.click(toggle);
-    expect(input).toHaveAttribute('type', 'text');
-    expect(input).toHaveValue('NotEditablePassword123');
+    await expect(input).toHaveAttribute('type', 'text');
+    await expect(input).toHaveValue('NotEditablePassword123');
   },
 };
 
@@ -339,21 +341,23 @@ export const ToggleVisibility: Story = {
     const input = canvas.getByLabelText('Password');
     const toggle = canvas.getByRole('button', { name: 'Show password' });
 
-    expect(toggle.closest('.mds-tooltip')).toHaveClass('mds-tooltip--light');
+    await expect(toggle.closest('.mds-tooltip')).toHaveClass(
+      'mds-tooltip--light',
+    );
 
-    expect(input).toHaveAttribute('type', 'password');
+    await expect(input).toHaveAttribute('type', 'password');
     await userEvent.hover(toggle);
     const tooltip = page.getByRole('tooltip', { hidden: true });
     await waitFor(() => expect(tooltip).toHaveTextContent('Show password'));
 
     await userEvent.click(toggle);
-    expect(input).toHaveAttribute('type', 'text');
+    await expect(input).toHaveAttribute('type', 'text');
     await waitFor(() => expect(tooltip).toHaveTextContent('Hide password'));
 
     await userEvent.click(
       canvas.getByRole('button', { name: 'Hide password' }),
     );
-    expect(input).toHaveAttribute('type', 'password');
+    await expect(input).toHaveAttribute('type', 'password');
   },
 };
 
@@ -380,10 +384,12 @@ export const RightToLeft: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText(/^كلمة المرور\s*\*?\s*$/);
-    expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(canvas.getByText('*')).toBeInTheDocument();
-    expect(canvas.getByText('كلمة المرور قصيرة جدًا.')).toBeInTheDocument();
-    expect(
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(canvas.getByText('*')).toBeInTheDocument();
+    await expect(
+      canvas.getByText('كلمة المرور قصيرة جدًا.'),
+    ).toBeInTheDocument();
+    await expect(
       canvas.getByRole('button', { name: 'معلومات إضافية حول كلمة المرور' }),
     ).toBeInTheDocument();
   },

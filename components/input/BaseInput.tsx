@@ -1,4 +1,5 @@
 import {
+  type HTMLAttributes,
   type InputHTMLAttributes,
   type ReactElement,
   type ReactNode,
@@ -41,6 +42,12 @@ export interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
    * any consumer-level gate.
    */
   suppressNativeInvalid?: boolean;
+  /**
+   * Attributes for the root wrapper rather than the native `<input>` (which
+   * receives `...props`). Lets consumers such as SearchInput turn the root
+   * into a landmark without adding an extra element around the field.
+   */
+  wrapperProps?: Pick<HTMLAttributes<HTMLDivElement>, 'role' | 'aria-label'>;
 }
 
 export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
@@ -56,6 +63,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
       startIcon,
       trailingAction,
       suppressNativeInvalid = false,
+      wrapperProps,
       className,
       id: idProp,
       required,
@@ -200,7 +208,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     }
 
     return (
-      <div className={wrapperClasses}>
+      <div {...wrapperProps} className={wrapperClasses}>
         {hasVisibleLabel && (
           <div className="mds-input-label-row">
             <label className="mds-input-label form-label" htmlFor={id}>
