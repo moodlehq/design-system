@@ -5,7 +5,7 @@ import { Input } from './Input';
 const iconMapping = {
   None: undefined,
   Email: <i className="fa-solid fa-envelope" aria-hidden="true" />,
-  Search: <i className="fa-solid fa-magnifying-glass" aria-hidden="true" />,
+  User: <i className="fa-solid fa-user" aria-hidden="true" />,
   Phone: <i className="fa-solid fa-phone" aria-hidden="true" />,
   Link: <i className="fa-solid fa-link" aria-hidden="true" />,
 };
