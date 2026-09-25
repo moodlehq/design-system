@@ -11,6 +11,7 @@ export interface PasswordInputProps extends Omit<
   | 'trailingAction'
   | 'type'
   | 'suppressNativeInvalid'
+  | 'wrapperProps'
 > {
   /** Accessible label for the visibility toggle when the password is hidden. */
   passwordToggleShowLabel: string;

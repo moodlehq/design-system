@@ -116,6 +116,15 @@ const meta = {
         defaultValue: { summary: '300' },
       },
     },
+    landmark: {
+      description:
+        'Renders the root as a `role="search"` landmark named by the label. Use for page- or site-level search; leave off for filters in tables, toolbars, or panels, and when already wrapped in `<search>` or `<form role="search">`.',
+      control: { type: 'boolean' },
+      table: {
+        type: { summary: 'true | false' },
+        defaultValue: { summary: 'false' },
+      },
+    },
   },
 } satisfies Meta<typeof SearchInput>;
 
@@ -315,6 +324,27 @@ export const HiddenLabel: Story = {
     hideLabel: true,
     label: 'Search',
     supportingText: 'Supporting text still shows when the label is hidden.',
+  },
+};
+
+export const Landmark: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Pass `landmark` for a page- or site-level search so assistive technology can jump straight to it. The root becomes a `role="search"` landmark named by the label. Leave it off for filters inside a table, toolbar, or panel.',
+      },
+    },
+  },
+  args: {
+    label: 'Search this site',
+    placeholder: 'Search courses, people, and resources',
+    landmark: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const landmark = canvas.getByRole('search', { name: 'Search this site' });
+    await expect(landmark).toContainElement(canvas.getByRole('searchbox'));
   },
 };
 

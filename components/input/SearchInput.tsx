@@ -25,9 +25,19 @@ export interface SearchInputProps extends Omit<
   | 'type'
   | 'readOnly'
   | 'suppressNativeInvalid'
+  | 'wrapperProps'
 > {
   /** Accessible label for the button that clears the field's current value. */
   clearLabel: string;
+  /**
+   * Renders the field's root as a `role="search"` landmark, named by the
+   * field's label. Use for a page- or site-level search. Leave off for
+   * filters inside a table, toolbar, or panel, and when the consumer already
+   * wraps the field in `<search>` or `<form role="search">`, so the page
+   * doesn't collect redundant or nested landmarks.
+   * @default false
+   */
+  landmark?: boolean;
   /**
    * Called with the field's current value `debounceMs` after the user stops
    * typing — use this (not `onChange`) to trigger the actual search/filter
@@ -79,6 +89,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       onDebouncedChange,
       debounceMs = DEFAULT_DEBOUNCE_MS,
       invalid,
+      landmark = false,
       ...props
     },
     ref,
@@ -221,9 +232,22 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       />
     ) : undefined;
 
+    // The landmark takes the same name as the field (visible label, or the
+    // aria-label used when the label is hidden) so multiple search landmarks
+    // on one page stay distinguishable.
+    const wrapperProps = landmark
+      ? {
+          role: 'search',
+          'aria-label': props.hideLabel
+            ? (props['aria-label'] ?? props.label)
+            : props.label,
+        }
+      : undefined;
+
     return (
       <BaseInput
         ref={setRefs}
+        wrapperProps={wrapperProps}
         inputType="search"
         startIcon={searchIcon}
         trailingAction={clearButton}
