@@ -2,7 +2,7 @@ export { ActivityIcon } from './activity-icon';
 export type { ActivityIconProps } from './activity-icon';
 
 export { Alert } from './alert';
-export type { AlertProps } from './alert';
+export type { AlertProps, AlertType } from './alert';
 
 export { Avatar } from './avatar';
 export type { AvatarProps, AvatarSize } from './avatar';
