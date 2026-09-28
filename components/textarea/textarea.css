@@ -96,10 +96,22 @@
   background-color: var(--mds-bg-surface-default);
 }
 
-/* Active / pressed — primary accent border marks the field being edited. */
-.mds-textarea[class] .mds-textarea-field[class]:active:not(:disabled) {
+/* Active / pressed — primary accent border marks the field being edited.
+   Invalid and read-only fields are excluded so pressing them keeps their own
+   border instead of switching to the primary accent. */
+.mds-textarea[class]
+  .mds-textarea-field[class]:active:not(:disabled):not(
+    .mds-textarea-field--readonly
+  ):not(.is-invalid) {
   background-color: var(--mds-bg-surface-default);
   border-color: var(--mds-border-interactive-primary-default);
+}
+
+.mds-textarea[class]
+  .mds-textarea-field.is-invalid[class]:active:not(:disabled):not(
+    .mds-textarea-field--readonly
+  ) {
+  background-color: var(--mds-bg-surface-default);
 }
 
 /* Focus — reset Bootstrap's box-shadow; apply MDS focus ring on focus-visible only */
