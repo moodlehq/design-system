@@ -225,14 +225,3 @@
   unicode-bidi: isolate;
   min-width: 65px; /* Intentional Figma fixed size. */
 }
-
-/* Visually hides the milestone live region while keeping it accessible to AT.
-   Uses clip-path to avoid the position:absolute approach which would require
-   a positioned ancestor on .mds-textarea. */
-.mds-textarea[class] .mds-textarea-counter-announcement {
-  clip-path: inset(50%);
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  white-space: nowrap;
-}
