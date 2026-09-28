@@ -343,7 +343,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 {/* Visually-hidden live region fires only at milestones so the
                     counter does not announce on every keystroke. */}
                 <span
-                  className="mds-textarea-counter-announcement"
+                  className="mds-textarea-counter-announcement visually-hidden"
                   role="status"
                   aria-live="polite"
                   aria-atomic="true"
