@@ -10,7 +10,9 @@ import {
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
 
-type CounterMessageFormatter =
+/** A pre-translated counter message, or a callback that builds one from the
+ *  current value and maxLength (e.g. `(n, max) => t('chars', { n, max })`). */
+export type TextareaCounterMessageFormatter =
   string | ((value: number, maxLength: number) => string);
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -49,13 +51,13 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   infoTooltipLabel?: string;
   /** Accessible label for the visible counter text (for example,
    *  "12 of 100 characters") as a translated string or formatter callback. */
-  counterAriaLabel?: CounterMessageFormatter;
+  counterAriaLabel?: TextareaCounterMessageFormatter;
   /** Live-region announcement for remaining-character milestones (20, 10, 5, 0)
    *  as a translated string or formatter callback. */
-  counterRemainingAnnouncement?: CounterMessageFormatter;
+  counterRemainingAnnouncement?: TextareaCounterMessageFormatter;
   /** Live-region announcement for over-limit state as a translated string or
    *  formatter callback. */
-  counterOverLimitAnnouncement?: CounterMessageFormatter;
+  counterOverLimitAnnouncement?: TextareaCounterMessageFormatter;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -138,7 +140,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const [announcement, setAnnouncement] = useState('');
 
     const resolveCounterMessage = (
-      formatter: CounterMessageFormatter | undefined,
+      formatter: TextareaCounterMessageFormatter | undefined,
       value: number,
       max: number,
     ) => {

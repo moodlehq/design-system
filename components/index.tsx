@@ -92,7 +92,10 @@ export type {
 } from './tag';
 
 export { Textarea } from './textarea';
-export type { TextareaProps } from './textarea';
+export type {
+  TextareaCounterMessageFormatter,
+  TextareaProps,
+} from './textarea';
 
 export { Tooltip } from './tooltip';
 export type { TooltipProps } from './tooltip';
