@@ -228,8 +228,10 @@ export const Invalid: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const textarea = canvas.getByRole('textbox');
-    expect(textarea).toHaveAttribute('aria-invalid', 'true');
-    expect(canvas.getByText('This field is required.')).toBeInTheDocument();
+    await expect(textarea).toHaveAttribute('aria-invalid', 'true');
+    await expect(
+      canvas.getByText('This field is required.'),
+    ).toBeInTheDocument();
   },
 };
 
@@ -262,7 +264,7 @@ export const Disabled: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByRole('textbox')).toBeDisabled();
+    await expect(canvas.getByRole('textbox')).toBeDisabled();
   },
 };
 
