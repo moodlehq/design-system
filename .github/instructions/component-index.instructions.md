@@ -31,7 +31,7 @@ Quick reference for AI agents and developers.
 | Radio           | Single-select options in a compact list (native radio input, label only)                                            | checked, label, disabled, invalid                                                                                    |
 | Switch          | Binary toggle control for on/off settings                                                                           | checked, label, disabled, onChange                                                                                   |
 | Tag             | Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise) | content, type, disabled; link: href, variant; removable: onRemove, removeLabel, username, email, institution, avatar |
-| Textarea        | Multi-line text input with label, supporting text, counter, and validation                                          | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
+| Textarea        | Multi-line plain-text input with label, supporting text, counter, and validation — not a rich text editor           | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
 | Tooltip         | Contextual label anchored to a trigger element                                                                      | label, placement, variant, children                                                                                  |
 
 ## Dropdown Subcomponents
@@ -138,6 +138,9 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
   - stepping through pages in a sequence → `Pagination`;
   - a page with only one level of hierarchy → nothing to show (the component renders nothing with fewer than 2 items).
 - `Breadcrumb` renders its own separators: the "/" between items is a CSS `::before` on each item after the first, hidden from screen readers. Never add a separator element, character, or icon to the `items` labels or around the component. Pass only `{ label, href }` objects — the last item is always the current page, rendered as plain text with `aria-current="page"`, so don't give it an `href` or wrap it in a link.
+- `Textarea` is a plain-text field for multi-line free text (comments, descriptions, feedback). Use `Input` for single-line values. It is not a rich text editor — it has no toolbar, formatting, or HTML output:
+  - When content needs formatting, links, images, or embedded media, use Moodle's own editor (the editor API, e.g. TinyMCE). MDS doesn't provide an editor component — don't build one by adding formatting controls around `Textarea`.
+  - Don't treat an editor field as a `Textarea` because its markup looks the same. The editor mounts on its own `<textarea class="form-control">`, and a site setting can switch a field between the two, but only the plain-text field is `Textarea`.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing

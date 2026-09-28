@@ -158,7 +158,7 @@ const PURPOSES: Record<string, string> = {
   switch: 'Binary toggle control for on/off settings.',
   tag: 'Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise). Nests Avatar and CloseButton rather than redrawing either.',
   textarea:
-    'Multi-line text input with label, placeholder, supporting text, character counter, and validation feedback.',
+    "Multi-line plain-text input with label, placeholder, supporting text, character counter, and validation feedback. Not a rich text editor: for formatting, links, or media use Moodle's editor (not provided by MDS), and use Input for single-line values.",
   tooltip: 'Contextual label anchored to a trigger element.',
 };
 
