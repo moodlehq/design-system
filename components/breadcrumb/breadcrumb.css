@@ -14,20 +14,23 @@
 
 /* ─── Items ─────────────────────────────────────────────────────────────────── */
 
-.breadcrumb-item.items-2 {
+/* Every rule here is scoped to .mds-breadcrumb so it can't restyle other
+   Bootstrap breadcrumbs on the page (e.g. Moodle LMS) that share the
+   .breadcrumb-item class. */
+.mds-breadcrumb .mds-breadcrumb__item--count-2 {
   max-width: 50%;
 }
-.breadcrumb-item.items-3 {
+.mds-breadcrumb .mds-breadcrumb__item--count-3 {
   max-width: 33.3333%;
 }
-.breadcrumb-item.items-4 {
+.mds-breadcrumb .mds-breadcrumb__item--count-4 {
   max-width: 25%;
 }
-.breadcrumb-item.mds-breadcrumb__item--current {
+.mds-breadcrumb .mds-breadcrumb__item--current {
   max-width: 50%;
 }
 
-.breadcrumb-item {
+.mds-breadcrumb .mds-breadcrumb__item {
   /* Each item is its own flex row: the Bootstrap ::before divider and the
      link/span become flex siblings rather than inline boxes. This eliminates
      the inline-box strut that previously added 2 px to every link item
@@ -48,7 +51,7 @@
    container. Its default min-width:auto prevents the flex algorithm from
    shrinking the wrapper, causing text overlap on narrow viewports. Overriding
    to min-width:0 lets the wrapper shrink freely alongside the other items. */
-.breadcrumb-item .mds-tooltip {
+.mds-breadcrumb .mds-breadcrumb__item .mds-tooltip {
   min-width: 0;
 }
 
