@@ -133,6 +133,11 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
   - a validation error on a single form field → the field's own `invalid` / `invalidFeedback` (for example `Input`, `Textarea`);
   - a high-priority message that blocks the user until they confirm → a modal dialog (none in MDS yet).
 - `Alert` never auto-dismisses; only the dismiss button, or navigating away, removes it.
+- Use `Breadcrumb` to show where a page sits in a hierarchy of 2 or more levels, so users can jump back to any parent page. Don't use it for:
+  - moving between unrelated top-level sections → tabs or `NavPill`;
+  - stepping through pages in a sequence → `Pagination`;
+  - a page with only one level of hierarchy → nothing to show (the component renders nothing with fewer than 2 items).
+- `Breadcrumb` renders its own separators: the "/" between items is a CSS `::before` on each item after the first, hidden from screen readers. Never add a separator element, character, or icon to the `items` labels or around the component. Pass only `{ label, href }` objects — the last item is always the current page, rendered as plain text with `aria-current="page"`, so don't give it an `href` or wrap it in a link.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing
