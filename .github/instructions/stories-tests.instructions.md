@@ -20,7 +20,7 @@ Two things differ from standard Vitest/Testing Library — get these wrong and t
 Everything else:
 
 - `userEvent` provides interactions: `userEvent.click()`, `userEvent.type()`, `userEvent.hover()`, etc.
-- Always `await` interactions and assertions.
+- Always `await` interactions and assertions — every `expect()` in a `play` function, not just `userEvent` calls. The one exception is an `expect()` inside a `waitFor(() => expect(...))` callback: `waitFor` already awaits and retries it, and `await` inside that synchronous callback is a syntax error.
 - Use `await new Promise(r => setTimeout(r, 0))` to flush the microtask queue if assertions fail spuriously after an interaction.
 - A `play` at meta level runs for **all** stories; a `play` on a specific story overrides it for that story only.
 
@@ -39,6 +39,10 @@ Default for new stories: `tags: ['autodocs', 'test', 'stable']`. Use `'beta'` in
 ### a11y
 
 Every story tagged `test` is automatically scanned by Axe against WCAG 2.x AA and best-practice rules (configured in `.storybook/preview.ts`). Violations are reported as errors. Do not disable a11y checks without a documented reason.
+
+### StateMatrix
+
+Components with interactive states get a `StateMatrix` story for visual regression review (reference: `Button.stories.tsx`). It is the **last** story in the file, covers **every state Figma defines** (rows or columns per state, per variant as needed), and shows "—" in cells for combinations Figma doesn't define rather than inventing a rendering. Hover, pressed, and focus-visible cells are driven by `storybook-addon-pseudo-states` via the story's `parameters.pseudo` selectors.
 
 ### RTL
 
@@ -102,3 +106,5 @@ Story and test files (`*.stories.tsx`, `*.test.tsx`) are excluded from `tsconfig
 | Storybook | `npm run test-storybook` | Vitest + Playwright | Chromium | Stories tagged `test`             |
 
 Use unit tests for behavior contracts (class application, prop validation, prop forwarding). Use story `play` functions for user interactions and visual/a11y state.
+
+**Pseudo-states are not active in Vitest runs.** `storybook-addon-pseudo-states` only applies its forced `:hover` / `:active` / `:focus-visible` styles in the Storybook UI and Chromatic, not in `npm run test-storybook`. A `play` assertion on hover, active, or focus styles in a pseudo-state story therefore passes without testing anything — assert on DOM, roles, and attributes instead, and leave the visual check to Chromatic.
