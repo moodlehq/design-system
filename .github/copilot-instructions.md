@@ -118,6 +118,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 2. If a matching token exists → use it via `var(--mds-*)`.
 3. When using an existing `--mds-*` token, do not add a fallback literal in `var(...)` (for example, avoid `var(--mds-token, 1rem)` and use `var(--mds-token)` instead).
 4. If no token exists → do not invent an ad-hoc value. Ask contributors to request one at https://design.moodle.com/.
+5. If Figma defines the value as fixed (not bound to a variable) → keep the literal with a comment saying so. Don't substitute a token that only happens to resolve to the same number.
 
 **Fonts are not bundled:** `--mds-font-family-base` resolves to `Noto Sans` with no CSS fallback chain. When scaffolding a consuming app (not the library itself), always include the README's "Fonts" instructions (Google Fonts link or self-hosted `@font-face`) — otherwise text silently renders in the browser default font with no warning.
 
