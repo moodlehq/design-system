@@ -128,6 +128,11 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
 - `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
 - **Badge is never interactive. If it links or removes, it's a Tag.** A static badge rendered beside a link is a layout pattern, not an interactive component — do not wrap a `Badge` in an anchor or add a click handler to it. Use `Tag` (`type="link"` or `type="removable"`) whenever the element should navigate or be dismissed. `Tag` nests the existing `Avatar` and `CloseButton` components and shares `Badge`'s surface tokens rather than redrawing either.
+- Use `Alert` for a persistent, in-flow message tied to the current page or section: the outcome of an action someone may want to reference, something that needs attention, or a warning or error that must stay visible until acted on or dismissed. Don't use it for:
+  - a brief confirmation that doesn't need to stay on the page → a toast (MDS has no Toast yet; flag the need rather than using `Alert` with auto-dismiss);
+  - a validation error on a single form field → the field's own `invalid` / `invalidFeedback` (for example `Input`, `Textarea`);
+  - a high-priority message that blocks the user until they confirm → a modal dialog (none in MDS yet).
+- `Alert` never auto-dismisses; only the dismiss button, or navigating away, removes it.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing
