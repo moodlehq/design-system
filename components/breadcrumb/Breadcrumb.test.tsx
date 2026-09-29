@@ -102,6 +102,28 @@ describe('Breadcrumb: Unit Test', () => {
       expect(currentLi).toHaveClass('mds-breadcrumb__item--current');
     });
 
+    it.each([
+      { name: '2 items', items: twoItems, count: 2 },
+      { name: '3 items', items: threeItems, count: 3 },
+      { name: '4 items', items: fourItems, count: 4 },
+      { name: 'overflow (7 items)', items: sevenItems, count: 4 },
+    ])(
+      'applies the mds-breadcrumb__item hook and count modifier to every item ($name)',
+      ({ items, count }) => {
+        const { container } = render(<Breadcrumb items={items} />);
+        const listItems = container.querySelectorAll('li');
+
+        expect(listItems.length).toBeGreaterThan(0);
+        listItems.forEach((li) => {
+          expect(li).toHaveClass(
+            'breadcrumb-item',
+            'mds-breadcrumb__item',
+            `mds-breadcrumb__item--count-${count}`,
+          );
+        });
+      },
+    );
+
     it('does not make the current page keyboard-focusable when not truncated', () => {
       render(<Breadcrumb items={twoItems} />);
       const currentLabel = screen.getByText('Current page');
