@@ -128,6 +128,11 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
 - `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
 - **Badge is never interactive. If it links or removes, it's a Tag.** A static badge rendered beside a link is a layout pattern, not an interactive component — do not wrap a `Badge` in an anchor or add a click handler to it. Use `Tag` (`type="link"` or `type="removable"`) whenever the element should navigate or be dismissed. `Tag` nests the existing `Avatar` and `CloseButton` components and shares `Badge`'s surface tokens rather than redrawing either.
+- Use `Breadcrumb` to show where a page sits in a hierarchy of 2 or more levels, so users can jump back to any parent page. Don't use it for:
+  - moving between unrelated top-level sections → tabs or `NavPill`;
+  - stepping through pages in a sequence → `Pagination`;
+  - a page with only one level of hierarchy → nothing to show (the component renders nothing with fewer than 2 items).
+- `Breadcrumb` renders its own separators: the "/" between items is a CSS `::before` on each item after the first, hidden from screen readers. Never add a separator element, character, or icon to the `items` labels or around the component. Pass only `{ label, href }` objects — the last item is always the current page, rendered as plain text with `aria-current="page"`, so don't give it an `href` or wrap it in a link.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing
