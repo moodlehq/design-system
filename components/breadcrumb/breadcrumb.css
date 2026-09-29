@@ -96,7 +96,7 @@
 
 .mds-breadcrumb__item--current .mds-breadcrumb__label {
   color: var(--mds-text-subtle);
-  font-weight: var(--mds-typography-font-weight-regular);
+  font-weight: var(--mds-font-weight-regular);
   line-height: var(--mds-line-height-paragraph-default);
 
   /* The span is a flex item inside the current-page <li> flex container.
