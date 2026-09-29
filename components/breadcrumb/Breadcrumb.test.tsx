@@ -12,6 +12,12 @@ const resizeObserverMock = vi.fn(
 );
 vi.stubGlobal('ResizeObserver', resizeObserverMock);
 
+// Required translatable labels, spread first so a test can still override one.
+const labels = {
+  ariaLabel: 'Breadcrumb',
+  overflowAriaLabel: 'Show more items',
+};
+
 const twoItems: BreadcrumbItem[] = [
   { label: 'Home', href: '/home' },
   { label: 'Current page' },
@@ -43,12 +49,14 @@ const sevenItems: BreadcrumbItem[] = [
 describe('Breadcrumb: Unit Test', () => {
   describe('rendering', () => {
     it('applies the mds-breadcrumb class on the nav element', () => {
-      render(<Breadcrumb items={twoItems} />);
+      render(<Breadcrumb {...labels} items={twoItems} />);
       expect(screen.getByRole('navigation')).toHaveClass('mds-breadcrumb');
     });
 
     it('sets aria-label on the nav element', () => {
-      render(<Breadcrumb items={twoItems} ariaLabel="Page navigation" />);
+      render(
+        <Breadcrumb {...labels} items={twoItems} ariaLabel="Page navigation" />,
+      );
       expect(screen.getByRole('navigation')).toHaveAttribute(
         'aria-label',
         'Page navigation',
@@ -56,7 +64,7 @@ describe('Breadcrumb: Unit Test', () => {
     });
 
     it('defaults aria-label to "Breadcrumb"', () => {
-      render(<Breadcrumb items={twoItems} />);
+      render(<Breadcrumb {...labels} items={twoItems} />);
       expect(screen.getByRole('navigation')).toHaveAttribute(
         'aria-label',
         'Breadcrumb',
@@ -64,14 +72,72 @@ describe('Breadcrumb: Unit Test', () => {
     });
 
     it('forwards extra props to the nav element', () => {
-      render(<Breadcrumb items={twoItems} data-testid="bc" />);
+      render(<Breadcrumb {...labels} items={twoItems} data-testid="bc" />);
       expect(screen.getByTestId('bc')).toBeInTheDocument();
+    });
+
+    it('does not fall back to an English nav label and warns when ariaLabel is missing at runtime', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      render(
+        <Breadcrumb
+          {...({} as { ariaLabel: string })}
+          items={twoItems}
+          overflowAriaLabel="Afficher plus"
+        />,
+      );
+
+      expect(screen.getByRole('navigation')).not.toHaveAttribute('aria-label');
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('ariaLabel is required'),
+      );
+      warnSpy.mockRestore();
+    });
+
+    it('only warns about an empty overflowAriaLabel when the overflow trigger renders', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      render(
+        <Breadcrumb
+          items={fourItems}
+          ariaLabel="Fil d'Ariane"
+          overflowAriaLabel=""
+        />,
+      );
+      expect(warnSpy).not.toHaveBeenCalled();
+
+      render(
+        <Breadcrumb
+          items={sevenItems}
+          ariaLabel="Fil d'Ariane"
+          overflowAriaLabel=""
+        />,
+      );
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('overflowAriaLabel is required'),
+      );
+      warnSpy.mockRestore();
+    });
+
+    it('does not warn when translated labels are provided', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      render(
+        <Breadcrumb
+          items={sevenItems}
+          ariaLabel="Fil d'Ariane"
+          overflowAriaLabel="Afficher plus"
+        />,
+      );
+
+      expect(warnSpy).not.toHaveBeenCalled();
+      warnSpy.mockRestore();
     });
 
     it('returns null and warns when fewer than 2 items are supplied', () => {
       const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
       const { container } = render(
-        <Breadcrumb items={[{ label: 'Home', href: '/home' }]} />,
+        <Breadcrumb {...labels} items={[{ label: 'Home', href: '/home' }]} />,
       );
       expect(container).toBeEmptyDOMElement();
       expect(warnSpy).toHaveBeenCalledWith(
@@ -83,7 +149,7 @@ describe('Breadcrumb: Unit Test', () => {
 
   describe('current page', () => {
     it('marks the last item with aria-current="page"', () => {
-      render(<Breadcrumb items={twoItems} />);
+      render(<Breadcrumb {...labels} items={twoItems} />);
       expect(screen.getByText('Current page').closest('li')).toHaveAttribute(
         'aria-current',
         'page',
@@ -91,19 +157,19 @@ describe('Breadcrumb: Unit Test', () => {
     });
 
     it('renders the current page as plain text, not a link', () => {
-      render(<Breadcrumb items={twoItems} />);
+      render(<Breadcrumb {...labels} items={twoItems} />);
       const currentLabel = screen.getByText('Current page');
       expect(currentLabel.tagName).not.toBe('A');
     });
 
     it('applies mds-breadcrumb__item--current class to the last item', () => {
-      render(<Breadcrumb items={twoItems} />);
+      render(<Breadcrumb {...labels} items={twoItems} />);
       const currentLi = screen.getByText('Current page').closest('li');
       expect(currentLi).toHaveClass('mds-breadcrumb__item--current');
     });
 
     it('does not make the current page keyboard-focusable when not truncated', () => {
-      render(<Breadcrumb items={twoItems} />);
+      render(<Breadcrumb {...labels} items={twoItems} />);
       const currentLabel = screen.getByText('Current page');
       expect(currentLabel).not.toHaveAttribute('tabindex');
     });
@@ -128,7 +194,7 @@ describe('Breadcrumb: Unit Test', () => {
       });
 
       try {
-        render(<Breadcrumb items={twoItems} />);
+        render(<Breadcrumb {...labels} items={twoItems} />);
         const currentItem = screen
           .getByRole('navigation')
           .querySelector('li[aria-current="page"]');
@@ -162,13 +228,13 @@ describe('Breadcrumb: Unit Test', () => {
 
   describe('link items', () => {
     it('renders link items as anchors with the correct href', () => {
-      render(<Breadcrumb items={threeItems} />);
+      render(<Breadcrumb {...labels} items={threeItems} />);
       const homeLink = screen.getByRole('link', { name: 'Home' });
       expect(homeLink).toHaveAttribute('href', '/home');
     });
 
     it('renders all ancestor links except the current page as anchors', () => {
-      render(<Breadcrumb items={fourItems} />);
+      render(<Breadcrumb {...labels} items={fourItems} />);
       expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
       expect(screen.getByRole('link', { name: 'Section' })).toBeInTheDocument();
       expect(
@@ -197,7 +263,7 @@ describe('Breadcrumb: Unit Test', () => {
       });
 
       try {
-        render(<Breadcrumb items={sevenItems} />);
+        render(<Breadcrumb {...labels} items={sevenItems} />);
         const homeLink = screen.getByRole('link', { name: 'Home' });
 
         await waitFor(() => {
@@ -225,17 +291,17 @@ describe('Breadcrumb: Unit Test', () => {
 
   describe('overflow (more than 4 items)', () => {
     it('does not render an overflow button when items <= 4', () => {
-      render(<Breadcrumb items={fourItems} />);
+      render(<Breadcrumb {...labels} items={fourItems} />);
       expect(screen.queryByRole('button')).not.toBeInTheDocument();
     });
 
     it('renders an overflow button when items > 4', () => {
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       expect(screen.getByRole('button')).toBeInTheDocument();
     });
 
     it('overflow button has aria-expanded="false" by default', () => {
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       expect(screen.getByRole('button')).toHaveAttribute(
         'aria-expanded',
         'false',
@@ -244,7 +310,7 @@ describe('Breadcrumb: Unit Test', () => {
 
     it('opens the overflow menu on button click and sets aria-expanded="true"', async () => {
       const user = userEvent.setup();
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       const trigger = screen.getByRole('button');
       await user.click(trigger);
       expect(trigger).toHaveAttribute('aria-expanded', 'true');
@@ -253,7 +319,7 @@ describe('Breadcrumb: Unit Test', () => {
 
     it('shows hidden middle items in the overflow menu', async () => {
       const user = userEvent.setup();
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       await user.click(screen.getByRole('button'));
       // items[1..3] are hidden; items[4,5] are visible anchors
       expect(
@@ -268,7 +334,7 @@ describe('Breadcrumb: Unit Test', () => {
     });
 
     it('always shows the root item and the 2 closest ancestors as links', () => {
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
       expect(screen.getByRole('link', { name: 'Level 5' })).toBeInTheDocument();
       expect(screen.getByRole('link', { name: 'Level 6' })).toBeInTheDocument();
@@ -276,7 +342,7 @@ describe('Breadcrumb: Unit Test', () => {
 
     it('closes the overflow menu on Escape key', async () => {
       const user = userEvent.setup();
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       const trigger = screen.getByRole('button');
       await user.click(trigger);
       expect(screen.getByRole('menu')).toBeInTheDocument();
@@ -286,7 +352,7 @@ describe('Breadcrumb: Unit Test', () => {
 
     it('closes the overflow menu when a menu item is clicked', async () => {
       const user = userEvent.setup();
-      render(<Breadcrumb items={sevenItems} />);
+      render(<Breadcrumb {...labels} items={sevenItems} />);
       await user.click(screen.getByRole('button'));
       await user.click(screen.getByRole('menuitem', { name: 'Level 2' }));
       await waitFor(() => {

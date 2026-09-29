@@ -3,6 +3,15 @@ import { useState } from 'react';
 import { expect, userEvent } from 'storybook/test';
 import { Pagination } from './Pagination';
 
+// Required translatable labels. In an app these come from the i18n layer; the
+// English strings here are only story fixtures.
+const labels = {
+  ariaLabel: 'Pagination',
+  previousPageLabel: 'Previous page',
+  nextPageLabel: 'Next page',
+  pageLabelFormatter: (page: number) => `Page ${page}`,
+};
+
 const meta = {
   title: 'Components/Pagination',
   component: Pagination,
@@ -33,35 +42,34 @@ const meta = {
     },
     ariaLabel: {
       control: { type: 'text' },
-      description: 'Accessible name for the pagination landmark.',
+      description:
+        'Accessible name for the pagination landmark. Required — pass a translated string.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: "'Pagination'" },
       },
     },
     previousPageLabel: {
       control: { type: 'text' },
-      description: 'Accessible label used for the previous-page button.',
+      description:
+        'Accessible label used for the previous-page button. Required — pass a translated string.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: "'Previous page'" },
       },
     },
     nextPageLabel: {
       control: { type: 'text' },
-      description: 'Accessible label used for the next-page button.',
+      description:
+        'Accessible label used for the next-page button. Required — pass a translated string.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: "'Next page'" },
       },
     },
     pageLabelFormatter: {
       control: false,
       description:
-        'Returns the accessible label for each numbered page button.',
+        'Returns the accessible label for each numbered page button. Required — return a translated string.',
       table: {
         type: { summary: '(page: number) => string' },
-        defaultValue: { summary: '(page) => `Page ${page}`' },
       },
     },
     variant: {
@@ -87,7 +95,7 @@ const meta = {
   args: {
     totalPages: 10,
     currentPage: 1,
-    ariaLabel: 'Pagination',
+    ...labels,
     onPageChange: () => {},
     disabled: false,
   },
@@ -176,6 +184,7 @@ function renderPseudoStateCell(
       style={pseudoMatrixStateCellStyle}
     >
       <Pagination
+        {...labels}
         totalPages={totalPages}
         currentPage={2}
         disabled={isDisabled}
@@ -219,6 +228,10 @@ export const Default: Story = {
   currentPage={1}
   onPageChange={() => {}}
   totalPages={10}
+  ariaLabel={t('core:pagination')}
+  previousPageLabel={t('core:previouspage')}
+  nextPageLabel={t('core:nextpage')}
+  pageLabelFormatter={(page) => t('core:pagea', { page })}
 />
 `,
       },
@@ -282,7 +295,7 @@ export const CustomAccessibleLabels: Story = {
     docs: {
       description: {
         story:
-          'Shows how to override the default accessible labels for translated or context-specific pagination text. Use `pageLabelFormatter` when numbered page buttons also need custom wording.',
+          'Shows context-specific accessible labels. All four labels are required — pass translated strings from your i18n layer.',
       },
       source: {
         code: `<Pagination
@@ -399,6 +412,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
         </p>
         <div data-testid="testing-bundle-first-disabled">
           <Pagination
+            {...labels}
             totalPages={10}
             currentPage={1}
             ariaLabel="Pagination first page disabled previous"
@@ -425,6 +439,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
         </p>
         <div data-testid="testing-bundle-last-disabled">
           <Pagination
+            {...labels}
             totalPages={10}
             currentPage={10}
             ariaLabel="Pagination last page disabled next"
@@ -451,6 +466,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
         </p>
         <div data-testid="testing-bundle-aria">
           <Pagination
+            {...labels}
             totalPages={5}
             currentPage={3}
             ariaLabel="Pagination aria current page example"
@@ -476,6 +492,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
           Current page in middle
         </p>
         <Pagination
+          {...labels}
           totalPages={10}
           currentPage={5}
           ariaLabel="Pagination middle page distribution"
@@ -500,6 +517,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
           Few pages
         </p>
         <Pagination
+          {...labels}
           totalPages={3}
           currentPage={2}
           ariaLabel="Pagination few pages example"
@@ -524,6 +542,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
           Grouped variant (prev/next only)
         </p>
         <Pagination
+          {...labels}
           totalPages={10}
           currentPage={5}
           variant="grouped"
@@ -549,6 +568,7 @@ export const PageDistributionAndBoundaryValidationBundle: Story = {
           Large page count with capped 9-slot window
         </p>
         <Pagination
+          {...labels}
           totalPages={20}
           currentPage={10}
           ariaLabel="Pagination large page count example"

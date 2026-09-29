@@ -10,6 +10,10 @@ const defaultProps: PaginationProps = {
   totalPages: 5,
   currentPage: 1,
   onPageChange: () => {},
+  ariaLabel: 'Pagination',
+  previousPageLabel: 'Previous page',
+  nextPageLabel: 'Next page',
+  pageLabelFormatter: (page) => `Page ${page}`,
 };
 
 type PaginationRenderOverrides = Partial<PaginationProps> &
@@ -68,7 +72,7 @@ describe('Pagination: Unit Tests', () => {
     warnSpy.mockRestore();
   });
 
-  it('falls back to the default page label formatter when an invalid formatter is provided', () => {
+  it('falls back to the bare page number when an invalid formatter is provided', () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     renderPagination({
@@ -77,8 +81,53 @@ describe('Pagination: Unit Tests', () => {
         'invalid' as unknown as PaginationProps['pageLabelFormatter'],
     });
 
-    expect(screen.getByRole('button', { name: 'Page 3' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '3' })).toBeInTheDocument();
 
+    warnSpy.mockRestore();
+  });
+
+  it('warns for each required label missing at runtime, without English fallbacks', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <Pagination
+        {...({} as Pick<
+          PaginationProps,
+          | 'ariaLabel'
+          | 'previousPageLabel'
+          | 'nextPageLabel'
+          | 'pageLabelFormatter'
+        >)}
+        totalPages={5}
+        currentPage={1}
+        onPageChange={() => {}}
+      />,
+    );
+
+    expect(screen.getByRole('navigation')).not.toHaveAttribute('aria-label');
+    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument();
+    for (const propName of [
+      'ariaLabel is required',
+      'previousPageLabel is required',
+      'nextPageLabel is required',
+      'Invalid pageLabelFormatter',
+    ]) {
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining(propName));
+    }
+    warnSpy.mockRestore();
+  });
+
+  it('does not warn when all translated labels are provided', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    renderPagination({
+      ariaLabel: 'Pagination des pages',
+      previousPageLabel: 'Page précédente',
+      nextPageLabel: 'Page suivante',
+      pageLabelFormatter: (page) => `Page ${page} (fr)`,
+    });
+
+    expect(warnSpy).not.toHaveBeenCalled();
     warnSpy.mockRestore();
   });
 
@@ -174,6 +223,7 @@ describe('Pagination: Unit Tests', () => {
 
       return (
         <Pagination
+          {...defaultProps}
           totalPages={15}
           currentPage={page}
           onPageChange={(nextPage) => {

@@ -79,18 +79,17 @@ const meta = {
       },
     },
     ariaLabel: {
-      description: 'Accessible label for the `<nav>` landmark element.',
+      description:
+        'Accessible label for the `<nav>` landmark element. Required — pass a translated string.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'Breadcrumb' },
       },
     },
     overflowAriaLabel: {
       description:
-        'Screen-reader label for the overflow "…" button. Only relevant when items > 4.',
+        'Screen-reader label for the overflow "…" button, shown when items > 4. Required — pass a translated string.',
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: 'Show more items' },
       },
     },
   },
@@ -176,7 +175,11 @@ export const ItemCounts: Story = {
             >
               {label}
             </p>
-            <Breadcrumb items={items} ariaLabel={`Breadcrumb - ${label}`} />
+            <Breadcrumb
+              items={items}
+              ariaLabel={`Breadcrumb - ${label}`}
+              overflowAriaLabel="Show more items"
+            />
           </div>
         ))}
       </div>

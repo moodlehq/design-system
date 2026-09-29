@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { warnMissingLabel } from '../_internal/warnMissingLabel';
 import {
   calculateVisiblePageNumbers,
   resolvePaginationInputs,
@@ -19,17 +20,31 @@ export interface PaginationProps extends ComponentPropsWithoutRef<'nav'> {
   /** Callback fired when the page changes */
   onPageChange: (page: number) => void;
 
-  /** Accessible name for the pagination landmark. */
-  ariaLabel?: string;
+  /**
+   * Accessible name for the pagination landmark.
+   * Must be a caller-supplied translated string.
+   */
+  ariaLabel: string;
 
-  /** Accessible label used for the previous-page button. */
-  previousPageLabel?: string;
+  /**
+   * Accessible label used for the previous-page button.
+   * Must be a caller-supplied translated string.
+   */
+  previousPageLabel: string;
 
-  /** Accessible label used for the next-page button. */
-  nextPageLabel?: string;
+  /**
+   * Accessible label used for the next-page button.
+   * Must be a caller-supplied translated string.
+   */
+  nextPageLabel: string;
 
-  /** Returns the accessible label for each numbered page button. */
-  pageLabelFormatter?: PageLabelFormatter;
+  /**
+   * Returns the accessible label for each numbered page button, e.g.
+   * `(page) => t('core:pagea', { page })`. Always required, even for the
+   * grouped variant, so a viewport-driven switch to page numbers never renders
+   * without labels. Must return a caller-translated string.
+   */
+  pageLabelFormatter: PageLabelFormatter;
 
   /**
    * Controls which variant of pagination to render.
@@ -51,9 +66,9 @@ export const Pagination = ({
   totalPages,
   currentPage,
   onPageChange,
-  ariaLabel = 'Pagination',
-  previousPageLabel = 'Previous page',
-  nextPageLabel = 'Next page',
+  ariaLabel,
+  previousPageLabel,
+  nextPageLabel,
   pageLabelFormatter,
   variant = 'full',
   disabled = false,
@@ -135,6 +150,10 @@ export const Pagination = ({
   if (sanitizedTotalPages < 2) {
     return null;
   }
+
+  warnMissingLabel('Pagination', 'ariaLabel', ariaLabel);
+  warnMissingLabel('Pagination', 'previousPageLabel', previousPageLabel);
+  warnMissingLabel('Pagination', 'nextPageLabel', nextPageLabel);
 
   const handlePageChange = (page: number) => {
     if (

@@ -14,6 +14,7 @@ figma.connect(Breadcrumb, url, {
     <Breadcrumb
       items={[{ label: 'Home', href: '/' }, { label: 'Current page' }]}
       ariaLabel="Breadcrumb"
+      overflowAriaLabel="Show more items"
     />
   ),
 });
@@ -29,6 +30,7 @@ figma.connect(Breadcrumb, url, {
         { label: 'Current page' },
       ]}
       ariaLabel="Breadcrumb"
+      overflowAriaLabel="Show more items"
     />
   ),
 });
@@ -45,6 +47,7 @@ figma.connect(Breadcrumb, url, {
         { label: 'Current page' },
       ]}
       ariaLabel="Breadcrumb"
+      overflowAriaLabel="Show more items"
     />
   ),
 });
@@ -63,6 +66,7 @@ figma.connect(Breadcrumb, url, {
         { label: 'Current page' },
       ]}
       ariaLabel="Breadcrumb"
+      overflowAriaLabel="Show more items"
     />
   ),
 });
@@ -94,6 +98,7 @@ figma.connect(Breadcrumb, url, {
         },
       ]}
       ariaLabel="Breadcrumb"
+      overflowAriaLabel="Show more items"
     />
   ),
 });

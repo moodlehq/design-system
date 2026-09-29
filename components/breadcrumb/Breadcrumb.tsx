@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef, ReactElement } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { warnMissingLabel } from '../_internal/warnMissingLabel';
 import { Dropdown, DropdownItemAction } from '../dropdown';
 import { Link } from '../link';
 import { Tooltip } from '../tooltip';
@@ -21,16 +22,16 @@ export interface BreadcrumbProps extends ComponentPropsWithoutRef<'nav'> {
 
   /**
    * Accessible label for the `<nav>` landmark element.
-   * Must be a caller-supplied translated string — the default is English only.
+   * Must be a caller-supplied translated string.
    */
-  ariaLabel?: string;
+  ariaLabel: string;
 
   /**
-   * Visible-to-assistive-tech label for the overflow "…" button.
-   * Only relevant when the component renders with more than 4 items.
-   * Must be a caller-supplied translated string — the default is English only.
+   * Visible-to-assistive-tech label for the overflow "…" button, rendered
+   * when there are more than 4 items. Always required so consumers don't have
+   * to track the item count. Must be a caller-supplied translated string.
    */
-  overflowAriaLabel?: string;
+  overflowAriaLabel: string;
 }
 
 // Wraps a breadcrumb Link in a Tooltip only when its label is actually
@@ -112,8 +113,8 @@ function TruncatingTooltip({
 
 export const Breadcrumb = function Breadcrumb({
   items,
-  ariaLabel = 'Breadcrumb',
-  overflowAriaLabel = 'Show more items',
+  ariaLabel,
+  overflowAriaLabel,
   className,
   ...props
 }: BreadcrumbProps) {
@@ -133,6 +134,12 @@ export const Breadcrumb = function Breadcrumb({
 
   if (!items || items.length < 2) {
     return null;
+  }
+
+  warnMissingLabel('Breadcrumb', 'ariaLabel', ariaLabel);
+  // Only rendered when items overflow, so only warn when it's actually used.
+  if (showOverflow) {
+    warnMissingLabel('Breadcrumb', 'overflowAriaLabel', overflowAriaLabel);
   }
 
   const currentItem = items[items.length - 1];

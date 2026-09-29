@@ -80,12 +80,12 @@ describe('pagination.helpers', () => {
     expect(resolvedInputs.resolvedVariant).toBe('full');
     expect(resolvedInputs.sanitizedTotalPages).toBe(5);
     expect(resolvedInputs.sanitizedCurrentPage).toBe(1);
-    expect(resolvedInputs.resolvedPageLabelFormatter(2)).toBe('Page 2');
+    expect(resolvedInputs.resolvedPageLabelFormatter(2)).toBe('2');
     expect(warnSpy).toHaveBeenCalledWith(
       '[MDS Pagination] Invalid variant "invalid". Falling back to "full". Allowed: full, grouped',
     );
     expect(warnSpy).toHaveBeenCalledWith(
-      '[MDS Pagination] Invalid pageLabelFormatter "bad formatter". Falling back to the default page label formatter.',
+      '[MDS Pagination] Invalid pageLabelFormatter "bad formatter". Falling back to the page number alone (pageLabelFormatter is required).',
     );
     expect(warnSpy).toHaveBeenCalledWith(
       '[MDS Pagination] Invalid totalPages "5.8". Falling back to 5.',

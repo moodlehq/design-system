@@ -18,7 +18,10 @@ const VIEWPORT_BREAKPOINT_MEDIA_QUERIES = [
   '(min-width: 768px)',
   '(min-width: 992px)',
 ] as const;
-const defaultPageLabelFormatter: PageLabelFormatter = (page) => `Page ${page}`;
+// Language-neutral safety net for JS consumers that omit or pass an invalid
+// (required) pageLabelFormatter: the bare number is at least meaningful in
+// every locale, unlike an English "Page N".
+const fallbackPageLabelFormatter: PageLabelFormatter = (page) => String(page);
 
 /**
  * Returns how many page-number slots to show based on the current viewport width.
@@ -233,20 +236,17 @@ function resolvePaginationVariant(variant: string): PaginationVariant {
 }
 
 function resolvePageLabelFormatter(pageLabelFormatter?: PageLabelFormatter) {
-  if (
-    pageLabelFormatter !== undefined &&
-    typeof pageLabelFormatter !== 'function'
-  ) {
+  if (typeof pageLabelFormatter !== 'function') {
     warnInvalidProp(
       'pageLabelFormatter',
       pageLabelFormatter,
-      'the default page label formatter',
+      'the page number alone (pageLabelFormatter is required)',
     );
   }
 
   return typeof pageLabelFormatter === 'function'
     ? pageLabelFormatter
-    : defaultPageLabelFormatter;
+    : fallbackPageLabelFormatter;
 }
 
 export function resolvePaginationInputs(

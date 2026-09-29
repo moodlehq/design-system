@@ -14,6 +14,9 @@ figma.connect(Pagination, url, {
       totalPages={10}
       currentPage={5}
       ariaLabel="Pagination"
+      previousPageLabel="Previous page"
+      nextPageLabel="Next page"
+      pageLabelFormatter={(page) => `Page ${page}`}
       onPageChange={() => {}}
     />
   ),
@@ -29,6 +32,9 @@ figma.connect(Pagination, url, {
       currentPage={5}
       variant="grouped"
       ariaLabel="Pagination"
+      previousPageLabel="Previous page"
+      nextPageLabel="Next page"
+      pageLabelFormatter={(page) => `Page ${page}`}
       onPageChange={() => {}}
     />
   ),
@@ -42,6 +48,9 @@ figma.connect(Pagination, url, {
       totalPages={10}
       currentPage={1}
       ariaLabel="Pagination"
+      previousPageLabel="Previous page"
+      nextPageLabel="Next page"
+      pageLabelFormatter={(page) => `Page ${page}`}
       onPageChange={() => {}}
     />
   ),
@@ -55,6 +64,9 @@ figma.connect(Pagination, url, {
       totalPages={10}
       currentPage={10}
       ariaLabel="Pagination"
+      previousPageLabel="Previous page"
+      nextPageLabel="Next page"
+      pageLabelFormatter={(page) => `Page ${page}`}
       onPageChange={() => {}}
     />
   ),
