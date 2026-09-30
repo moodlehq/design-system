@@ -45,6 +45,26 @@ figma.connect(Alert, url, {
 });
 
 figma.connect(Alert, url, {
+  variant: { Type: 'Info', 'Show Title': false, 'Customs slot': true },
+  props: {
+    ...sharedProps,
+    children: figma.children(['Custom elements']),
+  },
+  example: ({ message, isDismissible, isActionable, children }) => (
+    <Alert
+      type="info"
+      message={message}
+      isDismissible={isDismissible}
+      dismissAriaLabel="Dismiss alert"
+      isActionable={isActionable}
+      actionLabel="Action label"
+    >
+      {children}
+    </Alert>
+  ),
+});
+
+figma.connect(Alert, url, {
   variant: { Type: 'Info', 'Show Title': true, 'Customs slot': true },
   props: {
     ...sharedProps,
@@ -96,6 +116,26 @@ figma.connect(Alert, url, {
       isActionable={isActionable}
       actionLabel="Action label"
     />
+  ),
+});
+
+figma.connect(Alert, url, {
+  variant: { Type: 'Success', 'Show Title': false, 'Customs slot': true },
+  props: {
+    ...sharedProps,
+    children: figma.children(['Custom elements']),
+  },
+  example: ({ message, isDismissible, isActionable, children }) => (
+    <Alert
+      type="success"
+      message={message}
+      isDismissible={isDismissible}
+      dismissAriaLabel="Dismiss alert"
+      isActionable={isActionable}
+      actionLabel="Action label"
+    >
+      {children}
+    </Alert>
   ),
 });
 
@@ -155,6 +195,26 @@ figma.connect(Alert, url, {
 });
 
 figma.connect(Alert, url, {
+  variant: { Type: 'Warning', 'Show Title': false, 'Customs slot': true },
+  props: {
+    ...sharedProps,
+    children: figma.children(['Custom elements']),
+  },
+  example: ({ message, isDismissible, isActionable, children }) => (
+    <Alert
+      type="warning"
+      message={message}
+      isDismissible={isDismissible}
+      dismissAriaLabel="Dismiss alert"
+      isActionable={isActionable}
+      actionLabel="Action label"
+    >
+      {children}
+    </Alert>
+  ),
+});
+
+figma.connect(Alert, url, {
   variant: { Type: 'Warning', 'Show Title': true, 'Customs slot': true },
   props: {
     ...sharedProps,
@@ -206,6 +266,26 @@ figma.connect(Alert, url, {
       isActionable={isActionable}
       actionLabel="Action label"
     />
+  ),
+});
+
+figma.connect(Alert, url, {
+  variant: { Type: 'Danger', 'Show Title': false, 'Customs slot': true },
+  props: {
+    ...sharedProps,
+    children: figma.children(['Custom elements']),
+  },
+  example: ({ message, isDismissible, isActionable, children }) => (
+    <Alert
+      type="danger"
+      message={message}
+      isDismissible={isDismissible}
+      dismissAriaLabel="Dismiss alert"
+      isActionable={isActionable}
+      actionLabel="Action label"
+    >
+      {children}
+    </Alert>
   ),
 });
 
