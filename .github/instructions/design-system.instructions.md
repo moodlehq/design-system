@@ -3185,6 +3185,51 @@ Tooltips are display only. They do not have hover, pressed, disabled, or focus s
 
 ---
 
+# Code
+## Storybook
+
+Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
+
+[Default](https://moodlehq.github.io/design-system/iframe.html?id=components-input-input--default)
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | Moves focus to the field, then to the toggle button if present. |
+| `Shift + Tab` | Moves focus to the previous interactive element. |
+| `Enter` | Submits the surrounding form — unlike Text area, where Enter inserts a line break. |
+| `Arrow keys` | Move the caret within the value. |
+| `Home` / `End` | Move the caret to the start or end of the field's content. |
+| `Ctrl / Cmd + A` | Selects all text in the field. |
+| `Space` / `Enter` on toggle button | Switches the password value between hidden and visible, without moving focus. |
+
+### ARIA
+
+* Role: native `<input type="text">` / `<input type="password">`, exposed as a textbox.
+* Required: accessible name via `<label for>` or `aria-labelledby`; `aria-label` when `showLabel` is off.
+* Pair `isInvalid` with `aria-invalid="true"` and connect the supporting text via `aria-describedby`, so the failure reason is announced, not just shown in colour.
+* The leading icon on the Text variant is decorative (`aria-hidden`) unless it's conveying information the label doesn't already carry.
+* Toggle button: its own `aria-label`, updating with state ("Show password" / "Hide password") — not a generic "Toggle".
+* Read-only: `readonly` / `aria-readonly="true"` supported at the attribute level; no distinct visual treatment.
+
+### Dynamic announcements
+
+`[aria-live, state changes]`
+
+---
+
+## GitHub
+
+<shortcut_tiles>
+<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/input">
+**GitHub: Input**
+</shortcut_tile>
+</shortcut_tiles>
+---
+
 # Design
 ## Anatomy
 
@@ -3432,6 +3477,50 @@ Most fields shouldn't need one. A clear label, a useful placeholder, and support
 
 ---
 
+# Code
+## Storybook
+
+Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
+
+[Default](https://moodlehq.github.io/design-system/iframe.html?id=components-input-passwordinput--default)
+
+## Implementation notes
+
+* Don't block pasting into the field. Password managers and generated passwords depend on paste — disabling it is a known usability anti-pattern with no real security benefit. This is enforced at the implementation level; there's no design toggle for it.
+
+---
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | Moves focus to the field, then to the toggle button. |
+| `Shift + Tab` | Moves focus to the previous interactive element. |
+| `Space` / `Enter` on toggle button | Switches the value between hidden and visible, without moving focus away from the field. |
+
+### ARIA
+
+Toggle button: own `aria-label`, updating with state — "Show password" when masked, "Hide password" when revealed, matching the Content design guidance above.
+
+* Read-only: `readonly` / `aria-readonly="true"` supported at the attribute level, same as Input; no distinct visual treatment.
+
+### Dynamic announcements
+
+`[aria-live, state changes]`
+
+---
+
+## GitHub
+
+<shortcut_tiles>
+<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/input">
+**GitHub: Input**
+</shortcut_tile>
+</shortcut_tiles>
+---
+
 # Design
 ## Anatomy
 
@@ -3541,18 +3630,56 @@ The password input has a toggle at the end of the field. It switches between sho
 
 ---
 
+# Code
+## Storybook
+
+Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
+
+[Default](https://moodlehq.github.io/design-system/iframe.html?id=components-input-searchinput--default)
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | Moves focus through the field, then each badge (if present), then the clear control (if shown), then the chevron (if present). |
+| `Arrow keys` / `Enter` *(chevron open)* | Standard listbox/combobox pattern — arrow keys move through results, Enter chooses one, Escape closes the list. |
+| `Delete` / `Backspace` *(on a focused badge)* | Removes that badge and returns focus to the field. |
+
+### ARIA
+
+* Each badge's own accessible name.
+* The clear control's accessible name.
+* `aria-invalid` paired with the empty-content rule.
+* If the chevron drives a visible results list: `aria-expanded`, `aria-controls`, and listbox/combobox roles as appropriate.
+
+### Dynamic announcements
+
+`[aria-live, state changes]`
+
+---
+
+## GitHub
+
+<shortcut_tiles>
+<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/input">
+**GitHub: Input**
+</shortcut_tile>
+</shortcut_tiles>
+---
+
 # Design
 ## Anatomy
 
 *Shares* *[Text Input](https://design.moodle.com/98292f05f/p/56eea2-input)**'s Label, Required indicator, Info icon, Field container, Value/placeholder text and Supporting text exactly. Search-specific parts:*
 
-![](zeroheight://image/8951303/f60abdcd6a020fd8d8bb7ece79c69161ac53deca6342c9b0c8ce91d8ef6ffc0a)
+![](zeroheight://image/8951303/75bf5b32ec9f13aae2baab6429ab59b5b198a0f52c93cd4adc891b68e8696f37)
 
 1. **Leading icon** — fixed to a magnifier glyph when shown.
 2. **Placeholder text**
 3. **Value**
 4. **Clear control** — a dedicated close-button instance, not a generic button. Shown only when Content is Filled.
-5. **Trailing chevron** *(optional)* — signals that this instance can reveal an in-place results list.
 
 ---
 
@@ -3602,12 +3729,6 @@ Search is Input's filtering variant: a single-line field for narrowing down or f
 
 ---
 
-#### Chevron
-
-![](zeroheight://image/8951303/839bdbd2409614b74d21f39724bed0f428673e72c6f779cfa94052b827f65cf2)
-
-Shows a chevron at the end of the field. Use when typing opens a list of results below the field, not when filtering a list that's already visible elsewhere on the page.
-
 ## Guidelines
 
 ### Usage guidelines
@@ -3624,7 +3745,7 @@ Shows a chevron at the end of the field. Use when typing opens a list of results
 
 ### Interaction behaviour
 
-* Tab order: Field → clear control (filled only) → chevron (if present).
+* Tab order: Field → clear control (filled only) 
 
 ---
 
@@ -5539,6 +5660,229 @@ A Switch can be used without a visible label when the surrounding context makes 
 * If a switch triggers an immediate change that affects a larger area of the page, ensure the change is visually apparent and consider whether a live region announcement is needed.
 
 ---
+---
+
+---
+
+# Code
+## Implementation
+
+Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
+
+---
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | **Link**: moves focus to the tag. **Removable**: moves focus to the tag's Close button (the label itself isn't focusable). |
+| `Enter` / `Space` | **Link**: activates navigation. **Removable**: activates the Close button, removing the tag. |
+
+### ARIA
+
+* Roles:
+    *         * **Link** renders as a native `a` (or `button`, if it triggers an in-page action rather than navigation) — no explicit ARIA role needed beyond the correct element.
+        * **Removable** renders as a non-interactive container (`span`/`div`) wrapping the label content and a nested Close button. The Close button is a native `button`.
+    * Required attributes:
+        * The Close button on Removable requires an `aria-label` naming what it removes (see Labelling above), the same requirement as the standalone [Close button](https://024033df-8d42-4acc-a867-1740a881dda2.frame.claudeusercontent.com/778206-close-button) component.
+        * The avatar image should be `aria-hidden="true"` or use `alt=""` so the accessible name comes from the visible text.
+
+### Dynamic announcements
+
+* Removing a tag changes a list of selections — if that list isn't visually obvious after removal, announce the change via an app-level live region (for example, "Marketing tag removed").
+
+---
+
+## GitHub
+
+<shortcut_tiles>
+<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/button">
+**GitHub: Button**
+</shortcut_tile>
+</shortcut_tiles>
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/8991684/bc332d304e88518e315623849bd26807208dacdfbfaf230ef0c91861f89ee899)
+
+**Tag (Link)**
+
+1. **Container** — pill shape, background and border reflect the feedback type (Default or Danger).
+2. **Label** — centred text in the matching feedback colour.
+
+
+![](zeroheight://image/8991684/4beb303910c02e733aa25760d82718b487a8576edd792cdd1c1974e4ad4c1ac8)
+
+**Tag (Removable)**
+
+1. **Container** — radius and padding adapt to which optional rows are shown: compact and square-ish, with nothing on, up to a larger, more rounded card once 3 rows are shown.
+2. **Avatar** *(optional)* — small (16px) when only the name/category is shown; larger (32–48px) once email, username, or institution are also shown.
+3. **Name / category** — required, shown first.
+4. **Username / short name / Email** *(optional)* — shown together separated by a vertical divider, or individually.
+5. **Institution** *(optional)* — shown as a third line.
+6. **Close button** — SM size, anchored to the trailing edge. Always required.
+
+---
+
+## States
+
+### Link - Default
+
+| ![](zeroheight://image/8991684/6727de0283abb76c047bb384436b4bdbeabff3106d059868b06899a3842d2929)  | **Default** The tag's resting state. Confirm the label clearly names the category or destination before it's shown.   Label: `text.feedback.secondary`  Container: `bg.feedback.primary.light` Border: `border.feedback.primary` at `stroke-weight.sm` |
+| :--- | :--- |
+| ![](zeroheight://image/8991684/d7886feed4a03c93f2d70fa0666c8f910295e4b9cb3a791776b99b10ba3e289d)  | **Hover** Triggered when the cursor moves over the tag. Don't suppress or override this state — users rely on it to identify interactive elements.   Label: `text.feedback.secondary`  Container: `bg.feedback.primary.subtle` Border: `border.feedback.primary` |
+|  ![](zeroheight://image/8991684/1093e4ec482639821cd3abb5433cc0120a0637e85d26e7008948ce3d5b8e0fae)  | **Pressed** Triggered while the tag is being pressed. Transitions away immediately on release — don't hold this state.   Label: `text.feedback.secondary`  Container: `bg.feedback.primary.subtle` |
+| ![](zeroheight://image/8991684/f5b66b1fa46f718c22acbb67090258d0e8bcc16f0e1f7a7076bf437b45813a09) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.   Label: `text.feedback.secondary`  Container: `bg.feedback.primary.light` Border `border.feedback.primary`  Outline: `focus.default` at `stroke-weight.md` offset by `spacing.offset` |
+
+### Link - Danger
+
+| ![](zeroheight://image/8991684/f3ccfeaad13de46fd07bc17a253f20f9acfceda7a41f189b676c6ee23be793aa)  | **Default** The tag's resting state. Reserve this appearance for tags that genuinely need attention. L Label:`text.feedback.danger`  Container: `bg.feedback.danger.light` Border: `border.feedback.danger` at `stroke-weight.sm`  |
+| :--- | :--- |
+| ![](zeroheight://image/8991684/2e476ce8c915551c357ab7be87778d9fe5c5fbd27d04aae997643c32ff6c66c9)  | **Hover** Triggered when the cursor moves over the tag. Don't suppress or override this state — users rely on it to identify interactive elements.   Label: `text.feedback.danger`  Container: `bg.feedback.danger.subtle` Border `border.feedback.danger`  |
+| ![](zeroheight://image/8991684/70e011dc566cab38a74bc99ef28c5c6f1093289fa8e0e149f5a76bd7841ab867)   | **Pressed**  Triggered while the tag is being pressed. Transitions away immediately on release — don't hold this state.   Label: `text.feedback.danger`  Container: `bg.feedback.danger.subtle`   |
+| ![](zeroheight://image/8991684/f07c6c040174a62b2edca2987251469711c7bf85645cf1ea4c72adecaff04ec2)  | **Focus**  Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout.   Label: `text.feedback.danger`  Container: `bg.feedback.danger.light` Border `border.feedback.danger`  Outline: `focus.danger` at `stroke-weight.md`, offset by `spacing.offset`  |
+
+---
+
+### Removable
+
+| ![](zeroheight://image/8991684/d15a6e1ca3432c92dae15570f4efefeffbf6bbcbb7477fcc9a75c7ee6d1babd3)  | **Default** Container: `bg.surface.default` Border: `border.feedback.secondary` at `stroke-weight.sm`**.**  Name/category: `text.emphasis` Email/username/institution rows: `text.subtle` Close button: Default |
+| :--- | :--- |
+| ![](zeroheight://image/8991684/22d4962769e30f2557dc0ee8fb322431c8d4da86f64d910c0411536f963988f5) | **Disabled**  Container: `bg.surface.subtle` Name/category: `text.subtle` Email/username/institution rows: `text.muted` Close button: Disabled. |
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/8991684/d39810c973985f8c9f9c1eeafa474ca397d8389a955a79cfa8a7a5a248fd7287)
+
+Tags provide a consistent visual pattern for displaying labels, categories, or removable selections in a small, pill-shaped container. A Tag is either a Link — a clickable, navigable label — or Removable — a dismissible chip with an embedded Close button. Removable is a single, deliberately agnostic component: with its optional fields off it's a plain label chip, and with them on it can represent a specific person or a specific tenant/organisation.
+
+---
+
+## When to use
+
+* Use the **Link** type when a tag should navigate to related or filtered content — for example, a category tag on a course card that links to everything in that category.
+* Use the **Removable** type for any dismissible chip. It's built to cover three use cases with the same component:
+    * **Generic** — a plain label with no identity attached, for example an applied filter or a keyword in a chip-style input. Leave Avatar, Email, Username / short name, and Institution off.
+    * **User** — the tag represents a specific person, for example an "assigned to" chip, a shared-with recipient, or a selected user in a multi-select. Turn on the identity fields that apply (Avatar, Email, Username, Institution).
+    * **Tenant** — the tag represents a specific tenant, site, or organisation, for example in a multi-tenant admin screen. Use Avatar (as a logo/site image) and Username / short name (as the site's short name). Email and Institution are person-only fields and don't apply here.
+
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use Tag to show static status information with no action attached — use [Badge](/28c702-badge) instead.
+* Don't use the Link type for something the user needs to remove — use a Removable variant instead.
+* Don't use a Removable variant for a value the user shouldn't be able to remove — the Close button signals that the item is dismissible, so removing it would be misleading. Use Badge or plain text instead.
+* Don't use Tag as a substitute for [Nav pill](/981bd1-nav-pill) — Nav pill is for navigation state (selected/unselected), not for labelling or removable selections.
+
+</callout>
+
+---
+
+## Variants
+
+### Type
+
+Tag combines a **Type** choice with, for Removable, a **Variant** choice for what the tag represents.
+
+| **Variant** | **When to use** |
+| :--- | --- |
+| ![](zeroheight://image/8991684/b039fbb3791cde259d73193b39ed142d123b670512d749f128650f2746c32e72) | ****Link**** A clickable, pill-shaped tag that navigates to related content. Not removable. |
+| ![](zeroheight://image/8991684/f2ee2d372c8da606c5b202a184e9343a06fb2f088581028f2a5937a82cd0241d) | ****Removable**** A dismissible chip with an embedded Close button. Optionally shows identity details (avatar, email, username, institution). |
+
+### Link
+
+Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a fixed style and cannot be combined with Fill or Outline.
+
+| **Variant** | **When to use** |
+| :--- | --- |
+| ![](zeroheight://image/8991684/b039fbb3791cde259d73193b39ed142d123b670512d749f128650f2746c32e72) | ****Default**** The standard appearance for category and topic tags. |
+| ![](zeroheight://image/8991684/641b24f77af2a06213fd9e33fb58401a5e248024ce2aae8033a11b5bba425345) | ****Danger**** Use when the tag represents something that needs attention or carries risk — consistent with the danger meaning used elsewhere in MDS (Badge, Alert). |
+
+### Removable
+
+Removable has four independent toggles, all optional except the name/category label itself.
+
+| **Props** | **When to use** |
+| :--- | --- |
+| ![](zeroheight://image/8991684/75b3982979c2499bdfff4166d9dea3bd8fac3b7283daa0b33386c6a90ef0afa5) | ****Avatar**** Show a small identity image alongside the label. Defaults on. Works for a person's photo or a tenant/site logo. *(Generic — used for both People and Tenant.)* |
+| ![](zeroheight://image/8991684/90f13ee01f02509e63f7b8b85fb870f15bb6b0f2a516ea30b5df0f249255ef1d) | ****Username / short name**** Show a short identifier as a supporting line. Works for a person's username or a tenant's short name. *(Generic — used for both People and Tenant.)* |
+| ![](zeroheight://image/8991684/c2e759d91e79b181d60a8ef5154f0f218e4da6a7e25544d81ceabd17294420c4) | ****Email**** Show an email address as a supporting line. *(Person-only — leave off for Tenant tags.)* |
+| ![](zeroheight://image/8991684/a6d47ba15f1b2f7ccca630f9a6210f717165e0a35a47ab539555e4ada198c94d) | ****Institution**** Show a third line, the person's institution. *(Person-only — leave off for Tenant tags.)*  |
+
+---
+
+## Guidelines
+
+### Content design
+
+#### **Content structure and constraints**
+
+* Link and plain Removable tags support a single line of label text, which truncates with an ellipsis if it exceeds the available width.
+* When any identity field (Email, Username / short name, Institution) is on, the name/category label is required and always shown first.
+* Email and username truncate with an ellipsis rather than wrap.
+* Keep labels short — Tag is a compact, scannable element, not a place for long descriptions.
+
+#### **Content density**
+
+* All four fields (Avatar, Email, Username / short name, Institution) can be turned on independently — the layout adapts automatically as more are shown, moving to a taller radius and a larger avatar once Institution is on.
+* More fields make the tag taller, which affects how much space it takes up when several tags sit together.
+
+#### **Copywriting** 
+
+* Use sentence case for category and keyword labels.
+* Person names follow their own natural casing — don't force sentence case on a proper noun.
+* Don't add punctuation to labels.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8991684/b12eb7a2191399aae81ef3a3e76140d79d7286ac10288948e4345c4370c9c972) |   | Use a specific label that describes the outcome. |
+| Don't | ![](zeroheight://image/8991684/010727c3ca0b33fff77471a7772adf0e0bb6c2fa4df2a584e80562b413f9466a) |   | Avoid generic labels that don't tell the user what will happen. |
+
+---
+
+### Layout and spacing
+
+* Use `spacing.xxs` (4px) between tags in a group, horizontally and vertically.
+* Tags wrap onto multiple lines when a group doesn't fit the available width.
+* If a group runs past about five wrapped lines, reach for a different pattern — a multi-select dropdown or a filter panel will serve the user better than a very long wall of tags.
+* Keep one interaction model per group. A Link tag and a Removable tag look similar but behave differently: the whole pill navigates on one, and only the Close button does anything on the other.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8991684/1cb1f14f9d6d923c19305b6ca216a56c2cd1d577c4bbbb055152144973a787f0) |   | Keep one interaction model per group, so every tag in the set behaves the same way. |
+| Don't | ![](zeroheight://image/8991684/7feeade3efd63992e324e771b0133af5f9dc07811081fbad61644cddc94153da) |   | Don't mix Link and Removable in one group — they look alike but one navigates and the other only removes. |
+
+### Interaction behaviour
+
+* Link: the whole pill is clickable and navigates to the linked content.
+* Removable: the label itself is static; only the Close button is interactive. Activating it removes the tag.
+* Cursor: pointer on the Link tag and on the Close button; default cursor on the static label area of Removable tags.
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* Label text meets 4.5:1 contrast against the tag background, for both the Default and Danger appearances of the Link type.
+* Disabled Removable tags use intentionally reduced contrast; the disabled state is also carried by the Close button's own disabled styling, not colour alone.
+
+#### **Focus**
+
+* The Link tag shows a visible focus ring in the matching feedback colour (default or danger).
+* The Close button on a Removable tag keeps its own standard focus state — see [Close button](/778206-close-button).
+
+#### Labelling
+
+* On a Removable tag, the Close button needs its own accessible name describing what it removes (for example, "Remove Marketing", "Remove Jordan Lee"), not a generic "Close" — see the Close button page's labelling guidance.
 ---
 
 ---
