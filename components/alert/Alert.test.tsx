@@ -3,9 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { Alert } from './Alert';
 
+// Required translatable label, spread first so a test can still override it.
+const labels = { dismissAriaLabel: 'Dismiss alert' };
+
 describe('Alert: Unit Test', () => {
   it('applies mds and bootstrap alert classes for default info variant', () => {
-    render(<Alert title="Title" message="Message" />);
+    render(<Alert {...labels} title="Title" message="Message" />);
 
     const liveRegion = screen.getByRole('status');
 
@@ -18,7 +21,9 @@ describe('Alert: Unit Test', () => {
   });
 
   it('applies mds and bootstrap alert classes for success variant', () => {
-    render(<Alert type="success" title="Success" message="Message" />);
+    render(
+      <Alert {...labels} type="success" title="Success" message="Message" />,
+    );
 
     const liveRegion = screen.getByRole('status');
     const alert = liveRegion.closest('.mds-alert');
@@ -30,7 +35,7 @@ describe('Alert: Unit Test', () => {
 
   it('uses role alert for warning and danger variants', () => {
     const { rerender } = render(
-      <Alert type="warning" title="Warning" message="Message" />,
+      <Alert {...labels} type="warning" title="Warning" message="Message" />,
     );
 
     const warningLiveRegion = screen.getByRole('alert');
@@ -39,7 +44,9 @@ describe('Alert: Unit Test', () => {
     expect(warningAlert).toHaveClass('mds-alert--warning');
     expect(warningAlert).toHaveClass('alert-warning');
 
-    rerender(<Alert type="danger" title="Danger" message="Message" />);
+    rerender(
+      <Alert {...labels} type="danger" title="Danger" message="Message" />,
+    );
 
     const dangerLiveRegion = screen.getByRole('alert');
     const dangerAlert = dangerLiveRegion.closest('.mds-alert');
@@ -49,7 +56,9 @@ describe('Alert: Unit Test', () => {
   });
 
   it('falls back to info for invalid type values', () => {
-    render(<Alert type={'bad' as unknown as 'info'} message="Message" />);
+    render(
+      <Alert {...labels} type={'bad' as unknown as 'info'} message="Message" />,
+    );
 
     const alert = screen.getByRole('status').closest('.mds-alert');
     expect(alert).not.toBeNull();
@@ -62,6 +71,7 @@ describe('Alert: Unit Test', () => {
 
     render(
       <Alert
+        {...labels}
         title="Title"
         message="Message"
         isActionable
@@ -85,6 +95,7 @@ describe('Alert: Unit Test', () => {
     render(
       <>
         <Alert
+          {...labels}
           title="Title"
           message="Message"
           isDismissible
@@ -111,6 +122,7 @@ describe('Alert: Unit Test', () => {
 
     render(
       <Alert
+        {...labels}
         title="Title"
         message="Message"
         isDismissible
@@ -140,6 +152,7 @@ describe('Alert: Unit Test', () => {
     render(
       <>
         <Alert
+          {...labels}
           title="Title"
           message="Message"
           isDismissible
@@ -167,6 +180,7 @@ describe('Alert: Unit Test', () => {
 
     render(
       <Alert
+        {...labels}
         title="Title"
         message="Message"
         isDismissible
@@ -185,9 +199,49 @@ describe('Alert: Unit Test', () => {
     requestAnimationFrameSpy.mockRestore();
   });
 
+  it('does not fall back to an English label and warns when dismissAriaLabel is missing at runtime', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <Alert {...({} as { dismissAriaLabel: string })} message="Message" />,
+    );
+
+    expect(
+      screen.queryByRole('button', { name: 'Dismiss alert' }),
+    ).not.toBeInTheDocument();
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('dismissAriaLabel is required'),
+    );
+    warnSpy.mockRestore();
+  });
+
+  it('does not warn when a translated dismissAriaLabel is provided', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(<Alert message="Message" dismissAriaLabel="Fermer l'alerte" />);
+
+    expect(
+      screen.getByRole('button', { name: "Fermer l'alerte" }),
+    ).toBeInTheDocument();
+    expect(warnSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
+  });
+
+  it('does not warn about an empty dismissAriaLabel when the alert is not dismissible', () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    render(
+      <Alert message="Message" dismissAriaLabel="" isDismissible={false} />,
+    );
+
+    expect(warnSpy).not.toHaveBeenCalled();
+    warnSpy.mockRestore();
+  });
+
   it('forwards extra props to host element', () => {
     render(
       <Alert
+        {...labels}
         title="Title"
         message="Message"
         data-testid="alert"
@@ -201,7 +255,7 @@ describe('Alert: Unit Test', () => {
 
   it('renders custom slot content when children are provided', () => {
     render(
-      <Alert title="Title" message="Message">
+      <Alert {...labels} title="Title" message="Message">
         <a href="#">Learn more</a>
       </Alert>,
     );

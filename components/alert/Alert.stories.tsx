@@ -47,11 +47,10 @@ const meta = {
     dismissAriaLabel: {
       control: { type: 'text' },
       description:
-        'Accessible name for the dismiss button. Required when `isDismissible` is true to satisfy WCAG 2.1 SC 4.1.2.',
+        'Accessible name for the dismiss button. Required — pass a translated string.',
       if: { arg: 'isDismissible', truthy: true },
       table: {
         type: { summary: 'string' },
-        defaultValue: { summary: "'Dismiss alert'" },
       },
     },
     onDismiss: {
@@ -251,6 +250,7 @@ export const RelativeToParent: Story = {
         <p style={parentLabelStyle}>Parent width: 25rem</p>
         <div style={parentContainerStyle}>
           <Alert
+            dismissAriaLabel="Dismiss alert"
             isDismissible={false}
             title="Narrow parent"
             message="This alert expands to the width of its parent container."
@@ -268,6 +268,7 @@ export const RelativeToParent: Story = {
         <p style={parentLabelStyle}>Parent width: 48rem</p>
         <div style={parentContainerStyle}>
           <Alert
+            dismissAriaLabel="Dismiss alert"
             isDismissible={false}
             title="Wider parent"
             message="The same component grows when the parent container is wider."

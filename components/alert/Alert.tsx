@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { useRef, useState } from 'react';
+import { warnMissingLabel } from '../_internal/warnMissingLabel';
 import type { ButtonProps } from '../button';
 import { Button } from '../button';
 import { CloseButton } from '../close-button';
@@ -19,8 +20,12 @@ export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   /** Shows a dismiss control that removes the alert from the page. Defaults to true. */
   isDismissible?: boolean;
 
-  /** Accessible label for the dismiss control. Defaults to 'Dismiss alert'. */
-  dismissAriaLabel?: string;
+  /**
+   * Accessible label for the dismiss control. Always required so it's never
+   * missing when `isDismissible` is toggled on. Must be a caller-supplied
+   * translated string.
+   */
+  dismissAriaLabel: string;
 
   /** Callback fired after the alert is dismissed. */
   onDismiss?: () => void;
@@ -105,7 +110,7 @@ export const Alert = ({
   title,
   message,
   isDismissible = true,
-  dismissAriaLabel = 'Dismiss alert',
+  dismissAriaLabel,
   onDismiss,
   isActionable = false,
   actionLabel,
@@ -128,10 +133,8 @@ export const Alert = ({
       );
     }
 
-    if (isDismissible && !dismissAriaLabel?.trim()) {
-      console.warn(
-        '[MDS Alert] dismissAriaLabel is required when isDismissible is true.',
-      );
+    if (isDismissible) {
+      warnMissingLabel('Alert', 'dismissAriaLabel', dismissAriaLabel);
     }
 
     if (isActionable && !actionLabel?.trim()) {
