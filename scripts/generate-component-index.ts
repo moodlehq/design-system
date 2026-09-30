@@ -157,7 +157,7 @@ const PURPOSES: Record<string, string> = {
     'Single-select options in a compact list (native radio input, label only). No group wrapper is provided — see the Group story for consumer-supplied layout.',
   switch: 'Binary toggle control for on/off settings.',
   textarea:
-    'Multi-line text input with label, placeholder, supporting text, character counter, and validation feedback.',
+    "Multi-line plain-text input with label, placeholder, supporting text, character counter, and validation feedback. Not a rich text editor: for formatting, links, or media use Moodle's editor (not provided by MDS), and use Input for single-line values.",
   tooltip: 'Contextual label anchored to a trigger element.',
 };
 
