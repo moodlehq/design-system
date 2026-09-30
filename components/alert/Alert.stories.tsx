@@ -100,6 +100,14 @@ const meta = {
         },
       },
     },
+    children: {
+      control: false,
+      description:
+        'Optional custom content rendered in the custom slot below the message.',
+      table: {
+        type: { summary: 'ReactNode' },
+      },
+    },
   },
   args: {
     title: 'Profile update available',
