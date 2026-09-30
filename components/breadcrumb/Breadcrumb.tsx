@@ -152,17 +152,15 @@ export const Breadcrumb = function Breadcrumb({
     classes.push(className);
   }
 
-  const itemClasses = ['breadcrumb-item'];
-  // Count the items and set a maxwidth and set flex grow?
-  if (items.length === 2) {
-    itemClasses.push('items-2');
-  }
-  if (items.length === 3) {
-    itemClasses.push('items-3');
-  }
-  if (items.length === 4 || showOverflow) {
-    itemClasses.push('items-4');
-  }
+  // The count modifier sets each item's max-width share of the trail. The
+  // overflow variant renders 4 visible slots (root, overflow, 2 ancestors), so
+  // it shares the 4-item cap.
+  const visibleCount = showOverflow ? 4 : items.length;
+  const itemClasses = [
+    'breadcrumb-item',
+    'mds-breadcrumb__item',
+    `mds-breadcrumb__item--count-${visibleCount}`,
+  ];
   return (
     <nav aria-label={ariaLabel} className={classes.join(' ')} {...props}>
       <ol className="breadcrumb mds-breadcrumb__list">

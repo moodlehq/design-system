@@ -137,7 +137,7 @@ const PURPOSES: Record<string, string> = {
   avatar: 'Circular user/entity identity display — photo or initials.',
   badge: 'Short status, metadata, or count labels.',
   breadcrumb:
-    'Hierarchical navigation path with optional truncation and overflow support.',
+    'Hierarchical navigation path (2+ levels) with optional truncation and overflow support. Separators are CSS-only — never add separator elements or characters to item labels. The last item is always the current page (plain text, not a link). Not for unrelated top-level sections (tabs) or sequential pages (Pagination).',
   button: 'Primary and secondary actions.',
   checkbox:
     'Independent multi-select controls. No group wrapper is provided — see the Group story for consumer-supplied layout.',
