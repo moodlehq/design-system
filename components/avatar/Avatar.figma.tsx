@@ -4,16 +4,18 @@ import { Avatar } from './Avatar';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=10897-145';
 
-const size = figma.enum('Size', {
-  xs: 'xs',
-  sm: 'sm',
-  md: 'md',
-  lg: 'lg',
-  xl: 'xl',
-  xxl: 'xxl',
-});
+const sizeProps = {
+  size: figma.enum('Size', {
+    xs: 'xs',
+    sm: 'sm',
+    md: 'md',
+    lg: 'lg',
+    xl: 'xl',
+    xxl: 'xxl',
+  }),
+};
 
-// Initials type — md/lg/xl/xxl only (xs/sm do not support initials per the design spec)
+// Initials type — md/lg/xl/xxl only (Figma and the design spec do not define it at xs/sm)
 figma.connect(Avatar, url, {
   variant: { Type: 'Initials', Size: 'md' },
   props: { initials: figma.string('Initials') },
@@ -38,23 +40,19 @@ figma.connect(Avatar, url, {
   example: ({ initials }) => <Avatar size="xxl" initials={initials} />,
 });
 
-// xs and sm with "Initials" type in Figma will show the silhouette placeholder
-// at runtime because initials are unsupported at those sizes per the design spec.
+// Empty state type — all sizes (Figma defines Initials only at md and up, so
+// xs and sm only exist as Image or Empty state).
 figma.connect(Avatar, url, {
-  variant: { Type: 'Initials', Size: 'xs' },
-  example: () => <Avatar size="xs" />,
-});
-
-figma.connect(Avatar, url, {
-  variant: { Type: 'Initials', Size: 'sm' },
-  example: () => <Avatar size="sm" />,
+  variant: { Type: 'Empty state' },
+  props: { ...sizeProps },
+  example: ({ size }) => <Avatar size={size} />,
 });
 
 // Image type — all sizes
 figma.connect(Avatar, url, {
   variant: { Type: 'Image' },
   props: {
-    size: size,
+    ...sizeProps,
     initials: figma.string('Initials'),
   },
   example: ({ size, initials }) => (

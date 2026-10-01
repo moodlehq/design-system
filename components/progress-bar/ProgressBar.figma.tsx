@@ -6,8 +6,12 @@ const url =
 const statusUrl =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=8838-290';
 
-const titleProp = figma.string('Title');
-const countProp = figma.string('Count');
+const titlePropProps = {
+  title: figma.string('Title'),
+};
+const countPropProps = {
+  count: figma.string('Count'),
+};
 
 const baseLabelExampleProps = {
   value: 50,
@@ -24,8 +28,8 @@ const baseStatusExampleProps = {
 figma.connect(ProgressBar, url, {
   variant: { 'Label variant': 'Title and count' },
   props: {
-    title: titleProp,
-    count: countProp,
+    ...titlePropProps,
+    ...countPropProps,
   },
   example: ({ title, count }) => (
     <ProgressBar
@@ -41,7 +45,7 @@ figma.connect(ProgressBar, url, {
 figma.connect(ProgressBar, url, {
   variant: { 'Label variant': 'Title' },
   props: {
-    title: titleProp,
+    ...titlePropProps,
   },
   example: ({ title }) => (
     <ProgressBar
@@ -56,8 +60,8 @@ figma.connect(ProgressBar, url, {
 figma.connect(ProgressBar, url, {
   variant: { 'Label variant': 'Inline' },
   props: {
-    title: titleProp,
-    count: countProp,
+    ...titlePropProps,
+    ...countPropProps,
   },
   example: ({ title, count }) => (
     <ProgressBar
@@ -73,7 +77,7 @@ figma.connect(ProgressBar, url, {
 figma.connect(ProgressBar, url, {
   variant: { 'Label variant': 'None' },
   props: {
-    title: titleProp,
+    ...titlePropProps,
   },
   example: ({ title }) => (
     <ProgressBar {...baseLabelExampleProps} labelVariant="none" title={title} />
@@ -83,15 +87,11 @@ figma.connect(ProgressBar, url, {
 // 0% value override -> neutral/grey visual.
 figma.connect(ProgressBar, statusUrl, {
   variant: { Status: 'Empty' },
-  props: {
-    title: titleProp,
-    count: countProp,
-  },
-  example: ({ title, count }) => (
+  example: () => (
     <ProgressBar
       {...baseStatusExampleProps}
-      title={title}
-      count={count}
+      title="Title"
+      count="0%"
       value={0}
       status="warning"
     />
@@ -101,15 +101,11 @@ figma.connect(ProgressBar, statusUrl, {
 // In-progress status.
 figma.connect(ProgressBar, statusUrl, {
   variant: { Status: 'In progress' },
-  props: {
-    title: titleProp,
-    count: countProp,
-  },
-  example: ({ title, count }) => (
+  example: () => (
     <ProgressBar
       {...baseStatusExampleProps}
-      title={title}
-      count={count}
+      title="Title"
+      count="50%"
       value={50}
       status="in-progress"
     />
@@ -119,15 +115,11 @@ figma.connect(ProgressBar, statusUrl, {
 // Loading status.
 figma.connect(ProgressBar, statusUrl, {
   variant: { Status: 'Loading' },
-  props: {
-    title: titleProp,
-    count: countProp,
-  },
-  example: ({ title, count }) => (
+  example: () => (
     <ProgressBar
       {...baseStatusExampleProps}
-      title={title}
-      count={count}
+      title="Title"
+      count="30%"
       value={30}
       status="loading"
     />
@@ -137,15 +129,11 @@ figma.connect(ProgressBar, statusUrl, {
 // Error status.
 figma.connect(ProgressBar, statusUrl, {
   variant: { Status: 'Error' },
-  props: {
-    title: titleProp,
-    count: countProp,
-  },
-  example: ({ title, count }) => (
+  example: () => (
     <ProgressBar
       {...baseStatusExampleProps}
-      title={title}
-      count={count}
+      title="Title"
+      count="40%"
       value={40}
       status="error"
     />
@@ -155,15 +143,11 @@ figma.connect(ProgressBar, statusUrl, {
 // Warning status.
 figma.connect(ProgressBar, statusUrl, {
   variant: { Status: 'Warning' },
-  props: {
-    title: titleProp,
-    count: countProp,
-  },
-  example: ({ title, count }) => (
+  example: () => (
     <ProgressBar
       {...baseStatusExampleProps}
-      title={title}
-      count={count}
+      title="Title"
+      count="60%"
       value={60}
       status="warning"
     />
@@ -173,17 +157,13 @@ figma.connect(ProgressBar, statusUrl, {
 // 100% value override -> success/green visual.
 figma.connect(ProgressBar, statusUrl, {
   variant: { Status: 'Completed' },
-  props: {
-    title: titleProp,
-    count: countProp,
-  },
-  example: ({ title, count }) => (
+  example: () => (
     <ProgressBar
       {...baseStatusExampleProps}
-      title={title}
-      count={count}
+      title="Title"
+      count="100%"
       value={100}
-      status="error"
+      status="in-progress"
     />
   ),
 });

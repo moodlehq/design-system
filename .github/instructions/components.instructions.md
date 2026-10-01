@@ -52,31 +52,46 @@ Workflow for a new component:
 import figma from '@figma/code-connect';
 import { ComponentName } from './ComponentName';
 
-figma.connect(
-  ComponentName,
-  'https://www.figma.com/design/<fileKey>/...?node-id=<nodeId>',
-  {
-    props: {
-      // Map Figma properties to React props using figma.string(), figma.boolean(), figma.enum(), etc.
-      label: figma.string('Label'),
-      disabled: figma.enum('State', { Disabled: true }),
-    },
-    example: ({ label, disabled }) => (
-      <ComponentName label={label} disabled={disabled} />
-    ),
-  },
-);
+const url = 'https://www.figma.com/design/<fileKey>/...?node-id=<nodeId>';
+
+// Map Figma properties to React props with figma.string(), figma.boolean(),
+// figma.enum(), etc. Every mapping must cover all of its values.
+const props = {
+  label: figma.string('Label'),
+};
+
+// One connection per State, with the state prop written into the JSX.
+figma.connect(ComponentName, url, {
+  variant: { State: 'Default' },
+  props,
+  example: ({ label }) => <ComponentName label={label} />,
+});
+
+figma.connect(ComponentName, url, {
+  variant: { State: 'Disabled' },
+  props,
+  example: ({ label }) => <ComponentName label={label} disabled />,
+});
 ```
 
 4. Publish the mapping using the Figma MCP `add_code_connect_map` tool (or run `npx figma connect publish` manually).
 
+This repo uses **parser-based `.figma.tsx` files with `figma.connect()`**. These rules take precedence over generic Code Connect guidance, including the Figma plugin's `figma-code-connect` skill, which defaults to `.figma.ts` template files and conditional props — do not follow it here.
+
 Prop mapping conventions:
 
+- **One `figma.connect` call per combination that changes the snippet.** Split on `variant` filters rather than collapsing everything into a single connection with conditional props. A longer file of explicit connections is the expected shape (see `Alert.figma.tsx`).
+- **`variant` filters accept BOOLEAN properties as well as VARIANT ones** — e.g. `variant: { Type: 'Info', 'Show Title': false }`. Filtering on a boolean is the intended way to split, not a workaround.
 - Figma boolean props that are the inverse of a React prop (e.g. Figma `Show Label` → React `hideLabel`) should use `figma.boolean('Show Label', { true: false, false: true })`.
-- **Never use `false: undefined` in `figma.boolean`** — Code Connect cannot render `undefined` and will silently suppress the entire snippet for that variant. Instead, split into separate `figma.connect` calls using the `variant` key to cover each combination explicitly.
+- **Never let a mapping produce `undefined`** — Code Connect cannot render it and silently suppresses the entire snippet. This means:
+  - no `false: undefined` in `figma.boolean`;
+  - every value of a `figma.enum` mapping is listed, not just the ones that set the prop;
+  - for an optional string prop, map the "absent" case to `''` (e.g. `infoTooltipLabel: figma.boolean('Info', { true: 'More information about this field', false: '' })`). For anything that can't be an empty string (elements, children, slots), split into separate `figma.connect` calls with `variant` filters instead.
 - Figma `State` variants (Default / Invalid / Disabled) should each have their own `figma.connect` call with a `variant: { State: '...' }` filter, and any boolean props hardcoded as JSX attributes (e.g. `invalid` or `disabled`) rather than derived via `figma.enum`. This avoids empty `prop=` attributes appearing in the generated snippet when the enum returns `undefined`.
 - When a Figma property is only available in certain states (e.g. `Show feedback text` only when `State=Invalid`), use a nested variant split: one `figma.connect` for `{ State: 'Invalid', 'Show feedback text': false }` and one for `{ State: 'Invalid', 'Show feedback text': true }`, with the prop hardcoded in the example of the latter.
 - Use a placeholder string (e.g. `'Error message'`) for text props that represent conditional feedback — do not hard-code real content.
+- **No bare `const x = figma.*` helpers, and no shorthand props.** The parser only resolves `figma.*` calls written inline in `props` or inside an object that's spread into it. A standalone `const labelProp = figma.string('Label')` compiles to `_fcc_identifier('labelProp')` and the mapping is silently lost; `props: { label }` fails to parse. Use a shared object and spread it (`const baseProps = { label: figma.string('Label') }` → `props: { ...baseProps }`).
+- `.figma.tsx` files are excluded from `tsconfig.json`, so `tsc` never checks them. Validate before committing with `npx figma connect parse -f components/<name>/<Name>.figma.tsx` — it needs no Figma token and lists every connection with its `variant` filter, so a missing combination is easy to spot.
 
 ## Composition pattern
 
@@ -228,6 +243,8 @@ Moodle is available in 100+ languages and supports RTL scripts (Arabic, Hebrew, 
 
 **Strings:** Never hardcode user-facing text inside a component. Every visible string — labels, accessible names, placeholders, tooltips — must be accepted as a prop. The caller is responsible for translation.
 
+**No English defaults.** Don't give a user-facing string prop a default value (e.g. `dismissAriaLabel = 'Dismiss alert'`) — it ships English to every locale whenever a caller forgets the prop, with no warning. Make the prop required instead, even if it's only rendered in some configurations (e.g. the dismiss label when `isDismissible` is true), so it's never missing when that configuration is switched on. The same applies to label-formatter functions. See `PasswordInput` and `SearchInput` for the pattern.
+
 ```tsx
 // ✅ correct
 <Button label={t('core:save')} />;
@@ -247,6 +264,26 @@ return <button>Save</button>;
 | `text-align: left` / `text-align: right` | `text-align: start` / `text-align: end`       |
 
 Direction-neutral properties (`top`, `bottom`, `height`, `width`, `margin-top`, `padding-top`, etc.) do not need changing.
+
+**`[dir='rtl']` override pattern:** Some properties have no logical-property equivalent — `transform` (translation/scale on the inline axis), `animation-name`, and gradient direction in `background-image` (e.g. `linear-gradient` angle). For these, add an explicit `[dir='rtl'] .mds-component` rule immediately after the LTR rule rather than duplicating the whole ruleset.
+
+```css
+.mds-link[class]:hover:not(:focus-visible) .mds-link__icon:last-child {
+  transform: translateX(calc(-1 * var(--mds-spacing-xxs)));
+}
+
+[dir='rtl']
+  .mds-link[class]:hover:not(:focus-visible)
+  .mds-link__icon:last-child {
+  transform: translateX(var(--mds-spacing-xxs));
+}
+```
+
+Reference implementations for each override category:
+
+- **`Link`** (`components/link/link.css`) — mirrors icon `transform: translateX(...)` slide direction.
+- **`Pagination`** (`components/pagination/pagination.css`) — flips chevron icons with `transform: scaleX(-1)`.
+- **`ProgressBar`** (`components/progress-bar/progress-bar.css`) — reverses striped `linear-gradient` angle and swaps `animation-name` to an RTL-mirrored `@keyframes`.
 
 **`dir` attribute:** No explicit forwarding needed — writing direction is inherited from the document or nearest ancestor. Because `...props` is always spread on the host element, consumers can pass `dir` directly if needed.
 
@@ -347,6 +384,15 @@ interface DropdownItemExpandableProps {
 Colocate styles in `component-name.css` (lowercase kebab-case filename, e.g. `button.css` not `Button.css`). Use `--mds-*` CSS custom properties exclusively — no hardcoded colors, spacing, or typography values.
 
 When a matching `--mds-*` token exists, use the token directly with no fallback literal in `var(...)` (for example, use `var(--mds-spacing-xs)`, not `var(--mds-spacing-xs, 0.5rem)`). Fallback literals are only acceptable when no token exists yet and a temporary value is explicitly approved by maintainers.
+
+**Figma-fixed values stay hard-coded.** When Figma defines a dimension as a fixed value (not bound to a variable), keep the literal and add a comment saying so. Do not swap it for a token that merely resolves to the same number — tokens must reflect what Figma actually binds, not what matches numerically. A commented Figma-fixed value satisfies the "no hard-coded values" rule.
+
+```css
+.mds-alert-icon-wrap {
+  inline-size: 20px; /* Figma defines icon frame as fixed 20x20. */
+  block-size: 20px; /* Figma defines icon frame as fixed 20x20. */
+}
+```
 
 Component styles layer on top of Bootstrap CSS classes. The JSX applies both the Bootstrap base class (e.g. `.btn`) and the `mds-*` hook, so CSS rules target both together to control specificity:
 

@@ -15,7 +15,7 @@ const dropdownNodeUrl =
 const dropdownTriggerNodeUrl =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12381-3057&m=dev';
 const dropdownMenuNodeUrl =
-  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12573-1086&m=dev';
+  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12573-1290&m=dev';
 const dropdownItemNodeUrl =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=12563-2532&m=dev';
 const dropdownItemActionNodeUrl =
@@ -69,22 +69,26 @@ figma.connect(Dropdown, dropdownNodeUrl, {
 /* Dropdown.trigger                                                    */
 /* ------------------------------------------------------------------ */
 
-const triggerAppearance = figma.enum('Appearance', {
-  emphasis: 'emphasis',
-  default: 'default',
-  subtle: 'subtle',
-} as const);
-const triggerSize = figma.enum('Size', {
-  sm: 'sm',
-  md: 'md',
-} as const);
+const triggerAppearanceProps = {
+  appearance: figma.enum('Appearance', {
+    emphasis: 'emphasis',
+    default: 'default',
+    subtle: 'subtle',
+  }),
+};
+const triggerSizeProps = {
+  size: figma.enum('Size', {
+    sm: 'sm',
+    md: 'md',
+  }),
+};
 
 // Interactive states (default/hover/active/disabled) are CSS states of the
 // same component, so every State variant maps to the same example. Focus is
 // the keyboard :focus-visible ring.
 figma.connect(DropdownTrigger, dropdownTriggerNodeUrl, {
   variant: { Variant: 'button', Icon: 'none' },
-  props: { appearance: triggerAppearance, size: triggerSize },
+  props: { ...triggerAppearanceProps, ...triggerSizeProps },
   example: (props) => (
     <DropdownTrigger
       label={triggerLabel}
@@ -96,7 +100,7 @@ figma.connect(DropdownTrigger, dropdownTriggerNodeUrl, {
 
 figma.connect(DropdownTrigger, dropdownTriggerNodeUrl, {
   variant: { Variant: 'button', Icon: 'startIcon' },
-  props: { appearance: triggerAppearance, size: triggerSize },
+  props: { ...triggerAppearanceProps, ...triggerSizeProps },
   example: (props) => (
     <DropdownTrigger
       label={triggerLabel}
@@ -109,7 +113,7 @@ figma.connect(DropdownTrigger, dropdownTriggerNodeUrl, {
 
 figma.connect(DropdownTrigger, dropdownTriggerNodeUrl, {
   variant: { Variant: 'button', Icon: 'Icon only' },
-  props: { appearance: triggerAppearance, size: triggerSize },
+  props: { ...triggerAppearanceProps, ...triggerSizeProps },
   example: (props) => (
     <DropdownTrigger
       label="Open menu"
@@ -195,14 +199,16 @@ figma.connect(DropdownItemCustom, dropdownItemNodeUrl, {
 /* Dropdown.item.action                                                */
 /* ------------------------------------------------------------------ */
 
-const actionVariant = figma.enum('Variant', {
-  default: 'default',
-  danger: 'danger',
-} as const);
+const actionVariantProps = {
+  variant: figma.enum('Variant', {
+    default: 'default',
+    danger: 'danger',
+  }),
+};
 
 figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
   variant: { Icon: 'false', Description: 'false' },
-  props: { variant: actionVariant },
+  props: { ...actionVariantProps },
   example: (props) => (
     <DropdownItemAction label={itemLabel} variant={props.variant} />
   ),
@@ -210,7 +216,7 @@ figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
 
 figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
   variant: { Icon: 'true', Description: 'false' },
-  props: { variant: actionVariant },
+  props: { ...actionVariantProps },
   example: (props) => (
     <DropdownItemAction
       label={itemLabel}
@@ -222,7 +228,7 @@ figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
 
 figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
   variant: { Icon: 'true', Description: 'true' },
-  props: { variant: actionVariant },
+  props: { ...actionVariantProps },
   example: (props) => (
     <DropdownItemAction
       label={itemLabel}
@@ -235,7 +241,7 @@ figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
 
 figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
   variant: { Icon: 'false', Description: 'true' },
-  props: { variant: actionVariant },
+  props: { ...actionVariantProps },
   example: (props) => (
     <DropdownItemAction
       label={itemLabel}
@@ -247,7 +253,7 @@ figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
 
 figma.connect(DropdownItemAction, dropdownItemActionNodeUrl, {
   variant: { State: 'disabled' },
-  props: { variant: actionVariant },
+  props: { ...actionVariantProps },
   example: (props) => (
     <DropdownItemAction label={itemLabel} variant={props.variant} disabled />
   ),

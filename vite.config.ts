@@ -25,6 +25,8 @@ const componentEntries = Object.fromEntries(
 
 interface ComponentCssAsset {
   componentName: string;
+  /** CSS file name without extension, e.g. `tag-content`. */
+  cssName: string;
   isInternal: boolean;
   source: string;
 }
@@ -109,6 +111,7 @@ function getComponentCssAssets(): ComponentCssAsset[] {
 
     assets.push({
       componentName,
+      cssName: path.basename(absoluteImportPath, '.css'),
       isInternal,
       source: inlineCssImageUrls(
         fs.readFileSync(absoluteImportPath, 'utf8').trim(),
@@ -118,6 +121,40 @@ function getComponentCssAssets(): ComponentCssAsset[] {
   }
 
   return assets;
+}
+
+/**
+ * Internal CSS (e.g. `_internal/tag-content.css`) is styled for helpers that
+ * live beside the component TSX, such as `TagContent.tsx`. Find the internal
+ * stylesheets whose helper a component imports, so its per-component bundle
+ * can carry them. Matches `_internal/<Helper>` imports to `<helper>.css` by
+ * ignoring case and dashes.
+ */
+function getInternalCssDependencies(
+  componentName: string,
+  internalAssets: ComponentCssAsset[],
+): ComponentCssAsset[] {
+  const componentDir = path.join(dirname, 'components', componentName);
+  const sourceFiles = fs
+    .readdirSync(componentDir)
+    .filter(
+      (file) =>
+        /\.tsx?$/.test(file) && !/\.(test|stories|figma)\.tsx?$/.test(file),
+    );
+  const importedHelpers = new Set<string>();
+
+  for (const file of sourceFiles) {
+    const code = fs.readFileSync(path.join(componentDir, file), 'utf8');
+    for (const match of code.matchAll(
+      /from\s+['"]\.\.\/_internal\/(\w+)['"]/g,
+    )) {
+      importedHelpers.add(match[1].toLowerCase());
+    }
+  }
+
+  return internalAssets.filter((asset) =>
+    importedHelpers.has(asset.cssName.replace(/-/g, '').toLowerCase()),
+  );
 }
 
 function buildComponentsCssManifest(assets: ComponentCssAsset[]): string {
@@ -162,11 +199,18 @@ function emitComponentAssets(ctx: PluginContext): void {
   });
 
   // Per-component CSS files
+  const internalAssets = assets.filter((asset) => asset.isInternal);
+
   for (const componentAsset of assets.filter((asset) => !asset.isInternal)) {
+    const internalSources = getInternalCssDependencies(
+      componentAsset.componentName,
+      internalAssets,
+    ).map((asset) => asset.source);
+
     ctx.emitFile({
       type: 'asset',
       fileName: `components/${componentAsset.componentName}/index.css`,
-      source: `${componentAsset.source}\n`,
+      source: `${[...internalSources, componentAsset.source].join('\n')}\n`,
     });
   }
 }

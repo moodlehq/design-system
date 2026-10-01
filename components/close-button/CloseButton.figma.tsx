@@ -4,17 +4,19 @@ import { CloseButton } from './CloseButton';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=7811-354';
 
-const size = figma.enum('Size', {
-  SM: 'sm',
-  MD: 'md',
-  LG: 'lg',
-});
+const sizeProps = {
+  size: figma.enum('Size', {
+    SM: 'sm',
+    MD: 'md',
+    LG: 'lg',
+  }),
+};
 
 // Default state.
 figma.connect(CloseButton, url, {
   variant: { State: 'Default' },
   props: {
-    size: size,
+    ...sizeProps,
   },
   example: ({ size }) => <CloseButton aria-label="Close" size={size} />,
 });
@@ -23,7 +25,7 @@ figma.connect(CloseButton, url, {
 figma.connect(CloseButton, url, {
   variant: { State: 'Hover' },
   props: {
-    size: size,
+    ...sizeProps,
   },
   example: ({ size }) => <CloseButton aria-label="Close" size={size} />,
 });
@@ -32,7 +34,7 @@ figma.connect(CloseButton, url, {
 figma.connect(CloseButton, url, {
   variant: { State: 'Focus' },
   props: {
-    size: size,
+    ...sizeProps,
   },
   example: ({ size }) => <CloseButton aria-label="Close" size={size} />,
 });
@@ -41,7 +43,7 @@ figma.connect(CloseButton, url, {
 figma.connect(CloseButton, url, {
   variant: { State: 'Disabled' },
   props: {
-    size: size,
+    ...sizeProps,
   },
   example: ({ size }) => (
     <CloseButton aria-label="Close" size={size} disabled />
