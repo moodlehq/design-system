@@ -17,6 +17,6 @@ Only MDS majors actually specified as a peer/npm dependency by a moodle/moodle m
 | Major | Initial release     | Latest release     | Peer dependencies                                                                         | Consumed by moodle/moodle                        | Status           |
 | ----- | ------------------- | ------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------ | ---------------- |
 | 5.x   | 2026-06-24 (v5.0.0) | 5.3.0 (2026-08-14) | `react` ^19.2.4, `react-dom` ^19.2.4, `bootstrap` ^5.3.0, `typescript` >=5.0.0 (optional) | `main` (5.3beta, dev) pins `^5.0.0`              | Active (bug-fix) |
-| 2.x   | 2026-03-06 (v2.0.0) | 2.1.1 (2026-03-12) | `react` ^19.2.4, `react-dom` ^19.2.4, `react-bootstrap` ^2.10.10                          | `MOODLE_502_STABLE` (current stable) pins `^2.1` | Active (bug-fix) |
+| 2.x   | 2026-03-06 (v2.0.0) | 2.1.1 (2026-03-12) | `react` ^19.2.4, `react-dom` ^19.2.4                                                      | `MOODLE_502_STABLE` (current stable) pins `^2.1` | Active (bug-fix) |
 
-MDS 1.x, 3.x, and 4.x were published but never picked up as a dependency by any moodle/moodle branch (checked 4.00–5.01 stable plus main) — they're excluded from this table under the New majors policy.
+MDS 1.x, 3.x, and 4.x were published but never picked up as a dependency by any moodle/moodle branch (checked 4.00–5.02 stable plus main) — they're excluded from this table under the New majors policy.
