@@ -4,46 +4,40 @@ import { Button } from './Button';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=7206:1782';
 
-// Map Figma Size variants to React size prop
-const sizeMap = {
-  sm: 'sm',
-  'md (default)': 'md',
-  lg: 'lg',
-} as const;
-
-// Map Figma Variant + Style variants to React variant prop
-const styleVariantMap = {
-  primary: {
-    fill: 'primary',
-    outline: 'outline-primary',
-  },
-  secondary: {
-    fill: 'secondary',
-    outline: 'outline-secondary',
-  },
-  danger: {
-    fill: 'danger',
-    outline: 'outline-danger',
-  },
-  ghost: {
-    fill: 'ghost',
-  },
-} as const;
-
-const variant = figma.enum('Variant', {
-  primary: figma.enum('Style', styleVariantMap.primary),
-  secondary: figma.enum('Style', styleVariantMap.secondary),
-  danger: figma.enum('Style', styleVariantMap.danger),
-  ghost: figma.enum('Style', styleVariantMap.ghost),
-});
-const size = figma.enum('Size', sizeMap);
+// The parser needs object literals inline, so these can't be factored out.
+const variantProps = {
+  variant: figma.enum('Variant', {
+    primary: figma.enum('Style', {
+      fill: 'primary',
+      outline: 'outline-primary',
+    }),
+    secondary: figma.enum('Style', {
+      fill: 'secondary',
+      outline: 'outline-secondary',
+    }),
+    danger: figma.enum('Style', {
+      fill: 'danger',
+      outline: 'outline-danger',
+    }),
+    ghost: figma.enum('Style', {
+      fill: 'ghost',
+    }),
+  }),
+};
+const sizeProps = {
+  size: figma.enum('Size', {
+    sm: 'sm',
+    'md (default)': 'md',
+    lg: 'lg',
+  }),
+};
 const buttonLabel = 'Button';
 const iconOnlyAriaLabel = 'Action';
 
 // Default state (no icon, no focus state visual)
 figma.connect(Button, url, {
   variant: { Icon: 'none', State: 'default', Focus: 'False' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button label={buttonLabel} variant={props.variant} size={props.size} />
   ),
@@ -52,7 +46,7 @@ figma.connect(Button, url, {
 // Hover state
 figma.connect(Button, url, {
   variant: { Icon: 'none', State: 'hover', Focus: 'False' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button label={buttonLabel} variant={props.variant} size={props.size} />
   ),
@@ -61,7 +55,7 @@ figma.connect(Button, url, {
 // Pressed state
 figma.connect(Button, url, {
   variant: { Icon: 'none', State: 'pressed', Focus: 'False' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button label={buttonLabel} variant={props.variant} size={props.size} />
   ),
@@ -70,7 +64,7 @@ figma.connect(Button, url, {
 // Focus-visible state
 figma.connect(Button, url, {
   variant: { Icon: 'none', State: 'default', Focus: 'True' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button label={buttonLabel} variant={props.variant} size={props.size} />
   ),
@@ -79,7 +73,7 @@ figma.connect(Button, url, {
 // Disabled state
 figma.connect(Button, url, {
   variant: { Icon: 'none', State: 'disabled', Focus: 'False' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button
       label={buttonLabel}
@@ -93,7 +87,7 @@ figma.connect(Button, url, {
 // With end icon
 figma.connect(Button, url, {
   variant: { Icon: 'endIcon', State: 'default', Focus: 'False' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button
       label={buttonLabel}
@@ -107,7 +101,7 @@ figma.connect(Button, url, {
 // With start icon
 figma.connect(Button, url, {
   variant: { Icon: 'startIcon', State: 'default', Focus: 'False' },
-  props: { variant: variant, size: size },
+  props: { ...variantProps, ...sizeProps },
   example: (props) => (
     <Button
       label={buttonLabel}
@@ -122,8 +116,8 @@ figma.connect(Button, url, {
 figma.connect(Button, url, {
   variant: { Icon: 'Icon only', State: 'default', Focus: 'False' },
   props: {
-    variant: variant,
-    size: size,
+    ...variantProps,
+    ...sizeProps,
   },
   example: ({ variant, size }) => (
     <Button

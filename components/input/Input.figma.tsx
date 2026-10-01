@@ -2,78 +2,225 @@ import figma from '@figma/code-connect';
 import { Input } from './Input';
 
 const url =
-  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/branch/LKS8cJfLCTQFLxT8N60TVq/Moodle-Design-System?node-id=14649-2248';
+  'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=14649-2248';
 
-// Type=Text covers text/email/number/tel/url in code — Figma only
-// distinguishes Text vs Password since the text-family HTML types are
-// visually identical (see the component's Figma description).
+// Figma models the HTML type (email, number, tel, url) as implementation
+// guidance rather than a component property, so `type` is left at its
+// default. The leading icon is a nested boolean with a free icon swap and
+// no Code Connect of its own; nested properties can't be split with variant
+// filters and startIcon has no empty value, so it is left out of the
+// snippet.
+// Every mapping covers all of its values ('' where a prop should be absent)
+// so no snippet ever receives undefined.
 const baseProps = {
   label: figma.string('Label text'),
-  required: figma.boolean('Required'),
   hideLabel: figma.boolean('Show label', { true: false, false: true }),
+  required: figma.boolean('Required'),
   infoTooltipLabel: figma.boolean('Info', {
-    true: 'Additional information about this field',
-    false: undefined,
+    true: 'More information about this field',
+    false: '',
+  }),
+  field: figma.nestedProps('Input/input.text', {
+    placeholder: figma.enum('Content', {
+      Empty: '',
+      Placeholder: figma.string('Placeholder text'),
+      Filled: '',
+    }),
+    defaultValue: figma.enum('Content', {
+      Empty: '',
+      Placeholder: '',
+      Filled: figma.string('Fill text'),
+    }),
   }),
 };
 
+// One connection per State (and isInvalid where Figma defines it), with
+// state props written into the JSX rather than derived, per the Code Connect
+// guidelines. Hover, active, and focus are interaction states with no code
+// prop, so they share the default snippet. In the invalid state the
+// supporting text slot carries the validation message (invalidFeedback).
 figma.connect(Input, url, {
   variant: { Type: 'Text', State: 'default', isInvalid: 'No' },
-  props: baseProps,
-  example: ({ label, required, hideLabel, infoTooltipLabel }) => (
+  props: {
+    ...baseProps,
+    supportingText: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
     <Input
-      label={label}
-      required={required}
-      hideLabel={hideLabel}
-      infoTooltipLabel={infoTooltipLabel}
-      placeholder="Placeholder text goes here"
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
     />
   ),
 });
 
 figma.connect(Input, url, {
   variant: { Type: 'Text', State: 'default', isInvalid: 'Yes' },
-  props: baseProps,
-  example: ({ label, required, hideLabel, infoTooltipLabel }) => (
+  props: {
+    ...baseProps,
+    invalidFeedback: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
     <Input
-      label={label}
-      required={required}
-      hideLabel={hideLabel}
-      infoTooltipLabel={infoTooltipLabel}
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
       invalid
-      invalidFeedback="Error message"
-      placeholder="Placeholder text goes here"
     />
   ),
 });
 
 figma.connect(Input, url, {
-  variant: { Type: 'Text', State: 'disabled', isInvalid: 'No' },
-  props: baseProps,
-  example: ({ label, required, hideLabel, infoTooltipLabel }) => (
+  variant: { Type: 'Text', State: 'hover', isInvalid: 'No' },
+  props: {
+    ...baseProps,
+    supportingText: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
     <Input
-      label={label}
-      required={required}
-      hideLabel={hideLabel}
-      infoTooltipLabel={infoTooltipLabel}
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
+    />
+  ),
+});
+
+figma.connect(Input, url, {
+  variant: { Type: 'Text', State: 'hover', isInvalid: 'Yes' },
+  props: {
+    ...baseProps,
+    invalidFeedback: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
+    <Input
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
+      invalid
+    />
+  ),
+});
+
+figma.connect(Input, url, {
+  variant: { Type: 'Text', State: 'active', isInvalid: 'No' },
+  props: {
+    ...baseProps,
+    supportingText: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
+    <Input
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
+    />
+  ),
+});
+
+figma.connect(Input, url, {
+  variant: { Type: 'Text', State: 'active', isInvalid: 'Yes' },
+  props: {
+    ...baseProps,
+    invalidFeedback: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
+    <Input
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
+      invalid
+    />
+  ),
+});
+
+figma.connect(Input, url, {
+  variant: { Type: 'Text', State: 'focus', isInvalid: 'No' },
+  props: {
+    ...baseProps,
+    supportingText: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
+    <Input
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
+    />
+  ),
+});
+
+figma.connect(Input, url, {
+  variant: { Type: 'Text', State: 'focus', isInvalid: 'Yes' },
+  props: {
+    ...baseProps,
+    invalidFeedback: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
+    <Input
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
+      invalid
+    />
+  ),
+});
+
+figma.connect(Input, url, {
+  variant: { Type: 'Text', State: 'disabled' },
+  props: {
+    ...baseProps,
+    supportingText: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
+    <Input
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
       disabled
-      supportingText="Supporting text"
-      placeholder="Placeholder text goes here"
     />
   ),
 });
 
 figma.connect(Input, url, {
-  variant: { Type: 'Text', State: 'read-only', isInvalid: 'No' },
-  props: baseProps,
-  example: ({ label, required, hideLabel, infoTooltipLabel }) => (
+  variant: { Type: 'Text', State: 'read-only' },
+  props: {
+    ...baseProps,
+    supportingText: figma.boolean('Support text', {
+      true: figma.string('Supporting text'),
+      false: '',
+    }),
+  },
+  example: ({ field, ...props }) => (
     <Input
-      label={label}
-      required={required}
-      hideLabel={hideLabel}
-      infoTooltipLabel={infoTooltipLabel}
+      {...props}
+      placeholder={field.placeholder}
+      defaultValue={field.defaultValue}
       readOnly
-      defaultValue="Read-only value"
     />
   ),
 });
