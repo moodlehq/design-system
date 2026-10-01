@@ -4,6 +4,12 @@ import { Breadcrumb } from './Breadcrumb';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=13170-296';
 
+// One connection per Items value, since each changes the rendered trail.
+// "Truncation width" has no code prop — code uses a fluid width cap instead
+// of Figma's fixed widths (per Zeroheight) — so it doesn't change the snippet
+// and is intentionally left unmapped. Filtering on Items alone covers every
+// Truncation width variant.
+
 // Items: 2
 figma.connect(Breadcrumb, url, {
   variant: { Items: '2' },
@@ -46,7 +52,7 @@ figma.connect(Breadcrumb, url, {
   ),
 });
 
-// Items: More than 4
+// Items: More than 4 — the middle ancestors collapse into the overflow menu.
 figma.connect(Breadcrumb, url, {
   variant: { Items: 'More than 4' },
   example: () => (
@@ -60,37 +66,7 @@ figma.connect(Breadcrumb, url, {
         { label: 'Current page' },
       ]}
       ariaLabel="Breadcrumb"
-    />
-  ),
-});
-
-// Items: More than 4 (long labels / truncation)
-figma.connect(Breadcrumb, url, {
-  variant: { Items: 'More than 4' },
-  example: () => (
-    <Breadcrumb
-      items={[
-        {
-          label: 'Moodle learning platform home page',
-          href: '/',
-        },
-        {
-          label: 'Faculty of Arts and Social Sciences',
-          href: '/faculty',
-        },
-        {
-          label: 'Bachelor of Design and Technology - 2025 intake cohort',
-          href: '/program',
-        },
-        {
-          label: 'DSGN 101 - Introduction to design thinking and process',
-          href: '/course',
-        },
-        {
-          label: 'Week 1 - Foundations and context setting workshop',
-        },
-      ]}
-      ariaLabel="Breadcrumb"
+      overflowAriaLabel="Show more items"
     />
   ),
 });
