@@ -4,26 +4,30 @@ import { Badge } from './Badge';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=7309-410';
 
-const variant = figma.enum('Variant', {
-  Primary: 'primary',
-  Secondary: 'secondary',
-  Success: 'success',
-  Danger: 'danger',
-  Warning: 'warning',
-  Info: 'info',
-});
+const variantProps = {
+  variant: figma.enum('Variant', {
+    Primary: 'primary',
+    Secondary: 'secondary',
+    Success: 'success',
+    Danger: 'danger',
+    Warning: 'warning',
+    Info: 'info',
+  }),
+};
 
-const pill = figma.enum('Style', {
-  Pill: true,
-  Default: false,
-});
+const pillProps = {
+  pill: figma.enum('Style', {
+    Pill: true,
+    Default: false,
+  }),
+};
 
 // Default contrast, no icon
 figma.connect(Badge, url, {
   variant: { Contrast: 'Default', Icon: 'None' },
   props: {
-    variant: variant,
-    pill: pill,
+    ...variantProps,
+    ...pillProps,
   },
   example: ({ variant, pill }) => (
     <Badge label="Label" variant={variant} pill={pill} />
@@ -34,8 +38,8 @@ figma.connect(Badge, url, {
 figma.connect(Badge, url, {
   variant: { Contrast: 'Default', Icon: 'startIcon' },
   props: {
-    variant: variant,
-    pill: pill,
+    ...variantProps,
+    ...pillProps,
   },
   example: ({ variant, pill }) => (
     <Badge
@@ -51,8 +55,8 @@ figma.connect(Badge, url, {
 figma.connect(Badge, url, {
   variant: { Contrast: 'Default', Icon: 'endIcon' },
   props: {
-    variant: variant,
-    pill: pill,
+    ...variantProps,
+    ...pillProps,
   },
   example: ({ variant, pill }) => (
     <Badge
@@ -68,8 +72,8 @@ figma.connect(Badge, url, {
 figma.connect(Badge, url, {
   variant: { Contrast: 'Subtle', Icon: 'None' },
   props: {
-    variant: variant,
-    pill: pill,
+    ...variantProps,
+    ...pillProps,
   },
   example: ({ variant, pill }) => (
     <Badge label="Label" variant={variant} subtle pill={pill} />
@@ -80,8 +84,8 @@ figma.connect(Badge, url, {
 figma.connect(Badge, url, {
   variant: { Contrast: 'Subtle', Icon: 'startIcon' },
   props: {
-    variant: variant,
-    pill: pill,
+    ...variantProps,
+    ...pillProps,
   },
   example: ({ variant, pill }) => (
     <Badge
@@ -98,8 +102,8 @@ figma.connect(Badge, url, {
 figma.connect(Badge, url, {
   variant: { Contrast: 'Subtle', Icon: 'endIcon' },
   props: {
-    variant: variant,
-    pill: pill,
+    ...variantProps,
+    ...pillProps,
   },
   example: ({ variant, pill }) => (
     <Badge

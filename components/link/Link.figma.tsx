@@ -4,11 +4,13 @@ import { Link } from './Link';
 const url =
   'https://www.figma.com/design/bPRkRtSszcbWw9f9p9rXvA/Moodle-Design-System?node-id=10843-763';
 
-const variant = figma.enum('Variant', {
-  Primary: 'primary',
-  Secondary: 'secondary',
-  Inline: 'inline',
-});
+const variantProps = {
+  variant: figma.enum('Variant', {
+    Primary: 'primary',
+    Secondary: 'secondary',
+    Inline: 'inline',
+  }),
+};
 
 const linkLabel = 'Label';
 const linkHref = '#';
@@ -19,7 +21,7 @@ const linkHref = '#';
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'default', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -32,7 +34,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'hover', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -45,7 +47,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'pressed', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -58,7 +60,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'focus', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -71,7 +73,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'disabled', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link label={linkLabel} href={linkHref} variant={variant} disabled={true} />
   ),
@@ -79,7 +81,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'default', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -92,7 +94,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'hover', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -105,7 +107,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'pressed', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -118,7 +120,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'focus', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -131,7 +133,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'disabled', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link label={linkLabel} href={linkHref} variant={variant} disabled={true} />
   ),
@@ -139,7 +141,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'default', Link: 'startIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -152,7 +154,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Primary', State: 'default', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -165,7 +167,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'default', Link: 'startIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -178,7 +180,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Secondary', State: 'default', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -191,7 +193,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'default', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -204,7 +206,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'default', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -218,7 +220,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'hover', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -231,7 +233,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'hover', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -245,7 +247,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'pressed', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -258,7 +260,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'pressed', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -272,7 +274,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'focus', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -285,7 +287,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'focus', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
@@ -299,7 +301,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'disabled', Link: 'none' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link label={linkLabel} href={linkHref} variant={variant} disabled={true} />
   ),
@@ -307,7 +309,7 @@ figma.connect(Link, url, {
 
 figma.connect(Link, url, {
   variant: { Variant: 'Inline', State: 'disabled', Link: 'endIcon' },
-  props: { variant: variant },
+  props: { ...variantProps },
   example: ({ variant }) => (
     <Link
       label={linkLabel}
