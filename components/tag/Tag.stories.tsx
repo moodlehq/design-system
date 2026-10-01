@@ -500,5 +500,80 @@ export const RightToLeft = {
     await expect(canvas.getByText('فاطمة.علي')).toBeVisible();
     await expect(canvas.getByText('فاطمة@مثال.السعودية')).toBeVisible();
     await expect(canvas.getAllByText('جامعة الملك سعود')).toHaveLength(2);
+
+    // The Close button sits on the inline-end side, which is the left in RTL.
+    for (const [tagName, removeName] of [
+      ['أحمد محمد', 'إزالة أحمد محمد'],
+      ['فاطمة علي', 'إزالة فاطمة علي'],
+    ]) {
+      const closeRect = canvas
+        .getByRole('button', { name: removeName })
+        .getBoundingClientRect();
+      const bodyRect = canvas
+        .getByText(tagName)
+        .closest('.mds-tag__body')!
+        .getBoundingClientRect();
+      await expect(closeRect.right).toBeLessThanOrEqual(bodyRect.left + 1);
+    }
+  },
+} satisfies Story;
+
+export const LongLabels = {
+  tags: ['test', 'stable'],
+  parameters: {
+    ...showcaseParameters,
+    docs: {
+      description: {
+        story:
+          'Labels truncate with an ellipsis at the 18.75rem cap while the Close button stays visible. Covers Latin, CJK and Arabic, since line-breaking and glyph widths differ between scripts.',
+      },
+    },
+  },
+  render: () => (
+    <div style={showcaseInlineStyle}>
+      <Tag
+        type="removable"
+        content="A very long Latin label that cannot possibly fit inside the maximum width of a tag"
+        removeLabel="Remove Latin label"
+        onRemove={() => {}}
+      />
+      <Tag
+        type="removable"
+        content="これは最大幅に収まらないほど非常に長い日本語のラベルであり省略記号で切り詰められるはずです"
+        removeLabel="Remove CJK label"
+        onRemove={() => {}}
+      />
+      <div dir="rtl">
+        <Tag
+          type="removable"
+          content="هذا نص عربي طويل جدا لا يمكن أن يتسع داخل الحد الأقصى للعرض في الوسم"
+          removeLabel="إزالة التسمية العربية"
+          onRemove={() => {}}
+        />
+      </div>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    for (const name of [
+      'Remove Latin label',
+      'Remove CJK label',
+      'إزالة التسمية العربية',
+    ]) {
+      const closeButton = canvas.getByRole('button', { name });
+      await expect(closeButton).toBeVisible();
+
+      const tag = closeButton.closest('.mds-tag') as HTMLElement;
+      const nameElement = tag.querySelector('.mds-tag__name') as HTMLElement;
+      await expect(nameElement.scrollWidth).toBeGreaterThan(
+        nameElement.clientWidth,
+      );
+      await expect(getComputedStyle(nameElement).textOverflow).toBe('ellipsis');
+
+      // The Close button stays inside the tag rather than being pushed out.
+      const tagRect = tag.getBoundingClientRect();
+      const closeRect = closeButton.getBoundingClientRect();
+      await expect(closeRect.left).toBeGreaterThanOrEqual(tagRect.left - 1);
+      await expect(closeRect.right).toBeLessThanOrEqual(tagRect.right + 1);
+    }
   },
 } satisfies Story;
