@@ -2342,7 +2342,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 1. **Icon** — communicates severity at a glance. Always visible, colour-matched to the Type variant. Static vector, not a swappable sub-component.
 2. **Title** (optional) — short label above the message, shown only when the message needs one.
-3. **Message content** — the required text of the alert. May include inline links.
+3. **Message content** — the required text of the alert.
 4. **Action button** (optional) — a single, generic call to action related to the message.
 5. **Dismiss button** (optional) — removes the alert. Present only when the alert is dismissible.
 
@@ -2352,12 +2352,12 @@ Use the panel below to test every prop, state, and variant of this component int
 
 Alert itself has no interactive states — hover, focus, and press states belong to the Close button and Action button sub-components, documented on their own pages. This section lists the token bindings per Type instead.
 
-| **Variant** | **When to use** |
+| **Variant** | **Styles and Tokens** |
 | :--- | :--- |
-| ![](zeroheight://image/8823906/b5110fa158d2a2a7931658135cf04e9850a05627bd91dd9237226f5f7be6a7a8) | ****Info****  Background: .`bg.feedback.primary.light`. Border: .`border.feedback.primary`. Text: .`text.feedback.primary`. Icon: .`color.theme.primary`.  |
+| ![](zeroheight://image/8823906/b5110fa158d2a2a7931658135cf04e9850a05627bd91dd9237226f5f7be6a7a8) | ****Info****  Background: .`bg.feedback.primary.light`. Border: .`border.feedback.primary`. Text: .`text.feedback.primary`. Icon: .`bg.feedback.primary.default`.  |
 | ![](zeroheight://image/8823906/6e81eaf952c514cf204e5d255a23ce148655477b1e299f945a0e195ca907d11a) | **Success**  Background: .`bg.feedback.success.light`. Border: .`border.feedback.success`. Text: .`text.feedback.success`. Icon: .`bg.feedback.success.default`. |
-| ![](zeroheight://image/8823906/13166792941ba98e0de2136ba762f195a09a987af7cd51bfd154341f21a712c0) | **Warning**  Background: .`bg.feedback.warning.light`. Border: .`border.feedback.warning`. Text: .`text.feedback.warning`. Icon: .`bg.feedback.success.warning`.  |
-| ![](zeroheight://image/8823906/2ae5038b6eabde3fd0032ee987c4793bd0305d8b73cb2269585574b6004cbb94)  | **Danger**  Background: .`bg.feedback.danger.light`. Border: .`border.feedback.danger`. Text: .`text.feedback.danger`. Icon: .`bg.feedback.success.danger`. |
+| ![](zeroheight://image/8823906/13166792941ba98e0de2136ba762f195a09a987af7cd51bfd154341f21a712c0) | **Warning**  Background: .`bg.feedback.warning.light`. Border: .`border.feedback.warning`. Text: .`text.feedback.warning`. Icon: .`bg.feedback.warning.default`.  |
+| ![](zeroheight://image/8823906/2ae5038b6eabde3fd0032ee987c4793bd0305d8b73cb2269585574b6004cbb94)  | **Danger**  Background: .`bg.feedback.danger.light`. Border: .`border.feedback.danger`. Text: .`text.feedback.danger`. Icon: .`bg.feedback.danger.default`. |
 
 ---
 ---
@@ -3907,8 +3907,8 @@ Buttons let users trigger actions or navigate to a next step. They communicate w
 
 ### **❌ When not to use**
 
-*     * Don't use a button for navigation to another page — use a Link instead.
-    * Don't use a Danger button for actions that are reversible — use a Secondary button and rely on confirmation copy instead.
+* Don't use a button for navigation to another page — use a Link instead.
+* Don't use a Danger button for actions that are reversible — use a Secondary button and rely on confirmation copy instead.
 
 </callout>
 
@@ -5440,6 +5440,186 @@ between each. |
 
 ---
 
+# Design
+## Anatomy
+
+![](zeroheight://image/9029119/63de3532e352cc09562883a9ac1f9bbf4e51c9ce53b5289e43e4eecfcc4199cc)
+
+1. **Label text** — the field's name. Text style `UI text/UI small`. Colour `text.subtle`.
+2. **Info icon** *(optional)* — a circular icon-button next to the label (`fa-circle-info`). Check the codebase for an existing Button/Icon/Tooltip component before rebuilding it.
+3. **Required indicator** — a trailing asterisk next to the label text, `text.danger`. Shown only when the field is mandatory.
+4. **Field container** — the bordered box holding the value and the indicator. Radius `[border-radius.sm](http://border-radius.sm)`, padding `[spacing.sm](http://spacing.sm)` horizontal / `spacing.xs` vertical. Border and background respond to state, see Interactive states below.
+5. **Value** — the selected option's text. Text style `Paragraph/Base text`, colour `text.default` (`text.muted` when disabled). There's no separate placeholder text style, a pre-selected default option's label renders exactly like any other value.
+6. **Indicator (chevron)** — a caret icon signalling that the native picker will open. Purely visual, carries no hover state of its own.
+7. **Trailing icon** *(invalid only)* — appears only when `isInvalid` is true, sits before the chevron. `fa-circle-exclamation`, colour `text.danger`.
+8. **Supporting text** — help text at rest, or the validation message when invalid. Text style `Paragraph/Small`.
+
+---
+
+## Interactive states
+
+| **States** | **Styles and tokens** |
+| --- | --- |
+| ![](zeroheight://image/9029119/2dd3b92f84f21fc89f100a9dfdc160a720adb579170aa2bff7c2b4183b8f0062) | **Default**The field's resting state, before any interaction. Shows the pre-selected option.   Container:. Value: .`text.default`.  |
+| ![](zeroheight://image/9029119/221284e792978683cd814878991a9cb04177ba31d5b853c3481236f594c4a45b) | **Hover**The pointer is over the field, before it gains focus. Container gains a white background, confirming it's interactive.  Container:.  |
+| ![](zeroheight://image/9029119/9733eb36d691dd405e67998d4644f83da3df6dca75c3677f949ff5619498b016) | **Active**The moment of mouse-down on the field, just before focus lands.  Container:.  |
+| ![](zeroheight://image/9029119/52b5ffd4cd0a3674ed52f2ce80d95a580870f9945d3d68fd2dfc7c3e3131e0c2) | **Focus**The field has keyboard or pointer focus, ready to open the native picker.  Container:.  |
+| ![](zeroheight://image/9029119/b8d6d6ad1545de7dbcc1ad737f0a58b43136ba4c295b5b0e1a4ff9981a5b4660) | **Disabled**Can't be focused, clicked, or opened. Use for a field that's conditionally unavailable in the current context.  Container:. Value: .`text.muted`. Supporting text: .`text.muted`.  |
+| ![](zeroheight://image/9029119/2d31870518428741e860d9431f24cee311cbf9b7e5d30010a66385309d720493) | **Invalid (Default)**The chosen value has failed validation.  Container:. Supporting text: .`text.danger`.  |
+| ![](zeroheight://image/9029119/fae3e28c1368240fd135b04081fecf229bc529f567baaa33d094de39b4c81ca4)  | **Invalid (Hover)**  Container:.  |
+| ![](zeroheight://image/9029119/437611394bda2791e4e76b6fbda5f1905c3d96ff87f8296f82e797736d610cb0)  | **Invalid (Active)**  Container:.  |
+| ![](zeroheight://image/9029119/118f70a88f995a93703666ec787facfe83ab765e3bbf6c4ef173cdfa24fd7e0f)  | **Invalid (Focus)**Focus ring uses a lighter danger tone than the resting border, so the ring itself stays legible against the solid red border.  Container:.  |
+
+---
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/9029119/d48185d21c555a54c514b15e7befba2eab75c5f9d1e6b081465e485f2f8aee50)
+
+Select lets people choose one option from a list, tucking the full set of choices away until the field is opened. It renders as a native HTML `<select>` element, so it always shows a chosen option rather than an empty state. It suits option sets too long to lay out on the page but short enough that scanning beats typing to find the right one.
+
+---
+
+## When to use
+
+* Use when the list of options is short and fixed.
+* Use when the chosen value needs to submit with the form, exactly like a text field would.
+* Use when people should only ever pick from the list provided, typing a new value doesn't make sense here.
+* Use on touch and mobile contexts where the device's own native picker is preferable to a custom-built menu.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use for a single binary yes/no or on/off choice, use **[Switch](https://design.moodle.com/98292f05f/p/585368)** instead.
+* Don't use when the option list is long enough that typing to filter would genuinely help, or when people need to pick more than one value, that's a Combobox job.
+* Don't use when each option needs a description, an icon, or enough visual weight that a plain text label isn't enough to choose correctly, use Choicebox instead.
+* Don't use to trigger an action or navigate somewhere, nothing here gets saved to a form, use **[Dropdown](https://design.moodle.com/98292f05f/p/8381b3)** instead.
+
+</callout>
+
+---
+
+## Variants
+
+### Content options
+
+| **Toggles** | **When to use** |
+| :--- | :--- |
+| ![](zeroheight://image/9029119/fd5f63e2c5ee4dd8ad412a49744acbf3c6eb4c270876372a3e19c840c803c265) | **Show label**Shows the label above the field. Say what the field expects. |
+| ![](zeroheight://image/9029119/006afa15c7b9bf0c412cec2a24e2b59fa9a143c774e298382285c65fdcc84b14) | **Info**Adds an info icon next to the label. Use only when the field's purpose genuinely isn't clear from the label and supporting text alone. |
+| ![](zeroheight://image/9029119/2d2d4f3b0804d4c9de7af419bbd5605918434e0adc6318e1512703cd8eec8219) | **Required**Adds a red asterisk next to the label. Pair with the native `required` attribute so validation actually fails when nothing meaningful is chosen. |
+| ![](zeroheight://image/9029119/d9d42f97d4b4f281b10f044e14a88864b8c8f025af01ca19d25d9dd832bd5e4c)  | **Support text**Adds guidance or validation text under the field. Turn it on when the label alone doesn't explain what's expected, or to show the invalid message. |
+
+<callout background="2" fullWidth="true">
+
+For deeper guidance on writing labels, using the info icon, and working with supporting text, see [Input](https://design.moodle.com/98292f05f/v/latest/p/56eea2), these toggles work the same way there.
+
+</callout>
+
+---
+
+## Guidelines
+
+* Always show a sensible pre-selected option. Never leave the field looking blank or empty, native `<select>` can't represent "nothing chosen" cleanly, so the design shouldn't pretend otherwise.
+* Keep the option list short enough to scan without scrolling fatigue. Once it's long enough that typing to filter would help, that's Combobox's job, not a reason to make Select do more than it's built for.
+* Don't reach for Select for a single yes/no toggle, that reads as over-engineering a Switch.
+
+### Content design
+
+#### **Content structure and constraints**
+
+* Options are plain text labels only. Select can't render an icon, a second line, or any other visual content inside an option, that's a genuine browser limitation on styling native `<option>` elements.
+* Keep option labels short enough that the chosen value never needs to wrap or truncate inside the closed field's width.
+* There's no empty state to design for. A default option is always pre-selected and always shown.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9029119/5633939dbdd531cd778ed937c602ec8bee13d354b210a5dffceb1faf877cb985) |   | Pre-select a clear instructional default, for example "Select a country". |
+| Don't | ![](zeroheight://image/9029119/cff23daef1d13f35d2fbb491c75d97e1374c2d0e0432945d2051d47b3207af24) |   | Don't leave the field showing a dash, a blank space, or nothing at all. |
+
+#### **Content behaviour**
+
+* Adding more options doesn't change the size of the closed field, only the open native list grows or shrinks to fit them.
+* Choosing an option updates the value immediately, there's no separate confirm step.
+* A long option label truncates with an ellipsis inside the closed field rather than wrapping the field or resizing it.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9029119/6e090599536d32ab2cd55da3b24646e50df90964d448d3552ea0db18c3c5396d) |   | Keep option labels short enough to read at a glance in the closed field. |
+| Don't | ![](zeroheight://image/9029119/cb60a33021ddef120e69143f07f725bb330ff8a4d4d215112dd1aca7225e3511) |   | Don't rely on truncation to hide a label that's routinely too long to be useful once cut off. |
+
+#### **Copywriting** 
+
+* Use sentence case for both the field label and every option label.
+* Word the default, unselected-look option as an instruction (e.g. Select a country), not as a repeat of the field label or a vague dash.
+* On invalid, say what to do next in the supporting text, for example "Select a country to continue," not just "Invalid selection."
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9029119/4fcfdf4f5f8ed18f3c619aea6f9d5f7ea4735b421374ab435b48fb2f455b891b) |   | Word the default option as an instruction, and write errors that say what to do next. |
+| Don't | ![](zeroheight://image/9029119/b6982f1a10ff40f6b7931cea332db6a2d82561bcb8e1e0cc9e1981d64f29b4fb) |   | Don't repeat the label as the default option, or write an error that doesn't say what to do. |
+
+---
+
+### Layout and spacing
+
+* Label, field, and support row stack vertically with `spacing.xxs` gap between them.
+* The field is full width of its container by default, no intrinsic min or max width of its own, sizing constraints belong to the container or layout, not the component.
+
+---
+
+### Breakpoints and responsive behaviour
+
+* The field stays full width of its container across all breakpoints.
+* On touch devices, the browser or OS renders its own native option list (a wheel, a full-screen list, a native dropdown).
+
+---
+
+### Interaction behaviour
+
+* Touch target: the field measures 42px tall.
+* Opening the list: a click, a tap, or Space/Enter while focused opens the device's native option list, this is native browser behaviour, Select doesn't render its own overlay.
+* Focus stays on the closed field itself the entire time, even while the native list is open, exactly how a plain `<select>` element behaves. Don't try to move focus into the list.
+* Cursor: pointer on hover, not-allowed when disabled.
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* Field text and border meet 4.5:1 / 3:1 contrast against the field surface, including the invalid state.
+* Invalid never relies on colour alone, the border, the trailing icon, and the supporting text message all reinforce it together.
+
+#### **Focus**
+
+* The focus ring is always visible on keyboard focus, never suppress or override it.
+* Focus lands on the field itself, exactly where the native `<select>` element sits in the DOM, never on the chevron or a decorative part.
+
+#### **Labelling**
+
+* Always associate Label with the field (`for`/`id` or `aria-labelledby`).
+* If `showLabel` is off, still provide an accessible name via `aria-label`.
+* Give the info icon-button its own descriptive `aria-label` when it's shown.
+
+---
+
+## Related
+
+#### **Alternatives**
+
+* **Dropdown** — use when nothing gets saved to a form and the trigger performs an action or reflects a view setting (like a sort order), not a chosen value. Dropdown's own page already states the reverse of this rule.
+* **Choicebox** — use when each option needs a description, an icon, or enough visual weight that a plain text label isn't enough on its own.
+* **Switch** — use for a single binary yes/no or on/off choice, not a list of options.
+
+---
+---
+
+---
+
 # Code
 ## Implementation
 
@@ -5669,6 +5849,8 @@ A Switch can be used without a visible label when the surrounding context makes 
 
 Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
 
+[Removable](https://moodlehq.github.io/design-system/iframe.html?id=components-tag--removable)
+
 ---
 
 ## Accessibility implementation
@@ -5678,28 +5860,35 @@ Use the panel below to test every prop, state, and variant of this component int
 | **Key** | **Action** |
 | --- | --- |
 | `Tab` | **Link**: moves focus to the tag. **Removable**: moves focus to the tag's Close button (the label itself isn't focusable). |
-| `Enter` / `Space` | **Link**: activates navigation. **Removable**: activates the Close button, removing the tag. |
+| `Enter` | **Link**: follows the link. **Removable**: activates the Close button, removing the tag. |
+| `Space` | **Link**: no action (native anchor behaviour). **Removable**: activates the Close button, removing the tag. |
 
 ### ARIA
 
 * Roles:
-    *         * **Link** renders as a native `a` (or `button`, if it triggers an in-page action rather than navigation) — no explicit ARIA role needed beyond the correct element.
-        * **Removable** renders as a non-interactive container (`span`/`div`) wrapping the label content and a nested Close button. The Close button is a native `button`.
+    *         * **Link** renders a native `a` with an `href`. No explicit role is needed.
+        * **Removable** renders a non-interactive `span` containing the label content and a nested Close button. The Close button is a native `button`. The `span` has no role.
     * Required attributes:
-        * The Close button on Removable requires an `aria-label` naming what it removes (see Labelling above), the same requirement as the standalone [Close button](https://024033df-8d42-4acc-a867-1740a881dda2.frame.claudeusercontent.com/778206-close-button) component.
-        * The avatar image should be `aria-hidden="true"` or use `alt=""` so the accessible name comes from the visible text.
+        * **Link**: `href`.
+        * **Removable**: `removeLabel`, which becomes the Close button's `aria-label`. It must name what is being removed and include the tag's label, for example "Remove Ana Silva", not a bare "Remove". Use a translated, context-specific string from the consuming application. `onRemove` is also required.
+            * Same requirements as the standalone [Close button](https://zeroheight.com/98292f05f/p/778206) component.
+    * Optional attributes:
+        * `disabled`. On a Link, the `href` is removed and the tag gets `aria-disabled="true"` and is taken out of the tab order. On a Removable tag, the Close button is disabled.
+        * Standard attributes for the element type are passed through to the root (`a` or `span`).
+* The Avatar is always rendered with `aria-hidden="true"`, so the accessible name comes from the visible text. Consumers don't need to set this.
 
 ### Dynamic announcements
 
-* Removing a tag changes a list of selections — if that list isn't visually obvious after removal, announce the change via an app-level live region (for example, "Marketing tag removed").
+* Tag has no built-in live announcement. If removing a tag isn't visually obvious, announce it from the consuming UI with an app-level live region, for example "Marketing tag removed" in an *`aria-live="polite"`* region.
+* Focus after removal: removal is owned by the consumer through *`onRemove`*. If the tag unmounts and leaves focus on the page body, Tag moves focus to the next focusable element. If the consumer places focus itself (for example back in the input field), Tag doesn't override it.
 
 ---
 
 ## GitHub
 
 <shortcut_tiles>
-<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/button">
-**GitHub: Button**
+<shortcut_tile url="https://github.com/moodlehq/design-system/tree/main/components/tag">
+**GitHub: Tag**
 </shortcut_tile>
 </shortcut_tiles>
 ---
@@ -5798,8 +5987,6 @@ Tag combines a **Type** choice with, for Removable, a **Variant** choice for wha
 | ![](zeroheight://image/8991684/f2ee2d372c8da606c5b202a184e9343a06fb2f088581028f2a5937a82cd0241d) | ****Removable**** A dismissible chip with an embedded Close button. Optionally shows identity details (avatar, email, username, institution). |
 
 ### Link
-
-Style variants apply to Primary, Secondary, and Danger buttons only. Ghost has a fixed style and cannot be combined with Fill or Outline.
 
 | **Variant** | **When to use** |
 | :--- | --- |
@@ -6111,6 +6298,176 @@ The field defaults to roughly a 3-line content area before scrolling or resizing
 
 * Pair the required asterisk with an actual `required` attribute or `aria-required="true"` so it's announced, not just shown visually.
 * Use the native `disabled` attribute for the disabled state, and `aria-readonly="true"` (or `readonly`) for read-only, so assistive technology reports the correct interaction model.
+---
+
+---
+
+# Design
+## Anatomy
+
+![](zeroheight://image/9016909/5e442b3261e719dabf4d95f3f987fcd0473ff35d9c891c4b10d0f14119b9a2e3)
+
+1. **Label**: names the field. Inherited from [Search input](/38ca1d-search), with the optional required asterisk and info icon.
+2. **Field**: where the user types. Built from Input (Type=Search), with a leading search icon, placeholder or typed text, and the chosen values as removable tags.
+3. **Chevron** *(optional)*: opens and closes the menu. Hidden once values are chosen, where a clear button takes its place.
+4. **Support text** *(optional)*: help text under the field, replaced by the error message when invalid.
+5. **Menu**: the floating panel that contains all items. Surface: `bg.surface.default`, border: `border.default` at `[stroke-weight.sm](http://stroke-weight.sm)`, radius: `[border-radius.md](http://border-radius.md)`, internal padding and item gap: `spacing.xxs`.
+6. **Item**: a single row in the menu. Contains a name/category label (required), and optionally an avatar, a username or short name, an email, and an institution.
+
+## States
+
+### Combobox.item
+
+The item is the wrapper for every row in the menu. Every item shares the same state model: default, hover, disabled, and focus. Items sit on the menu surface (`bg.surface.default`) with `[spacing.sm](http://spacing.sm)` horizontal and `spacing.xs` vertical padding, `spacing.xs` gap, and `border-radius.xs` corners.
+
+| **States** | **Styles and tokens** |
+| :--- | --- |
+| ![](zeroheight://image/9016909/ccae3855d539ed6ceee867018a8c93b508637e63f28cf98b91d1eb81e2a20310) | **Default**  The item's resting state.   Label: `text.emphasis`  Supporting text: `text.subtle`  Container: `none` |
+| ![](zeroheight://image/9016909/94ee5d5f44d46e9c81a67b7c32c42b8979f39b07d3fab261ee18254c51556152) | **Hover**  Triggered when the cursor moves over the item, or it's highlighted with the arrow keys.   Label: `text.emphasis`  Container: `bg.interactive.primary.default-light` |
+| ![](zeroheight://image/9016909/d11b5cd51ada08ffda29a7217f1965531c5c9d8d52ab0957e42217c95bdeb5cd) | **Disabled**  Applied when the option is unavailable. Keep the item visible rather than removing it, to preserve the list structure.   Label: `text.muted`  Supporting text: `text.muted` |
+| ![](zeroheight://image/9016909/13beb07712428b3a3a8e4397b411b683bc20d0a0c1f9effc3d273c3f35f96d1a) | **Focus**  Triggered via keyboard navigation.   Label: `text.emphasis`  Outline: `focus.default` at `stroke-weight.md` |
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/9016909/f864ba3cc1db6756845e58f196daeae77101e1c35b9c981d88d75ebf77d5215e)
+
+Combobox pairs a search field with a list of options. People type to narrow the list, then pick one value or several. What they pick is stored in the field and submitted with the form, so it can be required and can show a validation error
+
+---
+
+## When to use
+
+* Use when the list of options is long enough that typing to narrow it is faster than scanning. For example, timezone, country or language.
+* Use when options come from the server as the person types. For example, finding a user to enrol.
+* Use when people need to pick several values from a long list. For example, adding members to a group or assigning tags.
+* Use when options need extra detail to tell them apart. For example, two people called Sarah, or two courses with the same name.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use for a short, fixed list. Use Select instead; if people can't or don't need to type, it isn't a Combobox.
+* Don't use for actions or view settings like sort order. Use a [Dropdown](/8381b3-dropdown). If nothing is saved with a form, it isn't a Combobox.
+* Don't use to search content when there's no list of options to pick from. Use [Search](/38ca1d-search) on its own.
+* Don't build a "user picker" as a separate component. A Combobox with person options is the user picker.
+* Don't assemble one yourself by placing a menu under an Input. Use Combobox.
+
+</callout>
+
+---
+
+## Variants
+
+### Tags
+
+Every chosen value shows in the field as a removable [Tag](/25b418-tag). This property reflects whether any values have been chosen yet.
+
+| **Variant** | **When to use** |
+| :--- | :--- |
+| ![](zeroheight://image/9016909/73267440c80a2e4320fd914b951c647eab049c0fc483a0deb1e8a49d97fff1be) | No values chosen yet. The field shows the placeholder or the text the user is typing, and the chevron.  |
+| ![](zeroheight://image/9016909/f75074c6ddc0287e42625f2dfb5753b1130a648789c488399f728653e09164f5) | One or more values chosen. Each one shows as a removable tag ahead of the typed text, and a clear button replaces the chevron.  |
+
+### Item content
+
+Every item in the menu is the same `combobox.item`. Its content comes from a nested [Tag](/25b418-tag) (Removable) with the close button hidden, and has four independent toggles, all optional except the name/category label itself.
+
+| **Props** | **When to use** |
+| :--- | :--- |
+| ![](zeroheight://image/9016909/434b62cc449b5b48919e071b4efc5fc0f25fedac1175442f5e40ea8856c4c6b8) | **Avatar**  Show a person's photo or a site's logo alongside the label. Leave off for plain options like timezone or country. |
+| ![](zeroheight://image/9016909/7c05159072914f78cdcb1dde05595b1808287ee5b03b9e5e20e7bde734d5e92c) | **Username / short name**  Show a short identifier as a supporting line. Works for a person's username or a course, group or site's short name. |
+| ![](zeroheight://image/9016909/37c67b6923c0e553e57588a00d95ebf45a1085029198541e5e3977bf8197f257) | **Email**  Show an email address, separated from the username by a divider. *(Person-only.)*  |
+| ![](zeroheight://image/9016909/e325960664d3804ea8ec1a1cc8a0a2890cb7bbfcbf0ec5da5451303f024450af) | **Institution**  Show a second supporting line with the person's institution. *(Person-only.)*  |
+
+---
+
+## Guidelines
+
+### Content design
+
+#### **Content structure and constraints**
+
+* Item labels support a single line of text, which truncates with an ellipsis if it runs out of space.
+* Recommended item label length: 1–4 words.
+* Turn on supporting fields only when the label alone can't tell two options apart, not to repeat the label.
+* Keep the same fields on for every item in a list, so rows stay the same height and easy to scan.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9016909/a96f8b04b12005b3b33b27efffa78b9a4388440a89f6a5230fbfc71bff98810a) |   | Use supporting fields when labels could be confused. |
+| Don't | ![](zeroheight://image/9016909/559986af97534afb835ef9787f5083f3ece4d61f13634e8406c8cab8613368a4) |   | Don't list people by name alone when names can repeat. |
+
+#### **Copywriting** 
+
+* Use sentence case for labels and option names. Person names keep their own casing.
+* Name the value, not an action: "Teacher", not "Assign teacher role".
+* Use the placeholder to say what the user can search by. Never use it as a replacement for the label.
+* Write a no results message that repeats the search term and suggests a next step: "No matches for 'Jsoe'. Check the spelling or search by email."
+* Use "Loading results…" while options load.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9016909/9b686a32077d631553a4a5ced0d1383bfcb7430cd8bd3375508dde45181ab07a) |   | Use the placeholder to say what the user can search by. |
+| Don't | ![](zeroheight://image/9016909/33a096c0a621d13a08fe969131215b69d06632b6255c14fba506adc4ac6c1957) |   | Don't repeat the label in the placeholder. |
+
+---
+
+### Layout and spacing
+
+* The field fills the width of its container, and the menu matches the field's width.
+* The menu opens `spacing.xxs` below the field and flips above it when there isn't room below.
+* Order results by how well they match what's been typed. With nothing typed, use alphabetical order unless there's a clear reason not to.
+* The menu shows up to 10 items before it scrolls. The menu scrolls, not the page.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9016909/2515abb10497338e9dbb1532c373823f50b2f7fba449e70803cff9007a51e942) |   | Keep the menu the same width as the field. |
+| Don't | ![](zeroheight://image/9016909/04f3074e96aef0df1d2474b6e153f2c8130485ded59873616031215d90dc25fc) |   | Don't let the menu shrink to its content or drift away from the field. |
+
+---
+
+### Responsive behaviour
+
+* The field stays full width at every breakpoint.
+* On small viewports, the menu repositions to stay fully on screen rather than being clipped.
+* Item height and tap targets stay the same across breakpoints. Don't shrink rows on mobile.
+
+---
+
+### Interaction behaviour
+
+* The menu opens when the user types, presses Arrow Down, or selects the chevron. The open state is reflected on the field via `aria-expanded`.
+* Choosing an item adds it to the field as a removable tag and clears the typed text. The menu stays open so more values can be picked.
+* Clicking outside the menu, pressing Escape, or tabbing away closes the menu.
+* Filtering ignores case and accents, and matches anywhere in the label: "jose" finds "José".
+* If the user leaves the field with text that doesn't match an option, the text is cleared and the chosen tags stay. Typed text never becomes a value on its own.
+* Show the loading message straight away while results load, so a slow connection doesn't look like a broken field.
+* Cursor: text cursor in the field, pointer on items and on each tag's close button, not-allowed on disabled items.
+
+---
+
+### Accessibility guidelines
+
+#### **Colour and contrast**
+
+* Item labels, supporting text and the placeholder meet 4.5:1 contrast against their background.
+* The invalid state doesn't rely on colour alone. The border, icon and error message change together.
+* Disabled contrast is intentionally reduced; supplement with `aria-disabled` so the state reaches screen reader users.
+
+#### **Focus**
+
+* Focus stays on the field while the user moves through items with the arrow keys. The highlighted item shows where they are.
+* When the menu closes, focus stays on the field. Never drop focus to the document body.
+* After removing a tag, focus returns to the field.
+
+#### **Labelling**
+
+* Every combobox has a label, even when it's visually hidden with Show label off.
+* Each tag's close button names what it removes ("Remove Jessica Parker"), not a generic "Close".
+* The chevron has its own accessible name, for example "Show options".
+
+---
 ---
 
 ---
