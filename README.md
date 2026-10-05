@@ -40,13 +40,13 @@ The MDS is a collaborative effort between designers and developers at Moodle HQ 
 To create and manage our design assets, we use the following tools:
 
 - **[Figma](https://www.figma.com/)**: A collaborative design and prototyping tool. It's the heart of the design process, allowing designers to work together seamlessly.
-- **[ZeroHeight](https://zeroheight.com/)**: A platform for creating and maintaining design systems. It helps document design guidelines and components for easy access by the team.
+- **[ZeroHeight](https://zeroheight.com/)**: A platform for creating and maintaining design systems. We use it to author and publish our public documentation site.
 
 ### Design Assets & Guidelines
 
 All design assets and guidelines are centralized in the following resource:
 
-- [Moodle ZeroHeight](https://moodle.zeroheight.com/): The central repository for all design assets, including components, styles, and guidelines.
+- [Moodle Design System](https://design.moodle.com/): The public documentation site for all components, styles, and guidelines.
 
 ## Development Resources
 

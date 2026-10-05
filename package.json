@@ -157,7 +157,7 @@
   "bugs": {
     "url": "https://github.com/moodlehq/design-system/issues"
   },
-  "homepage": "https://github.com/moodlehq/design-system#readme",
+  "homepage": "https://design.moodle.com/",
   "overrides": {
     "zod-validation-error": "4.0.2",
     "conventional-changelog-conventionalcommits": "9.3.1"

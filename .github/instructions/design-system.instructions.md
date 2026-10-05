@@ -378,7 +378,7 @@ Yes. We might update tokens to improve consistency, support themes, or fix acces
 
 #### How will I know when tokens have been added or changed?
 
-We post updates in our Zeroheight documentation and in team channels like Matrix. You can also check the "[What's new"](https://moodle.zeroheight.com/styleguide/s/131542/p/02e9f1-introduction/b/09cc7e) page in Zeroheight to see what’s new.
+We post updates in our Zeroheight documentation and in team channels like Matrix.
 
 </tab>
 <tab>
