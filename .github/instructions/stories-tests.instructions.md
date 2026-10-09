@@ -62,6 +62,10 @@ export const RightToLeft: Story = {
 
 Tag RTL stories with `['test', 'stable']` (omit `autodocs` — they are structural tests, not API documentation). If the component itself uses `'beta'`, use `['test', 'beta']` for the RTL story instead.
 
+### Component CSS and Chromatic TurboSnap
+
+Do not import component CSS in story files. Component CSS loads globally through `.storybook/preview.ts`, and the `traceComponentCss` plugin in `.storybook/main.ts` makes each component source file import its folder's CSS in Storybook builds only. That gives Chromatic TurboSnap a real module-graph link from every `.css` change to the stories that render the component, with nothing to maintain per story.
+
 ## Unit tests (Vitest + jsdom)
 
 Run with `npm run test-unit`. Tests live in `ComponentName.test.tsx` alongside the component.
