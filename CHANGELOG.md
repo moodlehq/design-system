@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.5.0](https://github.com/moodlehq/design-system/compare/design-system-v5.4.0...design-system-v5.5.0) (2026-10-09)
+
+
+### Features
+
+* **ci:** Auto-build tokens on ZeroHeight token PRs ([52bdfd1](https://github.com/moodlehq/design-system/commit/52bdfd174de6e25008acd4955e88926b2f651f66))
+* **Docs:** Update Storybook to display repo docs ([93cbdb0](https://github.com/moodlehq/design-system/commit/93cbdb0cbf90c6fdf6ec116c6c3f058f91ad54fc))
+
+
+### Bug Fixes
+
+* **FigmaCC:** Fix CC mappings and references ([83e5afa](https://github.com/moodlehq/design-system/commit/83e5afa094353b9465a5b566d389c86fc615c63f))
+* **FigmaCC:** Update to meet new instructions ([49a3b82](https://github.com/moodlehq/design-system/commit/49a3b826f9e3672a6fc04a10de30b16676b12915))
+
 ## [5.4.0](https://github.com/moodlehq/design-system/compare/design-system-v5.3.0...design-system-v5.4.0) (2026-10-05)
 
 
