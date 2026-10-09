@@ -101,6 +101,7 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
+          externals: '["tokens/**/*.css"]'
           storybookBaseDir: '.'
           autoAcceptChanges: 'main'
           skip: 'dependabot/**'
