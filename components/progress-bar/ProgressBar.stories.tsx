@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { ProgressBar } from './ProgressBar';
+import './progress-bar.css';
 
 const meta = {
   title: 'Components/ProgressBar',

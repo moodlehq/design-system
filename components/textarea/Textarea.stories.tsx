@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, userEvent, within } from 'storybook/test';
+import '../_internal/field-info-button.css';
+import '../_internal/tag-content.css';
+import '../avatar/avatar.css';
+import '../button/button.css';
+import '../tooltip/tooltip.css';
 import { Textarea } from './Textarea';
+import './textarea.css';
 
 const meta = {
   title: 'Components/Textarea',

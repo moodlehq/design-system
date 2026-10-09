@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
+import '../button/button.css';
+import '../checkbox/checkbox.css';
 import { Dropdown } from './Dropdown';
 import { DropdownItemAction } from './DropdownItemAction';
 import { DropdownItemDivider } from './DropdownItemDivider';
 import { DropdownItemHeader } from './DropdownItemHeader';
 import { DropdownTrigger } from './DropdownTrigger';
+import './dropdown.css';
 
 const iconMapping = {
   Smile: <i className="fa-solid fa-face-smile" aria-hidden="true" />,

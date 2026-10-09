@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
 import { Radio } from './Radio';
+import './radio.css';
 
 const meta = {
   title: 'Components/Radio',

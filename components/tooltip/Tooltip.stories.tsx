@@ -3,6 +3,7 @@ import type React from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { Button } from '../button';
 import { Tooltip } from './Tooltip';
+import './tooltip.css';
 
 const placements = ['left', 'top', 'bottom', 'right'] as const;
 const variants = ['dark', 'light'] as const;

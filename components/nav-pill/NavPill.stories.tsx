@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { NavPill } from './NavPill';
+import './nav-pill.css';
 
 const meta = {
   title: 'Components/NavPill',
