@@ -31,7 +31,7 @@ Quick reference for AI agents and developers.
 | Radio           | Single-select options in a compact list (native radio input, label only)                                            | checked, label, disabled, invalid                                                                                    |
 | Switch          | Binary toggle control for on/off settings                                                                           | checked, label, disabled, onChange                                                                                   |
 | Tag             | Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise) | content, type, disabled; link: href, variant; removable: onRemove, removeLabel, username, email, institution, avatar |
-| Textarea        | Multi-line text input with label, supporting text, counter, and validation                                          | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
+| Textarea        | Multi-line plain-text input with label, supporting text, counter, and validation — not a rich text editor           | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
 | Tooltip         | Contextual label anchored to a trigger element                                                                      | label, placement, variant, children                                                                                  |
 
 ## Dropdown Subcomponents
@@ -128,6 +128,9 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
 - `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
 - **Badge is never interactive. If it links or removes, it's a Tag.** A static badge rendered beside a link is a layout pattern, not an interactive component — do not wrap a `Badge` in an anchor or add a click handler to it. Use `Tag` (`type="link"` or `type="removable"`) whenever the element should navigate or be dismissed. `Tag` nests the existing `Avatar` and `CloseButton` components and shares `Badge`'s surface tokens rather than redrawing either.
+- `Textarea` is a plain-text field for multi-line free text (comments, descriptions, feedback). Use `Input` for single-line values. It is not a rich text editor — it has no toolbar, formatting, or HTML output:
+  - When content needs formatting, links, images, or embedded media, use Moodle's own editor (the editor API, e.g. TinyMCE). MDS doesn't provide an editor component — don't build one by adding formatting controls around `Textarea`.
+  - Don't treat an editor field as a `Textarea` because its markup looks the same. The editor mounts on its own `<textarea class="form-control">`, and a site setting can switch a field between the two, but only the plain-text field is `Textarea`.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
 
 ## Documentation Routing

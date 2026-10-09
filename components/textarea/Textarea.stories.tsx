@@ -11,8 +11,15 @@ const meta = {
   },
   tags: ['autodocs', 'test', 'stable'],
   decorators: [
-    (Story) => (
-      <div style={{ width: 'min(395px, 95vw)' }}>
+    (Story, context) => (
+      <div
+        style={{
+          width:
+            context.name === 'State Matrix'
+              ? 'min(48rem, 95vw)'
+              : 'min(395px, 95vw)',
+        }}
+      >
         <Story />
       </div>
     ),
@@ -147,6 +154,49 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const showcaseParameters = {
+  controls: { disable: true },
+  docs: { canvas: { sourceState: 'none' } },
+} as const;
+
+const showcaseTableStyle = {
+  borderCollapse: 'collapse' as const,
+  tableLayout: 'fixed' as const,
+  inlineSize: '100%',
+  minInlineSize: '32rem',
+};
+
+const showcaseHeaderCellStyle = {
+  padding: 'var(--mds-spacing-xs) var(--mds-spacing-sm)',
+  textAlign: 'center' as const,
+  color: 'var(--mds-text-subtle)',
+  fontSize: 'var(--mds-font-size-paragraph-small)',
+  fontFamily: 'var(--mds-font-family-base)',
+  fontWeight: 'var(--mds-font-weight-medium)',
+};
+
+const showcaseRowHeaderCellStyle = {
+  padding: 'var(--mds-spacing-xs) var(--mds-spacing-sm)',
+  textAlign: 'start' as const,
+  fontFamily: 'var(--mds-font-family-base)',
+  fontWeight: 'var(--mds-font-weight-medium)',
+  inlineSize: '6rem',
+};
+
+const showcaseStatesCellStyle = {
+  padding: 'var(--mds-spacing-xs) var(--mds-spacing-sm)',
+  verticalAlign: 'middle' as const,
+};
+
+const notApplicableCellStyle = {
+  ...showcaseStatesCellStyle,
+  textAlign: 'center' as const,
+  color: 'var(--mds-text-muted)',
+};
+
+const filledValue =
+  'This course introduces the core concepts of cell biology and genetics.';
+
 export const Default: Story = {
   args: {
     label: 'Label text',
@@ -228,8 +278,10 @@ export const Invalid: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const textarea = canvas.getByRole('textbox');
-    expect(textarea).toHaveAttribute('aria-invalid', 'true');
-    expect(canvas.getByText('This field is required.')).toBeInTheDocument();
+    await expect(textarea).toHaveAttribute('aria-invalid', 'true');
+    await expect(
+      canvas.getByText('This field is required.'),
+    ).toBeInTheDocument();
   },
 };
 
@@ -262,7 +314,7 @@ export const Disabled: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByRole('textbox')).toBeDisabled();
+    await expect(canvas.getByRole('textbox')).toBeDisabled();
   },
 };
 
@@ -388,4 +440,188 @@ export const RightToLeft: Story = {
       </div>
     ),
   ],
+};
+
+export const StateMatrix: Story = {
+  parameters: {
+    ...showcaseParameters,
+    docs: {
+      ...showcaseParameters.docs,
+      description: {
+        story:
+          'State matrix for visual regression review, covering every Figma State. Hover, active, and focus-visible cells are driven by the Storybook pseudo-states addon. Disabled and read-only cells use real props; the Invalid column confirms both suppress the invalid state. A dash marks combinations Figma does not define (disabled is always empty; read-only is always filled).',
+      },
+    },
+    pseudo: {
+      hover: "[data-textarea-state='hover'] .mds-textarea-field",
+      active: "[data-textarea-state='active'] .mds-textarea-field",
+      focusVisible: "[data-textarea-state='focus-visible'] .mds-textarea-field",
+    },
+  },
+  render: (args) => (
+    <table style={showcaseTableStyle}>
+      <thead>
+        <tr>
+          <th
+            style={{ ...showcaseHeaderCellStyle, inlineSize: '6rem' }}
+            scope="col"
+          >
+            State
+          </th>
+          <th style={showcaseHeaderCellStyle} scope="col">
+            Empty
+          </th>
+          <th style={showcaseHeaderCellStyle} scope="col">
+            Filled
+          </th>
+          <th style={showcaseHeaderCellStyle} scope="col">
+            Invalid
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Default
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Default empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Default filled"
+              hideLabel
+              defaultValue={filledValue}
+            />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Default invalid" hideLabel invalid />
+          </td>
+        </tr>
+
+        <tr data-textarea-state="hover">
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Hover
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Hover empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Hover filled"
+              hideLabel
+              defaultValue={filledValue}
+            />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Hover invalid" hideLabel invalid />
+          </td>
+        </tr>
+
+        <tr data-textarea-state="active">
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Active
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Active empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Active filled"
+              hideLabel
+              defaultValue={filledValue}
+            />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Active invalid" hideLabel invalid />
+          </td>
+        </tr>
+
+        <tr data-textarea-state="focus-visible">
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Focus
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Focus empty" hideLabel />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Focus filled"
+              hideLabel
+              defaultValue={filledValue}
+            />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Focus invalid" hideLabel invalid />
+          </td>
+        </tr>
+        <tr>
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Disabled
+          </th>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea {...args} label="Disabled empty" hideLabel disabled />
+          </td>
+          <td style={notApplicableCellStyle}>—</td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Disabled invalid"
+              hideLabel
+              disabled
+              invalid
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <th style={showcaseRowHeaderCellStyle} scope="row">
+            Read-only
+          </th>
+          <td style={notApplicableCellStyle}>—</td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Read-only filled"
+              hideLabel
+              readOnly
+              defaultValue={filledValue}
+            />
+          </td>
+          <td style={showcaseStatesCellStyle}>
+            <Textarea
+              {...args}
+              label="Read-only invalid"
+              hideLabel
+              readOnly
+              invalid
+              defaultValue={filledValue}
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByLabelText('Default empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Default filled')).toHaveValue(
+      filledValue,
+    );
+    await expect(canvas.getByLabelText('Hover empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Active empty')).toBeVisible();
+    await expect(canvas.getByLabelText('Focus empty')).toBeVisible();
+
+    // Disabled and read-only fields never carry the invalid state.
+    await expect(canvas.getByLabelText('Disabled invalid')).not.toHaveAttribute(
+      'aria-invalid',
+    );
+    await expect(
+      canvas.getByLabelText('Read-only invalid'),
+    ).not.toHaveAttribute('aria-invalid');
+  },
 };
