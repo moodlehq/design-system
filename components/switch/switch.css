@@ -7,7 +7,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--mds-spacing-xs);
-  padding-block: var(--mds-spacing-xxs);
+  padding-block: var(--mds-spacing-none);
   white-space: nowrap;
   cursor: pointer;
 }
@@ -17,12 +17,15 @@
 }
 
 .mds-switch-label {
-  color: var(--mds-text-default);
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 18px; /* Intentional Figma fixed min-height size. */
+  color: var(--mds-text-subtle);
   user-select: none;
   white-space: nowrap;
   font-family: var(--mds-font-family-base);
-  font-size: var(--mds-font-size-paragraph-default);
-  font-weight: var(--mds-font-weight-regular);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
   line-height: var(--mds-line-height-paragraph-xs);
   letter-spacing: var(--mds-letter-spacing-default);
 }
