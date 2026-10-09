@@ -121,6 +121,10 @@ export const Alert = ({
     return null;
   }
 
+  // Bootstrap's `alert-dismissible` is deliberately not applied: it adds a
+  // physical `padding-right` and absolutely positions `.btn-close` (which the
+  // CloseButton carries), fighting the flex layout that places the dismiss
+  // control and breaking RTL. The flex layout replaces what it provides.
   const classes = [
     'mds-alert',
     'alert',
