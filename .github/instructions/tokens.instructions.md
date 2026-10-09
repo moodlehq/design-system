@@ -34,7 +34,7 @@ This invokes `scripts/tokens.ts` via Style Dictionary and produces:
 - `tokens/css/` — CSS custom properties prefixed `--mds-`, plus `index.css` that imports them all
 - `tokens/scss/` — SCSS variables prefixed `$mds-` with `!default`, plus `_index.scss` (`@forward`) and `_index.legacy.scss` (`@import` for `scssphp` — tag: `MDS_LEGACY_SCSSPHP_COMPAT`)
 
-A custom transform (`dimension-px-to-rem`) converts `$type: "number"` dimension tokens from px to rem (÷16), excluding font-weight tokens.
+A custom transform (`dimension-px-to-rem`) converts `$type: "number"` dimension tokens from px to rem (÷16), excluding font-weight and stroke-weight tokens. A second transform (`dimension-px`) emits stroke-weight tokens as px so borders, dividers and focus rings stay fixed when the user changes their default font size.
 
 ## Token naming convention
 

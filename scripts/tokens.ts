@@ -111,13 +111,31 @@ StyleDictionary.registerFormat({
  * Rules & Assumptions:
  * - Any flat numerical tokens with $type 'number' are considered dimension-related tokens and will be transformed from px to rem.
  * - Font weight tokens are excluded from this transformation as they are also of type 'number' but should remain unitless.
+ * - Stroke weight tokens are excluded and handled by 'dimension-px' instead.
  */
 StyleDictionary.registerTransform({
   name: 'dimension-px-to-rem',
   type: 'value',
   filter: (token) =>
-    token.$type === 'number' && !/font-weight/i.test(token.name),
+    token.$type === 'number' && !/font-weight|stroke-weight/i.test(token.name),
   transform: (token) => `${token.$value / 16}rem`,
+});
+
+/**
+ * Custom transform: dimension-px
+ * Appends px to stroke weight tokens.
+ *
+ * Why px instead of rem?
+ * - Strokes should stay fixed when the user changes their default font size; browser zoom still scales px.
+ * - Browsers snap border and outline widths to whole device pixels, but not widths, heights or box-shadows.
+ *   Stroke tokens used in those places, or subtracted from rem padding in calc(), would otherwise produce fractional sizes.
+ */
+StyleDictionary.registerTransform({
+  name: 'dimension-px',
+  type: 'value',
+  filter: (token) =>
+    token.$type === 'number' && /stroke-weight/i.test(token.name),
+  transform: (token) => `${token.$value}px`,
 });
 
 /**
@@ -166,7 +184,11 @@ new StyleDictionary({
   platforms: {
     css: {
       transformGroup: 'css',
-      transforms: ['name/strip-top-level', 'dimension-px-to-rem'],
+      transforms: [
+        'name/strip-top-level',
+        'dimension-px-to-rem',
+        'dimension-px',
+      ],
       prefix: 'mds',
       buildPath: 'tokens/css',
       files: [
@@ -193,7 +215,11 @@ new StyleDictionary({
     },
     scss: {
       transformGroup: 'scss',
-      transforms: ['name/strip-top-level', 'dimension-px-to-rem'],
+      transforms: [
+        'name/strip-top-level',
+        'dimension-px-to-rem',
+        'dimension-px',
+      ],
       prefix: 'mds',
       buildPath: 'tokens/scss',
       files: [

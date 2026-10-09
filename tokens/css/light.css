@@ -167,11 +167,11 @@
   --mds-color-blue-800: #062b4c;
   --mds-color-blue-900: #031626;
   --mds-spacing-offset: 0.0625rem;
-  --mds-stroke-weight-xxl: 0.3125rem;
-  --mds-stroke-weight-xl: 0.25rem;
-  --mds-stroke-weight-lg: 0.1875rem;
-  --mds-stroke-weight-md: 0.125rem;
-  --mds-stroke-weight-sm: 0.0625rem;
+  --mds-stroke-weight-xxl: 5px;
+  --mds-stroke-weight-xl: 4px;
+  --mds-stroke-weight-lg: 3px;
+  --mds-stroke-weight-md: 2px;
+  --mds-stroke-weight-sm: 1px;
   --mds-color-lg: rgba(0, 0, 0, 0.17);
   --mds-color-md: rgba(0, 0, 0, 0.15);
   --mds-color-sm: rgba(0, 0, 0, 0.08);
