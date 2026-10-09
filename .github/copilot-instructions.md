@@ -148,4 +148,5 @@ Every component requires a `ComponentName.figma.tsx` Code Connect file alongside
 - Prefer extending existing component patterns; avoid new architectural layers, context providers, or state abstractions.
 - Do not add new npm dependencies unless the task explicitly requires an external package and no existing utility covers the need. Do not add icon or image packages — use assets provided by Figma MCP instead.
 - Preserve the Storybook a11y setup and theme decorator in `.storybook/preview.ts`.
+- Preserve the `traceComponentCss` plugin in `.storybook/main.ts`; Chromatic TurboSnap relies on it to trace component CSS changes to stories.
 - Do not touch release automation, workflow files (`.github/workflows/`), `CHANGELOG.md`, or `package.json` version fields unless the task explicitly requires it.
