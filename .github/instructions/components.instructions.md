@@ -375,6 +375,8 @@ interface DropdownItemExpandableProps {
 
 **Do not remove or rename exports from `components/index.tsx`.** Every named export is part of the public API — removing one is a breaking change with no compile-time error in the library build (story/test files are excluded from `tsconfig.json`). Only add exports; never remove or rename without an explicit breaking-change task.
 
+**When a component starts rendering another component, update the stories that render it.** Every story reaching the changed component must import the new dependency's CSS for Chromatic TurboSnap — see "CSS imports (Chromatic TurboSnap)" in `stories-tests.instructions.md`. `components/stories-css-imports.test.tsx` lists the missing imports.
+
 **Do not add icon, image, or asset packages.** Use SVG/image assets provided directly by Figma MCP (`get_design_context`, `get_screenshot`). Adding new packages for icons or images is not permitted.
 
 **For simple single-color icons, prefer `mask-image` over `background-image`.** Use `mask-image`/`-webkit-mask-image` with `background-color` (or `currentColor`) so icon colour follows tokens and state styles. Use `background-image` for multi-colour artwork, gradients, or photo-like assets.

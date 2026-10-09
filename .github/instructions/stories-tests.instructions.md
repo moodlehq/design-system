@@ -62,6 +62,16 @@ export const RightToLeft: Story = {
 
 Tag RTL stories with `['test', 'stable']` (omit `autodocs` — they are structural tests, not API documentation). If the component itself uses `'beta'`, use `['test', 'beta']` for the RTL story instead.
 
+### CSS imports (Chromatic TurboSnap)
+
+Component CSS is loaded globally in `.storybook/preview.ts`, so Chromatic TurboSnap cannot trace a `.css` change to the stories it affects. Every story file must import, as side-effect imports, the CSS of every component folder it can render:
+
+- every `.css` file in the story's own folder (e.g. all three in `input/`)
+- the CSS of any component the story imports directly (e.g. `Button` used in a demo)
+- the CSS of everything those components render in turn, transitively; `_internal/` counts as one folder, so reaching it pulls in `field-info-button.css`, `tag-content.css`, and their dependencies
+
+Reference: `components/alert/Alert.stories.tsx`. `components/stories-css-imports.test.tsx` enforces this in `npm run test-unit` and prints the exact missing import paths when it fails.
+
 ## Unit tests (Vitest + jsdom)
 
 Run with `npm run test-unit`. Tests live in `ComponentName.test.tsx` alongside the component.

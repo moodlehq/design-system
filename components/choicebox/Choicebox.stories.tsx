@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useArgs } from 'storybook/preview-api';
 import { expect, userEvent, within } from 'storybook/test';
 import { Choicebox } from './Choicebox';
+import './choicebox.css';
 
 const iconMapping = {
   None: undefined,

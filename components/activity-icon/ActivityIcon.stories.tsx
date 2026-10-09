@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
+import './activity-icon.css';
 import { ActivityIcon } from './ActivityIcon';
 import {
   type ActivityIconCategory,

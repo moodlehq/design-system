@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useArgs } from 'storybook/preview-api';
 import { expect, waitFor } from 'storybook/test';
 import { Checkbox } from './Checkbox';
+import './checkbox.css';
 
 const meta = {
   title: 'Components/Checkbox',

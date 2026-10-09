@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, screen, userEvent, within } from 'storybook/test';
+import '../button/button.css';
+import '../checkbox/checkbox.css';
+import '../dropdown/dropdown.css';
+import '../link/link.css';
+import '../tooltip/tooltip.css';
 import { Breadcrumb, type BreadcrumbItem } from './Breadcrumb';
+import './breadcrumb.css';
 
 // ─── Sample data ──────────────────────────────────────────────────────────────
 

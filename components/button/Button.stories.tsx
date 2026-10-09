@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
 import { Button } from './Button';
+import './button.css';
 
 const iconMapping = {
   None: undefined,

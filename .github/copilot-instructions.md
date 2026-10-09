@@ -142,6 +142,8 @@ Every component requires a `ComponentName.figma.tsx` Code Connect file alongside
 3. Create `ComponentName.figma.tsx` in the component folder mapping Figma props to React props.
 4. Publish via Figma MCP `add_code_connect_map` or `npx figma connect publish`.
 
+Also add the component's CSS to `components/index.css`, and side-effect import it (plus the CSS of every component it renders) in its stories so Chromatic TurboSnap can trace CSS changes — see "CSS imports (Chromatic TurboSnap)" in `.github/instructions/stories-tests.instructions.md`.
+
 **When making any change:**
 
 - Do not edit or regenerate token files. `tokens/dtcg/**/*.json`, `tokens/css/**`, and `tokens/scss/**` are managed by the ZeroHeight PR flow — agents must not edit them directly or run `npm run build-tokens`.

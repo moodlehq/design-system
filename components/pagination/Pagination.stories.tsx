@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, userEvent } from 'storybook/test';
 import { Pagination } from './Pagination';
+import './pagination.css';
 
 const meta = {
   title: 'Components/Pagination',
