@@ -5,6 +5,7 @@ import '../button/button.css';
 import { Checkbox } from '../checkbox';
 import '../checkbox/checkbox.css';
 import { Choicebox } from '../choicebox';
+import '../choicebox/choicebox.css';
 import { DropdownMenu } from './Dropdown';
 import { DropdownItemAction } from './DropdownItemAction';
 import { DropdownItemCustom } from './DropdownItemCustom';

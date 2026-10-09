@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { Button } from '../button';
+import '../button/button.css';
 import { Tooltip } from './Tooltip';
 import './tooltip.css';
 
