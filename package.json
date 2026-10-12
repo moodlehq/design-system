@@ -4,7 +4,8 @@
   "description": "The Moodle Design System",
   "files": [
     "/dist",
-    "/css.d.ts"
+    "/css.d.ts",
+    "/llms.txt"
   ],
   "exports": {
     ".": {
@@ -123,10 +124,11 @@
     "test-unit-coverage": "vitest run --project unit --coverage",
     "test-storybook": "vitest run --project storybook",
     "storybook": "storybook dev -p 6006",
-    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index",
+    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index && npm run build-guidance -- --dist",
     "build-component-index": "tsx scripts/generate-component-index.ts",
     "build-storybook": "storybook build",
     "build-docs": "tsx scripts/build-docs.ts",
+    "build-guidance": "tsx scripts/build-guidance.ts",
     "build-tokens": "tsx scripts/tokens.ts",
     "format": "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write . '**/*.{ts,tsx,js,jsx,yml}'",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix --config .github/linters/eslint.config.mjs",

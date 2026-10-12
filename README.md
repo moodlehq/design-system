@@ -14,6 +14,27 @@ It includes design assets, guidelines, UI components, and code standards to help
 
 The MDS is a collaborative effort between designers and developers at Moodle HQ and the wider Moodle community and is continuously evolving to meet the needs of users and to incorporate feedback we receive.
 
+## For AI agents
+
+Building with the Moodle Design System (`@moodlehq/design-system`)? Read the guidance for a component before choosing it. Props and types come from the package's TypeScript declarations.
+
+- **After install:** `node_modules/@moodlehq/design-system/dist/guidance/index.md` lists every component with its status. Each `dist/guidance/components/<slug>.md` starts with a "For agents" block: what to use it for, what not to, what to use instead, and look-alikes.
+- **Without installing:** [`llms.txt`](https://cdn.jsdelivr.net/npm/@moodlehq/design-system/llms.txt) links to the same pages, versioned by package release.
+- **Not available:** `dist/guidance/not-available.md` lists components that are documented but not shipped in this version. Do not import them, and do not invent components such as Toast or Tabs.
+- **Design guidance:** [design.moodle.com](https://design.moodle.com/) is the authored source. It is JavaScript-rendered, so use the pages above instead of fetching it.
+
+Agents don't read files inside `node_modules` automatically. To point yours at the guidance, paste this into your project's `CLAUDE.md` or `AGENTS.md`:
+
+```md
+## Moodle Design System
+
+Use `@moodlehq/design-system` components. Before choosing one, read
+`node_modules/@moodlehq/design-system/dist/guidance/index.md` and the matching
+`dist/guidance/components/<slug>.md` (check its `status` and `package` version).
+Take props from the `.d.ts` files in `dist/`. If a component is listed in
+`dist/guidance/not-available.md` or isn't documented, say so instead of inventing one.
+```
+
 ## Table of Contents
 
 - [Design Resources](#design-resources)

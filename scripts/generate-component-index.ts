@@ -7,6 +7,13 @@ interface ComponentIndexItem {
   slug: string;
   purpose: string;
   exportPath: string;
+  /** Declaration file inside the published package. */
+  typesPath: string;
+  /** Per-component guidance page inside the published package, when generated. */
+  guidancePath?: string;
+  /** Components the guidance says to use instead, and ones it is easily confused with. */
+  useInstead?: string[];
+  lookAlikes?: string[];
   implementationPath: string;
   storyPath?: string;
   testPath?: string;
@@ -35,6 +42,8 @@ const ROOT_DIR = path.resolve(SCRIPT_DIR, '..');
 const COMPONENTS_DIR = path.join(ROOT_DIR, 'components');
 const OUTPUT_DIR = path.join(ROOT_DIR, 'dist');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'component-index.json');
+
+const GUIDANCE_DIR = path.join(ROOT_DIR, 'docs', 'guidance', 'components');
 
 const RESERVED_DIR_NAMES = new Set(['assets']);
 
@@ -185,6 +194,27 @@ function findFirstExisting(filePaths: string[]): string | undefined {
   return filePaths.find((filePath) => fs.existsSync(filePath));
 }
 
+interface GuidanceInfo {
+  intro?: string;
+  useInstead?: string[];
+  lookAlikes?: string[];
+}
+
+/** Reads the generated guidance page (docs/guidance) for a component, if present. */
+function readGuidance(slug: string): GuidanceInfo | undefined {
+  const file = path.join(GUIDANCE_DIR, `${slug}.md`);
+  if (!fs.existsSync(file)) return undefined;
+  const md = fs.readFileSync(file, 'utf-8');
+  const intro = md.match(/^# .+\n\n(?!#|##)(.+)\n/m)?.[1];
+  const useInstead = md.match(/^- Use instead: (.+)$/m)?.[1];
+  const lookAlikes = md.match(/^- Look-alikes: (.+)$/m)?.[1];
+  return {
+    intro,
+    useInstead: useInstead?.split(';').map((v) => v.trim()),
+    lookAlikes: lookAlikes?.split('·').map((v) => v.trim()),
+  };
+}
+
 function collectComponent(slug: string): ComponentIndexItem | null {
   const dir = path.join(COMPONENTS_DIR, slug);
   if (!fs.statSync(dir).isDirectory()) {
@@ -212,10 +242,13 @@ function collectComponent(slug: string): ComponentIndexItem | null {
 
   const rel = (fullPath: string) => toPosix(path.relative(ROOT_DIR, fullPath));
 
-  const purpose = PURPOSES[slug];
+  // PURPOSES holds hand-written caveats; generated guidance is the fallback so
+  // new components don't need a manual entry.
+  const guidance = readGuidance(slug);
+  const purpose = PURPOSES[slug] ?? guidance?.intro;
   if (!purpose) {
     throw new Error(
-      `No purpose text defined for component "${slug}" in PURPOSES — add one in scripts/generate-component-index.ts.`,
+      `No purpose for component "${slug}": add it to PURPOSES in scripts/generate-component-index.ts or generate guidance (npm run build-guidance).`,
     );
   }
 
@@ -224,6 +257,10 @@ function collectComponent(slug: string): ComponentIndexItem | null {
     slug,
     purpose,
     exportPath: `@moodlehq/design-system/components/${slug}`,
+    typesPath: `dist/components/${slug}/index.d.ts`,
+    guidancePath: guidance ? `dist/guidance/components/${slug}.md` : undefined,
+    useInstead: guidance?.useInstead,
+    lookAlikes: guidance?.lookAlikes,
     implementationPath: rel(implementation),
     storyPath: story ? rel(story) : undefined,
     testPath: test ? rel(test) : undefined,

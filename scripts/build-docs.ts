@@ -11,6 +11,8 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 import { mkdirSync, writeFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 
+import { formatPage, stripExpiringImages } from './lib/zeroheight-format';
+
 const STYLEGUIDE_ID = 131542;
 const OUTPUT_PATH = resolve(
   '.github/instructions/design-system.instructions.md',
@@ -76,26 +78,6 @@ function extractPages(tree: PageTree): FlatPage[] {
   });
 }
 
-/**
- * Replaces expiring ZeroHeight S3 image URLs with plain alt text.
- * Image URLs expire after 7 days, so they are unsuitable for a committed file.
- */
-function stripExpiringImages(md: string): string {
-  return md.replace(
-    /!\[([^\]]*)\]\(https:\/\/zeroheight[^)]+\)/g,
-    (_, alt: string) => (alt ? `_[image: ${alt}]_` : ''),
-  );
-}
-
-/**
- * Strips ZeroHeight's YAML front matter from the page content.
- * Leaves all heading levels and Markdown structure unchanged for agent consumption.
- */
-function formatPage(raw: string): string {
-  const body = raw.replace(/^---[\s\S]*?---\n/, '').trim();
-  return body;
-}
-
 /** Concatenates all text-typed content blocks from an MCP tool response. */
 function extractText(content: MCPContent): string {
   return content
@@ -158,7 +140,7 @@ async function fetchPageContent(
     const page = pages[i];
     console.log(`  Fetching: ${page.title} (id: ${page.id})`);
     const raw = await invokeToolText(client, 'get-page', { pageId: page.id });
-    const formatted = formatPage(stripExpiringImages(raw));
+    const formatted = formatPage(stripExpiringImages(raw), page.title);
     if (formatted) {
       sections.push(formatted);
     } else {
