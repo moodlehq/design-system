@@ -114,9 +114,11 @@
 
 .mds-input[class]
   .mds-input-field-wrapper:has(
-    .mds-input-field[class]:active:not(:disabled):not(
-        .mds-input-field--readonly
-      ):not(.is-invalid)
+    .mds-input-field[class]:active:not(
+        :disabled,
+        .mds-input-field--readonly,
+        .is-invalid
+      )
   ) {
   background-color: var(--mds-bg-surface-default);
   border-color: var(--mds-border-interactive-primary-default);
@@ -124,7 +126,8 @@
 
 .mds-input[class]
   .mds-input-field-wrapper:has(
-    .mds-input-field.is-invalid[class]:active:not(:disabled):not(
+    .mds-input-field.is-invalid[class]:active:not(
+        :disabled,
         .mds-input-field--readonly
       )
   ) {
