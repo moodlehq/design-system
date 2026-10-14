@@ -179,24 +179,6 @@ $mds-breakpoints-xl: 75rem !default;
 $mds-breakpoints-lg: 62rem !default;
 $mds-breakpoints-md: 48rem !default;
 $mds-breakpoints-sm: 36rem !default;
-$mds-font-size-paragraph-lead: $mds-typography-font-size-1-25 !default; // Slightly larger body text, for lead paragraphs.
-$mds-font-size-paragraph-default: $mds-typography-font-size-1 !default; // Base size for body text.
-$mds-font-size-paragraph-small: $mds-typography-font-size-0-875 !default; // Reduced size for secondary text.
-$mds-font-size-headings-1: $mds-typography-font-size-2-5 !default; // Font size for H1 headings.
-$mds-font-size-headings-2: $mds-typography-font-size-2 !default; // Font size for H2 headings.
-$mds-font-size-headings-3: $mds-typography-font-size-1-75 !default; // Font size for H3 headings.
-$mds-font-size-headings-4: $mds-typography-font-size-1-5 !default; // Font size for H4 headings.
-$mds-font-size-headings-5: $mds-typography-font-size-1-25 !default; // Font size for H5 headings.
-$mds-font-size-headings-6: $mds-typography-font-size-1 !default; // Font size for H6 headings.
-$mds-font-size-displays-1: $mds-scale-1600 !default; // Display style, largest.
-$mds-font-size-displays-2: $mds-scale-1500 !default; // Display style, extra-large.
-$mds-font-size-displays-3: $mds-scale-1400 !default; // Display style, large.
-$mds-font-size-displays-4: $mds-scale-1300 !default; // Display style, medium-large.
-$mds-font-size-displays-5: $mds-scale-1200 !default; // Display style, medium.
-$mds-font-size-displays-6: $mds-scale-1100 !default; // Display style, smaller display.
-$mds-font-family-code: $mds-typography-font-family-monospace !default; // Typeface for code, preformatted text, or monospace contexts.
-$mds-font-family-base-jp: $mds-typography-font-family-sans-serif-jp !default; // Default typeface for all UI text. Ensures global consistency.
-$mds-font-family-base: $mds-typography-font-family-sans-serif !default; // Default typeface for all UI text. Ensures global consistency.
 $mds-line-height-paragraph-lead: $mds-typography-line-height-paragraph-lg !default; // Extended line height for large body text.
 $mds-line-height-paragraph-default: $mds-typography-line-height-paragraph-base !default; // Comfortable line height for paragraphs.
 $mds-line-height-paragraph-small: $mds-typography-line-height-paragraph-sm !default; // Compact line height for small text.
@@ -219,6 +201,24 @@ $mds-font-weight-semibold: $mds-typography-font-weight-semibold !default;
 $mds-font-weight-medium: $mds-typography-font-weight-medium !default;
 $mds-font-weight-regular: $mds-typography-font-weight-regular !default;
 $mds-font-weight-light: $mds-typography-font-weight-light !default;
+$mds-font-size-paragraph-lead: $mds-typography-font-size-1-25 !default; // Slightly larger body text, for lead paragraphs.
+$mds-font-size-paragraph-default: $mds-typography-font-size-1 !default; // Base size for body text.
+$mds-font-size-paragraph-small: $mds-typography-font-size-0-875 !default; // Reduced size for secondary text.
+$mds-font-size-headings-1: $mds-typography-font-size-2-5 !default; // Font size for H1 headings.
+$mds-font-size-headings-2: $mds-typography-font-size-2 !default; // Font size for H2 headings.
+$mds-font-size-headings-3: $mds-typography-font-size-1-75 !default; // Font size for H3 headings.
+$mds-font-size-headings-4: $mds-typography-font-size-1-5 !default; // Font size for H4 headings.
+$mds-font-size-headings-5: $mds-typography-font-size-1-25 !default; // Font size for H5 headings.
+$mds-font-size-headings-6: $mds-typography-font-size-1 !default; // Font size for H6 headings.
+$mds-font-size-displays-1: $mds-scale-1600 !default; // Display style, largest.
+$mds-font-size-displays-2: $mds-scale-1500 !default; // Display style, extra-large.
+$mds-font-size-displays-3: $mds-scale-1400 !default; // Display style, large.
+$mds-font-size-displays-4: $mds-scale-1300 !default; // Display style, medium-large.
+$mds-font-size-displays-5: $mds-scale-1200 !default; // Display style, medium.
+$mds-font-size-displays-6: $mds-scale-1100 !default; // Display style, smaller display.
+$mds-font-family-code: $mds-typography-font-family-monospace !default; // Typeface for code, preformatted text, or monospace contexts.
+$mds-font-family-base-jp: $mds-typography-font-family-sans-serif-jp !default; // Default typeface for all UI text. Ensures global consistency.
+$mds-font-family-base: $mds-typography-font-family-sans-serif !default; // Default typeface for all UI text. Ensures global consistency.
 $mds-switch-track-padding: $mds-scale-50 !default;
 $mds-spacing-xxl: $mds-scale-1200 !default;
 $mds-spacing-xl: $mds-scale-1000 !default;
@@ -329,6 +329,8 @@ $mds-activity-icon-collaboration-bg: $mds-color-indigo-100 !default;
 $mds-activity-icon-collaboration-icon: $mds-color-indigo-500 !default;
 $mds-activity-icon-assessment-bg: $mds-color-pink-100 !default;
 $mds-activity-icon-assessment-icon: $mds-color-pink-500 !default;
+$mds-activity-icon-disabled-bg: $mds-color-gray-200 !default;
+$mds-activity-icon-disabled-icon: $mds-color-gray-600 !default;
 $mds-icons-xxxl: $mds-scale-1200 !default;
 $mds-icons-xxl: $mds-scale-1100 !default;
 $mds-icons-xl: $mds-scale-1000 !default;
