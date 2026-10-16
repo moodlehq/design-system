@@ -1,6 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { ActivityIconContainer, ActivityIconSize } from './ActivityIcon';
+import type {
+  ActivityIconAppearance,
+  ActivityIconContainer,
+  ActivityIconSize,
+} from './ActivityIcon';
 import { ActivityIcon } from './ActivityIcon';
 
 describe('ActivityIcon: Unit Test', () => {
@@ -18,6 +22,63 @@ describe('ActivityIcon: Unit Test', () => {
     await waitFor(() => {
       expect(image.getAttribute('src')).toContain('data:image/svg+xml');
     });
+  });
+
+  it('does not apply the muted class by default', () => {
+    render(<ActivityIcon data-testid="icon" icon="assignment" />);
+    expect(
+      screen.getByTestId('icon').classList.contains('mds-activity-icon--muted'),
+    ).toBe(false);
+  });
+
+  it('applies the muted class and mask variable when appearance is muted', async () => {
+    render(
+      <ActivityIcon data-testid="icon" icon="assignment" appearance="muted" />,
+    );
+    const root = screen.getByTestId('icon');
+    expect(root.classList.contains('mds-activity-icon--muted')).toBe(true);
+    await waitFor(() => {
+      expect(root.style.getPropertyValue('--mds-activity-icon-mask')).toContain(
+        'data:image/svg+xml',
+      );
+    });
+  });
+
+  it('keeps the image accessible name when muted', () => {
+    render(
+      <ActivityIcon icon="assignment" alt="Assignment" appearance="muted" />,
+    );
+    expect(screen.getByRole('img', { name: 'Assignment' })).toBeTruthy();
+  });
+
+  it('preserves a consumer style when muted', () => {
+    render(
+      <ActivityIcon
+        data-testid="icon"
+        icon="assignment"
+        appearance="muted"
+        style={{ margin: 0 }}
+      />,
+    );
+    expect(screen.getByTestId('icon').style.margin).toBe('0px');
+  });
+
+  it('falls back to default appearance and warns for an invalid appearance', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(
+      <ActivityIcon
+        data-testid="icon"
+        icon="assignment"
+        appearance={'invalid' as unknown as ActivityIconAppearance}
+      />,
+    );
+    expect(
+      screen.getByTestId('icon').classList.contains('mds-activity-icon--muted'),
+    ).toBe(false);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining('Invalid appearance "invalid"'),
+    );
+    warn.mockRestore();
   });
 
   it('applies default container by default', () => {

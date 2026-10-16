@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type { CSSProperties, HTMLAttributes } from 'react';
 import { useEffect, useState } from 'react';
 import type { ActivityIconName } from './activityIconRegistry';
 import {
@@ -30,6 +30,9 @@ const allowedContainers: ActivityIconContainer[] = ['none', 'default', 'large'];
 
 export type ActivityIconSize = 'sm' | 'md' | 'lg' | 'xl';
 const allowedSizes: ActivityIconSize[] = ['sm', 'md', 'lg', 'xl'];
+
+export type ActivityIconAppearance = 'default' | 'muted';
+const allowedAppearances: ActivityIconAppearance[] = ['default', 'muted'];
 const iconLookupFallback: ActivityIconName = 'file-unknown';
 
 export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
@@ -49,6 +52,13 @@ export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
    * Icon size token.
    */
   size?: ActivityIconSize;
+  /**
+   * Colour treatment. `muted` replaces the category colours with the muted
+   * tokens, for hidden or unavailable activities. The icon remains in the
+   * accessibility tree, so convey the hidden state to assistive technology
+   * separately.
+   */
+  appearance?: ActivityIconAppearance;
 }
 
 export const ActivityIcon = ({
@@ -56,7 +66,9 @@ export const ActivityIcon = ({
   alt = '',
   container,
   size,
+  appearance,
   className,
+  style,
   ...props
 }: ActivityIconProps) => {
   // TS callers must pass icon, but JS consumers can still provide undefined at runtime.
@@ -87,9 +99,23 @@ export const ActivityIcon = ({
     );
   }
 
+  if (
+    import.meta.env.DEV &&
+    appearance &&
+    !allowedAppearances.includes(appearance)
+  ) {
+    console.warn(
+      `[MDS ActivityIcon] Invalid appearance "${appearance}". Falling back to "default". Allowed: ${allowedAppearances.join(', ')}`,
+    );
+  }
+
   const resolvedIcon: ActivityIconName = hasValidIcon
     ? (normalizedIcon as ActivityIconName)
     : iconLookupFallback;
+  const resolvedAppearance =
+    appearance && allowedAppearances.includes(appearance)
+      ? appearance
+      : 'default';
   const resolvedContainer =
     container && allowedContainers.includes(container) ? container : 'default';
   const resolvedSize = size && allowedSizes.includes(size) ? size : 'md';
@@ -123,12 +149,25 @@ export const ActivityIcon = ({
     `mds-activity-icon--size-${resolvedSize}`,
     `mds-activity-icon--category-${resolvedCategory}`,
   ];
+  if (resolvedAppearance === 'muted') {
+    classes.push('mds-activity-icon--muted');
+  }
   if (className) {
     classes.push(className);
   }
 
+  // The SVG assets carry fixed fills, so the muted colour is applied by masking
+  // a token-coloured overlay with the asset (see activity-icon.css).
+  const rootStyle =
+    resolvedAppearance === 'muted' && iconSrc
+      ? ({
+          ...style,
+          '--mds-activity-icon-mask': `url("${iconSrc}")`,
+        } as CSSProperties)
+      : style;
+
   return (
-    <span className={classes.join(' ')} {...props}>
+    <span className={classes.join(' ')} style={rootStyle} {...props}>
       <img alt={alt} className="mds-activity-icon__asset" src={iconSrc} />
     </span>
   );

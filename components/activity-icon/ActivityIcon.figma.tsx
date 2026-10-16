@@ -21,18 +21,30 @@ const containerProps = {
   }),
 };
 
+// Figma currently names this property "Disabled" (No/Yes). It is expected to be
+// renamed to "Appearance" (Default/Muted) to match the React prop; update the
+// property key and options here if the designer chooses different names.
+const appearanceProps = {
+  appearance: figma.enum('Appearance', {
+    Default: 'default',
+    Muted: 'muted',
+  }),
+};
+
 // Collaboration category examples
 figma.connect(ActivityIcon, url, {
   variant: { Category: 'Collaboration' },
   props: {
     ...sizeProps,
     ...containerProps,
+    ...appearanceProps,
   },
-  example: ({ size, container }) => (
+  example: ({ size, container, appearance }) => (
     <ActivityIcon
       icon="database"
       size={size}
       container={container}
+      appearance={appearance}
       alt="Collaboration activity"
     />
   ),
@@ -44,12 +56,14 @@ figma.connect(ActivityIcon, url, {
   props: {
     ...sizeProps,
     ...containerProps,
+    ...appearanceProps,
   },
-  example: ({ size, container }) => (
+  example: ({ size, container, appearance }) => (
     <ActivityIcon
       icon="chat"
       size={size}
       container={container}
+      appearance={appearance}
       alt="Communication activity"
     />
   ),
@@ -61,12 +75,14 @@ figma.connect(ActivityIcon, url, {
   props: {
     ...sizeProps,
     ...containerProps,
+    ...appearanceProps,
   },
-  example: ({ size, container }) => (
+  example: ({ size, container, appearance }) => (
     <ActivityIcon
       icon="assignment"
       size={size}
       container={container}
+      appearance={appearance}
       alt="Assessment activity"
     />
   ),
@@ -78,12 +94,14 @@ figma.connect(ActivityIcon, url, {
   props: {
     ...sizeProps,
     ...containerProps,
+    ...appearanceProps,
   },
-  example: ({ size, container }) => (
+  example: ({ size, container, appearance }) => (
     <ActivityIcon
       icon="ims-package"
       size={size}
       container={container}
+      appearance={appearance}
       alt="Interactive activity"
     />
   ),
@@ -95,12 +113,14 @@ figma.connect(ActivityIcon, url, {
   props: {
     ...sizeProps,
     ...containerProps,
+    ...appearanceProps,
   },
-  example: ({ size, container }) => (
+  example: ({ size, container, appearance }) => (
     <ActivityIcon
       icon="book"
       size={size}
       container={container}
+      appearance={appearance}
       alt="Resource"
     />
   ),
@@ -112,12 +132,14 @@ figma.connect(ActivityIcon, url, {
   props: {
     ...sizeProps,
     ...containerProps,
+    ...appearanceProps,
   },
-  example: ({ size, container }) => (
+  example: ({ size, container, appearance }) => (
     <ActivityIcon
       icon="subsection"
       size={size}
       container={container}
+      appearance={appearance}
       alt="Activity"
     />
   ),
