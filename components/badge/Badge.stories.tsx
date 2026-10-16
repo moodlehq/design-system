@@ -13,9 +13,9 @@ const meta = {
     label: {
       control: { type: 'text' },
       description:
-        'Visible badge text. Must be a caller-supplied translated string.',
+        'Visible badge content. Must be a caller-supplied translated string, or a node built from translated strings.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'ReactNode' },
       },
     },
     variant: {
