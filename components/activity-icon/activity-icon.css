@@ -67,6 +67,46 @@
   background-color: var(--mds-activity-icon-resource-bg);
 }
 
+/*
+ * muted: tile and icon use the disabled tokens (the token set names this state
+ * "disabled"). Declared after the category rules with matching specificity so
+ * it wins; none has no tile, so only the icon is muted.
+ */
+.mds-activity-icon--default.mds-activity-icon--muted,
+.mds-activity-icon--large.mds-activity-icon--muted {
+  background-color: var(--mds-activity-icon-disabled-bg);
+}
+
+.mds-activity-icon--muted {
+  position: relative;
+}
+
+/* Hide the full-colour asset (it stays in the a11y tree) and paint its shape in the muted token colour. */
+.mds-activity-icon--muted .mds-activity-icon__asset {
+  opacity: 0;
+}
+
+.mds-activity-icon--muted::after {
+  background-color: var(--mds-activity-icon-disabled-icon);
+  content: '';
+  -webkit-mask: var(--mds-activity-icon-mask) center / contain no-repeat;
+  mask: var(--mds-activity-icon-mask) center / contain no-repeat;
+  pointer-events: none;
+  position: absolute;
+}
+
+.mds-activity-icon--none.mds-activity-icon--muted::after {
+  inset: 0;
+}
+
+.mds-activity-icon--default.mds-activity-icon--muted::after {
+  inset: var(--mds-spacing-xs);
+}
+
+.mds-activity-icon--large.mds-activity-icon--muted::after {
+  inset: var(--mds-spacing-sm);
+}
+
 /* Size variants */
 .mds-activity-icon--size-sm {
   block-size: var(--mds-icons-sm);

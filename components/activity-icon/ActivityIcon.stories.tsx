@@ -43,6 +43,16 @@ const meta = {
         defaultValue: { summary: 'default' },
       },
     },
+    appearance: {
+      control: { type: 'select' },
+      options: ['default', 'muted'],
+      description:
+        'Colour treatment. Use muted for hidden or unavailable activities.',
+      table: {
+        type: { summary: 'default | muted' },
+        defaultValue: { summary: 'default' },
+      },
+    },
     alt: {
       control: { type: 'text' },
       description:
@@ -57,6 +67,7 @@ const meta = {
     icon: 'assignment',
     size: undefined,
     container: undefined,
+    appearance: undefined,
     alt: '',
   },
 } satisfies Meta<typeof ActivityIcon>;
@@ -224,6 +235,46 @@ export const Categories: Story = {
     await expect(
       canvas.getByRole('img', { name: 'Resource category' }),
     ).toBeVisible();
+  },
+};
+
+export const Muted: Story = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={showcaseStyles}>
+      <ActivityIcon
+        {...args}
+        appearance="muted"
+        container="none"
+        icon="assignment"
+        alt="Muted none container"
+      />
+      <ActivityIcon
+        {...args}
+        appearance="muted"
+        container="default"
+        icon="assignment"
+        alt="Muted default container"
+      />
+      <ActivityIcon
+        {...args}
+        appearance="muted"
+        container="large"
+        icon="forum"
+        size="lg"
+        alt="Muted large container"
+      />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    // The asset is hidden visually (the muted overlay replaces it) but must stay in the a11y tree.
+    for (const name of [
+      'Muted none container',
+      'Muted default container',
+      'Muted large container',
+    ]) {
+      await expect(canvas.getByRole('img', { name })).toBeInTheDocument();
+    }
   },
 };
 
