@@ -37,34 +37,114 @@
 }
 
 /* Category background colors apply only when a background container is active. */
-.mds-activity-icon--default.mds-activity-icon--category-assessment,
-.mds-activity-icon--large.mds-activity-icon--category-assessment {
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ).mds-activity-icon--category-assessment {
   background-color: var(--mds-activity-icon-assessment-bg);
 }
 
-.mds-activity-icon--default.mds-activity-icon--category-collaboration,
-.mds-activity-icon--large.mds-activity-icon--category-collaboration {
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ).mds-activity-icon--category-collaboration {
   background-color: var(--mds-activity-icon-collaboration-bg);
 }
 
-.mds-activity-icon--default.mds-activity-icon--category-communication,
-.mds-activity-icon--large.mds-activity-icon--category-communication {
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ).mds-activity-icon--category-communication {
   background-color: var(--mds-activity-icon-communication-bg);
 }
 
-.mds-activity-icon--default.mds-activity-icon--category-interactive,
-.mds-activity-icon--large.mds-activity-icon--category-interactive {
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ).mds-activity-icon--category-interactive {
   background-color: var(--mds-activity-icon-interactive-bg);
 }
 
-.mds-activity-icon--default.mds-activity-icon--category-other,
-.mds-activity-icon--large.mds-activity-icon--category-other {
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ).mds-activity-icon--category-other {
   background-color: var(--mds-activity-icon-other-bg);
 }
 
-.mds-activity-icon--default.mds-activity-icon--category-resource,
-.mds-activity-icon--large.mds-activity-icon--category-resource {
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ).mds-activity-icon--category-resource {
   background-color: var(--mds-activity-icon-resource-bg);
+}
+
+/*
+ * muted: tile and icon use the muted tokens. Declared after the category rules with matching specificity so
+ * it wins; none has no tile, so only the icon is muted.
+ */
+.mds-activity-icon:is(
+    .mds-activity-icon--default,
+    .mds-activity-icon--large
+  ):is(.mds-activity-icon--muted, .mds-activity-icon--muted-filter) {
+  background-color: var(--mds-activity-icon-muted-bg);
+}
+
+.mds-activity-icon--muted {
+  position: relative;
+}
+
+/* Hide the full-colour asset (it stays in the a11y tree) and paint its shape in the muted token colour. */
+.mds-activity-icon--muted .mds-activity-icon__asset {
+  opacity: 0;
+}
+
+.mds-activity-icon__mask {
+  background-color: var(--mds-activity-icon-muted-icon);
+  /* Match the asset's radius so muted icons keep the same rounded corners. */
+  border-radius: var(--mds-border-radius-xs);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  pointer-events: none;
+  position: absolute;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.mds-activity-icon--none .mds-activity-icon__mask {
+  inset: 0;
+}
+
+.mds-activity-icon--default .mds-activity-icon__mask {
+  inset: var(--mds-spacing-xs);
+}
+
+.mds-activity-icon--large .mds-activity-icon__mask {
+  inset: var(--mds-spacing-sm);
+}
+
+/* Forced colours override the mask's background, which would hide the icon, so show the real asset instead. */
+@media (forced-colors: active) {
+  .mds-activity-icon--muted .mds-activity-icon__asset {
+    opacity: 1;
+  }
+
+  .mds-activity-icon__mask {
+    display: none;
+  }
+}
+
+/*
+ * muted-filter: fallback for third-party brand icons only (see mutedFilterFallbackIcons).
+ * We can't control the colour of third-party artwork and masking would erase
+ * its detail, so the <img> has its saturation reduced instead. No opacity is applied, so the artwork keeps its contrast. This is NOT token-driven and contrast varies by artwork, which
+ * the repo guardrails discourage and which differs from the token-driven muted
+ * state. Keep it limited to flagged assets.
+ */
+.mds-activity-icon--muted-filter .mds-activity-icon__asset {
+  filter: saturate(0.2);
 }
 
 /* Size variants */
@@ -96,4 +176,9 @@
   border-radius: var(--mds-border-radius-xs);
   display: block;
   inline-size: 100%;
+}
+
+/* Hide the broken-image placeholder while the icon has no source. */
+.mds-activity-icon__asset:not([src]) {
+  visibility: hidden;
 }
