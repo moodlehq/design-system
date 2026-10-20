@@ -1,0 +1,25 @@
+{
+  "component": "Choicebox",
+  "slug": "choicebox",
+  "must": [],
+  "mustNot": [
+    "Don't use when options are self-explanatory. Use Radio button instead.",
+    "Don't use for multi-select scenarios. Use Checkbox instead.",
+    "Don't use for binary on/off settings. Use Switch instead.",
+    "Don't use when space is constrained and a compact list is more appropriate.",
+    "Don't open supporting text by repeating the option name, the label already provides that context.",
+    "Don't mix Choicebox with Radio button or Checkbox within the same selection group."
+  ],
+  "useInstead": [
+    "Radio button",
+    "Checkbox",
+    "Switch"
+  ],
+  "lookAlikes": [
+    "Radio button",
+    "Button",
+    "Checkbox",
+    "Select",
+    "Switch"
+  ]
+}

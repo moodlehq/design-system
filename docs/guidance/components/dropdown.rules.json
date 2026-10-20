@@ -1,0 +1,20 @@
+{
+  "component": "Dropdown",
+  "slug": "dropdown",
+  "must": [],
+  "mustNot": [
+    "Don't use a dropdown for choosing a value inside a form, use a Select input instead, which provides field semantics, validation, and native mobile behaviour.",
+    "Don't use a dropdown for two to three always-relevant actions — surface them as buttons instead. Hiding a small number of frequent actions adds a click for no benefit.",
+    "Don't use a dropdown to hide the primary action of a view. The main call to action should always be visible.",
+    "Don't nest more than one level of expandable submenu, deep nesting is hard to operate with a pointer and harder with a keyboard.",
+    "Don't mix selectable and multi-select items in the same group — the interaction models conflict."
+  ],
+  "useInstead": [
+    "Select input"
+  ],
+  "lookAlikes": [
+    "Input",
+    "Select",
+    "Button"
+  ]
+}

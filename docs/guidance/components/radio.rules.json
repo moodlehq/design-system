@@ -1,0 +1,22 @@
+{
+  "component": "Radio button",
+  "slug": "radio",
+  "must": [
+    "Always present radio buttons in a group of 2 or more. A single radio button alone is meaningless."
+  ],
+  "mustNot": [
+    "Don't use a single radio button in isolation — radio buttons only make sense as a group of 2 or more.",
+    "Don't mix radio buttons and checkboxes in the same group."
+  ],
+  "useInstead": [
+    "Checkbox",
+    "Select",
+    "Toggle/Switch"
+  ],
+  "lookAlikes": [
+    "Checkbox",
+    "Select",
+    "Switch",
+    "Choicebox"
+  ]
+}

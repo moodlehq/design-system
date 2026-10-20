@@ -1,0 +1,18 @@
+{
+  "component": "Link",
+  "slug": "link",
+  "must": [
+    "Always provide descriptive link text. Avoid \"Click here\" or \"Read more\" as the sole link text."
+  ],
+  "mustNot": [
+    "Don't use a link to trigger an action that changes state or submits data — use a Button instead.",
+    "Don't use a link styled to look like a button when the underlying behaviour is navigation only handle visual weight through the Button component, not by restyling a link.",
+    "Don't use punctuation at the end of a standalone link label."
+  ],
+  "useInstead": [
+    "Button"
+  ],
+  "lookAlikes": [
+    "Button"
+  ]
+}

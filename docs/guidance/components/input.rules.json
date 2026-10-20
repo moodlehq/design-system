@@ -1,0 +1,20 @@
+{
+  "component": "Input",
+  "slug": "input",
+  "must": [
+    "Always associate the Label with the input (`<label for>` or `aria-labelledby`)."
+  ],
+  "mustNot": [
+    "Don't use for multi-line, longer-form text — comments, descriptions, messages. Use the **Text area** component instead.",
+    "Don't use if you need a live character/word counter — that's a Text area feature, not currently supported here.",
+    "Don't repeat the label. If the placeholder says the same thing as the label, it's adding nothing — either show an example or leave it empty.",
+    "Never use it as a substitute for the label, or for anything the person needs to complete the field. Placeholder text disappears the moment someone starts typing, and assistive technology and password managers can't rely on it."
+  ],
+  "useInstead": [
+    "**Text area**"
+  ],
+  "lookAlikes": [
+    "Text area",
+    "Password"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "component": "Text area",
+  "slug": "textarea",
+  "must": [
+    "Always programmatically associate the Label with the textarea (`<label for>` or `aria-labelledby`)."
+  ],
+  "mustNot": [
+    "Don't use for single-line values — names, emails, search, short labels. Use the **Input** component instead.",
+    "Don't turn `Counter` on if there's no limit behind it; a count with nothing to compare against is noise.",
+    "Don't rely on placeholder text as a substitute for a visible Label — placeholder disappears the moment someone starts typing.",
+    "Don't use `Disabled` for a field that holds content someone should still be able to read — use `Read-only` instead.",
+    "Don't duplicate the label in the placeholder; use placeholder to show an example of expected input, not to repeat what the label already says."
+  ],
+  "useInstead": [
+    "**Input**",
+    "`Read-only`"
+  ],
+  "lookAlikes": [
+    "Input",
+    "Search"
+  ]
+}
