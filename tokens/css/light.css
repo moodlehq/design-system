@@ -321,6 +321,8 @@
   --mds-activity-icon-resource-icon: var(--mds-color-cyan-500);
   --mds-activity-icon-other-bg: var(--mds-color-gray-300);
   --mds-activity-icon-other-icon: var(--mds-color-gray-900);
+  --mds-activity-icon-muted-bg: var(--mds-color-gray-200);
+  --mds-activity-icon-muted-icon: var(--mds-color-gray-600);
   --mds-activity-icon-interactive-bg: var(--mds-color-red-100);
   --mds-activity-icon-interactive-icon: var(--mds-color-red-700);
   --mds-activity-icon-file-bg: var(--mds-color-cyan-100);
@@ -331,8 +333,6 @@
   --mds-activity-icon-collaboration-icon: var(--mds-color-indigo-500);
   --mds-activity-icon-assessment-bg: var(--mds-color-pink-100);
   --mds-activity-icon-assessment-icon: var(--mds-color-pink-500);
-  --mds-activity-icon-disabled-bg: var(--mds-color-gray-200);
-  --mds-activity-icon-disabled-icon: var(--mds-color-gray-600);
   --mds-icons-xxxl: var(--mds-scale-1200);
   --mds-icons-xxl: var(--mds-scale-1100);
   --mds-icons-xl: var(--mds-scale-1000);
