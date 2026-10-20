@@ -10,8 +10,10 @@ The GitHub instruction files are the authoritative source for all guidance. Read
 - **Stories & tests (`*.stories.tsx`, `*.test.tsx`, `tests/**`):\*\* [.github/instructions/stories-tests.instructions.md](.github/instructions/stories-tests.instructions.md)
 - **Token pipeline (`tokens/**`, `scripts/tokens.ts`):\*\* [.github/instructions/tokens.instructions.md](.github/instructions/tokens.instructions.md)
 
-Fallback policy:
+Design guidance (generated from ZeroHeight, read-only). Read the local guidance first:
 
-- Use ZeroHeight documentation and MCP access as the primary design guidance source.
-- Only load [.github/instructions/design-system.instructions.md](.github/instructions/design-system.instructions.md) if ZeroHeight cannot be accessed and additional design context is still required.
-- Ask before loading the large fallback file into the context window.
+- Start at [llms.txt](llms.txt), then read `docs/guidance/components/<slug>.md` for the component you are working on.
+- [docs/guidance/not-available.md](docs/guidance/not-available.md) lists what is not shipped yet.
+- Props and tokens come from code, not from guidance prose.
+- The ZeroHeight MCP is an extra for Moodle HQ when connected. Use it for anything the local guidance lacks.
+- `llms-full.txt` is the full ZeroHeight export. Ask before loading it, it is large.

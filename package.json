@@ -1,11 +1,12 @@
 {
   "name": "@moodlehq/design-system",
   "version": "5.4.0",
-  "description": "The Moodle Design System",
+  "description": "The Moodle Design System: React components and design tokens for Moodle, with per-component guidance for AI agents.",
   "files": [
     "/dist",
     "/css.d.ts",
-    "/llms.txt"
+    "/llms*.txt",
+    "/agents-snippet.md"
   ],
   "exports": {
     ".": {
@@ -154,7 +155,12 @@
     "typescript",
     "storybook",
     "vite",
-    "components"
+    "components",
+    "design-tokens",
+    "css",
+    "accessibility",
+    "llms-txt",
+    "ai-agents"
   ],
   "author": "Moodle HQ",
   "license": "GPL-3.0-only",

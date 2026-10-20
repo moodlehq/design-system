@@ -1,6 +1,8 @@
 /**
- * Fetches all public ZeroHeight pages and writes a combined Markdown file to
- * .github/instructions/design-system.instructions.md for AI agent consumption.
+ * Fetches all public ZeroHeight pages and writes one combined, titled Markdown
+ * file to llms-full.txt (repo root, shipped in the package) for agents that
+ * want everything. It is an optional extra: the per-component guidance from
+ * `npm run build-guidance` is the main path.
  *
  * Usage: npm run build-docs
  * Requires: ZEROHEIGHT_MCP_URL=https://mcp.zeroheight.com/mcp/<your-token>
@@ -14,23 +16,19 @@ import { dirname, resolve } from 'path';
 import { formatPage, stripExpiringImages } from './lib/zeroheight-format';
 
 const STYLEGUIDE_ID = 131542;
-const OUTPUT_PATH = resolve(
-  '.github/instructions/design-system.instructions.md',
-);
+const OUTPUT_PATH = resolve('llms-full.txt');
 
 // The cover page is a ZeroHeight UI chrome element with no text content.
 const SKIP_KEYS = new Set(['___cover']);
 
-// No applyTo frontmatter — this file is intentionally opt-in only (not auto-loaded by Copilot).
-// See routing rules in copilot-instructions.md.
 const FILE_HEADER = `<!-- Auto-generated from ZeroHeight. Do not edit manually. -->
 <!-- Source: https://design.moodle.com/ -->
 <!-- Regenerate: npm run build-docs -->
-<!-- NOTE: No applyTo frontmatter — this file is intentionally opt-in only.
-     Load it manually when ZeroHeight MCP is unavailable and design context is needed.
-     See routing rules in copilot-instructions.md. -->
 
-# Moodle Design System — Agent Reference
+# Moodle Design System: full documentation
+
+Every public page, in site order. Each page starts with a "# <title>" heading.
+Prefer llms.txt and the per-component guidance files; use this only when you need everything.
 
 `;
 
