@@ -1,0 +1,20 @@
+{
+  "component": "Button",
+  "slug": "button",
+  "must": [
+    "Always provide a text label. For icon-only buttons, this can be visually hidden and provided via `aria-label`."
+  ],
+  "mustNot": [
+    "Don't use a button for navigation to another page — use a Link instead.",
+    "Don't use a Danger button for actions that are reversible — use a Secondary button and rely on confirmation copy instead.",
+    "Don't use punctuation at the end of a label.",
+    "Don't place more than 1 primary button in the same view."
+  ],
+  "useInstead": [
+    "Link",
+    "Secondary button and rely on confirmation copy"
+  ],
+  "lookAlikes": [
+    "Link"
+  ]
+}

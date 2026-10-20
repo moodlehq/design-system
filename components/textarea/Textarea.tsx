@@ -15,6 +15,7 @@ import { FieldInfoButton } from '../_internal/FieldInfoButton';
 export type TextareaCounterMessageFormatter =
   string | ((value: number, maxLength: number) => string);
 
+/** Props for Textarea. */
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   /** Visible label text. When hideLabel is true this also serves as the aria-label
    *  fallback if no explicit aria-label prop is provided. */
@@ -60,6 +61,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   counterOverLimitAnnouncement?: TextareaCounterMessageFormatter;
 }
 
+/** Multi-line text field with optional character counter, supporting text and validation feedback. For single-line values use Input. */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {

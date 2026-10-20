@@ -1,0 +1,10 @@
+{
+  "component": "Search",
+  "slug": "search",
+  "must": [],
+  "mustNot": [
+    "Don't use for a search that submits to a separate results screen — that's a different pattern, handled elsewhere."
+  ],
+  "useInstead": [],
+  "lookAlikes": []
+}

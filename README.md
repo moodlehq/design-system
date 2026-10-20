@@ -14,6 +14,28 @@ It includes design assets, guidelines, UI components, and code standards to help
 
 The MDS is a collaborative effort between designers and developers at Moodle HQ and the wider Moodle community and is continuously evolving to meet the needs of users and to incorporate feedback we receive.
 
+## For AI agents
+
+Building with the Moodle Design System (`@moodlehq/design-system`)? Read the guidance for a component before choosing it. Props and types come from the package's TypeScript declarations.
+
+- **After install:** `node_modules/@moodlehq/design-system/llms.txt` links to the guidance page for every component, and `dist/guidance/index.md` lists them with their status. Each `dist/guidance/components/<slug>.md` covers when to use it, when not to, and look-alikes.
+- **Without installing:** [`llms.txt`](https://cdn.jsdelivr.net/npm/@moodlehq/design-system/llms.txt) links to the same pages, versioned by package release.
+- **Design guidance:** [design.moodle.com](https://design.moodle.com/) is the authored source. It is JavaScript-rendered, so use the pages above instead of fetching it.
+- **Source of truth:** ZeroHeight for design intent, the code and its `.d.ts` files for props and tokens.
+- **Everything at once:** [`llms-full.txt`](https://cdn.jsdelivr.net/npm/@moodlehq/design-system/llms-full.txt) is the full ZeroHeight export. It is large, so prefer the pages above.
+
+Agents don't read files inside `node_modules` automatically. To point yours at the guidance, paste this into your project's `CLAUDE.md` or `AGENTS.md` (also available as [`agents-snippet.md`](agents-snippet.md) in the package):
+
+```md
+## Moodle Design System
+
+Use `@moodlehq/design-system` components. Before choosing one, read
+`node_modules/@moodlehq/design-system/llms.txt`: it links to the guidance page
+for every component (check its `status` and `package` version).
+Take props from the `.d.ts` files in `dist/`. If a component isn't documented,
+say so instead of inventing one.
+```
+
 ## Table of Contents
 
 - [Design Resources](#design-resources)
@@ -217,7 +239,7 @@ The build now generates a machine-readable component index at `dist/component-in
 - Generation command: `npm run build-component-index`
 - Included in full build: `npm run build`
 
-Use this JSON for deterministic tooling/agent lookups, while `.github/instructions/component-index.instructions.md` remains the compact instruction-friendly entry point.
+Use this JSON for deterministic tooling/agent lookups, while `llms.txt` and `docs/guidance/` are the entry points for reading guidance.
 
 ### Build the Design System
 

@@ -75,6 +75,7 @@ export function useDropdownContext(): DropdownContextValue {
 
 // ── DropdownMenu ─────────────────────────────────────────────────────────────
 
+/** Props for DropdownMenu. */
 export type DropdownMenuProps = HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -109,6 +110,7 @@ DropdownMenu.displayName = 'DropdownMenu';
 
 // ── Dropdown ─────────────────────────────────────────────────────────────────
 
+/** Props for Dropdown. */
 export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
   /** Trigger label. Must be a caller-supplied translated string. Required
    *  unless `trigger` is provided. */
@@ -154,6 +156,7 @@ export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
 // --mds-spacing-xxs = var(--mds-scale-100) = 0.25rem = 4px
 const MENU_OFFSET = 4;
 
+/** Root of a Dropdown: a trigger that opens a floating menu of items, with controlled or uncontrolled open state. Compose with DropdownMenu and the DropdownItem* components; use Tooltip for non-interactive hints. */
 export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   function Dropdown(
     {

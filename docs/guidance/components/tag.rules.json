@@ -1,0 +1,24 @@
+{
+  "component": "Tag",
+  "slug": "tag",
+  "must": [],
+  "mustNot": [
+    "Don't use Tag to show static status information with no action attached — use [Badge](/28c702-badge) instead.",
+    "Don't use the Link type for something the user needs to remove — use a Removable variant instead.",
+    "Don't use a Removable variant for a value the user shouldn't be able to remove — the Close button signals that the item is dismissible, so removing it would be misleading. Use Badge or plain text instead.",
+    "Don't use Tag as a substitute for [Nav pill](/981bd1-nav-pill) — Nav pill is for navigation state (selected/unselected), not for labelling or removable selections.",
+    "Don't add punctuation to labels."
+  ],
+  "useInstead": [
+    "[Badge](/28c702-badge)",
+    "Removable variant",
+    "Badge or plain text"
+  ],
+  "lookAlikes": [
+    "Badge",
+    "Link",
+    "Button",
+    "Close button",
+    "Nav pill"
+  ]
+}

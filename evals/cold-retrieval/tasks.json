@@ -1,0 +1,115 @@
+{
+  "package": "@moodlehq/design-system",
+  "version": "5.4.0",
+  "shipped": [
+    "ActivityIcon",
+    "Alert",
+    "Avatar",
+    "Badge",
+    "Breadcrumb",
+    "Button",
+    "Checkbox",
+    "Choicebox",
+    "CloseButton",
+    "Dropdown",
+    "FavouriteButton",
+    "Input",
+    "Link",
+    "NavPill",
+    "Pagination",
+    "ProgressBar",
+    "Radio",
+    "Switch",
+    "Tag",
+    "Textarea",
+    "Tooltip",
+    "DropdownItemAction",
+    "DropdownItemCustom",
+    "DropdownItemDivider",
+    "DropdownItemExpandable",
+    "DropdownItemGroup",
+    "DropdownItemHeader",
+    "DropdownItemList",
+    "DropdownItemMultiselect",
+    "DropdownItemSelect",
+    "DropdownMenu",
+    "DropdownTrigger"
+  ],
+  "tasks": [
+    {
+      "id": "h1",
+      "prompt": "Render a removable tag showing 'Algebra' that a screen reader user can remove, wired to a handler.",
+      "expect": {
+        "component": "Tag",
+        "props": ["content", "onRemove", "removeLabel"],
+        "type": "removable"
+      }
+    },
+    {
+      "id": "h2",
+      "prompt": "Show a dismissible warning message 'Your session expires soon' with an 'Extend' action button and a localisable accessible name for the dismiss control.",
+      "expect": {
+        "component": "Alert",
+        "variant": "warning",
+        "props": [
+          "message",
+          "isDismissible",
+          "isActionable",
+          "actionLabel",
+          "onAction",
+          "dismissAriaLabel"
+        ]
+      }
+    },
+    {
+      "id": "h3",
+      "prompt": "A checkbox 'I agree to the terms' that shows the error 'You must agree' when validation fails.",
+      "expect": {
+        "component": "Checkbox",
+        "props": ["label", "invalid", "invalidFeedback"]
+      }
+    },
+    {
+      "id": "h4",
+      "prompt": "Put an on/off control in each row of a data table where the column header already names the setting, so no visible label, but it must stay accessible.",
+      "expect": {
+        "component": "Switch",
+        "props": ["label", "hideLabel"],
+        "mustNot": ["Checkbox"]
+      }
+    },
+    {
+      "id": "h5",
+      "prompt": "Paginate a list of 20 pages, controlled from React state.",
+      "expect": {
+        "component": "Pagination",
+        "props": ["totalPages", "currentPage", "onPageChange"]
+      }
+    },
+    {
+      "id": "h6",
+      "prompt": "A button that deletes a course and should read as destructive but not the page's main call to action (outlined, not filled).",
+      "expect": {
+        "component": "Button",
+        "variant": "outline-danger",
+        "props": ["label", "variant"]
+      }
+    },
+    {
+      "id": "h7",
+      "prompt": "Add tabbed navigation to switch between 'Overview' and 'Grades' panels.",
+      "expect": {
+        "notAvailable": true,
+        "note": "No Tabs component in 5.4.0 (Nav pill is navigation, not tabpanels)"
+      }
+    },
+    {
+      "id": "h8",
+      "prompt": "An 'Actions' menu button that opens a floating menu aligned below and to the right edge of its trigger.",
+      "expect": {
+        "component": "Dropdown",
+        "props": ["label", "placement"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "package": "@moodlehq/design-system",
+  "version": "5.4.0",
+  "shipped": [
+    "ActivityIcon",
+    "Alert",
+    "Avatar",
+    "Badge",
+    "Breadcrumb",
+    "Button",
+    "Checkbox",
+    "Choicebox",
+    "CloseButton",
+    "Dropdown",
+    "FavouriteButton",
+    "Input",
+    "Link",
+    "NavPill",
+    "Pagination",
+    "ProgressBar",
+    "Radio",
+    "Switch",
+    "Tag",
+    "Textarea",
+    "Tooltip",
+    "DropdownItemAction",
+    "DropdownItemCustom",
+    "DropdownItemDivider",
+    "DropdownItemExpandable",
+    "DropdownItemGroup",
+    "DropdownItemHeader",
+    "DropdownItemList",
+    "DropdownItemMultiselect",
+    "DropdownItemSelect",
+    "DropdownMenu",
+    "DropdownTrigger"
+  ],
+  "tasks": [
+    {
+      "id": "i1",
+      "prompt": "On the account page add a control that permanently deletes the user's account.",
+      "expect": {
+        "component": "Button",
+        "mustNot": ["Switch"]
+      }
+    },
+    {
+      "id": "i2",
+      "prompt": "Let the user pick exactly one of three subscription plans from a mutually exclusive list.",
+      "expect": {
+        "component": "Radio",
+        "mustNot": ["Switch", "Checkbox"]
+      }
+    },
+    {
+      "id": "i3",
+      "prompt": "A single 'Receive email digests' setting, saved when the surrounding form is submitted, with a one-line explanation of what it does.",
+      "expect": {
+        "component": "Checkbox",
+        "mustNot": ["Switch"]
+      }
+    },
+    {
+      "id": "i4",
+      "prompt": "A permissions row where an admin locks or unlocks editing for a role, applied immediately.",
+      "expect": {
+        "component": "Switch",
+        "variant": "lock"
+      }
+    },
+    {
+      "id": "i5",
+      "prompt": "Show a short 'Saved' confirmation that goes away on its own without blocking the user.",
+      "expect": {
+        "notAvailable": true,
+        "note": "Alert guidance points at toast; no Toast ships"
+      }
+    },
+    {
+      "id": "i6",
+      "prompt": "Ask the user to confirm before leaving a page with unsaved changes, blocking the page until they choose.",
+      "expect": {
+        "notAvailable": true,
+        "note": "Alert guidance points at Modal/Dialog; none ships in 5.4.0"
+      }
+    }
+  ]
+}

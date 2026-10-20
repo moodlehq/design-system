@@ -1,10 +1,12 @@
 {
   "name": "@moodlehq/design-system",
   "version": "5.4.0",
-  "description": "The Moodle Design System",
+  "description": "The Moodle Design System: React components and design tokens for Moodle, with per-component guidance for AI agents.",
   "files": [
     "/dist",
-    "/css.d.ts"
+    "/css.d.ts",
+    "/llms*.txt",
+    "/agents-snippet.md"
   ],
   "exports": {
     ".": {
@@ -123,19 +125,21 @@
     "test-unit-coverage": "vitest run --project unit --coverage",
     "test-storybook": "vitest run --project storybook",
     "storybook": "storybook dev -p 6006",
-    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index",
+    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index && npm run build-guidance -- --dist",
     "build-component-index": "tsx scripts/generate-component-index.ts",
     "build-storybook": "storybook build",
     "build-docs": "tsx scripts/build-docs.ts",
+    "build-guidance": "tsx scripts/build-guidance.ts",
+    "check-code-connect": "tsx scripts/check-code-connect.ts",
     "build-tokens": "tsx scripts/tokens.ts",
-    "format": "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write . '**/*.{ts,tsx,js,jsx,yml}'",
+    "format": "prettier --config .github/linters/.prettierrc --ignore-path .prettierignore --write . '**/*.{ts,tsx,js,jsx,yml}'",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix --config .github/linters/eslint.config.mjs",
     "prepare": "husky",
     "figma-connect": "figma connect publish"
   },
   "lint-staged": {
     "*{js,jsx,ts,tsx}": [
-      "prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --write",
+      "prettier --config .github/linters/.prettierrc --ignore-path .prettierignore --write",
       "eslint --fix --config .github/linters/eslint.config.mjs"
     ]
   },
@@ -151,7 +155,12 @@
     "typescript",
     "storybook",
     "vite",
-    "components"
+    "components",
+    "design-tokens",
+    "css",
+    "accessibility",
+    "llms-txt",
+    "ai-agents"
   ],
   "author": "Moodle HQ",
   "license": "GPL-3.0-only",
