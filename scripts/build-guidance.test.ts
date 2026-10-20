@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   collectComponentPages,
+  compactTables,
   deriveForAgents,
   renderComponent,
   slugFor,
@@ -154,8 +155,9 @@ describe('renderComponent', () => {
     expect(md).toContain('import: @moodlehq/design-system/components/switch');
   });
 
-  it('puts For agents before Usage, and Usage before Design', () => {
-    const order = ['## For agents', '## Usage', '## Design'].map((h) =>
+  it('puts Look-alikes before Usage, and Usage before Design; no For agents block', () => {
+    expect(md).not.toContain('## For agents');
+    const order = ['## Look-alikes', '## Usage', '## Design'].map((h) =>
       md.indexOf(h),
     );
     expect(order.every((i) => i >= 0)).toBe(true);
@@ -165,5 +167,26 @@ describe('renderComponent', () => {
   it('removes callout markup and zeroheight placeholders', () => {
     expect(md).not.toContain('<callout');
     expect(md).not.toContain('zeroheight://');
+  });
+});
+
+describe('look-alikes', () => {
+  it("does not match the component's own name as a look-alike", () => {
+    const f = deriveForAgents(
+      'Radio button',
+      '* **Use a Checkbox instead** when users can pick several.\n* Do not mix radio buttons here.',
+      ['Radio button', 'Button', 'Checkbox', 'Choicebox'],
+    );
+    expect(f.lookAlikes).toEqual(['Checkbox', 'Choicebox']);
+  });
+});
+
+describe('compactTables', () => {
+  it('collapses padding and separator runs', () => {
+    expect(
+      compactTables(
+        '| Rule  | Image |\n| :---- | ----------- |\n| Do    |       |',
+      ),
+    ).toBe('| Rule | Image |\n| :--- | --- |\n| Do | |');
   });
 });

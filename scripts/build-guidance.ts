@@ -30,6 +30,16 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import {
+  FOUNDATIONS,
+  builtFrom,
+  chooseGuidance,
+  compactGallery,
+  extractAccessibility,
+  readTokenNames,
+  renderBuiltFrom,
+  renderTokenTable,
+} from './lib/guidance-extras';
+import {
   demoteHeadings,
   parsePage,
   stripExpiringImages,
@@ -72,9 +82,12 @@ function isRef(v: unknown): v is { id: number; url: string } {
   );
 }
 
-/** Collects pages under the top-level "Components" group, ignoring other groups. */
-export function collectComponentPages(pages: Tree): PageRef[] {
-  const group = (pages['Components'] ?? {}) as Tree;
+/** Collects pages under one top-level group (default "Components"), ignoring other groups. */
+export function collectComponentPages(
+  pages: Tree,
+  groupName = 'Components',
+): PageRef[] {
+  const group = (pages[groupName] ?? {}) as Tree;
   const out: PageRef[] = [];
   const walk = (node: Tree): void => {
     for (const [name, value] of Object.entries(node)) {
@@ -127,9 +140,24 @@ export function splitSections(body: string): Map<string, string> {
   return sections;
 }
 
+/** Collapses table padding and drops separator dash runs; padded tables bloat every page. */
+export function compactTables(md: string): string {
+  return md
+    .split('\n')
+    .map((l) => {
+      if (!/^\s*\|.*\|\s*$/.test(l)) return l;
+      return l
+        .trim()
+        .replace(/\|\s*(:?)-{3,}(:?)\s*(?=\|)/g, '| $1---$2 ')
+        .replace(/[ \t]{2,}/g, ' ');
+    })
+    .join('\n');
+}
+
 /** Removes ZeroHeight-only markup that carries no meaning outside the site. */
 function cleanBody(md: string): string {
-  return md
+  return compactTables(md)
+    .replace(/\[([^\]]*)\]\(vscode-file:\/\/[^)]*\)/g, '$1')
     .replace(/<\/?(callout|shortcut_tiles?)[^>]*>/g, '')
     .replace(/^\*\*GitHub: .*\*\*$/gm, '')
     .replace(/^#{1,6}\s+GitHub\s*$/gm, '')
@@ -146,13 +174,22 @@ function mentionedComponents(
   names: string[],
   self: string,
 ): string[] {
+  // Drop the component's own name first: "radio button" must not match Button.
+  const text = line.replace(new RegExp(`\\b${self}s?\\b`, 'gi'), '');
   return names.filter(
     (n) =>
       n.toLowerCase() !== self.toLowerCase() &&
       !NAME_STOPWORDS.has(n) &&
-      new RegExp(`\\b${n}s?\\b`, 'i').test(line),
+      new RegExp(`\\b${n}s?\\b`, 'i').test(text),
   );
 }
+
+/** Look-alikes the page text can't reveal, keyed by component name (lower case). */
+const EXTRA_LOOK_ALIKES: Record<string, string[]> = {
+  'radio button': ['Checkbox', 'Choicebox'],
+  checkbox: ['Radio button', 'Choicebox'],
+  choicebox: ['Radio button', 'Checkbox'],
+};
 
 export interface ForAgents {
   must: string[];
@@ -162,7 +199,7 @@ export interface ForAgents {
 }
 
 /**
- * Derives the "For agents" block from page content. This is a deterministic
+ * Derives look-alikes and the machine-readable rules from page content. This is a deterministic
  * heuristic over "When not to use" and guideline bullets, not authored data:
  * the MSE disambiguation tables are the intended source once published.
  */
@@ -183,13 +220,17 @@ export function deriveForAgents(
 
   const useInstead = new Set<string>();
   const lookAlikes = new Set<string>();
-  for (const b of notUse) {
+  for (const b of bullets.filter(
+    (x) => /^(don'?t|do not|never)\b/i.test(x) || /\binstead\b/i.test(x),
+  )) {
     const alt = b.match(
       /^.*\buse (?:a |an |the )?([^.,;—]+?)(?: component)? instead/i,
     );
     if (alt) useInstead.add(alt[1].trim());
     for (const n of mentionedComponents(b, allNames, title)) lookAlikes.add(n);
   }
+  for (const n of EXTRA_LOOK_ALIKES[title.toLowerCase()] ?? [])
+    lookAlikes.add(n);
   return {
     must: must.slice(0, 6),
     mustNot: notUse.slice(0, 6),
@@ -198,19 +239,13 @@ export function deriveForAgents(
   };
 }
 
-function list(label: string, items: string[]): string {
-  if (!items.length) return '';
-  return `- ${label}:\n${items.map((i) => `  - ${i}`).join('\n')}\n`;
-}
-
-function renderForAgents(f: ForAgents): string {
-  const out = [
-    list('Must', f.must),
-    list('Must not', f.mustNot),
-    f.useInstead.length ? `- Use instead: ${f.useInstead.join('; ')}\n` : '',
-    f.lookAlikes.length ? `- Look-alikes: ${f.lookAlikes.join(' · ')}\n` : '',
-  ].join('');
-  return out ? `## For agents\n\n${out}` : '';
+/** Dos and don'ts already live in Usage, so only the look-alikes are surfaced. */
+function renderLookAlikes(f: ForAgents): string {
+  if (!f.lookAlikes.length) return '';
+  const instead = f.useInstead.length
+    ? `\n\nUse instead: ${f.useInstead.join('; ')}.`
+    : '';
+  return `## Look-alikes\n\n${f.lookAlikes.join(' · ')}${instead}\n`;
 }
 
 function orderedSections(sections: Map<string, string>): string[] {
@@ -230,6 +265,14 @@ export interface Rendered {
   url: string;
   intro: string;
   markdown: string;
+  /** Machine-readable dos and don'ts, written as <slug>.rules.json. */
+  rules: ForAgents;
+}
+
+/** Code-derived inputs for the "Built from" section; omitted in unit tests. */
+export interface CodeContext {
+  tokens: Map<string, string>;
+  slugs: string[];
 }
 
 export function renderComponent(
@@ -237,6 +280,7 @@ export function renderComponent(
   raw: string,
   version: string,
   allNames: string[],
+  code?: CodeContext,
 ): Rendered {
   const { meta, body } = parsePage(stripExpiringImages(raw));
   const name = meta.get('title') || page.name;
@@ -245,10 +289,15 @@ export function renderComponent(
   const url = meta.get('url') || page.url;
   const intro = meta.get('introduction') || '';
   const sections = splitSections(body);
-  const forAgents = renderForAgents(
-    deriveForAgents(name, sections.get('Usage') ?? '', allNames),
-  );
+  const rules = deriveForAgents(name, sections.get('Usage') ?? '', allNames);
+  const lookAlikes = renderLookAlikes(rules);
   const target = PART_OF[slug] ?? slug;
+  const accessibility = extractAccessibility(sections);
+  const composition = code
+    ? renderBuiltFrom(
+        builtFrom(target, COMPONENTS_DIR, code.slugs, code.tokens),
+      )
+    : '';
   const markdown = [
     '---',
     `component: ${name}`,
@@ -264,17 +313,71 @@ export function renderComponent(
     '',
     intro,
     '',
-    forAgents,
+    lookAlikes,
+    accessibility,
+    composition,
     ...orderedSections(sections),
   ]
     .filter((l, i, a) => !(l === '' && a[i - 1] === ''))
     .join('\n')
     .trimEnd()
     .concat('\n');
-  return { name, slug, status, url, intro, markdown };
+  return { name, slug, status, url, intro, markdown, rules };
 }
 
-function renderIndex(shipped: Rendered[], missing: Rendered[]): string {
+export interface Foundation {
+  file: string;
+  title: string;
+  markdown: string;
+}
+
+function renderFoundation(
+  spec: (typeof FOUNDATIONS)[number],
+  pages: Map<string, string>,
+  version: string,
+  tokens: Map<string, string>,
+  slugs: string[],
+): Foundation {
+  const guidance = spec.pages
+    .map((n) => pages.get(n))
+    .filter((raw): raw is string => Boolean(raw))
+    .map((raw) => {
+      const { body } = parsePage(stripExpiringImages(raw));
+      return chooseGuidance(splitSections(body), (b) =>
+        demoteHeadings(compactGallery(cleanBody(b))),
+      );
+    })
+    .filter(Boolean)
+    .join('\n\n');
+  const markdown = [
+    '---',
+    `foundation: ${spec.title}`,
+    `package: "${PACKAGE_NAME}@${version}"`,
+    `source: https://${PUBLIC_HOST}/`,
+    '---',
+    '',
+    `# ${spec.title}`,
+    '',
+    guidance
+      ? `How to choose, from ${PUBLIC_HOST}. Token values below the guidance come from code.`
+      : 'Token values come from code.',
+    '',
+    guidance,
+    '',
+    renderTokenTable(tokens, spec.prefixes, slugs),
+  ]
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trimEnd()
+    .concat('\n');
+  return { file: spec.file, title: spec.title, markdown };
+}
+
+function renderIndex(
+  shipped: Rendered[],
+  missing: Rendered[],
+  foundations: Foundation[] = [],
+): string {
   const row = (r: Rendered): string =>
     `- [${r.name}](components/${r.slug}.md) · ${r.status}${r.intro ? ` · ${r.intro}` : ''}`;
   return [
@@ -286,30 +389,23 @@ function renderIndex(shipped: Rendered[], missing: Rendered[]): string {
     '',
     ...shipped.map(row),
     '',
-    '## Documented but not available in this package version',
+    '## Foundations',
     '',
-    'See [not-available.md](not-available.md).',
+    ...foundations.map((f) => `- [${f.title}](foundations/${f.file})`),
+    '',
+    '## Documented but not in this package version',
+    '',
     ...missing.map((r) => `- ${r.name} · ${r.status}`),
     '',
   ].join('\n');
 }
 
-function renderNotAvailable(missing: Rendered[], version: string): string {
-  return [
-    '# Not available',
-    '',
-    `Documented on ${PUBLIC_HOST} but not shipped in ${PACKAGE_NAME}@${version}. Do not import these; say so, or use an available alternative.`,
-    '',
-    ...missing.map(
-      (r) => `- **${r.name}** · ${r.status}${r.intro ? ` · ${r.intro}` : ''}`,
-    ),
-    '',
-    'Components with no documentation at all (for example Toast or Tabs) are also not available.',
-    '',
-  ].join('\n');
-}
-
-function renderLlms(shipped: Rendered[], version: string): string {
+function renderLlms(
+  shipped: Rendered[],
+  version: string,
+  foundations: Foundation[] = [],
+): string {
+  const cdn = `https://cdn.jsdelivr.net/npm/${PACKAGE_NAME}@${version}`;
   return [
     '# Moodle Design System',
     '',
@@ -319,29 +415,37 @@ function renderLlms(shipped: Rendered[], version: string): string {
     '',
     '## Guidance',
     '',
-    `- [Index](https://cdn.jsdelivr.net/npm/${PACKAGE_NAME}@${version}/dist/guidance/index.md): one line per component with status`,
-    `- [Not available](https://cdn.jsdelivr.net/npm/${PACKAGE_NAME}@${version}/dist/guidance/not-available.md): documented but unshipped components`,
+    `- [Index](${cdn}/dist/guidance/index.md): one line per page with status`,
     ...shipped.map(
-      (r) =>
-        `- [${r.name}](https://cdn.jsdelivr.net/npm/${PACKAGE_NAME}@${version}/dist/guidance/components/${r.slug}.md)`,
+      (r) => `- [${r.name}](${cdn}/dist/guidance/components/${r.slug}.md)`,
+    ),
+    '',
+    '## Foundations',
+    '',
+    ...foundations.map(
+      (f) => `- [${f.title}](${cdn}/dist/guidance/foundations/${f.file})`,
     ),
     '',
     '## Optional',
     '',
+    `- [Full documentation](${cdn}/llms-full.txt): every public page in one file, large`,
     `- [Design guidelines](https://${PUBLIC_HOST}/)`,
     '',
   ].join('\n');
 }
 
-async function loadPages(
-  fixtures: string | undefined,
-): Promise<{ pages: PageRef[]; read: (p: PageRef) => Promise<string> }> {
+async function loadPages(fixtures: string | undefined): Promise<{
+  pages: PageRef[];
+  foundationPages: PageRef[];
+  read: (p: PageRef) => Promise<string>;
+}> {
   if (fixtures) {
     const tree = JSON.parse(
       readFileSync(join(fixtures, 'tree.json'), 'utf-8'),
     ) as { pages?: Tree } & Tree;
     return {
       pages: collectComponentPages(tree.pages ?? tree),
+      foundationPages: collectComponentPages(tree.pages ?? tree, 'Foundation'),
       read: async (p) => readFileSync(join(fixtures, `${p.id}.md`), 'utf-8'),
     };
   }
@@ -386,6 +490,7 @@ async function loadPages(
   let first = true;
   return {
     pages: collectComponentPages(data.pages ?? data),
+    foundationPages: collectComponentPages(data.pages ?? data, 'Foundation'),
     read: async (p) => {
       // ZeroHeight allows 30 requests per 30 s.
       // A valid page starts with YAML front matter; anything else is an error
@@ -420,15 +525,43 @@ function copyToDist(): void {
   console.log(`Copied docs/guidance → dist/guidance`);
 }
 
+/** Component directories the package exports (private `_` dirs and assets excluded). */
+function exportedSlugs(): Set<string> {
+  const skip = new Set(['assets']);
+  return new Set([...shippedSlugs()].filter((s) => !skip.has(s)));
+}
+
 /**
- * Offline gate for CI: every shipped component has a usable guidance page and
- * the generated files carry no unresolved ZeroHeight placeholders.
+ * Offline gate for CI. Fails when generated guidance is stale or inconsistent:
+ * a component without a page (or the reverse), unresolved placeholders, a
+ * frontmatter version that differs from package.json, missing llms files, or
+ * dead paths in a built dist/component-index.json.
  */
 export function checkGenerated(): string[] {
   const problems: string[] = [];
+  const version = (
+    JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf-8')) as {
+      version: string;
+    }
+  ).version;
+  const expectedPackage = `package: "${PACKAGE_NAME}@${version}"`;
+
   if (!existsSync(LLMS_PATH)) problems.push('llms.txt is missing');
-  for (const slug of shippedSlugs()) {
-    const file = join(GUIDANCE_DIR, 'components', `${slug}.md`);
+  else if (!readFileSync(LLMS_PATH, 'utf-8').includes(`@${version}`))
+    problems.push(`llms.txt is not for version ${version}`);
+  for (const f of ['index.md']) {
+    if (!existsSync(join(GUIDANCE_DIR, f)))
+      problems.push(`docs/guidance/${f} is missing`);
+  }
+  for (const spec of FOUNDATIONS) {
+    if (!existsSync(join(GUIDANCE_DIR, 'foundations', spec.file)))
+      problems.push(`docs/guidance/foundations/${spec.file} is missing`);
+  }
+
+  const exported = exportedSlugs();
+  const pagesDir = join(GUIDANCE_DIR, 'components');
+  for (const slug of exported) {
+    const file = join(pagesDir, `${slug}.md`);
     if (!existsSync(file)) {
       problems.push(`no guidance page for component "${slug}"`);
       continue;
@@ -439,6 +572,32 @@ export function checkGenerated(): string[] {
     if (!md.includes('\n## Usage')) problems.push(`${slug}: no Usage section`);
     if (md.includes('zeroheight://'))
       problems.push(`${slug}: unresolved zeroheight:// placeholder`);
+    if (!md.includes(`\n${expectedPackage}\n`))
+      problems.push(`${slug}: frontmatter package version is not ${version}`);
+  }
+  if (existsSync(pagesDir)) {
+    for (const f of readdirSync(pagesDir).filter((n) => n.endsWith('.md'))) {
+      const slug = f.replace(/\.md$/, '');
+      if (!exported.has(PART_OF[slug] ?? slug))
+        problems.push(`guidance page "${slug}" has no matching component`);
+    }
+  }
+
+  const indexFile = join(ROOT, 'dist', 'component-index.json');
+  if (existsSync(indexFile)) {
+    const index = JSON.parse(readFileSync(indexFile, 'utf-8')) as {
+      components: Array<Record<string, unknown>>;
+    };
+    const pathKeys = ['typesPath', 'guidancePath', 'implementationPath'];
+    for (const c of index.components) {
+      for (const k of pathKeys) {
+        const v = c[k];
+        if (typeof v === 'string' && !existsSync(join(ROOT, v)))
+          problems.push(
+            `component-index.json: ${String(c.slug)}.${k} → ${v} does not exist`,
+          );
+      }
+    }
   }
   return problems;
 }
@@ -464,8 +623,11 @@ async function main(): Promise<void> {
     }
   ).version;
   const shipped = shippedSlugs();
+  const slugs = [...exportedSlugs()];
+  const tokens = readTokenNames(join(ROOT, 'tokens', 'css'));
+  const code: CodeContext = { tokens, slugs };
 
-  const { pages, read } = await loadPages(fixtures);
+  const { pages, foundationPages, read } = await loadPages(fixtures);
   const allNames = pages.map((p) => p.name);
   const rendered: Rendered[] = [];
   for (const page of pages) {
@@ -475,8 +637,16 @@ async function main(): Promise<void> {
       console.warn(`    skipped (no content): ${page.name}`);
       continue;
     }
-    rendered.push(renderComponent(page, raw, version, allNames));
+    rendered.push(renderComponent(page, raw, version, allNames, code));
   }
+  const foundationRaw = new Map<string, string>();
+  for (const page of foundationPages) {
+    console.log(`  Foundation: ${page.name} (${page.id})`);
+    foundationRaw.set(page.name, await read(page));
+  }
+  const foundations = FOUNDATIONS.map((spec) =>
+    renderFoundation(spec, foundationRaw, version, tokens, slugs),
+  );
 
   const isShipped = (r: Rendered): boolean =>
     shipped.has(PART_OF[r.slug] ?? r.slug);
@@ -485,15 +655,22 @@ async function main(): Promise<void> {
 
   rmSync(GUIDANCE_DIR, { recursive: true, force: true });
   mkdirSync(join(GUIDANCE_DIR, 'components'), { recursive: true });
+  mkdirSync(join(GUIDANCE_DIR, 'foundations'), { recursive: true });
   for (const r of have) {
     writeFileSync(join(GUIDANCE_DIR, 'components', `${r.slug}.md`), r.markdown);
+    writeFileSync(
+      join(GUIDANCE_DIR, 'components', `${r.slug}.rules.json`),
+      `${JSON.stringify({ component: r.name, slug: r.slug, ...r.rules }, null, 2)}\n`,
+    );
   }
-  writeFileSync(join(GUIDANCE_DIR, 'index.md'), renderIndex(have, missing));
+  for (const f of foundations) {
+    writeFileSync(join(GUIDANCE_DIR, 'foundations', f.file), f.markdown);
+  }
   writeFileSync(
-    join(GUIDANCE_DIR, 'not-available.md'),
-    renderNotAvailable(missing, version),
+    join(GUIDANCE_DIR, 'index.md'),
+    renderIndex(have, missing, foundations),
   );
-  writeFileSync(LLMS_PATH, renderLlms(have, version));
+  writeFileSync(LLMS_PATH, renderLlms(have, version, foundations));
   console.log(
     `\nWrote ${have.length} component page(s); ${missing.length} documented but not shipped.`,
   );

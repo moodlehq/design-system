@@ -6,6 +6,8 @@ on:
       - 'components/**'
       - 'docs/guidance/**'
       - 'llms.txt'
+      - 'package.json'
+      - 'scripts/generate-component-index.ts'
       - 'scripts/build-guidance.ts'
       - 'scripts/lib/**'
 
@@ -27,5 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check guidance covers every component
+      - name: Build component index
+        run: npm run build-component-index
+
+      - name: Check generated guidance is complete and current
         run: npm run build-guidance -- --check
