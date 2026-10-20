@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactElement } from 'react';
 import { forwardRef, isValidElement } from 'react';
 
+/** Visual style of a Button, from `primary` to `ghost` and the `outline-*` variants. */
 export type ButtonVariant =
   | 'primary'
   | 'secondary'
@@ -14,6 +15,7 @@ type ButtonSize = 'sm' | 'md' | 'lg';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
+/** Props for Button. */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label?: string;
   variant?: ButtonVariant;
@@ -43,6 +45,7 @@ const allowedVariants: ButtonVariant[] = [
 
 const allowedSizes: ButtonSize[] = ['sm', 'md', 'lg'];
 
+/** Triggers an action such as submitting a form or opening a dialog. For navigation to another page use Link; for an icon-only dismiss control use CloseButton. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {

@@ -4,6 +4,7 @@ import { Tooltip } from '../tooltip/Tooltip';
 import type { BaseInputProps } from './BaseInput';
 import { BaseInput } from './BaseInput';
 
+/** Props for PasswordInput. */
 export interface PasswordInputProps extends Omit<
   BaseInputProps,
   | 'inputType'
@@ -27,6 +28,7 @@ const lockIcon = (
   />
 );
 
+/** Password field with a show/hide visibility toggle. Use instead of Input for any password entry. */
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   function PasswordInput(
     {

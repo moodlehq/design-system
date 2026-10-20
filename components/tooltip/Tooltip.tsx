@@ -22,6 +22,7 @@ import { cloneElement, isValidElement, useEffect, useState } from 'react';
 type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right';
 type TooltipVariant = 'dark' | 'light';
 
+/** Props for Tooltip. */
 export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   /** Tooltip text displayed in the popup. Must be a caller-supplied translated string. */
   label: string;
@@ -61,6 +62,7 @@ const ARROW_HEIGHT = 6;
 const ARROW_WIDTH = 12;
 const ARROW_GAP = 8;
 
+/** Short, non-interactive text popup shown on hover or focus of its single child element. Do not put essential information or interactive content in it; use Alert for persistent messages. */
 export const Tooltip = ({
   label,
   placement = 'top',

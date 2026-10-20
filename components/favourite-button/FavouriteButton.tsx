@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 
+/** Props for FavouriteButton. */
 export interface FavouriteButtonProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'type'
@@ -19,6 +20,7 @@ export interface FavouriteButtonProps extends Omit<
   'aria-label': string;
 }
 
+/** Icon toggle button for marking or unmarking an item as a favourite, exposing its state through `aria-pressed`. For other actions use Button. */
 export const FavouriteButton = forwardRef<
   HTMLButtonElement,
   FavouriteButtonProps

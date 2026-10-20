@@ -1,11 +1,14 @@
 import { type InputHTMLAttributes, forwardRef, useId } from 'react';
 
+/** Thumb icon set for a Switch: `enable`, `visibility` or `lock`. */
 export type SwitchVariant = 'enable' | 'visibility' | 'lock';
+/** Side of the switch the label appears on: `start` or `end`. */
 export type SwitchLabelSide = 'end' | 'start';
 
 const allowedVariants: SwitchVariant[] = ['enable', 'visibility', 'lock'];
 const allowedLabelSides: SwitchLabelSide[] = ['end', 'start'];
 
+/** Props for Switch. */
 export interface SwitchProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'type'
@@ -21,6 +24,7 @@ export interface SwitchProps extends Omit<
   labelSide?: SwitchLabelSide;
 }
 
+/** Toggle for an on/off setting that takes effect immediately. For choices submitted with a form use Checkbox. */
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   (
     {

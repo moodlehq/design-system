@@ -4,6 +4,7 @@ import { forwardRef } from 'react';
 import { Checkbox } from '../checkbox';
 import { useDropdownContext } from './Dropdown';
 
+/** Props for DropdownItemMultiselect. */
 export interface DropdownItemMultiselectProps extends HTMLAttributes<HTMLDivElement> {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;

@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 import { useDropdownContext } from './Dropdown';
 
+/** Props for DropdownItemList. */
 export interface DropdownItemListProps extends HTMLAttributes<HTMLDivElement> {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;

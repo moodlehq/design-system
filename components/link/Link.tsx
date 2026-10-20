@@ -5,6 +5,7 @@ type LinkVariant = 'primary' | 'secondary' | 'inline';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
+/** Props for Link. */
 export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   label: string;
   variant?: string;
@@ -23,6 +24,7 @@ const isIconElement = (el: unknown, propName: string): el is IconElement => {
   return valid;
 };
 
+/** Anchor for navigating to another page or resource, available as `primary`, `secondary` or `inline` variants. For actions that do not navigate use Button; for a pill-style navigation item use NavPill. */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   {
     label,

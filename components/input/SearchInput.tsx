@@ -17,6 +17,7 @@ import { BaseInput } from './BaseInput';
 // each consumer inventing (or omitting) its own; overridable via debounceMs.
 const DEFAULT_DEBOUNCE_MS = 300;
 
+/** Props for SearchInput. */
 export interface SearchInputProps extends Omit<
   BaseInputProps,
   | 'inputType'
@@ -78,6 +79,7 @@ function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
   };
 }
 
+/** Search field with a clear button and optional debounced change callback. Use for filtering or searching content; use Input for other short text. */
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(
     {

@@ -1,6 +1,7 @@
 import type { AnchorHTMLAttributes, MouseEvent } from 'react';
 import { forwardRef } from 'react';
 
+/** Props for NavPill. */
 export interface NavPillProps extends Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
   'href' | 'aria-current' | 'aria-disabled' | 'role'
@@ -27,6 +28,7 @@ export interface NavPillProps extends Omit<
   disabled?: boolean;
 }
 
+/** Pill-shaped navigation link that shows whether it is the current destination. Use for primary or sectional navigation; use Link for in-content links. */
 export const NavPill = forwardRef<HTMLAnchorElement, NavPillProps>(
   function NavPill(
     {
