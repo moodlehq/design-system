@@ -86,6 +86,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       invalidFeedback && !hideLabel && invalid && !disabled
         ? `${id}-feedback`
         : undefined;
+    // Keep a caller's description (for example a RadioGroup's error message)
+    // alongside the radio's own feedback rather than overwriting it.
+    const describedBy =
+      [props['aria-describedby'], feedbackId].filter(Boolean).join(' ') ||
+      undefined;
 
     return (
       <div className={classes.join(' ')}>
@@ -104,7 +109,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             disabled={disabled}
             aria-invalid={isInvalid ? true : undefined}
             aria-label={ariaLabel}
-            aria-describedby={feedbackId}
+            aria-describedby={describedBy}
             id={id} // Ensure we use the generated ID if no ID is provided, so the label can be properly associated with the input for accessibility.
           />
         </div>

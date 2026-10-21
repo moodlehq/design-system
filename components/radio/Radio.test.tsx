@@ -1,8 +1,59 @@
 import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
 import { fuzzComponent } from '../../tests/utils/fuzzComponent';
 import { type RadioProps, Radio } from './Radio';
+
+// Read from disk: Vitest stubs CSS imports (including `?raw`) as empty strings.
+// (Not `new URL('./radio.css', import.meta.url)`: Vite rewrites that pattern
+// into an asset URL.)
+const radioCss = readFileSync(
+  join(dirname(fileURLToPath(import.meta.url)), 'radio.css'),
+  'utf8',
+);
+const bootstrapCss = readFileSync(
+  createRequire(import.meta.url).resolve('bootstrap/dist/css/bootstrap.css'),
+  'utf8',
+);
+
+type Specificity = [ids: number, classes: number, elements: number];
+
+/** Every selector in a stylesheet, split out of rule lists. */
+function selectorsIn(css: string): string[] {
+  const withoutComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  // Innermost `selector { declarations }` blocks, so @media wrappers drop out.
+  return [...withoutComments.matchAll(/([^{}]+)\{[^{}]*\}/g)].flatMap(
+    ([, list]) =>
+      list
+        .split(',')
+        .map((selector) => selector.trim())
+        .filter(Boolean),
+  );
+}
+
+/**
+ * Specificity for simple selectors: ids, classes, attributes, pseudo-classes
+ * and type selectors. Selectors with functional pseudo-classes (:is, :not,
+ * :where, :has) aren't supported, and the caller excludes them.
+ */
+function specificityOf(selector: string): Specificity {
+  const rest = selector.replace(/::[\w-]+/g, '');
+  const ids = (rest.match(/#[\w-]+/g) ?? []).length;
+  const classes =
+    (rest.match(/\.[\w-]+/g) ?? []).length +
+    (rest.match(/\[[^\]]*\]/g) ?? []).length +
+    (rest.match(/:[\w-]+/g) ?? []).length;
+  const elements = (rest.match(/(?:^|[\s>+~])[a-zA-Z][\w-]*/g) ?? []).length;
+  return [ids, classes, elements];
+}
+
+function compareSpecificity(a: Specificity, b: Specificity): number {
+  return a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+}
 
 describe('Radio: Unit Test', () => {
   it('applies mds-radio class to the root wrapper element', () => {
@@ -132,6 +183,22 @@ describe('Radio: Unit Test', () => {
       expect(screen.getByRole('radio')).toHaveAttribute(
         'aria-describedby',
         'test-radio-feedback',
+      );
+    });
+
+    it('keeps a caller aria-describedby alongside its own feedback', () => {
+      render(
+        <Radio
+          id="test-radio"
+          label="Option"
+          invalid
+          invalidFeedback="Required"
+          aria-describedby="group-error"
+        />,
+      );
+      expect(screen.getByRole('radio')).toHaveAttribute(
+        'aria-describedby',
+        'group-error test-radio-feedback',
       );
     });
 
@@ -282,6 +349,60 @@ describe('Radio: Unit Test', () => {
         }),
         { numRuns: 100 },
       );
+    });
+  });
+
+  describe('Bootstrap compatibility', () => {
+    // Bootstrap's `.was-validated` form colours radios by native validity:
+    // every radio is either :valid (green) or, when required and unanswered,
+    // :invalid (red), standalone or inside a RadioGroup. If those rules tie
+    // with MDS on specificity, stylesheet load order decides the colour, and
+    // Moodle doesn't guarantee that order. So for each state Bootstrap styles
+    // (resting, :checked, :focus), the MDS input rule for that state must
+    // outrank it. Qualified MDS rules (.is-invalid, :disabled) only add
+    // specificity.
+    it('outranks .was-validated :valid/:invalid rules on specificity', () => {
+      const wasValidated = selectorsIn(bootstrapCss).filter(
+        (selector) =>
+          selector.includes('.was-validated') &&
+          selector.includes('.form-check-input') &&
+          // Sibling-label rules can't reach MDS markup (the input is wrapped).
+          !selector.includes('~'),
+      );
+      const mdsInputRules = selectorsIn(radioCss).filter((selector) =>
+        /\.mds-radio-input(?![\w-])/.test(selector),
+      );
+
+      // ':valid:checked' → ':checked'; ':invalid' → ''.
+      const stateOf = (selector: string) =>
+        (selector.match(/:(?!valid\b|invalid\b)[\w-]+/g) ?? []).join('');
+      // The MDS rule whose input compound is `.mds-radio-input[class]` plus
+      // exactly that state, with no extra qualifiers.
+      const mdsRuleFor = (state: string) =>
+        mdsInputRules.find(
+          (selector) =>
+            selector
+              .split(/\s+/)
+              .at(-1)!
+              .replace(/\.mds-radio-input|\[class\]/g, '') === state,
+        );
+
+      // Guard against the parsing silently matching nothing.
+      expect(wasValidated.length).toBeGreaterThanOrEqual(6);
+      for (const bootstrapSelector of wasValidated) {
+        const mdsSelector = mdsRuleFor(stateOf(bootstrapSelector));
+        expect(
+          mdsSelector,
+          `no MDS rule for ${bootstrapSelector}`,
+        ).toBeDefined();
+        expect(
+          compareSpecificity(
+            specificityOf(mdsSelector!),
+            specificityOf(bootstrapSelector),
+          ),
+          `${mdsSelector} must outrank ${bootstrapSelector}`,
+        ).toBeGreaterThan(0);
+      }
     });
   });
 });
