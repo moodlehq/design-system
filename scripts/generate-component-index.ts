@@ -152,6 +152,8 @@ const PURPOSES: Record<string, string> = {
   choicebox:
     'Single-select options as larger, card-style choices (icon + label + supporting text). Not interchangeable with Radio — use for options that benefit from extra visual weight or a supporting description.',
   'close-button': 'Icon-only dismiss action for temporary UI surfaces.',
+  'course-card':
+    'Summary card for a single course: optional image, title (optionally a link) and subtitle, with optional badge, teacher, progress bar, and footer link. Composes Avatar, Badge, ProgressBar, and Link rather than redrawing them. Content is flat named props, not children. Not for generic content cards or lists of courses (the consumer supplies the grid).',
   dropdown:
     'Composable trigger + menu container for action, select, expandable, and multiselect dropdown items.',
   'favourite-button': 'Icon button to mark/unmark items as favourites.',

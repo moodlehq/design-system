@@ -19,6 +19,7 @@ Quick reference for AI agents and developers.
 | Checkbox        | Independent multi-select controls                                                                                   | checked, label, disabled, invalid, indeterminate                                                                     |
 | Choicebox       | Single-select options as larger, card-style choices (icon + label + supporting text)                                | checked, label, disabled, invalid                                                                                    |
 | CloseButton     | Icon-only dismiss action for temporary UI surfaces                                                                  | size, disabled, ariaLabel                                                                                            |
+| CourseCard      | Course summary card with image, title, optional badge/teacher, progress bar and link                                | title, subtitle, imageSrc, progressLabel, progressValue, linkLabel, linkHref                                         |
 | Dropdown        | Composable trigger + menu container for action, select, expandable, and multiselect items                           | label, variant, appearance, size, open, children                                                                     |
 | FavouriteButton | Icon button to mark/unmark items as favourites                                                                      | checked, size, disabled, ariaLabel                                                                                   |
 | Input           | Single-line text input with label, supporting text, and validation feedback for non-password text-like values       | type, label, invalid, invalidFeedback, supportingText                                                                |
@@ -71,6 +72,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [Choicebox stories](../../components/choicebox/Choicebox.stories.tsx)
 - [CloseButton implementation](../../components/close-button/CloseButton.tsx)
 - [CloseButton stories](../../components/close-button/CloseButton.stories.tsx)
+- [CourseCard implementation](../../components/course-card/CourseCard.tsx)
+- [CourseCard stories](../../components/course-card/CourseCard.stories.tsx)
 - [Dropdown implementation](../../components/dropdown/Dropdown.tsx)
 - [Dropdown stories](../../components/dropdown/Dropdown.stories.tsx)
 - [DropdownTrigger implementation](../../components/dropdown/DropdownTrigger.tsx)

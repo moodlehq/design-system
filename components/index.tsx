@@ -25,6 +25,9 @@ export type { ChoiceboxProps } from './choicebox';
 export { CloseButton } from './close-button';
 export type { CloseButtonProps } from './close-button';
 
+export { CourseCard } from './course-card';
+export type { CourseCardProps } from './course-card';
+
 export {
   Dropdown,
   DropdownItemAction,

@@ -1,0 +1,80 @@
+.mds-course-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-md);
+  padding: var(--mds-spacing-md);
+  background-color: var(--mds-bg-surface-default);
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
+  border-radius: var(--mds-border-radius-md);
+  font-family: var(--mds-font-family-base);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+.mds-course-card-image {
+  aspect-ratio: 1.4; /* Figma defines the image frame as 253.67 x 181. */
+  overflow: hidden;
+  border-radius: var(--mds-border-radius-sm);
+}
+
+.mds-course-card-image-img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.mds-course-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--mds-spacing-xl);
+  padding-inline: 0;
+}
+
+.mds-course-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--mds-spacing-xs);
+  inline-size: 100%;
+}
+
+.mds-course-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+  inline-size: 100%;
+  overflow-wrap: break-word;
+}
+
+.mds-course-card-title {
+  margin: 0;
+  font-size: var(--mds-font-size-headings-6);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: var(--mds-line-height-headings-6);
+  color: var(--mds-text-link-primary-default);
+}
+
+.mds-course-card-subtitle {
+  margin: 0;
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-small);
+  color: var(--mds-text-muted);
+}
+
+.mds-course-card-teacher {
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xs);
+}
+
+.mds-course-card-teacher-name {
+  font-size: var(--mds-font-size-paragraph-default);
+  line-height: var(--mds-line-height-paragraph-xs);
+  color: var(--mds-text-default);
+}
+
+.mds-course-card-content > .mds-progress-bar {
+  inline-size: 100%;
+}
