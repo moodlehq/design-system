@@ -1,0 +1,16 @@
+{
+  "component": "Close button",
+  "slug": "close-button",
+  "must": [
+    "Always provide an accessible name that matches the action it performs."
+  ],
+  "mustNot": [
+    "Do not use the close button as a Cancel action when the user must choose between options. Use explicit buttons like Cancel and Save.",
+    "Do not use it for destructive actions like delete. Use a Delete action with clear text.",
+    "Do not use it when closing will lose work, unless you also show a confirmation."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Button"
+  ]
+}

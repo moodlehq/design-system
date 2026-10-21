@@ -1,0 +1,19 @@
+{
+  "component": "Nav pill",
+  "slug": "nav-pill",
+  "must": [],
+  "mustNot": [
+    "Don't use to trigger in-page behaviour without a URL change. Use a Button instead.",
+    "Don't use for tab switching between content panels on the same page. Use the Tabs component instead.",
+    "Don't use nav pill in isolation. It's designed to be used within a `nav-bar`",
+    "Don't use verbs. Nav pill labels are destinations, not actions.",
+    "Don't stack nav pills vertically. Use a different navigation pattern for vertical navigation."
+  ],
+  "useInstead": [
+    "Button",
+    "Tabs"
+  ],
+  "lookAlikes": [
+    "Button"
+  ]
+}

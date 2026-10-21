@@ -1,0 +1,17 @@
+{
+  "component": "Pagination",
+  "slug": "pagination",
+  "must": [],
+  "mustNot": [
+    "Don't use for infinite scroll or load-more patterns. Pagination implies a known, finite set.",
+    "Don't use when there's only 1 page of content.",
+    "Don't use as a step-by-step navigation indicator. Use a stepper or progress indicator instead.",
+    "Don't show ellipsis when all pages fit within 8 items.",
+    "Don't include \"Go to\". It's verbose and redundant.",
+    "Don't use colour alone to indicate the active page. The aria-current=\"page\" attribute communicates current position to screen readers independently of visual styling."
+  ],
+  "useInstead": [
+    "stepper or progress indicator"
+  ],
+  "lookAlikes": []
+}

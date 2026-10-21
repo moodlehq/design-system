@@ -1,0 +1,16 @@
+{
+  "component": "Avatar",
+  "slug": "avatar",
+  "must": [],
+  "mustNot": [
+    "Do not use for large profile displays where full user information is needed. Use a layout that includes the full user profile information instead.",
+    "Do not use more than two characters. The component is not designed to hold longer strings.",
+    "Do not add hover states, loading indicators, or status badges directly to the avatar. Use a separate component for these features."
+  ],
+  "useInstead": [
+    "layout that includes the full user profile information"
+  ],
+  "lookAlikes": [
+    "Badge"
+  ]
+}
