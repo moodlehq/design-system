@@ -19,6 +19,7 @@
 @import './pagination/pagination.css';
 @import './progress-bar/progress-bar.css';
 @import './radio/radio.css';
+@import './radio/radio-group.css';
 @import './switch/switch.css';
 @import './tag/tag.css';
 @import './textarea/textarea.css';
