@@ -1,0 +1,46 @@
+# Moodle Design System
+
+> React components and design tokens for Moodle. Package: @moodlehq/design-system@5.5.0.
+
+Read the per-component guidance before choosing a component. Props come from the TypeScript types in `dist/`.
+
+## Guidance
+
+- [Index](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/index.md): one line per page with status
+- [Breadcrumb](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/breadcrumb.md)
+- [Link](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/link.md)
+- [Nav pill](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/nav-pill.md)
+- [Pagination](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/pagination.md)
+- [Activity icons](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/activity-icon.md)
+- [Avatar](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/avatar.md)
+- [Alert](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/alert.md)
+- [Badge](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/badge.md)
+- [Progress bar](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/progress-bar.md)
+- [Tooltip](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/tooltip.md)
+- [Radio button](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/radio.md)
+- [Input](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/input.md)
+- [Password](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/password.md)
+- [Search](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/search.md)
+- [Button](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/button.md)
+- [Checkbox](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/checkbox.md)
+- [Choicebox](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/choicebox.md)
+- [Close button](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/close-button.md)
+- [Dropdown](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/dropdown.md)
+- [Favourite button](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/favourite-button.md)
+- [Switch](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/switch.md)
+- [Tag](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/tag.md)
+- [Text area](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/components/textarea.md)
+
+## Foundations
+
+- [Design tokens](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/foundations/tokens.md)
+- [Colour](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/foundations/colour.md)
+- [Typography](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/foundations/typography.md)
+- [Spacing](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/foundations/spacing.md)
+- [Icons](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/foundations/icons.md)
+- [Layout](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/dist/guidance/foundations/layout.md)
+
+## Optional
+
+- [Full documentation](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/llms-full.txt): every public page in one file, large
+- [Design guidelines](https://design.moodle.com/)
