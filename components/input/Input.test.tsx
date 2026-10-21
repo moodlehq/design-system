@@ -200,6 +200,19 @@ describe('Input: Unit Test', () => {
     expect(screen.queryByText(nativeMessage)).not.toBeInTheDocument();
   });
 
+  it('takes focus when a submit fails on it, since the native bubble is cancelled', () => {
+    render(
+      <form onSubmit={(event) => event.preventDefault()}>
+        <Input label="Label" required />
+        <button type="submit">Save</button>
+      </form>,
+    );
+    const save = screen.getByRole('button', { name: 'Save' });
+    save.focus();
+    fireEvent.click(save);
+    expect(screen.getByRole('textbox', { name: 'Label' })).toHaveFocus();
+  });
+
   it('applies the pointer-focus class when focus follows a pointerdown', () => {
     render(<Input label="Label" />);
     const input = screen.getByRole('textbox', { name: 'Label' });
