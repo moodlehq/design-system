@@ -30,16 +30,16 @@ Three scoped files contain the detailed rules for their areas. They auto-load in
 - **`*.stories.tsx`, `*.test.tsx`, `tests/**`** → `.github/instructions/stories-tests.instructions.md`
 - **`tokens/**`, `scripts/tokens.ts`** → `.github/instructions/tokens.instructions.md`
 
-Large fallback resource (opt-in only — no `applyTo`, never auto-loaded):
+Generated agent guidance (read-only, regenerated from ZeroHeight by `npm run build-guidance`):
 
-- **Fallback only:** `.github/instructions/design-system.instructions.md` — auto-generated full export from ZeroHeight, intentionally large, do not edit manually
+- `llms.txt` — short map, one line per component
+- `docs/guidance/index.md` and `docs/guidance/components/<slug>.md` — per-component guidance (shipped as `dist/guidance/`)
 
 Routing rule for agents:
 
-1. Prefer ZeroHeight MCP and `.github/instructions/component-index.instructions.md` first.
+1. Read `llms.txt`, then the guidance page for the component you are working on. Use the ZeroHeight MCP as an extra when it is available.
 2. Load scoped instruction files based on the file(s) being edited.
-3. Load `.github/instructions/design-system.instructions.md` only when the agent cannot access ZeroHeight and still needs missing design context.
-4. Ask before loading the large fallback file into the context window.
+3. Take props and types from the code, not from guidance prose.
 
 Component index artifacts:
 
@@ -47,7 +47,7 @@ Component index artifacts:
 - `dist/component-index.json` is a build-generated machine-readable index for deterministic lookups.
 - Generate with `npm run build-component-index` (also runs as part of `npm run build`).
 
-> When adding a new instruction file, add a pointer entry to both this list and to `.claude/CLAUDE.md` so all agent entry points stay in sync.
+> When adding a new instruction file, add a pointer entry to this list. `AGENTS.md` and `.claude/CLAUDE.md` both reach it from here.
 
 ## Recommended MCP servers
 
