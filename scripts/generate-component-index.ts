@@ -57,6 +57,16 @@ const SUBCOMPONENTS: Record<string, ComponentSubcomponentIndexItem[]> = {
       storyPath: 'components/input/SearchInput.stories.tsx',
     },
   ],
+  radio: [
+    {
+      name: 'RadioGroup',
+      purpose:
+        'Labelled form field for choosing exactly one of 2 to 5 options that stay in view: group label, required marker, info button, and supporting/error text, vertical or horizontal. Use Select for 6+ options, Checkbox for multiple, Switch for a single on/off setting, Choicebox when options need an icon or description.',
+      exportName: 'RadioGroup',
+      implementationPath: 'components/radio/RadioGroup.tsx',
+      storyPath: 'components/radio/RadioGroup.stories.tsx',
+    },
+  ],
   dropdown: [
     {
       name: 'DropdownTrigger',
@@ -162,7 +172,7 @@ const PURPOSES: Record<string, string> = {
   pagination: 'Page navigation control.',
   'progress-bar': 'Visual progress indicator with status and label variants.',
   radio:
-    'Single-select options in a compact list (native radio input, label only). No group wrapper is provided — see the Group story for consumer-supplied layout.',
+    'A single radio option (native radio input, label only). To ask one question with 2 to 5 options, use RadioGroup rather than laying out Radios by hand.',
   switch: 'Binary toggle control for on/off settings.',
   tag: 'Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise). Nests Avatar and CloseButton rather than redrawing either.',
   textarea:

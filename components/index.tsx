@@ -75,8 +75,13 @@ export type { PaginationProps } from './pagination';
 export { ProgressBar } from './progress-bar';
 export type { ProgressBarProps } from './progress-bar';
 
-export { Radio } from './radio';
-export type { RadioProps } from './radio';
+export { Radio, RadioGroup } from './radio';
+export type {
+  RadioGroupOption,
+  RadioGroupOrientation,
+  RadioGroupProps,
+  RadioProps,
+} from './radio';
 
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
