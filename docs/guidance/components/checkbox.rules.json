@@ -1,0 +1,23 @@
+{
+  "component": "Checkbox",
+  "slug": "checkbox",
+  "must": [
+    "Always pair a checkbox with a visible label that clearly describes what the user is selecting or agreeing to."
+  ],
+  "mustNot": [
+    "Don't use a checkbox without a visible label outside of a data table. The purpose must be evident from the surrounding context.",
+    "Don't use a disabled checkbox to hide unavailable options. Remove them from the UI or explain why they're unavailable.",
+    "Don't use a standalone checkbox without a label outside of a data table.",
+    "Don't start a label with \"Select\" or \"Choose\". The checkbox itself implies selection.",
+    "Don't mix checkboxes and radio buttons in the same option group."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Switch",
+    "Radio group",
+    "Choicebox",
+    "Select",
+    "Radio button",
+    "Button"
+  ]
+}

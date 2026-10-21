@@ -1,0 +1,20 @@
+{
+  "component": "Breadcrumb",
+  "slug": "breadcrumb",
+  "must": [],
+  "mustNot": [
+    "Don't use this for top-level navigation between unrelated sections, use tabs instead.",
+    "Don't use this for moving between pages in a sequence, use pagination instead.",
+    "Don't use this on a page with only one level of hierarchy. There's nothing to show.",
+    "Don't stack more than one breadcrumb trail on a single page.",
+    "Don't rely on colour alone to separate the current item from link items. The current item's distinct styling, like bold text and no link interaction states, also signals that it isn't a link."
+  ],
+  "useInstead": [
+    "tabs",
+    "pagination"
+  ],
+  "lookAlikes": [
+    "Pagination",
+    "Link"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "component": "Badge",
+  "slug": "badge",
+  "must": [
+    "Always use a label.",
+    "Always include a label even when an icon is used."
+  ],
+  "mustNot": [
+    "Do not use a badge to display important messages. Use Alert.",
+    "Do not use a badge for actions. Use Button.",
+    "Do not use a badge for long text. If the label wraps, it is usually the wrong component.",
+    "Do not use an icon as the only carrier of meaning.",
+    "Do not use punctuation.",
+    "Do not change the natural badge height or internal padding."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Alert",
+    "Button"
+  ]
+}

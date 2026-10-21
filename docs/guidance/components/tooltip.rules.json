@@ -1,0 +1,18 @@
+{
+  "component": "Tooltip",
+  "slug": "tooltip",
+  "must": [],
+  "mustNot": [
+    "Do not use for critical information the user must act on. Use inline text, a popover, or a dialog instead.",
+    "Do not use for long explanations or multi-line content. The tooltip is not a popover.",
+    "Do not nest interactive elements such as links or buttons inside a tooltip.",
+    "Do not use on touch-only interfaces. Tooltips rely on hover and focus, which are not reliably available on mobile.",
+    "Do not include punctuation at the end of a label-style tooltip (e.g. \"Edit profile\" not \"Edit profile.\").",
+    "Do not include HTML, links, or interactive elements in tooltip text."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Link",
+    "Button"
+  ]
+}

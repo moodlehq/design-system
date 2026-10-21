@@ -1,0 +1,19 @@
+{
+  "component": "Activity icons",
+  "slug": "activity-icon",
+  "must": [
+    "Always pair the icon with a visible text label for the item name."
+  ],
+  "mustNot": [
+    "Do not use it as the only way to communicate meaning. Use text labels as well.",
+    "Do not use the tile colour to show status such as complete, overdue, or locked. Use a status pattern instead.",
+    "Do not use a specific file type icon when the file type is unknown. Use the generic File icon.",
+    "Do not rely on icon shape or colour alone to explain meaning.",
+    "Do not mix Default and Large tiles in the same repeated list or grid unless there is a clear hierarchy.",
+    "Do not place focus on the icon alone unless it is the control."
+  ],
+  "useInstead": [
+    "status pattern"
+  ],
+  "lookAlikes": []
+}

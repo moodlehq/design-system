@@ -1,0 +1,18 @@
+{
+  "component": "Radio button",
+  "slug": "radio",
+  "must": [],
+  "mustNot": [
+    "Don't use a single radio button in isolation. Place radio buttons in a radio group. Radio buttons only make sense when used in groups of two or more."
+  ],
+  "useInstead": [
+    "Radio group",
+    "Checkbox"
+  ],
+  "lookAlikes": [
+    "Radio group",
+    "Checkbox",
+    "Select",
+    "Choicebox"
+  ]
+}
