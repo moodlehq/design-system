@@ -47,6 +47,7 @@ export type DropdownItemActionLinkProps = DropdownItemActionCommonProps &
     href: string;
   };
 
+/** Props for DropdownItemAction: button mode or link mode, chosen by whether `href` is provided. */
 export type DropdownItemActionProps =
   DropdownItemActionButtonProps | DropdownItemActionLinkProps;
 

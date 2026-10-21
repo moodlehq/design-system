@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes } from 'react';
 
 type CloseButtonSize = 'sm' | 'md' | 'lg';
 
+/** Props for CloseButton. */
 export interface CloseButtonProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'type'
@@ -21,6 +22,7 @@ export interface CloseButtonProps extends Omit<
 
 const allowedSizes: CloseButtonSize[] = ['sm', 'md', 'lg'];
 
+/** Icon-only button that dismisses or removes the thing it belongs to, such as an Alert or Tag. For general actions use Button. */
 export const CloseButton = ({
   'aria-label': ariaLabel,
   size,
