@@ -9,7 +9,9 @@ permissions:
 
 jobs:
   build-tokens:
-    if: startsWith(github.event.pull_request.head.ref, 'zeroheight-tokens-')
+    if: >-
+      startsWith(github.event.pull_request.head.ref, 'zeroheight-tokens-') &&
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -32,6 +34,8 @@ jobs:
         run: npm run build-tokens
 
       - name: Commit generated CSS/SCSS if changed
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -40,5 +44,5 @@ jobs:
             echo "No generated token changes to commit."
           else
             git commit -m "chore(tokens): Regenerate CSS/SCSS from updated DTCG tokens"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+            git push origin HEAD:"$HEAD_REF"
           fi
