@@ -1,5 +1,27 @@
 # Changelog
 
+## [5.5.0](https://github.com/moodlehq/design-system/compare/design-system-v5.4.0...design-system-v5.5.0) (2026-10-21)
+
+
+### Features
+
+* **ActivityIcon:** Add appearance prop for default or muted ([#377](https://github.com/moodlehq/design-system/issues/377)) ([81cddc1](https://github.com/moodlehq/design-system/commit/81cddc175617528affe5b404efb8cf08533a3de3))
+* **ci:** Auto-build tokens on ZeroHeight token PRs ([52bdfd1](https://github.com/moodlehq/design-system/commit/52bdfd174de6e25008acd4955e88926b2f651f66))
+* **Docs:** Update Storybook to display repo docs ([93cbdb0](https://github.com/moodlehq/design-system/commit/93cbdb0cbf90c6fdf6ec116c6c3f058f91ad54fc))
+* **SearchInput:** Add opt-in search landmark ([3e7b810](https://github.com/moodlehq/design-system/commit/3e7b8106bc5031d5573def1a2fcb32900bc92551))
+
+
+### Bug Fixes
+
+* **Alert:** Resolve MSE dev checklist gaps ([#351](https://github.com/moodlehq/design-system/issues/351)) ([0b2700d](https://github.com/moodlehq/design-system/commit/0b2700d6b04f30c8b1c25301b3314285d3a2f85f))
+* **Breadcrumb:** Resolve MSE dev checklist gaps ([#355](https://github.com/moodlehq/design-system/issues/355)) ([a1ea6bc](https://github.com/moodlehq/design-system/commit/a1ea6bc0f16d722d1ea8f7da8469cc259a3556c8))
+* **FigmaCC:** Fix CC mappings and references ([83e5afa](https://github.com/moodlehq/design-system/commit/83e5afa094353b9465a5b566d389c86fc615c63f))
+* **FigmaCC:** Update to meet new instructions ([49a3b82](https://github.com/moodlehq/design-system/commit/49a3b826f9e3672a6fc04a10de30b16676b12915))
+* **SearchInput:** Prevent empty submit on Enter ([0afc610](https://github.com/moodlehq/design-system/commit/0afc6109b4fd387cfdbec9a54d1ead8928d7265b))
+* **Switch:** Match label padding and typography tokens to Figma ([#369](https://github.com/moodlehq/design-system/issues/369)) ([48b72ea](https://github.com/moodlehq/design-system/commit/48b72eaf7731dbca7390ea3382254b86bd701703))
+* **Textarea:** Resolve MSE dev checklist gaps ([#349](https://github.com/moodlehq/design-system/issues/349)) ([3a53f41](https://github.com/moodlehq/design-system/commit/3a53f41e81f29726a49009f2ff60bd72c600615a))
+* **tokens:** Emit stroke weight tokens as px ([#370](https://github.com/moodlehq/design-system/issues/370)) ([8497718](https://github.com/moodlehq/design-system/commit/849771886ee0744e60ba6fd527f77630dd6acb9a))
+
 ## [5.4.0](https://github.com/moodlehq/design-system/compare/design-system-v5.3.0...design-system-v5.4.0) (2026-10-05)
 
 
