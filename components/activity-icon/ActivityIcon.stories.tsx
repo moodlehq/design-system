@@ -43,6 +43,16 @@ const meta = {
         defaultValue: { summary: 'default' },
       },
     },
+    appearance: {
+      control: { type: 'select' },
+      options: ['default', 'muted'],
+      description:
+        'Colour treatment. Use muted for hidden or unavailable activities.',
+      table: {
+        type: { summary: 'default | muted' },
+        defaultValue: { summary: 'default' },
+      },
+    },
     alt: {
       control: { type: 'text' },
       description:
@@ -57,6 +67,7 @@ const meta = {
     icon: 'assignment',
     size: undefined,
     container: undefined,
+    appearance: undefined,
     alt: '',
   },
 } satisfies Meta<typeof ActivityIcon>;
@@ -106,13 +117,13 @@ export const Containers: Story = {
   ),
   play: async ({ canvas }) => {
     await expect(
-      canvas.getByRole('img', { name: 'None container' }),
+      await canvas.findByRole('img', { name: 'None container' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Default container' }),
+      await canvas.findByRole('img', { name: 'Default container' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Large container' }),
+      await canvas.findByRole('img', { name: 'Large container' }),
     ).toBeVisible();
   },
 };
@@ -152,13 +163,17 @@ export const Sizes: Story = {
     </div>
   ),
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('img', { name: 'Small size' })).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Medium size' }),
+      await canvas.findByRole('img', { name: 'Small size' }),
     ).toBeVisible();
-    await expect(canvas.getByRole('img', { name: 'Large size' })).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Extra large size' }),
+      await canvas.findByRole('img', { name: 'Medium size' }),
+    ).toBeVisible();
+    await expect(
+      await canvas.findByRole('img', { name: 'Large size' }),
+    ).toBeVisible();
+    await expect(
+      await canvas.findByRole('img', { name: 'Extra large size' }),
     ).toBeVisible();
   },
 };
@@ -207,23 +222,115 @@ export const Categories: Story = {
   ),
   play: async ({ canvas }) => {
     await expect(
-      canvas.getByRole('img', { name: 'Collaboration category' }),
+      await canvas.findByRole('img', { name: 'Collaboration category' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Assessment category' }),
+      await canvas.findByRole('img', { name: 'Assessment category' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Communication category' }),
+      await canvas.findByRole('img', { name: 'Communication category' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Interactive category' }),
+      await canvas.findByRole('img', { name: 'Interactive category' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Other category' }),
+      await canvas.findByRole('img', { name: 'Other category' }),
     ).toBeVisible();
     await expect(
-      canvas.getByRole('img', { name: 'Resource category' }),
+      await canvas.findByRole('img', { name: 'Resource category' }),
     ).toBeVisible();
+  },
+};
+
+const mutedCategories = [
+  { icon: 'forum', name: 'Collaboration' },
+  { icon: 'assignment', name: 'Assessment' },
+  { icon: 'chat', name: 'Communication' },
+  { icon: 'lesson', name: 'Interactive' },
+  { icon: 'h5p', name: 'Other' },
+  { icon: 'file-pdf', name: 'Resource' },
+] as const;
+
+export const Muted: Story = {
+  parameters: showcaseParameters,
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 'var(--mds-spacing-md)' }}>
+      <div style={{ ...showcaseStyles, flexWrap: 'wrap' }}>
+        {mutedCategories.map(({ icon, name }) => (
+          <ActivityIcon
+            {...args}
+            appearance="muted"
+            container="default"
+            icon={icon}
+            key={icon}
+            alt={`Muted ${name} category`}
+          />
+        ))}
+      </div>
+      <div style={showcaseStyles}>
+        {(['none', 'default', 'large'] as const).map((container) => (
+          <ActivityIcon
+            {...args}
+            appearance="muted"
+            container={container}
+            icon="assignment"
+            key={container}
+            alt={`Muted ${container} container`}
+          />
+        ))}
+      </div>
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    // The asset is hidden visually (the muted overlay replaces it) but must stay in the a11y tree.
+    for (const name of [
+      ...mutedCategories.map(({ name }) => `Muted ${name} category`),
+      'Muted none container',
+      'Muted default container',
+      'Muted large container',
+    ]) {
+      await expect(
+        await canvas.findByRole('img', { name }),
+      ).toBeInTheDocument();
+    }
+  },
+};
+
+export const MutedForcedColors: Story = {
+  tags: ['test', 'stable'],
+  parameters: {
+    ...showcaseParameters,
+    chromatic: { forcedColors: 'active' },
+    docs: {
+      ...showcaseParameters.docs,
+      description: {
+        story:
+          'Compares default and muted icons for forced-colors (Windows High Contrast) review. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. Both rows should stay visible.',
+      },
+    },
+  },
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 'var(--mds-spacing-md)' }}>
+      {(['default', 'muted'] as const).map((appearance) => (
+        <div key={appearance} style={showcaseStyles}>
+          {(['none', 'default', 'large'] as const).map((container) => (
+            <ActivityIcon
+              {...args}
+              key={container}
+              appearance={appearance}
+              container={container}
+              icon="assignment"
+              alt={`${appearance} ${container} container`}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await expect(
+      await canvas.findByRole('img', { name: 'muted default container' }),
+    ).toBeInTheDocument();
   },
 };
 

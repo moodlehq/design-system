@@ -1,6 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import type { ActivityIconContainer, ActivityIconSize } from './ActivityIcon';
+import type {
+  ActivityIconAppearance,
+  ActivityIconContainer,
+  ActivityIconSize,
+} from './ActivityIcon';
 import { ActivityIcon } from './ActivityIcon';
 
 describe('ActivityIcon: Unit Test', () => {
@@ -18,6 +22,90 @@ describe('ActivityIcon: Unit Test', () => {
     await waitFor(() => {
       expect(image.getAttribute('src')).toContain('data:image/svg+xml');
     });
+  });
+
+  it('does not apply the muted class by default', () => {
+    render(<ActivityIcon data-testid="icon" icon="assignment" />);
+    expect(
+      screen.getByTestId('icon').classList.contains('mds-activity-icon--muted'),
+    ).toBe(false);
+  });
+
+  it('applies the muted class and renders the mask once the icon loads', async () => {
+    render(
+      <ActivityIcon data-testid="icon" icon="assignment" appearance="muted" />,
+    );
+    const root = screen.getByTestId('icon');
+    expect(root.classList.contains('mds-activity-icon--muted')).toBe(true);
+    expect(root.querySelector('.mds-activity-icon__mask')).toBeNull();
+    await waitFor(() => {
+      const mask = root.querySelector<HTMLElement>('.mds-activity-icon__mask');
+      expect(mask).not.toBeNull();
+      expect(mask?.getAttribute('aria-hidden')).toBe('true');
+      expect(mask?.getAttribute('style')).toContain('data:image/svg+xml');
+    });
+  });
+
+  it('uses the filter fallback instead of the overlay for flagged brand icons', () => {
+    render(
+      <ActivityIcon
+        data-testid="icon"
+        icon="bigbluebutton"
+        appearance="muted"
+      />,
+    );
+    const root = screen.getByTestId('icon');
+    expect(root.classList.contains('mds-activity-icon--muted-filter')).toBe(
+      true,
+    );
+    expect(root.classList.contains('mds-activity-icon--muted')).toBe(false);
+    expect(root.querySelector('.mds-activity-icon__mask')).toBeNull();
+  });
+
+  it('uses the filter fallback for h5p', () => {
+    render(<ActivityIcon data-testid="icon" icon="h5p" appearance="muted" />);
+    expect(
+      screen
+        .getByTestId('icon')
+        .classList.contains('mds-activity-icon--muted-filter'),
+    ).toBe(true);
+  });
+
+  it('keeps the image accessible name when muted', () => {
+    render(
+      <ActivityIcon icon="assignment" alt="Assignment" appearance="muted" />,
+    );
+    expect(screen.getByRole('img', { name: 'Assignment' })).toBeTruthy();
+  });
+
+  it('preserves a consumer style when muted', () => {
+    render(
+      <ActivityIcon
+        data-testid="icon"
+        icon="assignment"
+        appearance="muted"
+        style={{ margin: 0 }}
+      />,
+    );
+    expect(screen.getByTestId('icon').style.margin).toBe('0px');
+  });
+
+  it('falls back to default appearance and warns for an invalid appearance', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(
+      <ActivityIcon
+        data-testid="icon"
+        icon="assignment"
+        appearance={'invalid' as unknown as ActivityIconAppearance}
+      />,
+    );
+    expect(
+      screen.getByTestId('icon').classList.contains('mds-activity-icon--muted'),
+    ).toBe(false);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining('Invalid appearance "invalid"'),
+    );
+    warn.mockRestore();
   });
 
   it('applies default container by default', () => {

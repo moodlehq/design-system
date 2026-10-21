@@ -21,9 +21,9 @@ const containerProps = {
   }),
 };
 
-// Collaboration category examples
+// Collaboration category, default appearance
 figma.connect(ActivityIcon, url, {
-  variant: { Category: 'Collaboration' },
+  variant: { Category: 'Collaboration', Appearance: 'Default' },
   props: {
     ...sizeProps,
     ...containerProps,
@@ -33,14 +33,33 @@ figma.connect(ActivityIcon, url, {
       icon="database"
       size={size}
       container={container}
+      appearance="default"
       alt="Collaboration activity"
     />
   ),
 });
 
-// Communication category examples
+// Collaboration category, muted appearance
 figma.connect(ActivityIcon, url, {
-  variant: { Category: 'Communication' },
+  variant: { Category: 'Collaboration', Appearance: 'Muted' },
+  props: {
+    ...sizeProps,
+    ...containerProps,
+  },
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="database"
+      size={size}
+      container={container}
+      appearance="muted"
+      alt="Collaboration activity"
+    />
+  ),
+});
+
+// Communication category, default appearance
+figma.connect(ActivityIcon, url, {
+  variant: { Category: 'Communication', Appearance: 'Default' },
   props: {
     ...sizeProps,
     ...containerProps,
@@ -50,14 +69,33 @@ figma.connect(ActivityIcon, url, {
       icon="chat"
       size={size}
       container={container}
+      appearance="default"
       alt="Communication activity"
     />
   ),
 });
 
-// Assessment category examples
+// Communication category, muted appearance
 figma.connect(ActivityIcon, url, {
-  variant: { Category: 'Assessment' },
+  variant: { Category: 'Communication', Appearance: 'Muted' },
+  props: {
+    ...sizeProps,
+    ...containerProps,
+  },
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="chat"
+      size={size}
+      container={container}
+      appearance="muted"
+      alt="Communication activity"
+    />
+  ),
+});
+
+// Assessment category, default appearance
+figma.connect(ActivityIcon, url, {
+  variant: { Category: 'Assessment', Appearance: 'Default' },
   props: {
     ...sizeProps,
     ...containerProps,
@@ -67,14 +105,33 @@ figma.connect(ActivityIcon, url, {
       icon="assignment"
       size={size}
       container={container}
+      appearance="default"
       alt="Assessment activity"
     />
   ),
 });
 
-// Interactive category examples
+// Assessment category, muted appearance
 figma.connect(ActivityIcon, url, {
-  variant: { Category: 'Interactive' },
+  variant: { Category: 'Assessment', Appearance: 'Muted' },
+  props: {
+    ...sizeProps,
+    ...containerProps,
+  },
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="assignment"
+      size={size}
+      container={container}
+      appearance="muted"
+      alt="Assessment activity"
+    />
+  ),
+});
+
+// Interactive category, default appearance
+figma.connect(ActivityIcon, url, {
+  variant: { Category: 'Interactive', Appearance: 'Default' },
   props: {
     ...sizeProps,
     ...containerProps,
@@ -84,14 +141,33 @@ figma.connect(ActivityIcon, url, {
       icon="ims-package"
       size={size}
       container={container}
+      appearance="default"
       alt="Interactive activity"
     />
   ),
 });
 
-// Resource category examples
+// Interactive category, muted appearance
 figma.connect(ActivityIcon, url, {
-  variant: { Category: 'Resource' },
+  variant: { Category: 'Interactive', Appearance: 'Muted' },
+  props: {
+    ...sizeProps,
+    ...containerProps,
+  },
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="ims-package"
+      size={size}
+      container={container}
+      appearance="muted"
+      alt="Interactive activity"
+    />
+  ),
+});
+
+// Resource category, default appearance
+figma.connect(ActivityIcon, url, {
+  variant: { Category: 'Resource', Appearance: 'Default' },
   props: {
     ...sizeProps,
     ...containerProps,
@@ -101,14 +177,33 @@ figma.connect(ActivityIcon, url, {
       icon="book"
       size={size}
       container={container}
+      appearance="default"
       alt="Resource"
     />
   ),
 });
 
-// Other category examples
+// Resource category, muted appearance
 figma.connect(ActivityIcon, url, {
-  variant: { Category: 'Other' },
+  variant: { Category: 'Resource', Appearance: 'Muted' },
+  props: {
+    ...sizeProps,
+    ...containerProps,
+  },
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="book"
+      size={size}
+      container={container}
+      appearance="muted"
+      alt="Resource"
+    />
+  ),
+});
+
+// Other category, default appearance
+figma.connect(ActivityIcon, url, {
+  variant: { Category: 'Other', Appearance: 'Default' },
   props: {
     ...sizeProps,
     ...containerProps,
@@ -118,6 +213,25 @@ figma.connect(ActivityIcon, url, {
       icon="subsection"
       size={size}
       container={container}
+      appearance="default"
+      alt="Activity"
+    />
+  ),
+});
+
+// Other category, muted appearance
+figma.connect(ActivityIcon, url, {
+  variant: { Category: 'Other', Appearance: 'Muted' },
+  props: {
+    ...sizeProps,
+    ...containerProps,
+  },
+  example: ({ size, container }) => (
+    <ActivityIcon
+      icon="subsection"
+      size={size}
+      container={container}
+      appearance="muted"
       alt="Activity"
     />
   ),
