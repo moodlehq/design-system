@@ -4,7 +4,9 @@
   "description": "The Moodle Design System",
   "files": [
     "/dist",
-    "/css.d.ts"
+    "/css.d.ts",
+    "/llms*.txt",
+    "/agents-snippet.md"
   ],
   "exports": {
     ".": {
@@ -123,7 +125,7 @@
     "test-unit-coverage": "vitest run --project unit --coverage",
     "test-storybook": "vitest run --project storybook",
     "storybook": "storybook dev -p 6006",
-    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index",
+    "build": "npm run build-tokens && tsc && vite build && npm run build-component-index && npm run build-guidance -- --dist",
     "build-component-index": "tsx scripts/generate-component-index.ts",
     "build-storybook": "storybook build",
     "build-docs": "tsx scripts/build-docs.ts",
