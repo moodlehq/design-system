@@ -1,4 +1,7 @@
-/* Use [class] to outrank Bootstrap selectors like .form-check .form-check-input */
+/* Use [class] to outrank Bootstrap selectors like .form-check .form-check-input.
+   The input rules carry a second [class] so they also beat Bootstrap's
+   .was-validated .form-check-input:valid/:invalid rules, which would otherwise
+   tie on specificity and recolour radios depending on stylesheet load order. */
 .mds-radio[class] {
   /* Grid keeps feedback aligned under the label without Bootstrap's offset layout. */
   display: inline-grid;
@@ -24,7 +27,7 @@
   min-height: 24px; /* Intentional Figma fixed size. */
 }
 
-.mds-radio[class] .mds-radio-input {
+.mds-radio[class] .mds-radio-input[class] {
   border-radius: var(--mds-border-radius-pill);
   border: var(--mds-stroke-weight-sm) solid
     var(--mds-border-interactive-secondary-default);
@@ -35,45 +38,45 @@
   float: none;
   background-color: var(--mds-bg-surface-default);
 }
-.mds-radio[class] .mds-radio-input:checked {
+.mds-radio[class] .mds-radio-input[class]:checked {
   background-color: var(--mds-bg-interactive-primary-default);
   border-color: transparent;
 }
-.mds-radio[class] .mds-radio-input:disabled {
+.mds-radio[class] .mds-radio-input[class]:disabled {
   border-color: var(--mds-border-interactive-secondary-disabled);
 }
-.mds-radio[class] .mds-radio-input:disabled:checked {
+.mds-radio[class] .mds-radio-input[class]:disabled:checked {
   background-color: var(--mds-bg-interactive-primary-disabled);
   border-color: transparent;
 }
-.mds-radio[class] .mds-radio-input.is-invalid {
+.mds-radio[class] .mds-radio-input[class].is-invalid {
   border-color: var(--mds-border-interactive-danger-default);
 }
-.mds-radio[class] .mds-radio-input.is-invalid:checked {
+.mds-radio[class] .mds-radio-input[class].is-invalid:checked {
   background-color: var(--mds-bg-interactive-danger-default);
   border-color: transparent;
 }
 
 /* Disabled takes precedence over invalid when both states are active. */
-.mds-radio[class] .mds-radio-input.is-invalid:disabled {
+.mds-radio[class] .mds-radio-input[class].is-invalid:disabled {
   background-color: var(--mds-bg-interactive-secondary-disabled);
   border-color: var(--mds-border-interactive-secondary-disabled);
 }
-.mds-radio[class] .mds-radio-input.is-invalid:disabled:checked {
+.mds-radio[class] .mds-radio-input[class].is-invalid:disabled:checked {
   background-color: var(--mds-bg-interactive-primary-disabled);
   border-color: transparent;
 }
-.mds-radio[class] .mds-radio-input:focus {
+.mds-radio[class] .mds-radio-input[class]:focus {
   /* Reset Bootstrap's :focus box-shadow; our ring is applied on :focus-visible only */
   box-shadow: none;
   outline: none;
 }
-.mds-radio[class] .mds-radio-input:focus-visible {
+.mds-radio[class] .mds-radio-input[class]:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
   outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
 }
-.mds-radio[class] .mds-radio-input.is-invalid:focus-visible {
+.mds-radio[class] .mds-radio-input[class].is-invalid:focus-visible {
   outline: var(--mds-stroke-weight-md) solid var(--mds-border-feedback-danger);
   outline-offset: var(--mds-spacing-offset);
   box-shadow: none;
