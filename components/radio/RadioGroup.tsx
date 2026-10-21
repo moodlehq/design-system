@@ -15,6 +15,10 @@ import {
   useState,
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import {
+  focusFirstInvalidOnSubmit,
+  useSubmitAttemptTracking,
+} from '../_internal/validation';
 import { Radio } from './Radio';
 
 export type RadioGroupOrientation = 'vertical' | 'horizontal';
@@ -25,33 +29,6 @@ const allowedOrientations: RadioGroupOrientation[] = ['vertical', 'horizontal'];
 // design calls for Checkbox/Switch (one option) or Select (six or more).
 const MIN_OPTIONS = 2;
 const MAX_OPTIONS = 5;
-
-// Cancelling `invalid` (to hide the native bubble) also stops the browser
-// focusing the first invalid control on submit, so the group does it itself.
-// Like the browser, it only focuses when it holds the form's first invalid
-// control, and it never takes focus from another field (for example when a
-// consumer calls checkValidity() while someone is typing).
-function shouldFocusOnInvalid(radio: HTMLInputElement) {
-  const form = radio.form;
-  if (!form) return false;
-
-  const firstInvalid = Array.from(form.elements).find(
-    (element) =>
-      (element as HTMLInputElement).willValidate &&
-      !(element as HTMLInputElement).validity.valid,
-  );
-  if (firstInvalid !== radio) return false;
-
-  const active = document.activeElement;
-  if (!active || active === document.body) return true;
-  if (!('form' in active) || active.form !== form) return true;
-  // The submit button that triggered validation can hand focus over.
-  return (
-    (active instanceof HTMLButtonElement ||
-      active instanceof HTMLInputElement) &&
-    (active.type === 'submit' || active.type === 'image')
-  );
-}
 
 // Horizontal never wraps (Figma/ZeroHeight: "Switch to Vertical when the
 // options no longer fit"), so the group makes that switch itself instead of
@@ -324,6 +301,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         .map((option) => `${option.value}\u0000${option.label}`)
         .join('\u0001'),
     );
+    useSubmitAttemptTracking(optionsRef);
     const layoutOrientation: RadioGroupOrientation = fitsOnOneLine
       ? resolvedOrientation
       : 'vertical';
@@ -361,11 +339,11 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     const handleInvalid = (event: InvalidEvent<HTMLInputElement>) => {
       // Suppress the native bubble; the message is shown in the footer instead.
       event.preventDefault();
-      const radio = event.currentTarget;
-      setNativeMessage(radio.validationMessage);
-      // Focus lands on the radio, which is described by the footer, so the
-      // error is announced rather than appearing silently.
-      if (shouldFocusOnInvalid(radio)) radio.focus();
+      setNativeMessage(event.currentTarget.validationMessage);
+      // On submit, focus moves to the form's first invalid control. When that's
+      // this group's first radio, which the footer describes, the error is
+      // announced rather than appearing silently.
+      focusFirstInvalidOnSubmit(event.currentTarget);
     };
 
     const pressingOptionRef = useRef(false);

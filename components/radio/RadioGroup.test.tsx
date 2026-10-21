@@ -1,7 +1,8 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createRef, useState } from 'react';
+import { type ReactNode, createRef, useState } from 'react';
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest';
+import { Input } from '../input';
 import { RadioGroup, type RadioGroupOption } from './RadioGroup';
 
 const options: RadioGroupOption[] = [
@@ -681,46 +682,131 @@ describe('RadioGroup: Unit Test', () => {
       expect(first).toHaveAttribute('aria-invalid', 'true');
     });
 
-    it('focuses the first radio when the group is the form’s first invalid control', () => {
-      render(
-        <form data-testid="form">
-          <RadioGroup label="Frequency" options={options} required />
-        </form>,
-      );
-      act(() => {
-        (screen.getByTestId('form') as HTMLFormElement).reportValidity();
-      });
-      expect(screen.getByRole('radio', { name: 'Daily' })).toHaveFocus();
-    });
+    describe('focus on a failed submit', () => {
+      const renderForm = (before?: ReactNode) =>
+        render(
+          <form data-testid="form" onSubmit={(event) => event.preventDefault()}>
+            {before}
+            <RadioGroup label="Frequency" options={options} required />
+            <button type="submit">Save</button>
+          </form>,
+        );
 
-    it('leaves focus alone when an earlier control is invalid', () => {
-      render(
-        <form data-testid="form">
-          <input aria-label="Name" required />
-          <RadioGroup label="Frequency" options={options} required />
-        </form>,
-      );
-      act(() => {
-        (screen.getByTestId('form') as HTMLFormElement).reportValidity();
+      it('focuses the first radio when Save is clicked', async () => {
+        renderForm();
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+        expect(screen.getByRole('radio', { name: 'Daily' })).toHaveFocus();
       });
-      for (const radio of screen.getAllByRole('radio')) {
-        expect(radio).not.toHaveFocus();
-      }
-    });
 
-    it('does not take focus from a field being edited', () => {
-      render(
-        <form data-testid="form">
-          <input aria-label="Name" defaultValue="Sam" />
-          <RadioGroup label="Frequency" options={options} required />
-        </form>,
-      );
-      const name = screen.getByRole('textbox', { name: 'Name' });
-      name.focus();
-      act(() => {
-        (screen.getByTestId('form') as HTMLFormElement).checkValidity();
+      it('focuses the first radio when Save is clicked without taking focus (Safari)', () => {
+        renderForm(<input aria-label="Name" defaultValue="Sam" />);
+        const name = screen.getByRole('textbox', { name: 'Name' });
+        name.focus();
+        // fireEvent.click doesn't move focus, like WebKit clicking a button.
+        act(() => {
+          fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+        });
+        expect(screen.getByRole('radio', { name: 'Daily' })).toHaveFocus();
       });
-      expect(name).toHaveFocus();
+
+      it('focuses the first radio when Enter submits from a text field', () => {
+        renderForm(<input aria-label="Name" defaultValue="Sam" />);
+        const name = screen.getByRole('textbox', { name: 'Name' });
+        name.focus();
+        // Browser order for implicit submission: keydown, validation, keyup.
+        act(() => {
+          fireEvent.keyDown(name, { key: 'Enter' });
+          (screen.getByTestId('form') as HTMLFormElement).requestSubmit();
+          fireEvent.keyUp(name, { key: 'Enter' });
+        });
+        expect(screen.getByRole('radio', { name: 'Daily' })).toHaveFocus();
+      });
+
+      it('focuses an earlier invalid Input rather than the group', async () => {
+        renderForm(<Input label="Name" required />);
+        await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+        expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus();
+        // Both fields still show their errors.
+        expect(screen.getByRole('textbox', { name: 'Name' })).toHaveAttribute(
+          'aria-invalid',
+          'true',
+        );
+        expect(screen.getByRole('radio', { name: 'Daily' })).toHaveAttribute(
+          'aria-invalid',
+          'true',
+        );
+      });
+
+      it('does not take focus when validity is checked outside a submit', () => {
+        renderForm(<input aria-label="Name" defaultValue="Sam" />);
+        const name = screen.getByRole('textbox', { name: 'Name' });
+        name.focus();
+        act(() => {
+          (screen.getByTestId('form') as HTMLFormElement).checkValidity();
+        });
+        expect(name).toHaveFocus();
+      });
+
+      describe('in an iframe document', () => {
+        // React from this window rendering into an iframe (a portal or an
+        // iframe-mounted root): listeners must go on the iframe's document,
+        // and its elements fail `instanceof` against this window's classes.
+        const renderInIframe = (before?: ReactNode) => {
+          const iframe = document.createElement('iframe');
+          document.body.appendChild(iframe);
+          const frameDocument = iframe.contentDocument!;
+          const container = frameDocument.createElement('div');
+          frameDocument.body.appendChild(container);
+          render(
+            <form onSubmit={(event) => event.preventDefault()}>
+              {before}
+              <RadioGroup label="Frequency" options={options} required />
+              <button type="submit">Save</button>
+            </form>,
+            { container },
+          );
+          const frame = within(frameDocument.body);
+          return { iframe, frameDocument, frame };
+        };
+
+        it('focuses the first radio when Save is clicked', () => {
+          const { iframe, frameDocument, frame } = renderInIframe();
+          act(() => {
+            fireEvent.click(frame.getByRole('button', { name: 'Save' }));
+          });
+          expect(frameDocument.activeElement).toBe(
+            frame.getByRole('radio', { name: 'Daily' }),
+          );
+          iframe.remove();
+        });
+
+        it('focuses an earlier invalid Input when Enter submits from a text field', () => {
+          const { iframe, frameDocument, frame } = renderInIframe(
+            <>
+              <input aria-label="Nickname" defaultValue="Sam" />
+              <Input label="Name" required />
+            </>,
+          );
+          const nickname = frame.getByRole('textbox', { name: 'Nickname' });
+          nickname.focus();
+          act(() => {
+            fireEvent.keyDown(nickname, { key: 'Enter' });
+            nickname.form!.requestSubmit();
+            fireEvent.keyUp(nickname, { key: 'Enter' });
+          });
+          expect(frameDocument.activeElement).toBe(
+            frame.getByRole('textbox', { name: 'Name' }),
+          );
+          iframe.remove();
+        });
+      });
+
+      it('lets focus leave an invalid Input that validates on blur', async () => {
+        renderForm(<Input label="Name" required />);
+        await userEvent.click(screen.getByRole('textbox', { name: 'Name' }));
+        await userEvent.tab();
+        expect(screen.getByRole('radio', { name: 'Daily' })).toHaveFocus();
+      });
     });
 
     it('clears the native invalid state once an option is selected', async () => {
