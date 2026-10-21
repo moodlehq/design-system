@@ -19,6 +19,7 @@ import { forwardRef, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { DropdownContext, DropdownMenu, useDropdownContext } from './Dropdown';
 
+/** Props for DropdownItemExpandable. */
 export interface DropdownItemExpandableProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;
@@ -27,7 +28,9 @@ export interface DropdownItemExpandableProps extends ButtonHTMLAttributes<HTMLBu
   children?: ReactNode;
   /** Controlled submenu open state. */
   open?: boolean;
+  /** Initial submenu open state when uncontrolled. */
   defaultOpen?: boolean;
+  /** Called with the next open state whenever the submenu opens or closes. */
   onOpenChange?: (open: boolean) => void;
   /** Submenu placement relative to the expandable row. Defaults to 'right-start'.
    *  flip() will invert to the opposite side when space is insufficient. */

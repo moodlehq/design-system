@@ -8,6 +8,7 @@ import {
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
+/** Props for Choicebox. */
 export interface ChoiceboxProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'type'
@@ -40,6 +41,7 @@ const isIconElement = (el: unknown, propName: string): el is IconElement => {
   return valid;
 };
 
+/** Large selectable card with a label, optional supporting text and icon, for choosing between a few options that need more explanation. For simple choices use Radio or Checkbox. */
 export const Choicebox = forwardRef<HTMLInputElement, ChoiceboxProps>(
   function Choicebox(
     {

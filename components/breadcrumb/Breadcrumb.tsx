@@ -4,6 +4,7 @@ import { Dropdown, DropdownItemAction } from '../dropdown';
 import { Link } from '../link';
 import { Tooltip } from '../tooltip';
 
+/** A single entry in a Breadcrumb trail. */
 export interface BreadcrumbItem {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;
@@ -11,6 +12,7 @@ export interface BreadcrumbItem {
   href?: string;
 }
 
+/** Props for Breadcrumb. */
 export interface BreadcrumbProps extends ComponentPropsWithoutRef<'nav'> {
   /**
    * Ordered list of breadcrumb items from root to current page.
@@ -110,6 +112,7 @@ function TruncatingTooltip({
   );
 }
 
+/** Navigation trail showing the current page's position in the site hierarchy, collapsing long trails behind an overflow button. Use for hierarchical location; use Pagination for moving through a sequence of pages. */
 export const Breadcrumb = function Breadcrumb({
   items,
   ariaLabel = 'Breadcrumb',

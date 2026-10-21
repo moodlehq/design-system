@@ -24,6 +24,7 @@ const allowedVariants: BadgeVariant[] = [
   'info',
 ];
 
+/** Props for Badge. */
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /** Visible badge text. Must be a caller-supplied translated string. */
   label: string;
@@ -39,6 +40,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   endIcon?: IconElement;
 }
 
+/** Small, non-interactive label for status, category or count. If the element must be interactive (linked or removable), use Tag instead. */
 export const Badge = ({
   label,
   variant,

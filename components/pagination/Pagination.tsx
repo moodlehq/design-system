@@ -9,6 +9,7 @@ import {
 
 const MAX_VISIBLE_ELEMENTS = 9;
 
+/** Props for Pagination. */
 export interface PaginationProps extends ComponentPropsWithoutRef<'nav'> {
   /** Total number of pages */
   totalPages: number;
@@ -47,6 +48,7 @@ export interface PaginationProps extends ComponentPropsWithoutRef<'nav'> {
   disabled?: boolean;
 }
 
+/** Controls for moving between pages of a long list or result set, either with numbered pages (`full`) or previous/next only (`grouped`). For showing location in a site hierarchy use Breadcrumb. */
 export const Pagination = ({
   totalPages,
   currentPage,

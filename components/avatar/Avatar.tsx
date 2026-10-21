@@ -2,8 +2,10 @@ import type { HTMLAttributes } from 'react';
 import { forwardRef, useEffect, useState } from 'react';
 import fallbackSrc from './assets/image-fallback.svg';
 
+/** Size of an Avatar: `xs`, `sm`, `md`, `lg`, `xl` or `xxl`. */
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
+/** Props for Avatar. */
 export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Visual size of the avatar.
@@ -40,6 +42,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
 
 const allowedSizes: AvatarSize[] = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
 
+/** Represents a user with their photo, falling back to initials and then a generic silhouette. Use to identify a person; for a removable or linked person chip use Tag. */
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   (
     { size, imageSrc, alt, initials, className, ...props }: AvatarProps,

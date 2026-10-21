@@ -5,11 +5,31 @@ type LinkVariant = 'primary' | 'secondary' | 'inline';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
+/** Props for Link. */
 export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  /** Visible link text. */
   label: string;
+  /**
+   * Visual style of the link: `primary`, `secondary` or `inline`. The `inline`
+   * variant supports `endIcon` only.
+   * @default 'primary'
+   */
   variant?: string;
+  /**
+   * Blocks navigation and click handlers, removes the link from the tab order
+   * and sets `aria-disabled`.
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * Icon shown before the label. Must be an `<i>` or `<svg>` element. Ignored
+   * by the `inline` variant.
+   */
   startIcon?: IconElement;
+  /**
+   * Icon shown after the label. Must be an `<i>` or `<svg>` element. Not
+   * rendered alongside `startIcon` outside the `inline` variant.
+   */
   endIcon?: IconElement;
 }
 
@@ -23,6 +43,7 @@ const isIconElement = (el: unknown, propName: string): el is IconElement => {
   return valid;
 };
 
+/** Anchor for navigating to another page or resource, available as `primary`, `secondary` or `inline` variants. For actions that do not navigate use Button; for a pill-style navigation item use NavPill. */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   {
     label,

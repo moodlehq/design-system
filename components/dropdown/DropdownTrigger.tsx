@@ -30,6 +30,7 @@ const allowedSizes: DropdownTriggerSize[] = ['sm', 'md'];
 const isIconElement = (el: unknown): el is IconElement =>
   isValidElement(el) && (el.type === 'i' || el.type === 'svg');
 
+/** Props for DropdownTrigger. */
 export interface DropdownTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visible label text. Must be a caller-supplied translated string.
    *  For icon-only triggers it becomes the aria-label instead. */

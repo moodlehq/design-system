@@ -7,6 +7,7 @@ type ProgressBarVisualStatus = 'empty' | ProgressBarStatus | 'completed';
 
 type ProgressBarLabelVariant = 'title-and-count' | 'title' | 'inline' | 'none';
 
+/** Props for ProgressBar. */
 export interface ProgressBarProps extends HTMLAttributes<HTMLDivElement> {
   /** Current progress value in the range defined by `min` and `max`. */
   value?: number;
@@ -52,6 +53,7 @@ const allowedLabels: ProgressBarLabelVariant[] = [
   'none',
 ];
 
+/** Shows how far through a task or process the user is, with optional title and count labels and status colours. Exposed as a `progressbar` to assistive technology. */
 export const ProgressBar = ({
   value = 0,
   min = 0,

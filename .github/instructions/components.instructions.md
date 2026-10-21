@@ -163,6 +163,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 Use `interface`, not `type`, for props. Use `import type` for type-only imports.
 
+### JSDoc on public exports
+
+Descriptions on the component, its `*Props` interface, each prop and each exported variant/size/appearance union type ship in the `.d.ts` files, and `npm run build-guidance` reads them into the generated "Props" section of the component's guidance page. Write them for every new component:
+
+- One-line `/** ... */` on the props interface and on each exported union type; list the allowed values when they are a small set (for example "`sm`, `md`, `lg` or `xl`").
+- A `/** ... */` on every prop, saying what it does rather than restating its type. Defaults come from the destructuring in the component, which the generator reads, so don't repeat them in the description.
+- Keep comments that explain internals as `//` so they stay out of the generated guidance.
+
 ## Runtime validation for constrained props
 
 Props with a fixed set of allowed values must use runtime validation with an `allowedValues` array. Keep the public TypeScript API narrow (for example, union literals) for editor/type safety, and still resolve invalid runtime input to a safe default because external JavaScript consumers can pass any value.

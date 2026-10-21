@@ -6,6 +6,7 @@ import {
   useRef,
 } from 'react';
 
+/** Props for Checkbox. */
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   /** Visible label text. When hideLabel is true this also serves as the aria-label fallback
    *  if no explicit aria-label prop is provided. */
@@ -28,6 +29,7 @@ export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   supportingText?: string;
 }
 
+/** Labelled checkbox for selecting zero or more independent options, with optional indeterminate state. For exactly one choice from a set use Radio; for an immediate on/off setting use Switch. */
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   (
     {
