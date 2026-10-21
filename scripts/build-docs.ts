@@ -1,6 +1,8 @@
 /**
- * Fetches all public ZeroHeight pages and writes a combined Markdown file to
- * .github/instructions/design-system.instructions.md for AI agent consumption.
+ * Fetches all public ZeroHeight pages and writes one combined, titled Markdown
+ * file to llms-full.txt (repo root, shipped in the package) for agents that
+ * want everything. It is an optional extra: the per-component guidance from
+ * `npm run build-guidance` is the main path.
  *
  * Usage: npm run build-docs
  * Requires: ZEROHEIGHT_MCP_URL=https://mcp.zeroheight.com/mcp/<your-token>
@@ -11,24 +13,23 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 import { mkdirSync, writeFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 
+import { packageSlugFor } from './build-guidance';
+import { formatPage, stripExpiringImages } from './lib/zeroheight-format';
+
 const STYLEGUIDE_ID = 131542;
-const OUTPUT_PATH = resolve(
-  '.github/instructions/design-system.instructions.md',
-);
+const OUTPUT_PATH = resolve('llms-full.txt');
 
 // The cover page is a ZeroHeight UI chrome element with no text content.
 const SKIP_KEYS = new Set(['___cover']);
 
-// No applyTo frontmatter — this file is intentionally opt-in only (not auto-loaded by Copilot).
-// See routing rules in copilot-instructions.md.
 const FILE_HEADER = `<!-- Auto-generated from ZeroHeight. Do not edit manually. -->
 <!-- Source: https://design.moodle.com/ -->
 <!-- Regenerate: npm run build-docs -->
-<!-- NOTE: No applyTo frontmatter — this file is intentionally opt-in only.
-     Load it manually when ZeroHeight MCP is unavailable and design context is needed.
-     See routing rules in copilot-instructions.md. -->
 
-# Moodle Design System — Agent Reference
+# Moodle Design System: full documentation
+
+Every public page, in site order. Each page starts with a "# <title>" heading.
+Prefer llms.txt and the per-component guidance files; use this only when you need everything.
 
 `;
 
@@ -74,26 +75,6 @@ function extractPages(tree: PageTree): FlatPage[] {
       return [{ id: value.id, title: key, url: value.url }];
     return extractPages(value as PageTree);
   });
-}
-
-/**
- * Replaces expiring ZeroHeight S3 image URLs with plain alt text.
- * Image URLs expire after 7 days, so they are unsuitable for a committed file.
- */
-function stripExpiringImages(md: string): string {
-  return md.replace(
-    /!\[([^\]]*)\]\(https:\/\/zeroheight[^)]+\)/g,
-    (_, alt: string) => (alt ? `_[image: ${alt}]_` : ''),
-  );
-}
-
-/**
- * Strips ZeroHeight's YAML front matter from the page content.
- * Leaves all heading levels and Markdown structure unchanged for agent consumption.
- */
-function formatPage(raw: string): string {
-  const body = raw.replace(/^---[\s\S]*?---\n/, '').trim();
-  return body;
 }
 
 /** Concatenates all text-typed content blocks from an MCP tool response. */
@@ -158,7 +139,11 @@ async function fetchPageContent(
     const page = pages[i];
     console.log(`  Fetching: ${page.title} (id: ${page.id})`);
     const raw = await invokeToolText(client, 'get-page', { pageId: page.id });
-    const formatted = formatPage(stripExpiringImages(raw));
+    const formatted = formatPage(
+      stripExpiringImages(raw),
+      page.title,
+      packageSlugFor(page.title),
+    );
     if (formatted) {
       sections.push(formatted);
     } else {
