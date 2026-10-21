@@ -308,6 +308,8 @@ const feedbackId = invalid && invalidFeedback ? `${id}-feedback` : undefined;
 )}
 ```
 
+**Native validation:** a component that cancels the `invalid` event (to show its own message instead of the browser bubble) also stops the browser focusing the first invalid control on submit. Call `useSubmitAttemptTracking()` in the component and `focusFirstInvalidOnSubmit(event.currentTarget)` in its `invalid` handler (`components/_internal/validation.ts`), as `BaseInput` and `RadioGroup` do. Focus then moves on a failed submit only, never on blur validation or a programmatic `checkValidity()`.
+
 ## Overlay / portaled component pattern
 
 Components that open a floating surface (menus, dropdowns, tooltips, popovers) must use [`@floating-ui/react`](https://floating-ui.com/docs/react) for positioning, portal rendering, and keyboard interaction. Do not reimplement these manually.

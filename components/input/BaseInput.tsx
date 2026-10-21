@@ -11,6 +11,10 @@ import {
   useState,
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import {
+  focusFirstInvalidOnSubmit,
+  useSubmitAttemptTracking,
+} from '../_internal/validation';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
@@ -98,6 +102,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const [nativeMessage, setNativeMessage] = useState<string | undefined>(
       undefined,
     );
+    useSubmitAttemptTracking();
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
     // even if the consumer never passed the invalid prop — unless the consumer opts out
@@ -154,6 +159,8 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
       // Suppress the native validation bubble; the message is surfaced via invalidFeedback instead.
       event.preventDefault();
       setNativeMessage(event.currentTarget.validationMessage);
+      // Cancelling also stops the browser focusing the first invalid control on submit.
+      focusFirstInvalidOnSubmit(event.currentTarget);
       onInvalid?.(event);
     };
 
