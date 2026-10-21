@@ -5,7 +5,7 @@ import { expect } from 'storybook/test';
 import { Radio } from './Radio';
 
 const meta = {
-  title: 'Components/Radio',
+  title: 'Components/Radio/Radio',
   component: Radio,
   parameters: {
     layout: 'centered',
@@ -265,9 +265,9 @@ export const ControlledCheckedExample = () => {
 };
 
 /**
- * Multiple `Radio` components sharing the same `name` attribute form a group — the browser ensures only one can be selected at a time. Each option needs its own `value` and `label`; the consumer is responsible for the container and its layout direction.
+ * Multiple `Radio` components sharing the same `name` attribute form a group — the browser ensures only one can be selected at a time.
  *
- * The two layouts below use a flex container to demonstrate both common arrangements. Neither is provided by this component — choose whichever suits the surrounding form.
+ * For a form question, use `RadioGroup` instead: it renders the radios from an `options` array and adds the group label, required marker, info button, supporting/error text, and the Figma spacing. This story only shows the native grouping behaviour.
  */
 export const Group: Story = {
   parameters: {

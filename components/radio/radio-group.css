@@ -1,0 +1,84 @@
+/* RadioGroup component
+  Form field that wraps Radio options with a group label, optional required
+  marker and info button, and a supporting/error text row. Radio styling
+  itself lives in radio/radio.css. */
+
+.mds-radio-group[class] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+
+  font-family: var(--mds-font-family-base);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+.mds-radio-group[class] .mds-radio-group-label-row {
+  display: flex;
+  align-items: center;
+  min-height: 16px; /* Figma defines the Label frame as fixed 16px tall. */
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-radio-group[class] .mds-radio-group-label {
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+  /* The token (12px) sits inside the Figma-fixed 16px label row. Raising the
+     floor to that 16px keeps one line identical and stops a wrapped label
+     (long translations, narrow containers) from overlapping itself. */
+  line-height: max(var(--mds-line-height-paragraph-xs), 16px);
+  color: var(--mds-text-subtle);
+}
+
+/* The label and asterisk keep their default colours in every state. */
+.mds-radio-group[class] .mds-radio-group-required {
+  color: var(--mds-text-danger);
+}
+
+.mds-radio-group[class] .mds-radio-group-options {
+  display: flex;
+  padding-block: var(--mds-spacing-xs);
+}
+
+/* Reset Bootstrap's .form-check margin-bottom so the gap token alone spaces
+   the options, matching Figma's 8px (vertical) / 16px (horizontal). */
+.mds-radio-group[class] .mds-radio-group-options > .mds-radio {
+  margin: 0;
+}
+
+.mds-radio-group[class] .mds-radio-group-options--vertical {
+  flex-direction: column;
+  gap: var(--mds-spacing-xs);
+}
+
+/* Horizontal never shows wrapped (per Figma/ZeroHeight): RadioGroup measures
+   the row and switches to the vertical layout before a wrapped row is painted.
+   flex-wrap lets the group shrink in a container sized to its content, which
+   is how it finds out the row no longer fits. Without JavaScript a wrapped row
+   can show, so row-gap matches the vertical spacing. */
+.mds-radio-group[class] .mds-radio-group-options--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: var(--mds-spacing-md);
+  row-gap: var(--mds-spacing-xs);
+}
+
+.mds-radio-group[class] .mds-radio-group-supporting-text {
+  margin: 0;
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-small);
+  color: var(--mds-text-subtle);
+}
+
+.mds-radio-group[class] .mds-radio-group-supporting-text--invalid {
+  color: var(--mds-text-danger);
+}
+
+/* Placed after --invalid so disabled wins by cascade order if both apply. */
+.mds-radio-group[class] .mds-radio-group-supporting-text--disabled {
+  color: var(--mds-text-muted);
+}

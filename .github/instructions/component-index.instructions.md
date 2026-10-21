@@ -29,6 +29,7 @@ Quick reference for AI agents and developers.
 | ProgressBar     | Visual progress indicator with status and label variants                                                            | value, min, max, status, labelVariant, title                                                                         |
 | SearchInput     | Search field (`type="search"`) with magnifier and clear button — never Input with a magnifier icon                  | label, invalid, invalidFeedback, supportingText, clearLabel, onDebouncedChange, debounceMs, landmark                 |
 | Radio           | Single-select options in a compact list (native radio input, label only)                                            | checked, label, disabled, invalid                                                                                    |
+| RadioGroup      | Labelled field for choosing exactly one of 2 to 5 options (wraps Radio)                                             | label, options, value, orientation, required, invalid, invalidFeedback, supportingText                               |
 | Switch          | Binary toggle control for on/off settings                                                                           | checked, label, disabled, onChange                                                                                   |
 | Tag             | Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise) | content, type, disabled; link: href, variant; removable: onRemove, removeLabel, username, email, institution, avatar |
 | Textarea        | Multi-line plain-text input with label, supporting text, counter, and validation — not a rich text editor           | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
@@ -110,6 +111,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [ProgressBar stories](../../components/progress-bar/ProgressBar.stories.tsx)
 - [Radio implementation](../../components/radio/Radio.tsx)
 - [Radio stories](../../components/radio/Radio.stories.tsx)
+- [RadioGroup implementation](../../components/radio/RadioGroup.tsx)
+- [RadioGroup stories](../../components/radio/RadioGroup.stories.tsx)
 - [Switch implementation](../../components/switch/Switch.tsx)
 - [Switch stories](../../components/switch/Switch.stories.tsx)
 - [Tag implementation](../../components/tag/Tag.tsx)
@@ -125,8 +128,9 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - Use published MDS tokens through CSS variables only; avoid hardcoded design values.
 - Treat generated token outputs as read-only and update only source token flows.
 - Keep Storybook variants and tests aligned with component API changes.
-- `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
-- `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
+- Use `RadioGroup` whenever radio options answer one question — it renders the `Radio`s itself from an `options` array and owns the label, required marker, info button, supporting/error text, and spacing. Don't lay out loose `Radio`s by hand. Keep it to 2 to 5 options: use `Select` for 6 or more, `Checkbox` for multiple choices, and `Switch` for a single on/off setting.
+- `Checkbox` and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
+- `RadioGroup` and `Choicebox` both render single-select options but are not interchangeable: use `RadioGroup` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
 - **Badge is never interactive. If it links or removes, it's a Tag.** A static badge rendered beside a link is a layout pattern, not an interactive component — do not wrap a `Badge` in an anchor or add a click handler to it. Use `Tag` (`type="link"` or `type="removable"`) whenever the element should navigate or be dismissed. `Tag` nests the existing `Avatar` and `CloseButton` components and shares `Badge`'s surface tokens rather than redrawing either.
 - Use `Alert` for a persistent, in-flow message tied to the current page or section: the outcome of an action someone may want to reference, something that needs attention, or a warning or error that must stay visible until acted on or dismissed. Don't use it for:
   - a brief confirmation that doesn't need to stay on the page → a toast (MDS has no Toast yet; flag the need rather than using `Alert` with auto-dismiss);
