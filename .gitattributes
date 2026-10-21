@@ -1,0 +1,4 @@
+# Collapse generated guidance in GitHub diffs (written by npm run build-guidance / build-docs).
+docs/guidance/** linguist-generated=true
+llms.txt linguist-generated=true
+llms-full.txt linguist-generated=true

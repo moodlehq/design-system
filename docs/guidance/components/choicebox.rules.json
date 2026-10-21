@@ -1,0 +1,24 @@
+{
+  "component": "Choicebox",
+  "slug": "choicebox",
+  "must": [],
+  "mustNot": [
+    "Don't use when options are self-explanatory. Use [Radio group](https://design.moodle.com/98292f05f/p/366522) instead.",
+    "Don't use for multi-select scenarios. Use [Checkbox](https://design.moodle.com/98292f05f/p/12e8f6) instead.",
+    "Don't use for binary on/off settings. Use Switch instead.",
+    "Don't use when space is constrained and a compact list is more appropriate. Use [Select](https://design.moodle.com/98292f05f/p/013ac0) instead.",
+    "Don't open supporting text by repeating the option name, the label already provides that context.",
+    "Don't mix Choicebox with Radio button or Checkbox within the same selection group."
+  ],
+  "useInstead": [
+    "Switch"
+  ],
+  "lookAlikes": [
+    "Radio group",
+    "Checkbox",
+    "Select",
+    "Switch",
+    "Radio button",
+    "Button"
+  ]
+}

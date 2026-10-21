@@ -1,0 +1,19 @@
+{
+  "component": "Alert",
+  "slug": "alert",
+  "must": [],
+  "mustNot": [
+    "Don't use for brief confirmations that don't need to stay on the page. Use toast instead.",
+    "Don't use for form field-level validation errors. Use inline field validation instead.",
+    "Don't use for high-priority blocking messages that require user confirmation before continuing. Use a Modal/Dialog instead.",
+    "Don't repeat the alert type in words: the icon and colour already communicate severity.",
+    "Don't add a title to obvious messages like \"Changes saved\"."
+  ],
+  "useInstead": [
+    "toast",
+    "inline field validation",
+    "Modal/Dialog",
+    "Modal"
+  ],
+  "lookAlikes": []
+}
