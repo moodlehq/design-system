@@ -19,6 +19,7 @@ import { forwardRef, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { DropdownContext, DropdownMenu, useDropdownContext } from './Dropdown';
 
+/** Props for DropdownItemExpandable. */
 export interface DropdownItemExpandableProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;

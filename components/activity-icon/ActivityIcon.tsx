@@ -25,9 +25,11 @@ function loadIconSrc(fileName: string): Promise<string> {
   return loader().then((mod) => mod.default);
 }
 
+/** Container style around an ActivityIcon: `none`, `default` or `large`. */
 export type ActivityIconContainer = 'none' | 'default' | 'large';
 const allowedContainers: ActivityIconContainer[] = ['none', 'default', 'large'];
 
+/** Size of an ActivityIcon: `sm`, `md`, `lg` or `xl`. */
 export type ActivityIconSize = 'sm' | 'md' | 'lg' | 'xl';
 const allowedSizes: ActivityIconSize[] = ['sm', 'md', 'lg', 'xl'];
 
@@ -40,6 +42,7 @@ const iconLookupFallback: ActivityIconName = 'file-unknown';
 // for the muted state instead of using the token overlay.
 const mutedFilterFallbackIcons: ActivityIconName[] = ['bigbluebutton', 'h5p'];
 
+/** Props for ActivityIcon. */
 export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Activity/resource icon key used to resolve the SVG asset from the registry.
@@ -68,6 +71,7 @@ export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
   appearance?: ActivityIconAppearance;
 }
 
+/** Renders a Moodle activity or resource type icon (e.g. assignment, quiz, forum), looked up by `icon` key. Use for course content types; use an `<i>`/`<svg>` icon element for general UI icons. */
 export const ActivityIcon = ({
   icon,
   alt = '',

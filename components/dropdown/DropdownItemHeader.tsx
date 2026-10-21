@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 
+/** Props for DropdownItemHeader. */
 export interface DropdownItemHeaderProps extends HTMLAttributes<HTMLDivElement> {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;

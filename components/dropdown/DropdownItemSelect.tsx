@@ -5,6 +5,7 @@ import { useDropdownContext } from './Dropdown';
 import type { IconElement } from './dropdownItemUtils';
 import { isIconElement } from './dropdownItemUtils';
 
+/** Props for DropdownItemSelect. */
 export interface DropdownItemSelectProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visible label text. Must be a caller-supplied translated string. */
   label: string;

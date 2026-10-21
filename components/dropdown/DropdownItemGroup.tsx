@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { forwardRef, useId } from 'react';
 
+/** Props for DropdownItemGroup. */
 export interface DropdownItemGroupProps extends HTMLAttributes<HTMLDivElement> {
   /** Group section label. Rendered as visible text and used as the
    *  accessible name for role="group" via aria-labelledby. */
