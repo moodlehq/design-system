@@ -130,11 +130,13 @@ Each sub-component follows the same file structure rules as any other component 
 
 ## Group / multi-instance composition (Radio, Checkbox, NavPill)
 
-`Radio`, `Checkbox`, and `NavPill` are single-instance components — none ships a group wrapper, layout, or spacing. When multiple instances are rendered together (for example, a radio group sharing a `name`, a related checkbox set, or a row of navigation pills), the consumer supplies the container and its layout direction (for example, a flex container with a `--mds-spacing-*` gap token). Do not add a new wrapper component or hardcode spacing inside `Radio`/`Checkbox`/`NavPill` to solve this — follow each component's stories for the reference pattern.
+Radio options that answer one question use `RadioGroup` (`components/radio/RadioGroup.tsx`), which Figma defines as its own form field. It renders each option as a `Radio` from an `options` array, shares one `name`, propagates `disabled`/`invalid`/`required` to every radio, and owns the label row, supporting/error text, and option spacing. Don't hardcode spacing inside `Radio` or lay out loose `Radio`s by hand.
+
+`Checkbox` and `NavPill` are single-instance components — neither ships a group wrapper, layout, or spacing. When multiple instances are rendered together (for example, a related checkbox set or a row of navigation pills), the consumer supplies the container and its layout direction (for example, a flex container with a `--mds-spacing-*` gap token). Do not add a new wrapper component or hardcode spacing inside `Checkbox`/`NavPill` to solve this — follow each component's stories for the reference pattern.
 
 ## Cross-axis sizing (Badge, Tag)
 
-`Badge` and `Tag` are `display: inline-flex` and set `align-self: flex-start` in their own CSS, so each holds its own intrinsic (content + padding) height regardless of taller siblings — unlike the Radio/Checkbox/NavPill group pattern above, this is **not** left to the consumer. Without the guard, a flex container's default `align-items: stretch` would stretch a short `Badge`/`Tag` to match a taller sibling in the same row (e.g. next to a `Button`, or next to a `Tag` with more populated text lines). Keep this guard in both components' base rule; do not remove it or push the fix out to consumer markup.
+`Badge` and `Tag` are `display: inline-flex` and set `align-self: flex-start` in their own CSS, so each holds its own intrinsic (content + padding) height regardless of taller siblings — unlike the Checkbox/NavPill group pattern above, this is **not** left to the consumer. Without the guard, a flex container's default `align-items: stretch` would stretch a short `Badge`/`Tag` to match a taller sibling in the same row (e.g. next to a `Button`, or next to a `Tag` with more populated text lines). Keep this guard in both components' base rule; do not remove it or push the fix out to consumer markup.
 
 ## Breaking change guardrail
 
@@ -305,6 +307,8 @@ const feedbackId = invalid && invalidFeedback ? `${id}-feedback` : undefined;
   <div id={feedbackId}>{invalidFeedback}</div>
 )}
 ```
+
+**Native validation:** a component that cancels the `invalid` event (to show its own message instead of the browser bubble) also stops the browser focusing the first invalid control on submit. Call `useSubmitAttemptTracking()` in the component and `focusFirstInvalidOnSubmit(event.currentTarget)` in its `invalid` handler (`components/_internal/validation.ts`), as `BaseInput` and `RadioGroup` do. Focus then moves on a failed submit only, never on blur validation or a programmatic `checkValidity()`.
 
 ## Overlay / portaled component pattern
 
