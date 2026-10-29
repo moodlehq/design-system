@@ -2,7 +2,7 @@
 
 > React components and design tokens for Moodle. Package: @moodlehq/design-system@5.5.0.
 
-Read the per-component guidance before choosing a component. Props come from the TypeScript types in `dist/`.
+Read the per-component guidance before choosing a component. Each component page lists its props and allowed values, generated from the TypeScript types.
 
 ## Guidance
 
@@ -42,5 +42,6 @@ Read the per-component guidance before choosing a component. Props come from the
 
 ## Optional
 
+- [Design tokens (DTCG)](https://raw.githubusercontent.com/moodlehq/design-system/design-system-v5.5.0/tokens/dtcg/Defaultmode_Light.tokens.json): token source, read-only
 - [Full documentation](https://cdn.jsdelivr.net/npm/@moodlehq/design-system@5.5.0/llms-full.txt): every public page in one file, large
 - [Design guidelines](https://design.moodle.com/)
