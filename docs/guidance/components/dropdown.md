@@ -38,6 +38,123 @@ Combobox · Select · Button
   - If activating an action produces an off-screen result (e.g. "Course duplicated"), announce it via an app-level live region in the consuming experience.GitHub
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### DropdownProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  | Trigger label. Must be a caller-supplied translated string. Required unless `trigger` is provided. |
+| `variant` | `DropdownTriggerProps['variant']` |  | Trigger form — see DropdownTrigger. Ignored when `trigger` is provided. |
+| `appearance` | `DropdownTriggerProps['appearance']` |  | Trigger appearance — see DropdownTrigger. Ignored when `trigger` is provided. |
+| `size` | `DropdownTriggerProps['size']` |  | Trigger size — see DropdownTrigger. Ignored when `trigger` is provided. |
+| `startIcon` | `IconElement` |  | Optional leading trigger icon. Accepts only intrinsic `<i>` or `<svg>` elements. Ignored when `trigger` is provided. |
+| `iconOnly` | `boolean` |  | Renders an icon-only trigger; the label becomes its aria-label. Ignored when `trigger` is provided. |
+| `trigger` | `CustomTriggerElement` |  | Escape hatch for a fully custom trigger element when none of the built-in DropdownTrigger visual variants fit (e.g. a link-styled trigger). The element is cloned with the floating reference ref plus the ARIA and interaction props Dropdown needs — it must forward its `ref` to a focusable host element. When provided, `label`, `variant`, `appearance`, `size`, `startIcon` and `iconOnly` are ignored. |
+| `open` | `boolean` |  | Controlled open state; leave undefined for uncontrolled behavior. |
+| `defaultOpen` | `boolean` | `false` |  |
+| `onOpenChange` | `(open: boolean) => void` |  |  |
+| `placement` | `Placement` | `'bottom-start'` | Menu placement relative to the trigger. Defaults to 'bottom-start'. flip() will invert to the opposite side when space is insufficient. |
+| `allowPlacementFlip` | `boolean` | `true` | Whether the menu may flip to an alternate placement when space is insufficient. Defaults to true. |
+| `matchTriggerWidth` | `boolean` | `false` | When true, the menu panel grows to be at least as wide as the trigger. Useful when the trigger label is wider than the default 217px minimum. |
+| `children` | `ReactNode` |  | Menu content (Dropdown item components). |
+
+### DropdownItemActionCommonProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+| `variant` | `DropdownItemActionVariant` | `'default'` | default (neutral) or danger (destructive) styling. |
+| `startIcon` | `IconElement` |  | Optional leading icon. Accepts only intrinsic `<i>` or `<svg>` elements. |
+| `description` | `string` |  | Optional secondary line below the label. Caller-supplied translated string. |
+| `disabled` | `boolean` |  |  |
+| `target` | `string` |  | Link target (e.g. `_blank`). Only applies when `href` is provided. |
+| `rel` | `string` |  | Link relationship. Only applies when `href` is provided. |
+
+Allowed values:
+
+- `variant`: `default`, `danger`
+
+### DropdownItemCustomProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `children` | `ReactNode` |  | Arbitrary slot content. The custom item is the escape hatch for item layouts not covered by the typed variants; interactivity and ARIA for the content are the consumer's responsibility. |
+
+### DropdownItemExpandableProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+| `children` | `ReactNode` |  | Submenu content (Dropdown item components). Presence enables the expand behavior; without children the row renders inert chrome only. |
+| `open` | `boolean` |  | Controlled submenu open state. |
+| `defaultOpen` | `boolean` | `false` |  |
+| `onOpenChange` | `(open: boolean) => void` |  |  |
+| `placement` | `Placement` | `'right-start'` | Submenu placement relative to the expandable row. Defaults to 'right-start'. flip() will invert to the opposite side when space is insufficient. |
+
+### DropdownItemGroupProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Group section label. Rendered as visible text and used as the accessible name for role="group" via aria-labelledby. |
+| `children` | `ReactNode` |  | Dropdown item components to include in this group. |
+
+### DropdownItemHeaderProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+
+### DropdownItemListProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+| `variant` | `'todo' \| 'done'` | `'todo'` | Completion state of the item. |
+
+Allowed values:
+
+- `variant`: `todo`, `done`
+
+### DropdownItemMultiselectProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+| `checked` | `boolean` | `false` | Whether this item is currently checked. Controlled by the consumer. |
+| `description` | `string` |  | Optional secondary line below the label. Caller-supplied translated string. |
+| `disabled` | `boolean` |  | Prevents interaction and renders the item as unavailable. |
+
+### DropdownItemSelectProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+| `selected` | `boolean` | `false` | Single-select state: shows the surface-subtle fill and trailing check. |
+| `startIcon` | `IconElement` |  | Optional leading icon. Accepts only intrinsic `<i>` or `<svg>` elements. |
+| `description` | `string` |  | Optional secondary line below the label. Caller-supplied translated string. |
+
+### DropdownTriggerProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. For icon-only triggers it becomes the aria-label instead. |
+| `variant` | `DropdownTriggerVariant` | `'button'` | Visual form: a standalone button or a navigation pill. The nav-pill variant is constrained to Appearance=default and Size=md per the design. |
+| `appearance` | `DropdownTriggerAppearance` | `'default'` | emphasis = filled secondary, default = outlined secondary, subtle = ghost. |
+| `size` | `DropdownTriggerSize` | `'md'` | Visual size: md (default) or sm. Nav-pill variant is constrained to md. |
+| `startIcon` | `IconElement` |  | Optional leading icon. Accepts only intrinsic `<i>` or `<svg>` elements. |
+| `iconOnly` | `boolean` | `false` | Renders only the startIcon (no label text, no chevron); the label prop is applied as aria-label so the trigger keeps an accessible name. |
+| `open` | `boolean` | `false` | Whether the dropdown this trigger controls is open. Drives aria-expanded and the pressed/active visual state (Figma State=active). |
+| `selected` | `boolean` | `false` | Marks the nav-pill trigger as selected — indicates that a child destination in the dropdown menu is the currently active page. Only applies when variant='nav-pill'; ignored (with a dev warning) on the button variant. |
+
+Allowed values:
+
+- `variant`: `button`, `nav-pill`
+- `appearance`: `emphasis`, `default`, `subtle`
+- `size`: `sm`, `md`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

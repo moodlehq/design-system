@@ -34,6 +34,24 @@ Checkbox · Radio group · Button
   - If a switch triggers a broader change to the page (for example, enabling a section of content), consider a live region announcement for that content area.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### SwitchProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  | Visible label text. When hideLabel is true this also serves as the aria-label fallback if no explicit aria-label prop is provided. |
+| `hideLabel` | `boolean` | `false` | When true, hides the visible label text while preserving an accessible name on the input. |
+| `variant` | `SwitchVariant` | `'enable'` | Semantic variant that controls the thumb icon set. |
+| `labelSide` | `SwitchLabelSide` | `'end'` | Places the label after (end) or before (start) the switch indicator. |
+
+Allowed values:
+
+- `variant`: `enable`, `visibility`, `lock`
+- `labelSide`: `end`, `start`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

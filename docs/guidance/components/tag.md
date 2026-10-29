@@ -33,6 +33,46 @@ Use instead: [Badge](/28c702-badge); Removable variant; Badge or plain text.
   - Focus after removal: removal is owned by the consumer through *`onRemove`*. If the tag unmounts and leaves focus on the page body, Tag moves focus to the next focusable element. If the consumer places focus itself (for example back in the input field), Tag doesn't override it.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### TagSharedProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `content` (required) | `string` |  | Position 1 — the tag's name/category label. Always rendered first. Required. |
+| `disabled` | `boolean` | `false` | Disables the whole tag. In removable mode this also disables the nested CloseButton. |
+
+### TagIdentityProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `username` | `string` |  | Position 2 — a short supporting identifier, shown after `content`. Named "Username / short name" in Figma/ZeroHeight: a person's username for a User tag, or a site/tenant's short name for a Tenant tag. Shown before `email` when both are present (divider-separated). |
+| `email` | `string` |  | Position 2 — an email address, shown after `username` (divider-separated when both are present). Person-only per ZeroHeight — omit for Tenant tags. |
+| `institution` | `string` |  | Position 3 — institution name only. Renders after Position 2 but its visibility does not depend on it. |
+| `avatar` | `TagAvatar` |  | Optional leading identity avatar. Reuses the MDS Avatar component. Its size scales with how many of the three text lines are populated: `xs` for `content` alone, `md` when one of Position 2 / `institution` is also present, `lg` when all three lines are filled. Always rendered `aria-hidden` — the identity it shows is already conveyed by the visible text alongside it, so exposing its own accessible name would announce the same identity twice. |
+
+### TagLinkProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` (required) | `Extract<TagType, 'link'>` |  | Discriminant — selects the link-mode prop shape. Renders a real `<a>`. |
+| `href` (required) | `string` |  | Destination URL. Required — link mode always renders a real `<a>`. |
+| `variant` | `TagVariant` |  | Colour variant. Link mode only — removable mode has no colour axis and always renders its neutral surface. When omitted, renders as `default`. |
+
+Allowed values:
+
+- `variant`: `default`, `danger`
+
+### TagRemovableProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` (required) | `Extract<TagType, 'removable'>` |  | Discriminant — selects the removable-mode prop shape. Renders a `<span>` with a nested CloseButton. |
+| `onRemove` (required) | `(event: MouseEvent<HTMLButtonElement>) => void` |  | Callback fired when the nested CloseButton is activated. Removable mode always renders the CloseButton — ZeroHeight treats it as required, and a value the user can't remove should use Badge or plain text instead. The non-removable identity layout used by Combobox rows is shared through `_internal/TagContent` rather than a Tag prop (see the reasoning there). |
+| `removeLabel` (required) | `string` |  | Accessible name passed to the nested CloseButton, e.g. "Remove Ana Silva". Must include the tag's label — a bare "Remove" is not sufficient. Required because CloseButton's own `aria-label` is required. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

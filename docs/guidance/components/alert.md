@@ -27,6 +27,30 @@ A contextual message that draws attention to important information without inter
   - On dismiss, focus moves programmatically to the next focusable element in the DOM. No transition or animation is implemented in this version.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### AlertProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `AlertType` |  | Semantic alert type that controls icon, colours, and live-region role. |
+| `title` | `string` |  | Optional heading above the message body. |
+| `message` (required) | `string` |  | Required alert message content. |
+| `isDismissible` | `boolean` | `true` | Shows a dismiss control that removes the alert from the page. Defaults to true. |
+| `dismissAriaLabel` | `string` | `'Dismiss alert'` | Accessible label for the dismiss control. Defaults to 'Dismiss alert'. |
+| `onDismiss` | `() => void` |  | Callback fired after the alert is dismissed. |
+| `isActionable` | `boolean` | `false` | Shows a single inline action button below the message. |
+| `actionLabel` | `string` |  | Visible action button label. Required when actionable. |
+| `onAction` | `ButtonProps['onClick']` |  | Click handler for the action button. |
+| `actionButtonProps` | `Omit< ButtonProps, 'label' \| 'variant' \| 'onClick' \| 'type' \| 'startIcon' \| 'endIcon' >` |  | Additional props forwarded to the action Button component. |
+| `children` | `ReactNode` |  | Optional custom content rendered in the custom slot. |
+
+Allowed values:
+
+- `type`: `info`, `success`, `warning`, `danger`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

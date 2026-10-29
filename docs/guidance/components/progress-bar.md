@@ -29,6 +29,28 @@ A visual indicator that shows how much of a task is complete, using a progress b
   - If you need guaranteed spoken announcements on every update (for example, long-running async tasks with milestones), add a separate app-level live region message in the consuming experience.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### ProgressBarProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | `0` | Current progress value in the range defined by `min` and `max`. |
+| `min` | `number` | `0` | Lower bound for the progress range. Defaults to 0. |
+| `max` | `number` | `100` | Upper bound for the progress range. Defaults to 100. |
+| `status` | `ProgressBarStatus` |  | Visual state of the progress indicator — controls fill and track colours. |
+| `labelVariant` | `ProgressBarLabelVariant` | `'title-and-count'` | Controls label layout: - `title-and-count`: title + count row above the bar (default) - `title`: title only above the bar - `inline`: bar with count beside it in a row - `none`: bar only, no visible label |
+| `title` | `string` |  | Pre-translated title text rendered above the bar (title-and-count / title variants). Also used as the accessible name for the bar when no visible label is present. |
+| `count` | `string` |  | Pre-translated count or percentage text, e.g. "3 of 10" or "50%". The component intentionally does not calculate or format this from `value`, `min`, and `max`; word order, plural rules, and number formatting belong to the consuming application's i18n layer. |
+| `animated` | `boolean` | `false` | Controls striped animation when status is loading. |
+
+Allowed values:
+
+- `status`: `in-progress`, `loading`, `error`, `warning`
+- `labelVariant`: `title-and-count`, `title`, `inline`, `none`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

@@ -1,3 +1,6 @@
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import { splitSections } from '../build-guidance';
@@ -6,7 +9,9 @@ import {
   compactGallery,
   extractAccessibility,
   isComponentSpecific,
+  readProps,
   renderBuiltFrom,
+  renderProps,
 } from './guidance-extras';
 
 const PAGE = `# Code
@@ -108,5 +113,48 @@ describe('compactGallery', () => {
     const out = compactGallery(md);
     expect(out).toContain('- anchor\n- arrow-down');
     expect(out).not.toContain('<design>');
+  });
+});
+
+describe('readProps', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'props-'));
+  mkdirSync(join(dir, 'demo'));
+  writeFileSync(
+    join(dir, 'demo', 'Demo.tsx'),
+    `export type DemoSize = 'sm' | 'lg';
+export interface DemoProps {
+  /** Shown text. */
+  label: string;
+  /** Size of the demo. */
+  size?: DemoSize;
+  tone?: 'a' | 'b';
+}
+export const Demo = ({ size = 'sm', tone = 'a' }: DemoProps) => null;`,
+  );
+
+  it('reads types, defaults, optionality and allowed values from the source', () => {
+    const [doc] = readProps('demo', dir);
+    expect(doc.name).toBe('DemoProps');
+    const byName = Object.fromEntries(doc.props.map((p) => [p.name, p]));
+    expect(byName.label).toMatchObject({
+      optional: false,
+      description: 'Shown text.',
+    });
+    expect(byName.size).toMatchObject({
+      default: "'sm'",
+      values: ['sm', 'lg'],
+    });
+    expect(byName.tone.values).toEqual(['a', 'b']);
+  });
+
+  it('renders a props table with allowed values', () => {
+    const out = renderProps(readProps('demo', dir));
+    expect(out).toContain('| `label` (required) | `string` |');
+    expect(out).toContain('- `size`: `sm`, `lg`');
+  });
+
+  it('returns nothing for a missing component', () => {
+    expect(readProps('nope', dir)).toEqual([]);
+    expect(renderProps([])).toBe('');
   });
 });

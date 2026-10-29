@@ -6,6 +6,7 @@
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import ts from 'typescript';
 
 const NOT_DOCUMENTED = 'Not documented';
 
@@ -216,6 +217,142 @@ export function builtFrom(
     }
   }
   return { components: [...components].sort(), tokens: [...tokens].sort() };
+}
+
+export interface PropDoc {
+  name: string;
+  type: string;
+  optional: boolean;
+  default?: string;
+  description: string;
+  /** Exact values when the prop type is a union of string literals. */
+  values?: string[];
+}
+
+export interface PropsDoc {
+  name: string;
+  props: PropDoc[];
+}
+
+function literalValues(node: ts.TypeNode): string[] | undefined {
+  if (!ts.isUnionTypeNode(node)) return undefined;
+  const values: string[] = [];
+  for (const t of node.types) {
+    if (ts.isLiteralTypeNode(t) && ts.isStringLiteral(t.literal)) {
+      values.push(t.literal.text);
+    } else return undefined;
+  }
+  return values;
+}
+
+/**
+ * Reads the own props of each `*Props` interface in a component's source with
+ * the TypeScript compiler: type, optionality, default (from destructuring
+ * defaults) and exact allowed values for string-literal unions, following one
+ * level of type alias. Inherited HTML attributes are not listed.
+ */
+export function readProps(slug: string, componentsDir: string): PropsDoc[] {
+  const dir = join(componentsDir, slug);
+  if (!existsSync(dir)) return [];
+  const out: PropsDoc[] = [];
+  for (const file of readdirSync(dir).sort()) {
+    if (!/\.tsx?$/.test(file) || /\.(test|stories|figma)\.tsx?$/.test(file)) {
+      continue;
+    }
+    const sf = ts.createSourceFile(
+      file,
+      readFileSync(join(dir, file), 'utf-8'),
+      ts.ScriptTarget.Latest,
+      true,
+      ts.ScriptKind.TSX,
+    );
+    const aliases = new Map<string, string[]>();
+    const defaults = new Map<string, string>();
+    const visit = (n: ts.Node): void => {
+      if (ts.isTypeAliasDeclaration(n)) {
+        const v = literalValues(n.type);
+        if (v) aliases.set(n.name.text, v);
+      } else if (
+        ts.isBindingElement(n) &&
+        n.initializer &&
+        ts.isIdentifier(n.name) &&
+        !n.propertyName
+      ) {
+        if (!defaults.has(n.name.text)) {
+          defaults.set(n.name.text, n.initializer.getText(sf));
+        }
+      }
+      ts.forEachChild(n, visit);
+    };
+    visit(sf);
+
+    sf.forEachChild((n) => {
+      if (!ts.isInterfaceDeclaration(n) || !/Props$/.test(n.name.text)) return;
+      const props: PropDoc[] = [];
+      for (const m of n.members) {
+        if (!ts.isPropertySignature(m) || !m.type || !m.name) continue;
+        const name = m.name.getText(sf).replace(/^['"]|['"]$/g, '');
+        const description = ts
+          .getJSDocCommentsAndTags(m)
+          .map((d) =>
+            ts.isJSDoc(d) ? ts.getTextOfJSDocComment(d.comment) : '',
+          )
+          .join(' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        const alias = ts.isTypeReferenceNode(m.type)
+          ? aliases.get(m.type.typeName.getText(sf))
+          : undefined;
+        const values = alias ?? literalValues(m.type);
+        props.push({
+          name,
+          type: m.type.getText(sf).replace(/\s+/g, ' '),
+          optional: !!m.questionToken,
+          default: defaults.get(name),
+          description,
+          values,
+        });
+      }
+      if (props.length) out.push({ name: n.name.text, props });
+    });
+  }
+  return out;
+}
+
+const cell = (s: string): string => s.replace(/\|/g, '\\|');
+
+export function renderProps(docs: PropsDoc[]): string {
+  if (!docs.length) return '';
+  const blocks = docs.map((d) => {
+    const rows = d.props.map(
+      (p) =>
+        `| \`${p.name}\`${p.optional ? '' : ' (required)'} | \`${cell(p.type)}\` | ${
+          p.default ? `\`${cell(p.default)}\`` : ''
+        } | ${cell(p.description)} |`,
+    );
+    const allowed = d.props
+      .filter((p) => p.values)
+      .map(
+        (p) =>
+          `- \`${p.name}\`: ${(p.values ?? []).map((v) => `\`${v}\``).join(', ')}`,
+      );
+    return [
+      `### ${d.name}`,
+      '',
+      '| Prop | Type | Default | Description |',
+      '| --- | --- | --- | --- |',
+      ...rows,
+      ...(allowed.length ? ['', 'Allowed values:', '', ...allowed] : []),
+    ].join('\n');
+  });
+  return [
+    '## Props',
+    '',
+    'Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.',
+    '',
+    blocks.join('\n\n'),
+    '',
+  ].join('\n');
 }
 
 export function renderBuiltFrom(b: BuiltFrom): string {

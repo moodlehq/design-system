@@ -29,6 +29,17 @@ Button
 - Announced: Not documented
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### CloseButtonProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `aria-label` (required) | `string` |  | Accessible name announced by screen readers for the close button control. Must be a translated string provided by the caller. |
+| `size` | `string` |  | Visual size variant for the close icon button. Invalid values fall back to the default `md` size at runtime. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

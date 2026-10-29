@@ -34,6 +34,17 @@ Use instead: labelled button; button with an icon and label.
   - Screen readers announce state changes through native toggle button behaviour via `aria-pressed` and the accessible name.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### FavouriteButtonProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selected` | `boolean` | `false` | Whether the item is currently selected as a favourite. Controls the filled/outlined icon state and `aria-pressed`. |
+| `aria-label` (required) | `string` |  | Accessible name announced by screen readers. Must be a translated string provided by the caller. Typically "Add to favourites" or "Remove from favourites". |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

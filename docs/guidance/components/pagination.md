@@ -28,6 +28,24 @@ Lets users navigate between pages of content by showing their current position a
   - If your product requires explicit verbal feedback like “Page changed to 4,” add an app-level live region message in the consuming context.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### PaginationProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `totalPages` (required) | `number` |  | Total number of pages |
+| `currentPage` (required) | `number` |  | Current page number (1-indexed) |
+| `onPageChange` (required) | `(page: number) => void` |  | Callback fired when the page changes |
+| `ariaLabel` | `string` | `'Pagination'` | Accessible name for the pagination landmark. |
+| `previousPageLabel` | `string` | `'Previous page'` | Accessible label used for the previous-page button. |
+| `nextPageLabel` | `string` | `'Next page'` | Accessible label used for the next-page button. |
+| `pageLabelFormatter` | `PageLabelFormatter` |  | Returns the accessible label for each numbered page button. |
+| `variant` | `string` | `'full'` | Controls which variant of pagination to render. Accepts a broad string so JS consumers can be validated at runtime. - `'full'` (default): Shows page numbers between previous and next controls. The visible page count reduces automatically as the viewport width narrows (9 → 7 → 5 items), and collapses to grouped appearance when the viewport is too narrow to fit any page numbers. First and last pages are always shown when needed. - `'grouped'`: Shows only previous and next controls without page numbers. |
+| `disabled` | `boolean` | `false` | Disables all interactive elements, preventing focus, hover, and page-change events. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

@@ -22,6 +22,23 @@ The avatar component displays a visual representation of a user.
 - Announced: Not documented
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### AvatarProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `AvatarSize` |  | Visual size of the avatar. xs=16px, sm=24px, md=32px, lg=48px, xl=64px, xxl=96px. Defaults to 'md'. |
+| `imageSrc` | `string` |  | URL for the avatar photo. When provided, the image is displayed on top of the initials layer. If the image fails to load, the component automatically falls back to displaying the initials. |
+| `alt` | `string` |  | Accessible name for the avatar. When an image is visible it is forwarded to the inner `<img alt>` attribute; when the component falls back to initials or the SVG silhouette it is applied as `aria-label` on the root element so the accessible name is preserved regardless of display state. Use the user's full name (e.g. `"Jane Doe"`). Omit or leave empty when the avatar is purely decorative. |
+| `initials` | `string` |  | 1–2 character string used as the fallback when no `imageSrc` is provided or when the image fails to load. The consuming app is responsible for truncation and locale (e.g. derive from the user's display name). When omitted or empty the SVG silhouette placeholder is shown instead. |
+
+Allowed values:
+
+- `size`: `xs`, `sm`, `md`, `lg`, `xl`, `xxl`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

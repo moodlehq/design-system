@@ -35,6 +35,25 @@ Use instead: Link; Secondary button and rely on confirmation copy.
   - If your flow needs explicit status messaging after click (for example, “Saved” or “Error”), add an app-level live region in the consuming experience.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### ButtonProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  |  |
+| `variant` | `ButtonVariant` |  |  |
+| `size` | `ButtonSize` |  |  |
+| `startIcon` | `IconElement` |  |  |
+| `endIcon` | `IconElement` |  |  |
+
+Allowed values:
+
+- `variant`: `primary`, `secondary`, `danger`, `ghost`, `outline-primary`, `outline-secondary`, `outline-danger`
+- `size`: `sm`, `md`, `lg`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

@@ -36,6 +36,52 @@ Use instead: **Text area**.
 - Announced: Not documented
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### BaseInputProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  |  |
+| `hideLabel` | `boolean` | `false` |  |
+| `invalid` | `boolean` | `false` |  |
+| `invalidFeedback` | `string` |  |  |
+| `supportingText` | `string` |  |  |
+| `infoTooltipLabel` | `string` |  |  |
+| `inputType` | `InputHTMLAttributes<HTMLInputElement>['type']` | `'text'` |  |
+| `startIcon` | `IconElement` |  |  |
+| `trailingAction` | `ReactNode` |  |  |
+| `suppressNativeInvalid` | `boolean` | `false` | When true, native constraint-validation failures (e.g. `pattern`, `required`) don't drive the invalid state — only the `invalid` prop does. Lets consumers (e.g. SearchInput's "invalid only while Empty" rule) gate ALL invalid sources consistently, since native validation attrs pass straight through `...props` to the native `<input>` outside any consumer-level gate. |
+| `wrapperProps` | `Pick< HTMLAttributes<HTMLDivElement>, 'role' \| 'aria-label' \| 'aria-labelledby' >` |  | Attributes for the root wrapper rather than the native `<input>` (which receives `...props`). Lets consumers such as SearchInput turn the root into a landmark without adding an extra element around the field. |
+
+### InputProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `InputType` |  | Restricts input type to design-system-supported non-password text-like types. |
+
+Allowed values:
+
+- `type`: `email`, `number`, `tel`, `text`, `url`
+
+### PasswordInputProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `passwordToggleShowLabel` (required) | `string` |  | Accessible label for the visibility toggle when the password is hidden. |
+| `passwordToggleHideLabel` (required) | `string` |  | Accessible label for the visibility toggle when the password is visible. |
+
+### SearchInputProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `clearLabel` (required) | `string` |  | Accessible label for the button that clears the field's current value. |
+| `landmark` | `boolean` | `false` | Renders the field's root as a `role="search"` landmark, named by the field's accessible name (`aria-labelledby`, `label`, or `aria-label` when the label is hidden). Give each landmark on a page a unique name so they can be told apart. Use for a page- or site-level search. Leave off for filters inside a table, toolbar, or panel, and when the consumer already wraps the field in `<search>` or `<form role="search">`, so the page doesn't collect redundant or nested landmarks. |
+| `onDebouncedChange` | `(value: string) => void` |  | Called with the field's current value `debounceMs` after the user stops typing — use this (not `onChange`) to trigger the actual search/filter request so instant search doesn't fire on every keystroke. Fires immediately, bypassing the debounce, when the value is cleared. |
+| `debounceMs` | `number` | `DEFAULT_DEBOUNCE_MS` | Debounce interval, in milliseconds, for `onDebouncedChange`. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

@@ -31,6 +31,24 @@ Link · Button
 - Announced: Not documented
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### TooltipProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Tooltip text displayed in the popup. Must be a caller-supplied translated string. |
+| `placement` | `TooltipPlacement` | `'top'` | Preferred physical side of the trigger the tooltip appears on. Defaults to `top`. Auto-flips to avoid viewport edges. In RTL, `left` and `right` still mean viewport-left and viewport-right. |
+| `variant` | `TooltipVariant` | `'dark'` | Colour mode. `dark` uses a dark background with light text; `light` uses a light background with dark text. Defaults to `dark`. |
+| `children` (required) | `ReactElement` |  | The trigger element. Must be a single React element that forwards refs. |
+
+Allowed values:
+
+- `placement`: `top`, `bottom`, `left`, `right`
+- `variant`: `dark`, `light`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

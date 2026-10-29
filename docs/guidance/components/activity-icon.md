@@ -27,6 +27,26 @@ Activity icons show the type of Moodle activity, resource, or file. They support
 - Announced: Not documented
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### ActivityIconProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon` (required) | `ActivityIconName` |  | Activity/resource icon key used to resolve the SVG asset from the registry. |
+| `alt` | `string` | `''` | Accessible text for the rendered image. Use an empty string for decorative icons. |
+| `container` | `ActivityIconContainer` |  | Visual container style around the icon. |
+| `size` | `ActivityIconSize` |  | Icon size token. |
+| `appearance` | `ActivityIconAppearance` |  | Colour treatment. `muted` replaces the category colours with the muted tokens, for hidden or unavailable activities. Third-party brand icons (e.g. BigBlueButton, H5P) can't be recoloured, so they are desaturated instead. The icon remains in the accessibility tree, so convey the hidden state to assistive technology separately. |
+
+Allowed values:
+
+- `container`: `none`, `default`, `large`
+- `size`: `sm`, `md`, `lg`, `xl`
+- `appearance`: `default`, `muted`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

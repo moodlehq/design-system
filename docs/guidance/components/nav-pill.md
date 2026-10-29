@@ -36,6 +36,19 @@ Use instead: Button; Tabs.
   - Disabled state is announced through `aria-disabled` when applicable.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### NavPillProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. |
+| `selected` | `boolean` | `false` | Whether this pill is currently the active/selected navigation item. Controls the active-indicator dot and selected visual styles. |
+| `href` (required) | `string` |  | Destination URL for the navigation pill. |
+| `disabled` | `boolean` |  | Marks the anchor as non-interactive while preserving anchor semantics. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

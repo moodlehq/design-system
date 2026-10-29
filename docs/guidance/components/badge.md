@@ -30,6 +30,25 @@ Alert · Button
   - If badge content updates need to be announced (for example, status changes), add an app-level live region in the consuming UI (for example, `aria-live="polite"`).
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### BadgeProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Visible badge text. Must be a caller-supplied translated string. |
+| `variant` | `BadgeVariant` |  | Colour/semantic variant. Defaults to `primary`. |
+| `subtle` | `boolean` | `false` | When true, renders the low-contrast (subtle) style with a light background and border. |
+| `pill` | `boolean` | `false` | When true, renders fully rounded pill shape instead of the default slight rounding. |
+| `startIcon` | `IconElement` |  | Optional icon rendered before the label. Must be an `<i>` or `<svg>` element. Mutually exclusive with `endIcon`. |
+| `endIcon` | `IconElement` |  | Optional icon rendered after the label. Must be an `<i>` or `<svg>` element. Mutually exclusive with `startIcon`. |
+
+Allowed values:
+
+- `variant`: `primary`, `secondary`, `success`, `danger`, `warning`, `info`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

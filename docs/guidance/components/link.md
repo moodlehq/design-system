@@ -35,6 +35,20 @@ Use instead: Button.
   - Announcements rely on native link semantics screen readers announce the element as a link when disabled, `aria-disabled="true"` communicates the unavailable state.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### LinkProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  |  |
+| `variant` | `string` |  |  |
+| `disabled` | `boolean` | `false` |  |
+| `startIcon` | `IconElement` |  |  |
+| `endIcon` | `IconElement` |  |  |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

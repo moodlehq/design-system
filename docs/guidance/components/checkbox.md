@@ -32,6 +32,21 @@ Switch · Radio group · Choicebox · Select · Radio button · Button
   - Screen readers announce checked, unchecked, and mixed states through native checkbox behaviour.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### CheckboxProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  | Visible label text. When hideLabel is true this also serves as the aria-label fallback if no explicit aria-label prop is provided. |
+| `hideLabel` | `boolean` | `false` | When true, the visible label element is hidden. The input is still labelled accessibly via aria-label (prop) → label (prop) in that order of precedence. Suppresses invalidFeedback — feedback text requires a visible label to provide context. |
+| `invalid` | `boolean` |  | Marks the input as invalid: applies danger border/label colour and sets aria-invalid. Independent of invalidFeedback — invalid styling can be shown without a message. |
+| `invalidFeedback` | `string` |  | Pre-translated error message rendered below the label. Requires invalid={true} and hideLabel={false} to be displayed. |
+| `indeterminate` | `boolean` | `false` | Renders the checkbox in a mixed state, typically for "select all" parent controls. This state is visual/semantic and should usually be controlled by parent logic. |
+| `supportingText` | `string` |  | Optional supporting/helper text shown below the label in non-error state. Hidden when hideLabel is true. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

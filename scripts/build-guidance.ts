@@ -33,8 +33,10 @@ import {
   chooseGuidance,
   compactGallery,
   extractAccessibility,
+  readProps,
   readTokenNames,
   renderBuiltFrom,
+  renderProps,
   renderTokenTable,
 } from './lib/guidance-extras';
 import {
@@ -64,6 +66,10 @@ const PART_OF: Record<string, string> = { password: 'input', search: 'input' };
 
 /** ZeroHeight links type declarations at the latest release; pin them to this version. */
 const UNPKG_LATEST = `https://unpkg.com/${PACKAGE_NAME}/`;
+
+/** Versioned link to the DTCG token source, which the package does not ship. */
+const DTCG_URL = (version: string): string =>
+  `https://raw.githubusercontent.com/moodlehq/design-system/design-system-v${version}/tokens/dtcg/Defaultmode_Light.tokens.json`;
 
 /** Marks every generated Markdown file so nobody hand-edits it. */
 const GENERATED_NOTE =
@@ -310,6 +316,7 @@ export function renderComponent(
         builtFrom(target, COMPONENTS_DIR, code.slugs, code.tokens),
       )
     : '';
+  const props = code ? renderProps(readProps(target, COMPONENTS_DIR)) : '';
   const markdown = [
     '---',
     `component: ${name}`,
@@ -329,6 +336,7 @@ export function renderComponent(
     '',
     lookAlikes,
     accessibility,
+    props,
     composition,
     ...orderedSections(sections),
   ]
@@ -430,7 +438,7 @@ function renderLlms(
     '',
     `> React components and design tokens for Moodle. Package: ${PACKAGE_NAME}@${version}.`,
     '',
-    'Read the per-component guidance before choosing a component. Props come from the TypeScript types in `dist/`.',
+    'Read the per-component guidance before choosing a component. Each component page lists its props and allowed values, generated from the TypeScript types.',
     '',
     '## Guidance',
     '',
@@ -447,6 +455,7 @@ function renderLlms(
     '',
     '## Optional',
     '',
+    `- [Design tokens (DTCG)](${DTCG_URL(version)}): token source, read-only`,
     `- [Full documentation](${cdn}/llms-full.txt): every public page in one file, large`,
     `- [Design guidelines](https://${PUBLIC_HOST}/)`,
     '',

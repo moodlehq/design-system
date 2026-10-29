@@ -36,6 +36,18 @@ Use instead: Switch.
   - Screen readers announce selection changes through native radio behaviour, including checked state and group context, when radios are grouped correctly.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### ChoiceboxProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` (required) | `string` |  | Required primary label text identifying the option. Keep to 1–5 words for readability. |
+| `supportingText` | `string` |  | Optional supporting/descriptive text displayed below the label. Used to add context the label alone cannot convey. Aim for 1–2 lines. |
+| `icon` | `IconElement` |  | Optional icon rendered before the label group. Must be an <i> or <svg> element. Use only when the icon adds meaning. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

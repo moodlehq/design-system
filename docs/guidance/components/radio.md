@@ -33,6 +33,19 @@ Use instead: Radio group; Checkbox.
   - If explicit spoken updates are required (for example, “Option changed to Phone”), add an app-level live region in the consuming flow.
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### RadioProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  | Visible label text. When hideLabel is true this also serves as the aria-label fallback if no explicit aria-label prop is provided. |
+| `hideLabel` | `boolean` | `false` | When true, the visible label element is hidden. The input is still labelled accessibly via aria-label (prop) → label (prop) in that order of precedence. Suppresses invalidFeedback — feedback text requires a visible label to provide context. Use cases: hideLabel is appropriate when the visual label would be redundant or visually cluttered, such as in dense tables where the column header acts as the label, or in icon-only UIs. Always ensure an accessible name is provided via aria-label or label prop. |
+| `invalid` | `boolean` |  | Marks the input as invalid: applies danger border/label colour and sets aria-invalid. Independent of invalidFeedback — invalid styling can be shown without a message. |
+| `invalidFeedback` | `string` |  | Pre-translated error message rendered below the label. Requires invalid={true} and hideLabel={false} to be displayed. Only invalid feedback is supported; is-valid and neutral feedback states are intentionally not implemented. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.

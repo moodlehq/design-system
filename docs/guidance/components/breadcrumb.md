@@ -34,6 +34,18 @@ Use instead: tabs; pagination.
 - Announced: Not documented
 - Focus: Not documented
 
+## Props
+
+Generated from the component TypeScript types, not from ZeroHeight. Inherited HTML attributes are not listed.
+
+### BreadcrumbProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` (required) | `BreadcrumbItem[]` |  | Ordered list of breadcrumb items from root to current page. The last item is always the current page and is rendered as plain text. Must have at least 2 entries. |
+| `ariaLabel` | `string` | `'Breadcrumb'` | Accessible label for the `<nav>` landmark element. Must be a caller-supplied translated string — the default is English only. |
+| `overflowAriaLabel` | `string` | `'Show more items'` | Visible-to-assistive-tech label for the overflow "…" button. Only relevant when the component renders with more than 4 items. Must be a caller-supplied translated string — the default is English only. |
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.
