@@ -65,7 +65,7 @@
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^10.0.1",
     "@etchteam/storybook-addon-status": "^8.0.0",
-    "@figma/code-connect": "^1.5.3",
+    "@figma/code-connect": "^2.1.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@storybook/addon-a11y": "^10.6.5",
@@ -160,8 +160,7 @@
   },
   "homepage": "https://design.moodle.com/",
   "overrides": {
-    "zod-validation-error": "4.0.2",
-    "conventional-changelog-conventionalcommits": "9.3.1"
+    "zod-validation-error": "4.0.2"
   },
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,

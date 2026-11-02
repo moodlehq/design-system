@@ -255,7 +255,7 @@ export default defineConfig({
     emitCssAssets(),
     dts({
       // Exclude dev-only files from the generated type declarations, matching tsconfig.json.
-      exclude: ['**/*.stories.tsx', '**/*.test.tsx', '**/*.figma.tsx'],
+      exclude: ['**/*.stories.tsx', '**/*.test.tsx', '**/*.figma.ts'],
     }),
   ],
   define: {

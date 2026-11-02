@@ -14,7 +14,7 @@ components/<name>/
   component-name.css        # component-scoped styles using --mds-* tokens
   ComponentName.test.tsx    # Vitest unit tests
   ComponentName.stories.tsx # Storybook stories (also used for interaction/a11y tests)
-  ComponentName.figma.tsx   # Figma Code Connect mapping (see Code Connect section below)
+  ComponentName.figma.ts    # Figma Code Connect template (see Code Connect section below)
   index.tsx                 # local barrel: export * from './ComponentName';
 ```
 
@@ -40,58 +40,53 @@ Named re-exports (`export { Button }`) are the correct form — avoid `export { 
 
 ## Code Connect
 
-Every component must have a `ComponentName.figma.tsx` file that links the Figma component to the React implementation using [`@figma/code-connect`](https://github.com/figma/code-connect). This file is not shipped in the package build — it exists only to publish prop mappings to Figma's Dev Mode.
+Every component must have a `ComponentName.figma.ts` template file that links the Figma component to the React implementation using [`@figma/code-connect`](https://github.com/figma/code-connect) v2. This file is not shipped in the package build — it exists only to publish prop mappings to Figma's Dev Mode.
 
 Workflow for a new component:
 
 1. Locate the Figma component node URL from the Moodle Design System file: https://www.figma.com/files/1539002666003113376/team/1542064100377724261/Moodle-Design-System
 2. Call the Figma MCP `get_context_for_code_connect` tool with the node URL to get the Figma property structure.
-3. Create `ComponentName.figma.tsx` mapping Figma properties to React props:
+3. Create `ComponentName.figma.ts` in the component folder. It is a template file, not a parsed React file:
 
-```tsx
-import figma from '@figma/code-connect';
-import { ComponentName } from './ComponentName';
+```ts
+// url=https://www.figma.com/design/<fileKey>/...?node-id=<nodeId>
+// source=https://github.com/moodlehq/design-system/blob/main/components/<folder>/ComponentName.tsx
+// component=ComponentName
 
-const url = 'https://www.figma.com/design/<fileKey>/...?node-id=<nodeId>';
+import figma from 'figma';
 
-// Map Figma properties to React props with figma.string(), figma.boolean(),
-// figma.enum(), etc. Every mapping must cover all of its values.
-const props = {
-  label: figma.string('Label'),
+const label = figma.selectedInstance.getString('Label');
+
+const template = {
+  id: 'ComponentName',
+  imports: ["import { ComponentName } from './ComponentName';"],
+  example: figma.code`<ComponentName${figma.helpers.react.renderProp('label', label)}/>`,
 };
 
-// One connection per State, with the state prop written into the JSX.
-figma.connect(ComponentName, url, {
-  variant: { State: 'Default' },
-  props,
-  example: ({ label }) => <ComponentName label={label} />,
-});
-
-figma.connect(ComponentName, url, {
-  variant: { State: 'Disabled' },
-  props,
-  example: ({ label }) => <ComponentName label={label} disabled />,
-});
+export default template;
 ```
 
-4. Publish the mapping using the Figma MCP `add_code_connect_map` tool (or run `npx figma connect publish` manually).
+4. Validate with `npx figma connect parse -f components/<folder>/ComponentName.figma.ts`. It needs no Figma token and prints the rendered template, so a missing branch is easy to spot.
+5. Publish using the Figma MCP `add_code_connect_map` tool (or run `npx figma connect publish` manually).
 
-This repo uses **parser-based `.figma.tsx` files with `figma.connect()`**. These rules take precedence over generic Code Connect guidance, including the Figma plugin's `figma-code-connect` skill, which defaults to `.figma.ts` template files and conditional props — do not follow it here.
+This repo uses **template-based `.figma.ts` files** (Code Connect v2), not the parser-based `figma.connect()` API in `.figma.tsx` files. Do not add `.figma.tsx` files. `figma.config.json` only includes `components/**/*.figma.ts`, and `tsconfig.json` and `vite.config.ts` exclude them from type-checking and the build.
 
-Prop mapping conventions:
+Template conventions:
 
-- **One `figma.connect` call per combination that changes the snippet.** Split on `variant` filters rather than collapsing everything into a single connection with conditional props. A longer file of explicit connections is the expected shape (see `Alert.figma.tsx`).
-- **`variant` filters accept BOOLEAN properties as well as VARIANT ones** — e.g. `variant: { Type: 'Info', 'Show Title': false }`. Filtering on a boolean is the intended way to split, not a workaround.
-- Figma boolean props that are the inverse of a React prop (e.g. Figma `Show Label` → React `hideLabel`) should use `figma.boolean('Show Label', { true: false, false: true })`.
-- **Never let a mapping produce `undefined`** — Code Connect cannot render it and silently suppresses the entire snippet. This means:
-  - no `false: undefined` in `figma.boolean`;
-  - every value of a `figma.enum` mapping is listed, not just the ones that set the prop;
-  - for an optional string prop, map the "absent" case to `''` (e.g. `infoTooltipLabel: figma.boolean('Info', { true: 'More information about this field', false: '' })`). For anything that can't be an empty string (elements, children, slots), split into separate `figma.connect` calls with `variant` filters instead.
-- Figma `State` variants (Default / Invalid / Disabled) should each have their own `figma.connect` call with a `variant: { State: '...' }` filter, and any boolean props hardcoded as JSX attributes (e.g. `invalid` or `disabled`) rather than derived via `figma.enum`. This avoids empty `prop=` attributes appearing in the generated snippet when the enum returns `undefined`.
-- When a Figma property is only available in certain states (e.g. `Show feedback text` only when `State=Invalid`), use a nested variant split: one `figma.connect` for `{ State: 'Invalid', 'Show feedback text': false }` and one for `{ State: 'Invalid', 'Show feedback text': true }`, with the prop hardcoded in the example of the latter.
+- **The header comments are required.** `// url=`, `// source=` and `// component=` must be the first lines. Without one of them the CLI does not treat the file as a template.
+- **One template file per Figma component node.** A node can only have one template, so every code component that shares a node lives in the same file. For example, `Input.figma.ts` covers `Input`, `PasswordInput` and `SearchInput`, which share one Figma node. It maps its `Type` property to the component name, nested layer and extra props, and sets `id` and `imports` from that, so its `component=` header names the primary component (`Input`). Name the file after the primary component, or after the node when files for the same component would collide (e.g. `DropdownItem` and `DropdownItemAction`).
+- **Map first, branch last.** Map every Figma property to a prop with `getEnum` / `getBoolean` and render the result with `figma.helpers.react.renderProp`, so one template covers all variants. Only use an `if / else` when the output has a genuinely different shape (e.g. Alert's custom slot, which changes the snippet from self-closing to wrapping children) or a different component (e.g. `DropdownItem`). Never write one branch per combination of property values with the value hard-coded in each.
+- **Interaction states with no code prop** (Hover, Pressed, Focus, Active) must not change the output. If you do branch, order branches most specific first: an `if / else if` chain takes the first match, so a branch that is a subset of an earlier one's conditions is unreachable (ESLint's `no-dupe-else-if` flags this).
+- **Map a property to a prop, including flags and lookups.** `getEnum('Type', { Info: 'info', Success: 'success' })` gives `variant`. Flags use the same form: `getEnum('State', { Disabled: true })` renders ` disabled`. Lookups (one property driving several props, e.g. a category selecting an icon and its alt text) use one `getEnum` per prop over the same property.
+- **Use the typed accessors:** `getString`, `getBoolean`, `getEnum`, `getInstanceSwap` and `findInstance` for nested instances. Mappings that produce a prop value must cover every Figma value. Flag mappings list only the value that sets the flag.
+- Figma boolean props that are the inverse of a React prop (e.g. Figma `Show Label` → React `hideLabel`) use `getBoolean('Show Label', { true: false, false: true })`.
+- `renderProp` omits a prop when its value is `undefined`, `''` or `false`, and renders `true` as a bare flag. `getEnum` returns `undefined` when no key matches, so an unmapped value drops the prop rather than failing. An optional string prop can map its absent case to `''` or leave it `undefined`. For elements use `figma.helpers.react.jsxElement('<i .../>')`, and for code identifiers such as `{buttonLabel}` use `figma.helpers.react.identifier('buttonLabel')`. Children and slots still need a separate branch.
+- Derive state props (`invalid`, `disabled`, `readOnly`, `checked`) from the Figma property with `getEnum`, not from a hard-coded branch. Keep attribute order consistent: content props, then flags, then fixed props.
+- Template files must stay standalone: Code Connect evaluates each file on its own, so do not import shared helpers or constants between `.figma.ts` files.
 - Use a placeholder string (e.g. `'Error message'`) for text props that represent conditional feedback — do not hard-code real content.
-- **No bare `const x = figma.*` helpers, and no shorthand props.** The parser only resolves `figma.*` calls written inline in `props` or inside an object that's spread into it. A standalone `const labelProp = figma.string('Label')` compiles to `_fcc_identifier('labelProp')` and the mapping is silently lost; `props: { label }` fails to parse. Use a shared object and spread it (`const baseProps = { label: figma.string('Label') }` → `props: { ...baseProps }`).
-- `.figma.tsx` files are excluded from `tsconfig.json`, so `tsc` never checks them. Validate before committing with `npx figma connect parse -f components/<name>/<Name>.figma.tsx` — it needs no Figma token and lists every connection with its `variant` filter, so a missing combination is easy to spot.
+- Do not add the old `// Branch per variant; no default, else first.` comment. It described the generated branch-per-variant output.
+- When collapsing or changing a template, compare the rendered snippet before and after across every property combination. Differences should only be fixes to previously unreachable or fall-through branches.
+- Run Prettier on new template files (`npm run format`) and `npx eslint components`.
 
 ## Composition pattern
 

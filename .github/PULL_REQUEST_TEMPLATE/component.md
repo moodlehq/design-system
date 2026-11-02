@@ -15,7 +15,7 @@
 ### File structure and exports
 
 - [ ] All 5 required files present: `ComponentName.tsx`, `component-name.css`, `ComponentName.test.tsx`, `ComponentName.stories.tsx`, `index.tsx`
-- [ ] `ComponentName.figma.tsx` Code Connect file created and published
+- [ ] `ComponentName.figma.ts` Code Connect template created, validated with `figma connect parse` and published
 - [ ] Named and type exports added to `components/index.tsx`
 - [ ] Component stylesheet imported in `components/index.css`
 
