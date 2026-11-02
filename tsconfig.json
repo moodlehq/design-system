@@ -25,6 +25,6 @@
   "exclude": [
     "components/**/*.stories.tsx",
     "components/**/*.test.tsx",
-    "components/**/*.figma.tsx"
+    "components/**/*.figma.ts"
   ]
 }

@@ -25,7 +25,7 @@ const traceComponentCss = (): Plugin => ({
     const cssImports = fs
       .readdirSync(path.dirname(file))
       .filter((name) => name.endsWith('.css'))
-      .map((name) => `import './${name}';`);
+      .map((name) => `import ${JSON.stringify(`./${name}`)};`);
     if (cssImports.length === 0) return;
     return { code: `${code}\n${cssImports.join('\n')}\n`, map: null };
   },
