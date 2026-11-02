@@ -137,11 +137,11 @@
 }
 
 /*
- * muted-filter: fallback for third-party brand icons only (see mutedFilterFallbackIcons).
+ * muted-filter: fallback for third-party brand icons (see mutedFilterFallbackIcons) and every custom `src` image.
  * We can't control the colour of third-party artwork and masking would erase
  * its detail, so the <img> has its saturation reduced instead. No opacity is applied, so the artwork keeps its contrast. This is NOT token-driven and contrast varies by artwork, which
  * the repo guardrails discourage and which differs from the token-driven muted
- * state. Keep it limited to flagged assets.
+ * state. Keep it limited to flagged assets and custom images.
  */
 .mds-activity-icon--muted-filter .mds-activity-icon__asset {
   filter: saturate(0.2);
@@ -176,6 +176,18 @@
   border-radius: var(--mds-border-radius-xs);
   display: block;
   inline-size: 100%;
+}
+
+/*
+ * custom: an image supplied through `src`. Registry glyphs sit inside their 24px
+ * artboard with about 12.5% of whitespace on each side (median ~75% fill), so the
+ * custom image is inset by the same amount to look the same size beside them, and
+ * fitted with contain so non-square artwork is not stretched.
+ */
+.mds-activity-icon--custom .mds-activity-icon__asset {
+  box-sizing: border-box;
+  object-fit: contain;
+  padding: 12.5%;
 }
 
 /* Hide the broken-image placeholder while the icon has no source. */

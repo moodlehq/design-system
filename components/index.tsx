@@ -1,5 +1,5 @@
 export { ActivityIcon } from './activity-icon';
-export type { ActivityIconProps } from './activity-icon';
+export type { ActivityIconCategory, ActivityIconProps } from './activity-icon';
 
 export { Alert } from './alert';
 export type { AlertProps, AlertType } from './alert';
