@@ -174,6 +174,17 @@ describe('ActivityIcon: Unit Test', () => {
     error.mockRestore();
   });
 
+  it('does not log an invalid icon error outside development', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.stubEnv('DEV', false);
+
+    render(<ActivityIcon icon="invalid" />);
+
+    expect(error).not.toHaveBeenCalled();
+    vi.unstubAllEnvs();
+    error.mockRestore();
+  });
+
   it('falls back to default for an invalid container', () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
 

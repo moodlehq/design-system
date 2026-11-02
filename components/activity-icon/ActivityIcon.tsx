@@ -74,7 +74,9 @@ export interface ActivityIconProps extends HTMLAttributes<HTMLSpanElement> {
    */
   category?: ActivityIconCategory;
   /**
-   * Accessible text for the rendered image. Use an empty string for decorative icons.
+   * Accessible text for the rendered image. Use an empty string for decorative
+   * icons, which is the right choice for a custom `src` image when the activity
+   * type is already conveyed in text beside it.
    */
   alt?: string;
   /**
@@ -118,7 +120,7 @@ export const ActivityIcon = ({
   const hasValidIcon =
     normalizedIcon !== undefined && normalizedIcon in activityIconRegistry;
 
-  if (!isCustom && !hasValidIcon) {
+  if (import.meta.env.DEV && !isCustom && !hasValidIcon) {
     const invalidIconMessage = `[MDS ActivityIcon] Invalid icon "${icon}". Allowed: ${activityIconNames.join(', ')}`;
     console.error(
       `${invalidIconMessage}. Falling back to "${iconLookupFallback}" placeholder.`,
