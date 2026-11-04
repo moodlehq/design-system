@@ -364,6 +364,8 @@ Any component using `useListNavigation` must satisfy the WAI-ARIA `menu` keyboar
 - **Enter / Space** — activate the focused item (default button/anchor behaviour; no extra wiring needed).
 - **Right Arrow / Left Arrow** — for expandable items that open a submenu: Right opens the submenu and moves focus into it; Left closes the submenu and returns focus to the parent trigger item. Wire this in the item's `onKeyDown` handler.
 
+**Exception: Combobox.** Combobox uses `useListNavigation` with `virtual: true` but is not a menu. DOM focus stays in the text box while the list is open, so typing filters the list and Home / End move the text cursor. It deliberately has no `useTypeahead`, no Home / End item jumps and no `FloatingFocusManager`; Escape closes the list but focus never left the input. The listbox follows the WAI-ARIA combobox pattern (`aria-activedescendant`, `aria-selected` on the highlighted row only, no `aria-multiselectable`). Do not "fix" it to match the menu contract above.
+
 ### Placement prop convention
 
 Floating components that accept a `placement` prop must type it as `Placement` imported from `@floating-ui/react` (re-export from `@floating-ui/core`). Always apply `flip()` and `shift()` middleware so the surface repositions automatically when it would overflow the viewport.
