@@ -635,3 +635,122 @@ describe('SearchInput: Unit Test', () => {
     });
   });
 });
+
+describe('SearchInput: trailingAction, showClear, onClear', () => {
+  it('renders trailingAction after the clear button', () => {
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        defaultValue="abc"
+        trailingAction={<button type="button">More</button>}
+      />,
+    );
+    const buttons = screen.getAllByRole('button');
+    expect(
+      buttons.map((b) => b.getAttribute('aria-label') ?? b.textContent),
+    ).toEqual(['Clear search', 'More']);
+  });
+
+  it('renders trailingAction on its own when the field is empty', () => {
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        trailingAction={<button type="button">More</button>}
+      />,
+    );
+    expect(screen.getByRole('button', { name: 'More' })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Clear search' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('showClear overrides the text-derived clear button visibility', () => {
+    const { rerender } = render(
+      <SearchInput label="Search" clearLabel="Clear search" showClear />,
+    );
+    expect(
+      screen.getByRole('button', { name: 'Clear search' }),
+    ).toBeInTheDocument();
+
+    rerender(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        defaultValue="abc"
+        showClear={false}
+      />,
+    );
+    expect(
+      screen.queryByRole('button', { name: 'Clear search' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('never shows the clear button while disabled, even with showClear', () => {
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        showClear
+        disabled
+      />,
+    );
+    expect(
+      screen.queryByRole('button', { name: 'Clear search' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('calls onClear after the clear button is activated', async () => {
+    const onClear = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        defaultValue="abc"
+        onClear={onClear}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Clear search' }));
+    expect(onClear).toHaveBeenCalledTimes(1);
+    expect(screen.getByLabelText('Search')).toHaveValue('');
+  });
+
+  it('still clears on Escape by default when a consumer onKeyDown calls preventDefault', async () => {
+    const user = userEvent.setup();
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        defaultValue="abc"
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') event.preventDefault();
+        }}
+      />,
+    );
+    const input = screen.getByLabelText('Search');
+    input.focus();
+    await user.keyboard('{Escape}');
+    expect(input).toHaveValue('');
+  });
+
+  it('leaves Escape to a consumer onKeyDown that handled it when respectDefaultPrevented is set', async () => {
+    const user = userEvent.setup();
+    render(
+      <SearchInput
+        label="Search"
+        clearLabel="Clear search"
+        defaultValue="abc"
+        respectDefaultPrevented
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') event.preventDefault();
+        }}
+      />,
+    );
+    const input = screen.getByLabelText('Search');
+    input.focus();
+    await user.keyboard('{Escape}');
+    expect(input).toHaveValue('abc');
+  });
+});
