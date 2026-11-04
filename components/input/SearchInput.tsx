@@ -2,6 +2,7 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
   type MouseEvent,
+  type ReactNode,
   forwardRef,
   useCallback,
   useEffect,
@@ -22,7 +23,6 @@ export interface SearchInputProps extends Omit<
   BaseInputProps,
   | 'inputType'
   | 'startIcon'
-  | 'trailingAction'
   | 'type'
   | 'readOnly'
   | 'suppressNativeInvalid'
@@ -30,6 +30,11 @@ export interface SearchInputProps extends Omit<
 > {
   /** Accessible label for the button that clears the field's current value. */
   clearLabel: string;
+  /**
+   * Hides the leading magnifying-glass icon. Only for composites such as
+   * Combobox, where the icon is dropped once the field holds chosen values.
+   */
+  hideSearchIcon?: boolean;
   /**
    * Renders the field's root as a `role="search"` landmark, named by the
    * field's accessible name (`aria-labelledby`, `label`, or `aria-label`
@@ -53,6 +58,31 @@ export interface SearchInputProps extends Omit<
    * @default 300
    */
   debounceMs?: number;
+  /**
+   * Extra control rendered after the clear button, at the end of the field
+   * (e.g. Combobox's open/close chevron).
+   */
+  trailingAction?: ReactNode;
+  /**
+   * Overrides when the clear button is shown. By default it shows while the
+   * field has text. Pass `true` to keep it available when the field text is
+   * empty but the consumer holds other cleared-with-it state (e.g. Combobox's
+   * chosen values), or `false` to hide it. Never shown while `disabled`.
+   */
+  showClear?: boolean;
+  /**
+   * Called after the clear button is activated and the field text has been
+   * cleared. Lets a consumer reset any state it holds alongside the text.
+   */
+  onClear?: () => void;
+  /**
+   * When true, a key that the consumer's `onKeyDown` marked handled with
+   * `event.preventDefault()` is not also handled by SearchInput (no Escape
+   * clear, no Enter block). Off by default, so existing callers that call
+   * `preventDefault()` for their own reasons keep today's behaviour.
+   * @default false
+   */
+  respectDefaultPrevented?: boolean;
 }
 
 // Fixed per design: search fields always show a magnifying-glass icon at the start of the field.
@@ -78,6 +108,11 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       debounceMs = DEFAULT_DEBOUNCE_MS,
       invalid,
       landmark = false,
+      hideSearchIcon = false,
+      trailingAction,
+      showClear,
+      onClear,
+      respectDefaultPrevented = false,
       ...props
     },
     ref,
@@ -180,10 +215,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       // the debounce interval.
       clearPendingDebounce();
       onDebouncedChange?.('');
+      onClear?.();
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(event);
+      // A consumer that opted in and handled the key (e.g. Combobox closing its
+      // menu on Escape) owns it — don't also clear or block it here.
+      if (respectDefaultPrevented && event.defaultPrevented) return;
 
       // Escape clears the field. Handled here (rather than relying on the
       // browser's native type="search" Escape-to-clear) because the native
@@ -209,7 +248,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     // consumer still passes invalid.
     const showInvalid = invalid && !hasValue;
 
-    const showClearButton = hasValue && !disabled;
+    const showClearButton = (showClear ?? hasValue) && !disabled;
 
     const clearButton = showClearButton ? (
       <CloseButton
@@ -219,6 +258,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         onClick={handleClear}
       />
     ) : undefined;
+
+    const actions =
+      clearButton || trailingAction ? (
+        <>
+          {clearButton}
+          {trailingAction}
+        </>
+      ) : undefined;
 
     // The landmark takes the same name as the field so multiple search
     // landmarks on one page stay distinguishable. Mirrors the input's own
@@ -249,8 +296,8 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         ref={setRefs}
         wrapperProps={wrapperProps}
         inputType="search"
-        startIcon={searchIcon}
-        trailingAction={clearButton}
+        startIcon={hideSearchIcon ? undefined : searchIcon}
+        trailingAction={actions}
         className={classes.join(' ')}
         disabled={disabled}
         value={value}
