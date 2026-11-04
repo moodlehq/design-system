@@ -7,7 +7,7 @@ import { Avatar } from '../avatar';
  * avatar plus up to three stacked text lines.
  *
  * Why this lives here rather than behind a Tag prop:
- * the future Combobox reuses this layout in its menu rows (Figma
+ * Combobox reuses this layout in its menu rows (Figma
  * `combobox.item`), but a row is a `role="option"` that must contain no
  * focusable children, and it owns its own hover, focus, selected and
  * disabled surface. We first modelled that as a `nonRemovable` prop on Tag,
@@ -18,7 +18,7 @@ import { Avatar } from '../avatar';
  * honest; removing a prop after release would be a breaking change, adding
  * this helper is not.
  *
- * Contract for hosts (Tag today, ComboboxItem later):
+ * Contract for hosts (Tag and Combobox's option rows):
  * - Renders no role, no ARIA state and nothing focusable — the host element
  *   supplies all semantics and interaction.
  * - Renders a single `mds-tag__body` wrapper (Figma's `content` frame) that

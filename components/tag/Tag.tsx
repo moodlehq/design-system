@@ -25,7 +25,7 @@ const allowedVariants: readonly TagVariant[] = ['default', 'danger'];
 /**
  * Avatar sub-fields accepted by Tag. `size` is deliberately excluded — it's
  * derived from how many text lines are populated. Aliased from the shared
- * content helper so Tag and the future Combobox accept the same shape.
+ * content helper so Tag and Combobox accept the same shape.
  */
 export type TagAvatar = TagContentAvatar;
 
