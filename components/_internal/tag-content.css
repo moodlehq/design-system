@@ -1,5 +1,5 @@
 /* Layout for Tag's identity content (avatar + up to three text lines),
-   shared with the future Combobox's menu rows via TagContent.tsx — see the
+   shared with Combobox's menu rows via TagContent.tsx — see the
    comment there for why this is a shared helper rather than a Tag prop.
 
    Deliberately host-agnostic: no cursor, no container chrome and no
