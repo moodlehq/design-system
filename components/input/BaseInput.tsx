@@ -3,8 +3,11 @@ import {
   type InputHTMLAttributes,
   type ReactElement,
   type ReactNode,
+  type Ref,
   forwardRef,
   isValidElement,
+  useCallback,
+  useEffect,
   useId,
   useMemo,
   useRef,
@@ -79,6 +82,25 @@ export interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
     HTMLAttributes<HTMLDivElement>,
     'role' | 'aria-label' | 'aria-labelledby'
   >;
+  /**
+   * Ref to the field wrapper (the bordered box around the start icon, input
+   * and trailing action). Lets consumers such as Combobox anchor a floating
+   * surface to the whole field rather than just the native `<input>`.
+   */
+  fieldWrapperRef?: Ref<HTMLDivElement>;
+  /**
+   * Wraps the native `<input>` inside the field wrapper, between the start
+   * icon and the trailing action. Lets consumers such as Combobox render
+   * chosen values as siblings of the input within one wrapping flex row.
+   */
+  wrapField?: (input: ReactElement) => ReactNode;
+  /**
+   * Overrides the native `required` attribute on the `<input>` without
+   * changing the required asterisk, which follows `required`. Lets
+   * consumers such as Combobox keep the field marked required visually while
+   * only enforcing it natively when no value has been chosen.
+   */
+  inputRequired?: boolean;
 }
 
 /** Internal field shell providing the label, feedback, icon and validation behaviour shared by the input components. Use Input, PasswordInput or SearchInput rather than rendering this directly. */
@@ -96,6 +118,9 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
       trailingAction,
       suppressNativeInvalid = false,
       wrapperProps,
+      fieldWrapperRef: fieldWrapperRefProp,
+      wrapField,
+      inputRequired,
       className,
       id: idProp,
       required,
@@ -129,6 +154,20 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     );
     const fieldWrapperRef = useRef<HTMLDivElement>(null);
     useSubmitAttemptTracking(fieldWrapperRef);
+    // The wrapper needs two refs: the internal one above (submit tracking) and
+    // the consumer's `fieldWrapperRef` prop (e.g. Combobox anchoring its popup).
+    // A callback ref sets both, as a single `ref` attribute can't take two.
+    const setFieldWrapper = useCallback(
+      (node: HTMLDivElement | null) => {
+        fieldWrapperRef.current = node;
+        if (typeof fieldWrapperRefProp === 'function') {
+          fieldWrapperRefProp(node);
+        } else if (fieldWrapperRefProp) {
+          fieldWrapperRefProp.current = node;
+        }
+      },
+      [fieldWrapperRefProp],
+    );
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
     // even if the consumer never passed the invalid prop — unless the consumer opts out
@@ -154,6 +193,35 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           Boolean(entry && entry.trim().length > 0),
         )
         .join(' ') || undefined;
+
+    const nativeRequired = inputRequired ?? required;
+
+    // BaseInput needs its own handle on the <input> to re-run validation when
+    // the native `required` attribute changes, while still forwarding the
+    // consumer's ref.
+    const localInputRef = useRef<HTMLInputElement | null>(null);
+    const setInputRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        localInputRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      },
+      [ref],
+    );
+
+    // A message raised by an earlier failed validation otherwise lingers until
+    // the next change event. When the constraint changes without one (e.g. a
+    // Combobox value is chosen and `inputRequired` drops to false), clear it
+    // as soon as the input is valid again. Reads `validity` rather than
+    // calling checkValidity() so no extra 'invalid' event is fired.
+    useEffect(() => {
+      // Only for consumers that drive `inputRequired`; plain inputs keep their
+      // existing validation timing.
+      if (inputRequired === undefined) return;
+      if (nativeMessage && localInputRef.current?.validity.valid) {
+        setNativeMessage(undefined);
+      }
+    }, [inputRequired, nativeRequired, nativeMessage]);
 
     const isPointerDownRef = useRef(false);
     const [isPointerFocus, setIsPointerFocus] = useState(false);
@@ -248,6 +316,27 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
       }
     }
 
+    const inputElement = (
+      <input
+        ref={setInputRef}
+        id={id}
+        className={fieldClasses}
+        type={inputType}
+        required={nativeRequired}
+        disabled={disabled}
+        readOnly={readOnly}
+        aria-invalid={effectiveInvalid ? true : undefined}
+        aria-label={ariaLabel}
+        aria-describedby={describedBy}
+        onPointerDown={handlePointerDown}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onInvalid={handleInvalid}
+        onChange={handleChange}
+        {...inputProps}
+      />
+    );
+
     return (
       <div {...wrapperProps} className={wrapperClasses}>
         {hasVisibleLabel && (
@@ -265,31 +354,14 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           </div>
         )}
 
-        <div ref={fieldWrapperRef} className="mds-input-field-wrapper">
+        <div ref={setFieldWrapper} className="mds-input-field-wrapper">
           {resolvedStartIcon && (
             <span className="mds-input-start-icon" aria-hidden="true">
               {resolvedStartIcon}
             </span>
           )}
 
-          <input
-            ref={ref}
-            id={id}
-            className={fieldClasses}
-            type={inputType}
-            required={required}
-            disabled={disabled}
-            readOnly={readOnly}
-            aria-invalid={effectiveInvalid ? true : undefined}
-            aria-label={ariaLabel}
-            aria-describedby={describedBy}
-            onPointerDown={handlePointerDown}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onInvalid={handleInvalid}
-            onChange={handleChange}
-            {...inputProps}
-          />
+          {wrapField ? wrapField(inputElement) : inputElement}
 
           {(effectiveInvalid || trailingAction) && (
             <div
