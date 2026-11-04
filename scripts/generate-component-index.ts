@@ -51,7 +51,7 @@ const SUBCOMPONENTS: Record<string, ComponentSubcomponentIndexItem[]> = {
     {
       name: 'SearchInput',
       purpose:
-        'Search field (<input type="search">) for finding or filtering content shown elsewhere, with a fixed magnifier, clear button, and debounced onDebouncedChange. Use instead of Input with a magnifier icon. If the user picks a row from a list that is saved with the form, it is a combobox, not SearchInput. Pass landmark only for page- or site-level search.',
+        'Search field (<input type="search">) for finding or filtering content shown elsewhere, with a fixed magnifier, clear button, and debounced onDebouncedChange. Use instead of Input with a magnifier icon. If the user picks a row from a list that is saved with the form, use Combobox, not SearchInput. Pass landmark only for page- or site-level search.',
       exportName: 'SearchInput',
       implementationPath: 'components/input/SearchInput.tsx',
       storyPath: 'components/input/SearchInput.stories.tsx',
@@ -152,6 +152,8 @@ const PURPOSES: Record<string, string> = {
   choicebox:
     'Single-select options as larger, card-style choices (icon + label + supporting text). Not interchangeable with Radio — use for options that benefit from extra visual weight or a supporting description.',
   'close-button': 'Icon-only dismiss action for temporary UI surfaces.',
+  combobox:
+    "Search field that opens a filterable list of options, so people can type to narrow the list and pick one value or several that are saved with the form. Supports server-fetched options (inputValue, onInputChange, loading, filterOptions) and person options with avatar, username, email and institution. Not for a short fixed list people can scan without typing (use Select), actions or view settings (use Dropdown), or finding content with no option to pick (use SearchInput). Never assemble one from an Input or SearchInput with a Dropdown menu beneath it, and don't build a separate user picker — a Combobox with person options is the user picker.",
   dropdown:
     'Composable trigger + menu container for action, select, expandable, and multiselect dropdown items.',
   'favourite-button': 'Icon button to mark/unmark items as favourites.',
