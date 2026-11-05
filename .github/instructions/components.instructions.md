@@ -130,7 +130,7 @@ Each sub-component follows the same file structure rules as any other component 
 
 ## Group / multi-instance composition (Radio, Checkbox, NavPill)
 
-Radio options that answer one question use `RadioGroup` (`components/radio/RadioGroup.tsx`), which Figma defines as its own form field. It renders each option as a `Radio` from an `options` array, shares one `name`, propagates `disabled`/`invalid`/`required` to every radio, and owns the label row, supporting/error text, and option spacing. Don't hardcode spacing inside `Radio` or lay out loose `Radio`s by hand.
+Radio options that answer one question use `RadioGroup` (`components/radio/RadioGroup.tsx`), which Figma defines as its own form field. It renders each option as a `Radio` from an `options` array, shares one `name`, propagates `disabled`/`invalid`/`required` to every radio (an option can also set its own `disabled`), and owns the label row, supporting/error text, and option spacing. Don't hardcode spacing inside `Radio` or lay out loose `Radio`s by hand.
 
 `Checkbox` and `NavPill` are single-instance components — neither ships a group wrapper, layout, or spacing. When multiple instances are rendered together (for example, a related checkbox set or a row of navigation pills), the consumer supplies the container and its layout direction (for example, a flex container with a `--mds-spacing-*` gap token). Do not add a new wrapper component or hardcode spacing inside `Checkbox`/`NavPill` to solve this — follow each component's stories for the reference pattern.
 

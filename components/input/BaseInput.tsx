@@ -102,7 +102,8 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const [nativeMessage, setNativeMessage] = useState<string | undefined>(
       undefined,
     );
-    useSubmitAttemptTracking();
+    const fieldWrapperRef = useRef<HTMLDivElement>(null);
+    useSubmitAttemptTracking(fieldWrapperRef);
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
     // even if the consumer never passed the invalid prop — unless the consumer opts out
@@ -239,7 +240,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           </div>
         )}
 
-        <div className="mds-input-field-wrapper">
+        <div ref={fieldWrapperRef} className="mds-input-field-wrapper">
           {resolvedStartIcon && (
             <span className="mds-input-start-icon" aria-hidden="true">
               {resolvedStartIcon}

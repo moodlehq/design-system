@@ -4,6 +4,7 @@ import {
   type FocusEventHandler,
   type HTMLAttributes,
   type InvalidEvent,
+  type PointerEvent,
   type Ref,
   forwardRef,
   useCallback,
@@ -40,12 +41,15 @@ const MAX_OPTIONS = 5;
 // vertical, the group can't tell how much room it has, so whenever it or an
 // ancestor resizes it tries horizontal again the same way.
 const isOnOneLine = (element: HTMLElement) => {
-  const [first, ...rest] = Array.from(element.children);
-  if (!first) return true;
-  const top = first.getBoundingClientRect().top;
+  const { firstElementChild: first, lastElementChild: last } = element;
+  // flex-wrap fills lines in order, so the row has wrapped exactly when the
+  // last option sits on a different line from the first.
+  if (!first || !last || first === last) return true;
   // Half a pixel absorbs sub-pixel rounding.
-  return rest.every(
-    (option) => Math.abs(option.getBoundingClientRect().top - top) < 0.5,
+  return (
+    Math.abs(
+      last.getBoundingClientRect().top - first.getBoundingClientRect().top,
+    ) < 0.5
   );
 };
 
@@ -74,7 +78,18 @@ function useFitsOnOneLine(enabled: boolean, contentKey: string) {
     const element = ref.current;
     if (!enabled || !element || typeof ResizeObserver === 'undefined') return;
 
-    const observer = new ResizeObserver(() => {
+    // Only a change in width can change whether the row fits. Ancestors grow
+    // taller over and over while a page loads, so height-only changes are
+    // skipped rather than re-measuring the options for each one.
+    const widths = new WeakMap<Element, number>();
+    const observer = new ResizeObserver((entries) => {
+      let widthChanged = false;
+      for (const { target, contentRect } of entries) {
+        if (widths.get(target) !== contentRect.width) widthChanged = true;
+        widths.set(target, contentRect.width);
+      }
+      if (!widthChanged) return;
+
       const horizontal = element.classList.contains(
         'mds-radio-group-options--horizontal',
       );
@@ -86,7 +101,9 @@ function useFitsOnOneLine(enabled: boolean, contentKey: string) {
     for (let node: Element | null = element; node; node = node.parentElement) {
       observer.observe(node);
     }
-    // Options resize too when web fonts load or labels change.
+    // Options resize too when web fonts load or labels change. setFits
+    // changes with contentKey, so new options re-run this effect and are
+    // observed in turn.
     for (const option of Array.from(element.children)) observer.observe(option);
     return () => observer.disconnect();
   }, [enabled, setFits]);
@@ -99,6 +116,13 @@ export interface RadioGroupOption {
   value: string;
   /** Pre-translated visible label for the option. */
   label: string;
+  /**
+   * Disables this option only. It stays visible, arrow keys skip it, and it
+   * isn't submitted with the form even when selected. Explain why it's
+   * unavailable in the group's `supportingText`. To disable every option, use
+   * the group's `disabled` instead.
+   */
+  disabled?: boolean;
 }
 
 /**
@@ -132,7 +156,7 @@ export interface RadioGroupProps extends Omit<
   onChange?: (value: string, event: ChangeEvent<HTMLInputElement>) => void;
   /** Called when focus leaves the group. Moving between radios, or from the info button to a radio, doesn't count. */
   onBlur?: FocusEventHandler<HTMLDivElement>;
-  /** Ref to the first radio input, for programmatic focus (for example a form library focusing the field on error). `ref` targets the root wrapper. */
+  /** Ref to the first enabled radio input, for programmatic focus (for example a form library focusing the field on error). `ref` targets the root wrapper. */
   inputRef?: Ref<HTMLInputElement>;
   /** Layout of the options. Defaults to 'vertical'. Horizontal does not wrap: it switches to vertical by itself when the options don't fit on one line. Use it only for a few short labels. */
   orientation?: RadioGroupOrientation;
@@ -143,10 +167,11 @@ export interface RadioGroupProps extends Omit<
   /**
    * Marks every radio invalid and turns the supporting text to the danger colour.
    *
-   * Selecting an option clears the invalid state and its message straight
-   * away, without waiting for the caller. It shows again when `invalid` or
-   * `invalidFeedback` changes, so re-validate by toggling `invalid` or passing
-   * a new message.
+   * Fully controlled: the group stays invalid until the caller sets `invalid`
+   * to false, so the error on screen always matches the form's state. Clear it
+   * in `onChange` (form libraries that re-validate on change, like React Hook
+   * Form after a failed submit, do this for you). Only the native `required`
+   * error clears by itself once an option is selected.
    */
   invalid?: boolean;
   /**
@@ -174,6 +199,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       defaultValue,
       onChange,
       onBlur,
+      onPointerDown,
       inputRef,
       orientation,
       required,
@@ -202,24 +228,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     const [nativeMessage, setNativeMessage] = useState<string | undefined>(
       undefined,
     );
-    useSubmitAttemptTracking();
-
-    // ZeroHeight: selecting an option removes the invalid state and the error
-    // message straight away. A caller-set `invalid` is dismissed on change and
-    // comes back when the caller passes a new `invalid` or `invalidFeedback`
-    // (React's "adjusting state when a prop changes" pattern).
-    const [invalidDismissed, setInvalidDismissed] = useState(false);
-    const [previousInvalid, setPreviousInvalid] = useState({
-      invalid,
-      invalidFeedback,
-    });
-    if (
-      previousInvalid.invalid !== invalid ||
-      previousInvalid.invalidFeedback !== invalidFeedback
-    ) {
-      setPreviousInvalid({ invalid, invalidFeedback });
-      setInvalidDismissed(false);
-    }
 
     if (import.meta.env.DEV) {
       if (
@@ -245,6 +253,26 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           `[MDS RadioGroup] received ${options.length} options. Use ${MIN_OPTIONS} to ${MAX_OPTIONS}; use Checkbox or Switch for a single option and Select for 6 or more.`,
         );
       }
+      if (
+        !disabled &&
+        options.length > 0 &&
+        options.every((option) => option.disabled)
+      ) {
+        console.warn(
+          '[MDS RadioGroup] every option is disabled. Set disabled on the group instead, so the group is announced as disabled and its supporting text mutes.',
+        );
+      }
+      const selectedValue = value ?? defaultValue;
+      if (
+        selectedValue !== undefined &&
+        options.some(
+          (option) => option.value === selectedValue && option.disabled,
+        )
+      ) {
+        console.warn(
+          `[MDS RadioGroup] the selected value "${selectedValue}" belongs to a disabled option. Disabled inputs aren't submitted, so the form won't receive it, and it still satisfies required.`,
+        );
+      }
       if (value !== undefined && !onChange) {
         console.warn(
           '[MDS RadioGroup] value is provided without onChange. The selection cannot change; use defaultValue for an uncontrolled group.',
@@ -253,6 +281,10 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       if (invalid && !disabled && !invalidFeedback) {
         console.warn(
           '[MDS RadioGroup] invalid is set without invalidFeedback. Pass an error message so the invalid state does not rely on colour alone.',
+        );
+      } else if (required && !disabled && !invalidFeedback) {
+        console.warn(
+          "[MDS RadioGroup] required is set without invalidFeedback. Pass a pre-translated error message so a failed submit does not fall back to the browser's message, which follows the browser's language rather than the user's.",
         );
       }
     }
@@ -269,13 +301,15 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         .map((option) => `${option.value}\u0000${option.label}`)
         .join('\u0001'),
     );
+    useSubmitAttemptTracking(optionsRef);
     const layoutOrientation: RadioGroupOrientation = fitsOnOneLine
       ? resolvedOrientation
       : 'vertical';
 
     // Disabled takes precedence: Figma doesn't define a disabled + invalid group.
-    const effectiveInvalid =
-      ((invalid && !invalidDismissed) || !!nativeMessage) && !disabled;
+    // Caller `invalid` is never overridden here; only the native message, which
+    // the group owns, is cleared internally.
+    const effectiveInvalid = (invalid || !!nativeMessage) && !disabled;
     const errorText = invalidFeedback ?? nativeMessage;
     const showInvalidFeedback = effectiveInvalid && !!errorText;
     const footerText = showInvalidFeedback ? errorText : supportingText;
@@ -290,9 +324,15 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
 
     const isControlled = value !== undefined;
 
+    // A disabled radio can't take focus, so inputRef goes to the first one
+    // that can. With every option disabled, it falls back to the first.
+    const inputRefIndex = Math.max(
+      0,
+      options.findIndex((option) => !option.disabled),
+    );
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       if (nativeMessage) setNativeMessage(undefined);
-      if (invalid) setInvalidDismissed(true);
       onChange?.(event.target.value, event);
     };
 
@@ -306,6 +346,22 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       focusFirstInvalidOnSubmit(event.currentTarget);
     };
 
+    const pressingOptionRef = useRef(false);
+    const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+      onPointerDown?.(event);
+      if (!optionsRef.current?.contains(event.target as Node)) return;
+      pressingOptionRef.current = true;
+      // The press can end outside the group, so listen on the window.
+      const listeners = new AbortController();
+      const release = () => {
+        pressingOptionRef.current = false;
+        listeners.abort();
+      };
+      const listenerOptions = { capture: true, signal: listeners.signal };
+      window.addEventListener('pointerup', release, listenerOptions);
+      window.addEventListener('pointercancel', release, listenerOptions);
+    };
+
     // React's onBlur bubbles, so the root also hears focus moving inside the
     // group. Reporting only focus leaving it stops form libraries marking the
     // field touched, and validating it, before anyone has made a choice.
@@ -313,6 +369,10 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       if (event.currentTarget.contains(event.relatedTarget as Node | null)) {
         return;
       }
+      // WebKit reports a null relatedTarget when a click on another option
+      // takes focus off the current radio, and doesn't focus the clicked one.
+      // A press on an option still means the user is choosing, not leaving.
+      if (event.relatedTarget === null && pressingOptionRef.current) return;
       onBlur?.(event);
     };
 
@@ -336,6 +396,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         id={id}
         className={classes.join(' ')}
         onBlur={handleBlur}
+        onPointerDown={handlePointerDown}
         {...props}
       >
         {!hideLabel && (
@@ -365,12 +426,12 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           {options.map((option, index) => (
             <Radio
               key={option.value}
-              ref={index === 0 ? inputRef : undefined}
+              ref={index === inputRefIndex ? inputRef : undefined}
               name={name}
               value={option.value}
               label={option.label}
               required={required}
-              disabled={disabled}
+              disabled={disabled || option.disabled}
               invalid={effectiveInvalid}
               {...(isControlled
                 ? { checked: option.value === value }
@@ -391,6 +452,13 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
             {footerText}
           </div>
         )}
+
+        {/* Always mounted: screen readers skip live regions that appear in the
+            same update as their content. Mirrors the error so it is announced
+            when it shows without focus moving into the group (e.g. on blur). */}
+        <span className="visually-hidden" aria-live="polite" aria-atomic="true">
+          {showInvalidFeedback ? errorText : ''}
+        </span>
       </div>
     );
   },

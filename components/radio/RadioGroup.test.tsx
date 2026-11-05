@@ -1,6 +1,6 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { type ReactNode, createRef } from 'react';
+import { type ReactNode, createRef, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Input } from '../input';
 import { RadioGroup, type RadioGroupOption } from './RadioGroup';
@@ -10,6 +10,10 @@ const options: RadioGroupOption[] = [
   { value: 'weekly', label: 'Weekly' },
   { value: 'monthly', label: 'Monthly' },
 ];
+
+// The error is also mirrored into a hidden live region, so text queries for
+// the visible message are scoped to the footer.
+const FOOTER = '.mds-radio-group-supporting-text';
 
 describe('RadioGroup: Unit Test', () => {
   afterEach(() => {
@@ -179,6 +183,52 @@ describe('RadioGroup: Unit Test', () => {
       await userEvent.tab();
       expect(screen.getByRole('button', { name: 'Next' })).toHaveFocus();
       expect(onBlur).toHaveBeenCalledTimes(1);
+    });
+
+    // WebKit, with keyboard focus on a radio, fires focusout with a null
+    // relatedTarget when another option is clicked.
+    it('is not called when clicking another option blurs with no relatedTarget', () => {
+      const onBlur = vi.fn();
+      render(
+        <RadioGroup label="Frequency" options={options} onBlur={onBlur} />,
+      );
+      const daily = screen.getByRole('radio', { name: 'Daily' });
+      const weekly = screen.getByRole('radio', { name: 'Weekly' });
+      daily.focus();
+
+      fireEvent.pointerDown(weekly);
+      fireEvent.focusOut(daily, { relatedTarget: null });
+      fireEvent.pointerUp(weekly);
+
+      expect(onBlur).not.toHaveBeenCalled();
+    });
+
+    it('is called when focus leaves with no relatedTarget after a press has ended', () => {
+      const onBlur = vi.fn();
+      render(
+        <RadioGroup label="Frequency" options={options} onBlur={onBlur} />,
+      );
+      const daily = screen.getByRole('radio', { name: 'Daily' });
+      daily.focus();
+
+      fireEvent.pointerDown(screen.getByRole('radio', { name: 'Weekly' }));
+      fireEvent.pointerUp(document.body);
+      fireEvent.focusOut(daily, { relatedTarget: null });
+
+      expect(onBlur).toHaveBeenCalledTimes(1);
+    });
+
+    it('still calls a consumer onPointerDown', () => {
+      const onPointerDown = vi.fn();
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={options}
+          onPointerDown={onPointerDown}
+        />,
+      );
+      fireEvent.pointerDown(screen.getByRole('radio', { name: 'Weekly' }));
+      expect(onPointerDown).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -454,12 +504,71 @@ describe('RadioGroup: Unit Test', () => {
       expect(footer).toHaveClass('mds-radio-group-supporting-text--invalid');
     });
 
+    it('announces the error through a pre-mounted live region', () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const { container, rerender } = render(
+        <RadioGroup label="Frequency" options={options} />,
+      );
+      const liveRegion = container.querySelector('[aria-live="polite"]');
+      expect(liveRegion).toBeInTheDocument();
+      expect(liveRegion).toBeEmptyDOMElement();
+
+      rerender(
+        <RadioGroup
+          label="Frequency"
+          options={options}
+          invalid
+          invalidFeedback="Choose how often we email you"
+        />,
+      );
+      // Same node, so assistive tech already tracks it when the text lands.
+      expect(container.querySelector('[aria-live="polite"]')).toBe(liveRegion);
+      expect(liveRegion).toHaveTextContent('Choose how often we email you');
+    });
+
+    it('keeps resting supporting text out of the live region', () => {
+      const { container } = render(
+        <RadioGroup
+          label="Frequency"
+          options={options}
+          supportingText="Guidance"
+        />,
+      );
+      expect(
+        container.querySelector('[aria-live="polite"]'),
+      ).toBeEmptyDOMElement();
+    });
+
     it('warns when invalid is set without invalidFeedback', () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
       render(<RadioGroup label="Frequency" options={options} invalid />);
       expect(warn).toHaveBeenCalledWith(
         expect.stringContaining('invalid is set without invalidFeedback'),
       );
+    });
+
+    it('warns when required is set without invalidFeedback', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(<RadioGroup label="Frequency" options={options} required />);
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('required is set without invalidFeedback'),
+      );
+    });
+
+    it('does not warn about invalidFeedback when required is set with it, or while disabled', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <>
+          <RadioGroup
+            label="Frequency"
+            options={options}
+            required
+            invalidFeedback="Choose how often we email you"
+          />
+          <RadioGroup label="Frequency" options={options} required disabled />
+        </>,
+      );
+      expect(warn).not.toHaveBeenCalled();
     });
 
     it('describes every radio with the error message', () => {
@@ -503,7 +612,7 @@ describe('RadioGroup: Unit Test', () => {
       );
       fireEvent.invalid(screen.getAllByRole('radio')[0]);
       expect(
-        screen.getByText('Choose how often we email you'),
+        screen.getByText('Choose how often we email you', { selector: FOOTER }),
       ).toBeInTheDocument();
     });
 
@@ -611,6 +720,60 @@ describe('RadioGroup: Unit Test', () => {
         expect(name).toHaveFocus();
       });
 
+      describe('in an iframe document', () => {
+        // React from this window rendering into an iframe (a portal or an
+        // iframe-mounted root): listeners must go on the iframe's document,
+        // and its elements fail `instanceof` against this window's classes.
+        const renderInIframe = (before?: ReactNode) => {
+          const iframe = document.createElement('iframe');
+          document.body.appendChild(iframe);
+          const frameDocument = iframe.contentDocument!;
+          const container = frameDocument.createElement('div');
+          frameDocument.body.appendChild(container);
+          render(
+            <form onSubmit={(event) => event.preventDefault()}>
+              {before}
+              <RadioGroup label="Frequency" options={options} required />
+              <button type="submit">Save</button>
+            </form>,
+            { container },
+          );
+          const frame = within(frameDocument.body);
+          return { iframe, frameDocument, frame };
+        };
+
+        it('focuses the first radio when Save is clicked', () => {
+          const { iframe, frameDocument, frame } = renderInIframe();
+          act(() => {
+            fireEvent.click(frame.getByRole('button', { name: 'Save' }));
+          });
+          expect(frameDocument.activeElement).toBe(
+            frame.getByRole('radio', { name: 'Daily' }),
+          );
+          iframe.remove();
+        });
+
+        it('focuses an earlier invalid Input when Enter submits from a text field', () => {
+          const { iframe, frameDocument, frame } = renderInIframe(
+            <>
+              <input aria-label="Nickname" defaultValue="Sam" />
+              <Input label="Name" required />
+            </>,
+          );
+          const nickname = frame.getByRole('textbox', { name: 'Nickname' });
+          nickname.focus();
+          act(() => {
+            fireEvent.keyDown(nickname, { key: 'Enter' });
+            nickname.form!.requestSubmit();
+            fireEvent.keyUp(nickname, { key: 'Enter' });
+          });
+          expect(frameDocument.activeElement).toBe(
+            frame.getByRole('textbox', { name: 'Name' }),
+          );
+          iframe.remove();
+        });
+      });
+
       it('lets focus leave an invalid Input that validates on blur', async () => {
         renderForm(<Input label="Name" required />);
         await userEvent.click(screen.getByRole('textbox', { name: 'Name' }));
@@ -627,17 +790,23 @@ describe('RadioGroup: Unit Test', () => {
       expect(first).not.toHaveAttribute('aria-invalid');
     });
 
-    it('clears a caller-set invalid state and message once an option is selected', async () => {
-      render(
-        <RadioGroup
-          label="Frequency"
-          options={options}
-          supportingText="Guidance"
-          invalid
-          invalidFeedback="Choose how often we email you"
-        />,
-      );
+    it('keeps a caller-set invalid state after selection until the caller clears it', async () => {
+      const props = {
+        label: 'Frequency',
+        options,
+        supportingText: 'Guidance',
+        invalidFeedback: 'Choose how often we email you',
+      };
+      const { rerender } = render(<RadioGroup {...props} invalid />);
       await userEvent.click(screen.getByRole('radio', { name: 'Weekly' }));
+      for (const radio of screen.getAllByRole('radio')) {
+        expect(radio).toHaveAttribute('aria-invalid', 'true');
+      }
+      expect(
+        screen.getByText('Choose how often we email you', { selector: FOOTER }),
+      ).toBeInTheDocument();
+
+      rerender(<RadioGroup {...props} invalid={false} />);
       for (const radio of screen.getAllByRole('radio')) {
         expect(radio).not.toHaveAttribute('aria-invalid');
       }
@@ -649,35 +818,48 @@ describe('RadioGroup: Unit Test', () => {
       );
     });
 
-    it('shows the invalid state again when the caller toggles invalid', async () => {
-      const props = {
-        label: 'Frequency',
-        options,
-        invalidFeedback: 'Choose how often we email you',
-      };
-      const { rerender } = render(<RadioGroup {...props} invalid />);
-      await userEvent.click(screen.getByRole('radio', { name: 'Weekly' }));
-      rerender(<RadioGroup {...props} invalid={false} />);
-      rerender(<RadioGroup {...props} invalid />);
-      expect(screen.getByRole('radio', { name: 'Weekly' })).toHaveAttribute(
+    it('keeps the error when the caller re-validates a new selection as still invalid', async () => {
+      // e.g. a rule beyond "required": the new choice is also rejected, so the
+      // caller passes the same invalid + message and the error must stay.
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={options}
+          invalid
+          invalidFeedback="Weekly isn't available"
+        />,
+      );
+      await userEvent.click(screen.getByRole('radio', { name: 'Monthly' }));
+      expect(screen.getByRole('radio', { name: 'Monthly' })).toHaveAttribute(
         'aria-invalid',
         'true',
       );
       expect(
-        screen.getByText('Choose how often we email you'),
+        screen.getByText("Weekly isn't available", { selector: FOOTER }),
       ).toBeInTheDocument();
     });
 
-    it('shows the invalid state again when the caller passes a new message', async () => {
-      const props = { label: 'Frequency', options, invalid: true };
-      const { rerender } = render(
-        <RadioGroup {...props} invalidFeedback="Choose an option" />,
-      );
+    it('clears when the caller resets invalid in onChange', async () => {
+      function Harness() {
+        const [invalid, setInvalid] = useState(true);
+        return (
+          <RadioGroup
+            label="Frequency"
+            options={options}
+            invalid={invalid}
+            invalidFeedback="Choose how often we email you"
+            onChange={() => setInvalid(false)}
+          />
+        );
+      }
+      render(<Harness />);
       await userEvent.click(screen.getByRole('radio', { name: 'Weekly' }));
-      rerender(
-        <RadioGroup {...props} invalidFeedback="Weekly isn't available" />,
-      );
-      expect(screen.getByText("Weekly isn't available")).toBeInTheDocument();
+      for (const radio of screen.getAllByRole('radio')) {
+        expect(radio).not.toHaveAttribute('aria-invalid');
+      }
+      expect(
+        screen.queryByText('Choose how often we email you'),
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -726,6 +908,141 @@ describe('RadioGroup: Unit Test', () => {
       expect(
         container.querySelector('.mds-radio-group-supporting-text'),
       ).not.toHaveClass('mds-radio-group-supporting-text--invalid');
+    });
+  });
+
+  describe('disabled option', () => {
+    const withDisabled: RadioGroupOption[] = [
+      { value: 'daily', label: 'Daily', disabled: true },
+      { value: 'weekly', label: 'Weekly' },
+      { value: 'monthly', label: 'Monthly' },
+    ];
+
+    it('disables only that option', () => {
+      render(<RadioGroup label="Frequency" options={withDisabled} />);
+      expect(screen.getByRole('radio', { name: 'Daily' })).toBeDisabled();
+      expect(screen.getByRole('radio', { name: 'Weekly' })).toBeEnabled();
+      expect(screen.getByRole('radio', { name: 'Monthly' })).toBeEnabled();
+      expect(screen.getByRole('radiogroup')).not.toHaveAttribute(
+        'aria-disabled',
+      );
+    });
+
+    it('cannot be selected by clicking', async () => {
+      const onChange = vi.fn();
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={withDisabled}
+          onChange={onChange}
+        />,
+      );
+      await userEvent.click(screen.getByRole('radio', { name: 'Daily' }));
+      expect(screen.getByRole('radio', { name: 'Daily' })).not.toBeChecked();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('is overridden by the group disabled prop', () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={[
+            { value: 'daily', label: 'Daily', disabled: false },
+            { value: 'weekly', label: 'Weekly' },
+          ]}
+          disabled
+        />,
+      );
+      for (const radio of screen.getAllByRole('radio')) {
+        expect(radio).toBeDisabled();
+      }
+    });
+
+    it('forwards inputRef to the first enabled radio', () => {
+      const inputRef = createRef<HTMLInputElement>();
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={withDisabled}
+          inputRef={inputRef}
+        />,
+      );
+      expect(inputRef.current).toBe(
+        screen.getByRole('radio', { name: 'Weekly' }),
+      );
+    });
+
+    it('focuses the first enabled radio on a failed submit', async () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <RadioGroup
+            label="Frequency"
+            options={withDisabled}
+            required
+            invalidFeedback="Choose a frequency"
+          />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+      expect(screen.getByRole('radio', { name: 'Weekly' })).toHaveFocus();
+    });
+
+    it('is not submitted with the form even when selected', () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <form data-testid="form">
+          <RadioGroup
+            label="Frequency"
+            name="freq"
+            options={withDisabled}
+            defaultValue="daily"
+          />
+        </form>,
+      );
+      const form = screen.getByTestId('form') as HTMLFormElement;
+      expect(new FormData(form).get('freq')).toBeNull();
+    });
+
+    it('warns when the selected value belongs to a disabled option', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={withDisabled}
+          defaultValue="daily"
+        />,
+      );
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('belongs to a disabled option'),
+      );
+    });
+
+    it('warns when every option is disabled', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={options.map((option) => ({ ...option, disabled: true }))}
+        />,
+      );
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('every option is disabled'),
+      );
+    });
+
+    it('does not warn when only some options are disabled', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={withDisabled}
+          defaultValue="weekly"
+        />,
+      );
+      expect(warn).not.toHaveBeenCalled();
     });
   });
 });

@@ -26,9 +26,13 @@ const meta = {
     },
     options: {
       description:
-        'Options rendered as Radio inputs sharing one name. Use 2 to 5 options — use Select for 6 or more.',
+        'Options rendered as Radio inputs sharing one name. Use 2 to 5 options — use Select for 6 or more. Set disabled on an option to disable it alone, and explain why in supportingText.',
       control: { type: 'object' },
-      table: { type: { summary: '{ value: string; label: string }[]' } },
+      table: {
+        type: {
+          summary: '{ value: string; label: string; disabled?: boolean }[]',
+        },
+      },
     },
     orientation: {
       description:
@@ -191,6 +195,7 @@ export const WithInfoButton: Story = {
 export const Required: Story = {
   args: {
     required: true,
+    invalidFeedback: 'Choose how often we email you.',
   },
   play: async ({ canvas, canvasElement }) => {
     const group = canvas.getByRole('radiogroup', { name: 'Email frequency' });
@@ -240,6 +245,38 @@ export const Disabled: Story = {
     for (const radio of canvas.getAllByRole('radio')) {
       await expect(radio).toBeDisabled();
     }
+  },
+};
+
+/**
+ * A single option can be disabled while the rest stay available. It stays
+ * visible so people know it exists, arrow keys skip it, and it isn't
+ * submitted. Say why it's unavailable in the supporting text.
+ */
+export const DisabledOption: Story = {
+  args: {
+    options: [
+      { value: 'daily', label: 'Daily' },
+      { value: 'weekly', label: 'Weekly', disabled: true },
+      { value: 'monthly', label: 'Monthly' },
+    ],
+    supportingText: 'Weekly digests are turned off for this site.',
+  },
+  play: async ({ canvas, userEvent }) => {
+    const weekly = canvas.getByRole('radio', { name: 'Weekly' });
+    await expect(weekly).toBeDisabled();
+    await expect(canvas.getByRole('radio', { name: 'Daily' })).toBeEnabled();
+
+    // Arrow keys skip the disabled option.
+    await userEvent.tab();
+    await expect(canvas.getByRole('radio', { name: 'Daily' })).toHaveFocus();
+    await userEvent.keyboard('{ArrowDown}');
+    const monthly = canvas.getByRole('radio', { name: 'Monthly' });
+    await expect(monthly).toHaveFocus();
+    await expect(monthly).toBeChecked();
+    await expect(weekly).not.toBeChecked();
+    // End without a focus ring, which snapshots unreliably.
+    monthly.blur();
   },
 };
 
@@ -402,6 +439,77 @@ export const RequiredValidation: Story = {
 };
 
 /**
+ * Caller validation: `invalid` is fully controlled. The group never clears it
+ * on its own, so the error on screen always matches your form's state. Clear
+ * it in `onChange` (or re-validate there). React Hook Form re-validates on
+ * change after a failed submit by default, so passing `fieldState.invalid`
+ * through needs no extra code.
+ *
+ * Only the native `required` error (see Required validation) clears by itself,
+ * because the group owns that one.
+ */
+export const CallerValidation: Story = {
+  args: {
+    required: true,
+    supportingText: 'You can change this at any time.',
+  },
+  parameters: {
+    // Behaviour check: the last step clears the error, so it ends on a plain
+    // selected group.
+    chromatic: { disableSnapshot: true },
+    docs: {
+      source: {
+        code: `import { useState } from 'react';
+import { RadioGroup } from '@moodlehq/design-system';
+
+export const CallerValidationExample = () => {
+  const [frequency, setFrequency] = useState('');
+  const [error, setError] = useState<string>();
+
+  return (
+    <RadioGroup
+      label={t('emailfrequency')}
+      options={options}
+      required
+      value={frequency}
+      invalid={!!error}
+      invalidFeedback={error ?? t('emailfrequencyrequired')}
+      onChange={(value) => {
+        setFrequency(value);
+        // Re-validate here: the group keeps showing the error until you do.
+        setError(undefined);
+      }}
+    />
+  );
+};`,
+      },
+    },
+  },
+  render: function Render(args) {
+    const [value, setValue] = useState('');
+    const [invalid, setInvalid] = useState(true);
+    return (
+      <RadioGroup
+        {...args}
+        value={value}
+        invalid={invalid}
+        invalidFeedback="Choose how often we email you."
+        onChange={(next) => {
+          setValue(next);
+          setInvalid(false);
+        }}
+      />
+    );
+  },
+  play: async ({ canvas, userEvent }) => {
+    const weekly = canvas.getByRole('radio', { name: 'Weekly' });
+    await expect(weekly).toHaveAttribute('aria-invalid', 'true');
+    await userEvent.click(weekly);
+    await expect(weekly).not.toHaveAttribute('aria-invalid');
+  },
+};
+
+/**
  * Native radio keyboard pattern: Tab enters the group, arrow keys move and select.
  */
 export const KeyboardInteraction: Story = {
@@ -537,6 +645,7 @@ export const LongLabel: Story = {
     label:
       'Wie oft möchten Sie E-Mail-Benachrichtigungen über neue Forumsbeiträge erhalten?',
     required: true,
+    invalidFeedback: 'Wählen Sie aus, wie oft wir Ihnen E-Mails senden.',
   },
   decorators: [
     (Story) => (
