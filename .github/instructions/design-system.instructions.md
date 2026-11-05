@@ -958,7 +958,7 @@ AI prototyping tools are evolving rapidly, and the best ways to integrate MDS in
 
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8729151/89b669a00d81cac5df08b2f87a8998668575a2395410437c85a5d4b9fd3dbd06)
@@ -980,6 +980,39 @@ Breadcrumb link items are built from the Link component. Hover, pressed, focus, 
 | :--- | :--- |
 | ![](zeroheight://image/8729151/20bd445640d9100e49d635d1f4fb47586e6027106ade61f44b4b93c03b2e491e) | **Default (link item)** This is the resting state for a breadcrumb item that links to a page above the current one. Shown as a link, followed by a separator. |
 | ![](zeroheight://image/8729151/685bdf8dfbc4e2322fef8929235e34e77ecf10a801e1cb69a2553f105f744ac8) | **Default (current item)** This is the last item in the trail. It shows the page the user is on now and is not a link. Shown as plain text. |
+
+![](zeroheight://image/8729151/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* Breadcrumb is designed to never wrap to a second line, at any width. When the combined width of all the items is more than the available space, increase the "Truncation width" setting so link items shrink and truncate with an ellipsis. Show a tooltip with the full label on hover or on keyboard focus for any truncated item.
+* If there are more than 4 levels in the hierarchy, use the "More than 4" items variant. It collapses the hidden ancestor pages into the overflow menu automatically.
+* The last item never links anywhere, even if its label matches an earlier item's label.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8729151/30a2c445b9c8fffb79f23c3b07d4b9f842e213b4f5a0743c19646c538452367e) |   | SHOULD turn on truncation when the trail doesn't fit, and show a tooltip on hover or keyboard focus. |
+| Don't | ![](zeroheight://image/8729151/c872e4031526d343b7cfcedb597bb70246a336cfd16faeab726b65a41bc868ad) |   | SHOULD NOT let the trail wrap onto a second line. |
+
+### Truncation width strategy
+
+The goal at every breakpoint is to show as much of each label as possible, including the current page. Only cap a label's width when there's genuinely no room to show it in full.
+
+* The current (last) item is not affected by "Truncation width". When there's enough room, it shows its full label just like the ancestor items do, at whatever width that content needs. It only truncates once space genuinely runs out. 
+* Breadcrumb never wraps to a second line but watch for the trail exceeding the available width. For ancestor link items, start with "Truncation width" set to None. If the whole trail fits within the available width at that breakpoint, leave it there. This shows every label in full.
+* If the trail doesn't fit, step down the scale one size at a time (XL 200px, then LG 160px, then MD 120px, then SM 80px, then XS 40px), and use the largest size that still keeps the trail within the available width. Don't jump straight to the smallest option.
+* Check this at every breakpoint you design for, since the number of items and the available width both change how much room each label has. A width that fits on desktop may need to drop a size or two on a narrow viewport.
+* These six widths are fixed pixel values in the Figma file, not a formula. The real implementation in code should use a fluid cap that recalculates based on the actual space available at render time.
+
+## Behaviour
+
+* Link items and the overflow menu are clickable. The current item is not.
+* The overflow menu opens a dropdown listing the hidden ancestor pages. Clicking outside the dropdown closes it.
+* Touch target size and the open and close animation follow the base Link and Dropdown component patterns.
+
+## Responsive behaviour
+
+* The trail doesn't wrap to a second line, and link items keep their natural width unless "Truncation width" is set, so a full trail is more likely to run out of room on a narrow viewport than on desktop.
 ---
 
 # Code
@@ -1102,7 +1135,7 @@ This property controls how narrow every link item's label can get before it trun
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -1110,17 +1143,6 @@ This property controls how narrow every link item's label can get before it trun
 * The current (last) item's label truncates with an ellipsis if it's too long to fit the available width. This is always on, no matter the "Truncation width" setting. Link items keep their natural width and don't truncate unless "Truncation width" is set to xs, sm, md, lg, or xl.
 * Keep ancestor labels short so the trail doesn't run out of horizontal space.
 * There's no defined maximum for the number of ancestor items shown in the overflow dropdown.
-
-#### Content behaviour
-
-* Breadcrumb is designed to never wrap to a second line, at any width. When the combined width of all the items is more than the available space, increase the "Truncation width" setting so link items shrink and truncate with an ellipsis. Show a tooltip with the full label on hover or on keyboard focus for any truncated item.
-* If there are more than 4 levels in the hierarchy, use the "More than 4" items variant. It collapses the hidden ancestor pages into the overflow menu automatically.
-* The last item never links anywhere, even if its label matches an earlier item's label.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8729151/30a2c445b9c8fffb79f23c3b07d4b9f842e213b4f5a0743c19646c538452367e) |   | SHOULD turn on truncation when the trail doesn't fit, and show a tooltip on hover or keyboard focus. |
-| Don't | ![](zeroheight://image/8729151/c872e4031526d343b7cfcedb597bb70246a336cfd16faeab726b65a41bc868ad) |   | SHOULD NOT let the trail wrap onto a second line. |
 
 #### Copywriting
 
@@ -1134,36 +1156,10 @@ This property controls how narrow every link item's label can get before it trun
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Place the breadcrumb trail above the page title, left aligned with the main content column.
 * Don't stack more than one breadcrumb trail on a single page.
-
----
-
-### Breakpoints and responsive behaviour
-
-* The trail doesn't wrap to a second line, and link items keep their natural width unless "Truncation width" is set, so a full trail is more likely to run out of room on a narrow viewport than on desktop.
-
----
-
-### Truncation width strategy
-
-The goal at every breakpoint is to show as much of each label as possible, including the current page. Only cap a label's width when there's genuinely no room to show it in full.
-
-* The current (last) item is not affected by "Truncation width". When there's enough room, it shows its full label just like the ancestor items do, at whatever width that content needs. It only truncates once space genuinely runs out. 
-* Breadcrumb never wraps to a second line but watch for the trail exceeding the available width. For ancestor link items, start with "Truncation width" set to None. If the whole trail fits within the available width at that breakpoint, leave it there. This shows every label in full.
-* If the trail doesn't fit, step down the scale one size at a time (XL 200px, then LG 160px, then MD 120px, then SM 80px, then XS 40px), and use the largest size that still keeps the trail within the available width. Don't jump straight to the smallest option.
-* Check this at every breakpoint you design for, since the number of items and the available width both change how much room each label has. A width that fits on desktop may need to drop a size or two on a narrow viewport.
-* These six widths are fixed pixel values in the Figma file, not a formula. The real implementation in code should use a fluid cap that recalculates based on the actual space available at render time.
-
----
-
-### Interaction behaviour
-
-* Link items and the overflow menu are clickable. The current item is not.
-* The overflow menu opens a dropdown listing the hidden ancestor pages. Clicking outside the dropdown closes it.
-* Touch target size and the open and close animation follow the base Link and Dropdown component patterns.
 
 ---
 
@@ -1248,7 +1244,7 @@ Full list of props and their types for Link.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8647020/a0f80309f6651ab2ae808ed727633b4f2f259f1cb2fca971975a747f409f8552)
@@ -1291,6 +1287,22 @@ Full list of props and their types for Link.
 | ![](zeroheight://image/8647020/5182c432295884f4e9514fe9078ab244ab09accd00db64075b3d44f4418f3c0b) | **Active / Pressed** Triggered while the link is being pressed. |
 | ![](zeroheight://image/8647020/013cc78cd43d176b526cd37b1a0af7fd2f1e35ebc9877bc28158ce85a7f30b1b) | **Disabled** Rarely appropriate inline. A disabled link mid-sentence reads as broken text rather than as an unavailable action, and the reduced contrast can fail against body copy. Prefer rendering plain text and, if needed, explaining the unavailability in the sentence itself. No underline. |
 | ![](zeroheight://image/8647020/36a2c5ce5cfea3edc777363b4d63382906b5be49c8fca5c96b3a8dc5ac3d85cb) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout. The underline is replaced by a 2px focus line. |
+
+![](zeroheight://image/8647020/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* The link width is determined by the label length.
+* Inline links flow with the surrounding text and wrap naturally at line breaks.
+
+## Behaviour
+
+* Cursor: pointer on hover, not-allowed when disabled.
+* Use disabled state only when the action is genuinely unavailable.
+
+## Responsive behaviour
+
+* Inline links wrap with their surrounding text at all breakpoints.
 ---
 
 # Usage
@@ -1346,7 +1358,7 @@ The link has 3 icon configurations. Primary and Secondary links can use any of t
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -1359,11 +1371,6 @@ The link has 3 icon configurations. Primary and Secondary links can use any of t
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8647020/ca5825cdeb0f15f73ce1fc41cc60fb2f9aebf81bd8d5e0bffc7dd6171e373eaa) |   | SHOULD use a single StartIcon or EndIcon, not both, to keep the link's direction of meaning clear. |
 | Don't | ![](zeroheight://image/8647020/4a6fc08d9c934068a4166f10979adb847ee45117158460056e92975e41919cf1) |   | MUST NOT combine a StartIcon and EndIcon on the same link. It isn't supported and it confuses the action. |
-
-#### Content behaviour
-
-* The link width is determined by the label length (Hug behaviour).
-* Inline links flow with the surrounding text and wrap naturally at line breaks.
 
 #### Copywriting
 
@@ -1380,7 +1387,7 @@ The link has 3 icon configurations. Primary and Secondary links can use any of t
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Inline links sit within the text flow and inherit the line height of surrounding content.
 * Standalone links can stand on their own line, optionally paired with a StartIcon or EndIcon.
@@ -1390,19 +1397,6 @@ The link has 3 icon configurations. Primary and Secondary links can use any of t
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8647020/5de55a3b4129af66d7d92eecbe59f2b3e1a9d7c79448eb8354ad16491d0a8ec0) |   | SHOULD give standalone links enough spacing so each one reads as a separate target. |
 | Don't | ![](zeroheight://image/8647020/c62afa96f51314eee7f3d5ee8253f5e033b61da215e8b9c95149318089d8fe0d) |   | SHOULD NOT place 2 standalone links back-to-back with no spacing. They read as one target. |
-
----
-
-### Responsive behaviour
-
-* Inline links wrap with their surrounding text at all breakpoints.
-
----
-
-### Interaction behaviour
-
-* Cursor: pointer on hover, not-allowed when disabled.
-* Use disabled state only when the action is genuinely unavailable.
 
 ---
 
@@ -1482,7 +1476,7 @@ Full list of props and their types for Nav pill.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8648336/4dd3822e0a031cf531969baa74887cd85f18418025d97e02306f68ba5bf198e0)
@@ -1504,6 +1498,25 @@ Full list of props and their types for Nav pill.
 | ![](zeroheight://image/8648336/045cd95a9f83594858ff88169376ec98ae873319d91a6cde3ed69dfc352af66e) | **Disabled** Applied when the destination is unavailable in the current context. Disabled items are removed from the keyboard tab order. Use sparingly. If a destination is permanently unavailable to a user, consider hiding the item entirely. |
 | ![](zeroheight://image/8648336/62655191c4838aaa6d161912fdf27b2a7d5a8f234b5b314396c22d99c0f6fbd8) | **Selected** Applied to the item that represents the current page. Set programmatically via `aria-current="page"`. Don't apply this state manually in design. An indicator dot shows. |
 | ![](zeroheight://image/8648336/f75a6b10b324b5813a8a444e6be9874100b27b757df7ccbaf1e1bc3896655f93) | **Selected + Focus** Triggered via keyboard navigation when focus lands on the current page item. Required. Don't suppress the focus ring on selected items. Looks the same as Selected, plus a 2px focus ring around the item. |
+
+![](zeroheight://image/8648336/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* Clicking or tapping a nav pill navigates to the linked page. The component doesn't toggle the Selected state. The selected item is set by the application based on the current page URL.
+* The Selected state is always determined programmatically. Don't apply it manually in design mockups unless you're accurately representing the current page.
+* **Cursor:** pointer on hover; not-allowed when disabled.
+* **Keyboard:** the nav bar behaves as a single tab stop. Tab moves focus into and out of the group as a unit. Arrow keys navigate between items within the group. This is intentional. Don't design interactions that assume Tab will step through each item individually.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8648336/19a42875a2f6a7bb8bb5d95ffdb76298a106969a8c7a6f80410a1ea402bffaae) |   | MUST show only 1 item as Selected per nav bar: the current page. |
+| Don't | ![](zeroheight://image/8648336/db932b7b16ea38bd347da375afcf122a6929f823ede56394c55c2dc733cefb4c) |   | MUST NOT show more than 1 item in the Selected state at the same time. |
+
+## Responsive behaviour
+
+* The component's size and styling remain consistent across all breakpoints.
+* On narrow viewports, the number of visible items is controlled by the implementing nav bar pattern. The component itself has no responsive override.
 ---
 
 # Usage
@@ -1539,7 +1552,7 @@ Nav pill has no variants. Selected and disabled are states. See States on the De
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -1554,7 +1567,7 @@ Nav pill has no variants. Selected and disabled are states. See States on the De
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Nav pills in a group are arranged horizontally, in a single row.
 * Each item's width is determined by its label length. Don't apply fixed widths.
@@ -1575,27 +1588,6 @@ Nav pill has no variants. Selected and disabled are states. See States on the De
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8648336/1530c8263abdfe6ae14c187266795d0ccc89741c649a6ea497b3f34b1f8ad8be) |   | SHOULD left-align the nav pill group within its container. |
 | Don't | ![](zeroheight://image/8648336/117db021968be204471717c6e1b9273b9181db1abc41cef1ed270e819c9ae58c) |   | SHOULD NOT stretch or spread nav pills to fill the full container width. |
-
----
-
-### Breakpoints and responsive behaviour
-
-* The component's size and styling remain consistent across all breakpoints.
-* On narrow viewports, the number of visible items is controlled by the implementing nav bar pattern. The component itself has no responsive override.
-
----
-
-### Interaction behaviour 
-
-* Clicking or tapping a nav pill navigates to the linked page. The component doesn't toggle the Selected state. The selected item is set by the application based on the current page URL.
-* The Selected state is always determined programmatically. Don't apply it manually in design mockups unless you're accurately representing the current page.
-* **Cursor:** pointer on hover; not-allowed when disabled.
-* **Keyboard:** the nav bar behaves as a single tab stop. Tab moves focus into and out of the group as a unit. Arrow keys navigate between items within the group. This is intentional. Don't design interactions that assume Tab will step through each item individually.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8648336/19a42875a2f6a7bb8bb5d95ffdb76298a106969a8c7a6f80410a1ea402bffaae) |   | MUST show only 1 item as Selected per nav bar: the current page. |
-| Don't | ![](zeroheight://image/8648336/db932b7b16ea38bd347da375afcf122a6929f823ede56394c55c2dc733cefb4c) |   | MUST NOT show more than 1 item in the Selected state at the same time. |
 
 ---
 
@@ -1696,7 +1688,7 @@ Full list of props and their types for Pagination.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8505350/29c51a635078c9b6eb5d61c206f1915ee81b3f168747e407a07987fd56f0e8b9)
@@ -1759,6 +1751,48 @@ Full list of props and their types for Pagination.
 | ![](zeroheight://image/8505350/dca80a12dee61dbcbef22a00c15897c5c6e24db9602ee674775e8f371c234d4e) | **Focus** The focus ring appears on the focused control individually. |
 | ![](zeroheight://image/8505350/db48ec89920ca3661e09552d8f2961be11de6ca3ffc8d725f6fa814cc36ddbdc) | **Pressed** Only the pressed control changes state. |
 | ![](zeroheight://image/8505350/c9b38ceefdc1b51588e3c779585dac07563dc48f6ee6e83e946766ccf7b35d3c) | **Disabled** Applied to the previous button on the first page, and to the next button on the last page. The disabled control renders with muted styles; the other control remains in its default state. |
+
+![](zeroheight://image/8505350/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* Pagination items are separated by 4px
+* Pagination doesn't set its own width. It wraps to the content width of its items.
+
+![](zeroheight://image/8505350/f0c373294c09ba5b424941e48e19120f91d5aa2ae01556438ac7988da316188a)
+
+### Ellipsis truncation
+
+* The pagination bar shows a maximum of 9 items between the previous and next controls, including page link items, the current page item, and ellipsis items.
+
+
+![](zeroheight://image/8505350/967410b789934b2d490ea73f507d82dc10926b9446fe8a8400de4628a699c0f3)
+
+* When the total number of pages is 8 or fewer, all pages are shown without truncation.
+
+![](zeroheight://image/8505350/f0735f9a1ee236f7a19b7b30b1a933debe89bf3e55f4df009f9e2101bf0aae15)
+
+* When the total number of pages is 9 or more, ellipsis truncation applies:
+    * **Near the start**: show the first 7 pages, one ellipsis, and the last page.
+    * **In the middle**: show the first page, one ellipsis, 2 pages before the current page, the current page, 2 pages after, one ellipsis, and the last page.
+    * **Near the end**: show the first page, one ellipsis, and the last 7 pages.
+* Don't show ellipsis when all pages fit within 8 items.
+
+## Behaviour
+
+* Minimum tap target for page items: 36x36px.
+
+## Responsive behaviour
+
+* Pagination truncates and hides items based on viewport width and ellipsis logic applied to total page count. 
+
+![](zeroheight://image/8505350/a167a237aaa83259c1bb0783ac63366018b88484b89e0ab28398d998415a40e4)
+
+* On narrower viewports, the number of page link items between the ellipsis and the current page is reduced on both sides to fit the available width, ensuring the Previous and Next controls, first and/or last page items, ellipsis items, and current page item remain visible.
+    * At 992px and up, the full 9-item bar is shown.
+    * From 768px, the bar shows 7 items.
+    * From 576px, the bar shows 5 items.
+    * Below 576px, the bar switches to the grouped (prev/next only) style automatically, with no page numbers.
 ---
 
 # Usage
@@ -1803,25 +1837,6 @@ Set with the `variant` prop. If you leave it out, you get `full`.
 
 ## Guidelines
 
-### Ellipsis truncation
-
-* The pagination bar shows a maximum of 9 items between the previous and next controls, including page link items, the current page item, and ellipsis items.
-
-
-![](zeroheight://image/8505350/967410b789934b2d490ea73f507d82dc10926b9446fe8a8400de4628a699c0f3)
-
-* When the total number of pages is 8 or fewer, all pages are shown without truncation.
-
-![](zeroheight://image/8505350/f0735f9a1ee236f7a19b7b30b1a933debe89bf3e55f4df009f9e2101bf0aae15)
-
-* When the total number of pages is 9 or more, ellipsis truncation applies:
-    * **Near the start**: show the first 7 pages, one ellipsis, and the last page.
-    * **In the middle**: show the first page, one ellipsis, 2 pages before the current page, the current page, 2 pages after, one ellipsis, and the last page.
-    * **Near the end**: show the first page, one ellipsis, and the last 7 pages.
-* Don't show ellipsis when all pages fit within 8 items.
-
----
-
 ### Previous and next controls
 
 * Previous and next must always be present, regardless of total page count or current page position. Disable them (don't hide them) when there are no more pages in that direction.
@@ -1844,7 +1859,7 @@ Set with the `variant` prop. If you leave it out, you get `full`.
 
 ---
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -1862,35 +1877,6 @@ Set with the `variant` prop. If you leave it out, you get `full`.
 * Screen-reader label for the nav container: "Pagination". Keep it short and unambiguous.
 * Screen-reader text for page number items: "Page [n]" (e.g. "Page 1", "Page 4").
 * Don't include "Go to". It's verbose and redundant.
-
----
-
-### Layout and spacing
-
-* Pagination items are separated by 4px
-* Pagination doesn't set its own width. It wraps to the content width of its items.
-
-![](zeroheight://image/8505350/f0c373294c09ba5b424941e48e19120f91d5aa2ae01556438ac7988da316188a)
-
----
-
-### Breakpoints and responsive behaviour
-
-* Pagination truncates and hides items based on viewport width and ellipsis logic applied to total page count. 
-
-![](zeroheight://image/8505350/a167a237aaa83259c1bb0783ac63366018b88484b89e0ab28398d998415a40e4)
-
-* On narrower viewports, the number of page link items between the ellipsis and the current page is reduced on both sides to fit the available width, ensuring the Previous and Next controls, first and/or last page items, ellipsis items, and current page item remain visible.
-    * At 992px and up, the full 9-item bar is shown.
-    * From 768px, the bar shows 7 items.
-    * From 576px, the bar shows 5 items.
-    * Below 576px, the bar switches to the grouped (prev/next only) style automatically, with no page numbers.
-
----
-
-### Interaction behaviour
-
-* Minimum tap target for page items: 36x36px.
 
 ---
 
@@ -2006,7 +1992,7 @@ Icon selects the symbol that represents the activity, resource, or file type.
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -2037,7 +2023,7 @@ Icon selects the symbol that represents the activity, resource, or file type.
 
 ---
 
-### Layout and spacing
+### Placement
 
 * In lists, align the icon and label to the same baseline or vertical centre based on the list item design.
 * Keep spacing between the icon and the label consistent within the parent component, for example list item or card.
@@ -2047,23 +2033,6 @@ Icon selects the symbol that represents the activity, resource, or file type.
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8050559/52ed8189307d4c07179b8fe5fd36813c8ac2ca5189e4e025bde9f253b671911a) |   | SHOULD use the same container size for every icon in a list. |
 | Don't | ![](zeroheight://image/8050559/63bea1ecf3a0172279c9c124a6549cd0ccca8989acde6ccbace249b446311b48) |   | SHOULD NOT mix container sizes in the same list. |
-
----
-
-### Breakpoints and responsive behaviour
-
-* The component itself does not change at breakpoints.
-* Choose the Size variant based on space and density.
-* On smaller screens, prefer SM or MD in lists.
-* In the activity chooser layout, use LG or XL when space allows.
-
----
-
-### Interaction behaviour
-
-* If the icon appears inside a clickable element, the parent element owns hover, pressed, and focus styling.
-* Touch target requirements must be met by the parent interactive element, not by the icon tile alone.
-* Cursor behaviour comes from the parent interactive element.
 
 ---
 
@@ -2085,7 +2054,7 @@ Icon selects the symbol that represents the activity, resource, or file type.
 The icon is not a label by itself. Make sure the parent component provides an accessible name, usually the activity or resource name. If the icon is decorative, hide it from assistive technologies in code.
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8050559/68a9043f22888b78ca803ceb9c56b72a5786c33884b83d20190a3f3c5bff1904)
@@ -2102,7 +2071,7 @@ Activity icon is usually static. When it appears inside a clickable component su
 
 ![](zeroheight://image/8050559/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
 
-## Structure
+## Layout and sizing
 
 ### Size rules
 
@@ -2117,6 +2086,21 @@ Size controls only the icon glyph size. The glyph size does not change between C
 3. **Large** is icon in a larger coloured tile
 
 ![](zeroheight://image/8050559/3a9dc3a771787f381f4fcf3fe0710f5e9d5adc1dc0372bcf6b3116c8d6303be2)
+
+![](zeroheight://image/8050559/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* If the icon appears inside a clickable element, the parent element owns hover, pressed, and focus styling.
+* Touch target requirements must be met by the parent interactive element, not by the icon tile alone.
+* Cursor behaviour comes from the parent interactive element.
+
+## Responsive behaviour
+
+* The component itself does not change at breakpoints.
+* Choose the Size variant based on space and density.
+* On smaller screens, prefer SM or MD in lists.
+* In the activity chooser layout, use LG or XL when space allows.
 ---
 
 # Code
@@ -2241,7 +2225,7 @@ The Avatar component manages its accessible role and name automatically based on
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8646653/dafce80e8d3fe1481ad84e7ef3940300ef8e16eeca92974cee57ecaf21bff66b)
@@ -2256,6 +2240,25 @@ The Avatar component manages its accessible role and name automatically based on
 ## States
 
 This component is display-only. It does not have hover, pressed, disabled, or focus states. When it appears inside a clickable component such as a list item, link, button, or card, it follows the states of that parent component.
+
+![](zeroheight://image/8646653/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* The image type fills the container and is cropped to a circle.
+* The initials type centres text vertically and horizontally within the container.
+* When an image fails to load, display initials using the first letter of the user's first and last name. If no name data is available either, display the empty state graphic instead.
+
+## Behaviour
+
+* The avatar itself is not interactive and should not receive focus or respond to clicks.
+* If the avatar must link to a page, wrap it in a separate link or button component.
+* Do not add hover states, loading indicators, or status badges directly to the avatar. Use a separate component for these features.
+
+## Responsive behaviour
+
+* The avatar size and type remain consistent across all breakpoints. 
+* In very narrow layouts, choose a smaller size variant (XS or SM) rather than relying on responsive scaling.
 ---
 
 # Usage
@@ -2317,7 +2320,7 @@ The size sets the avatar's dimensions and scales the content to match.
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -2332,33 +2335,12 @@ The size sets the avatar's dimensions and scales the content to match.
 | Do | ![](zeroheight://image/8646653/71651b6dbc19107100b66b352463e9d9c95aa88ec34a4c5d630a3750a1c8ef49) |   | SHOULD use the first letter of the person's first name and last name. |
 | Don't | ![](zeroheight://image/8646653/78eef8f506421aa1a2943c15d5597ded0c852d0dae5c3283c99ac71b77f8b99e) |   | MUST NOT use more than 2 characters. |
 
-#### Content behaviour
-
-* The image type fills the container and is cropped to a circle.
-* The initials type centres text vertically and horizontally within the container.
-* When an image fails to load, display initials using the first letter of the user's first and last name. If no name data is available either, display the empty state graphic instead.
-
 ---
 
-### Layout and spacing
+### Placement
 
 * Use avatars individually or in small groups within a single row or column.
 * Align avatars to content like user names using centre alignment.
-
----
-
-### Breakpoints and responsive behaviour
-
-* The avatar size and type remain consistent across all breakpoints. 
-* In very narrow layouts, choose a smaller size variant (XS or SM) rather than relying on responsive scaling.
-
----
-
-### Interaction behaviour
-
-* The avatar itself is not interactive and should not receive focus or respond to clicks.
-* If the avatar must link to a page, wrap it in a separate link or button component.
-* Do not add hover states, loading indicators, or status badges directly to the avatar. Use a separate component for these features.
 
 ---
 
@@ -2434,7 +2416,7 @@ Full list of props and their types for Alert.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8823906/9767ea5eba8644d98a72a1e802c49ba07c9f00f7300b03e9bb0fb083934fa9e1)
@@ -2445,6 +2427,26 @@ Full list of props and their types for Alert.
 4. **Custom content** (optional): additional content beyond title and body, for cases the standard pattern doesn't cover (e.g. a link). An exception mechanism, not a general-purpose container. Icon and body remain mandatory regardless of what's added here.
 5. **Action button** (optional): a single, generic call to action related to the message.
 6. **Dismiss button** (optional): removes the alert. Present only when the alert is dismissible.
+
+![](zeroheight://image/8823906/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* Dismiss button removes the alert from the page on click, or on Enter/Space when focused.
+* On dismiss, focus moves to the next focusable element on the page.
+* The action button behaves like a standard secondary button. See the Button component for its interaction states.
+* The action button never acts as a dismiss control. An action can result in the Alert closing as a side effect (e.g. completing an "Undo"), but the dismiss (Close) button is always the dedicated, explicit way to close it.
+
+### Focus and tab order
+
+* If an Alert contains no interactive elements (message text only, no link, action button, or dismiss button), it isn't part of the tab order at all. It's announced once via the live region when it appears; keyboard users tab straight past it as they would past any static text.
+* If an Alert contains one or more interactive elements, they follow natural DOM/tab order in this sequence: custom content (e.g. a link) → action button → dismiss button.
+* The dismiss button is always last in the tab sequence, even though it's positioned visually top-right. This matches reading order and avoids surfacing the dismiss control before the user has encountered the message it belongs to.
+
+## Responsive behaviour
+
+* Message text wraps at all breakpoints. The container never scrolls horizontally or truncates text.
+* Icon, title, and dismiss button stay fixed size across breakpoints. Only the text column reflows.
 ---
 
 # Usage
@@ -2530,7 +2532,7 @@ Alert can optionally include a single action button, controlled via `isActionabl
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 Alerts communicate a single message about an outcome, a status, or something people need to act on. Every part of the alert (title, message text, and any actions) should support that message and nothing else. 
 
@@ -2606,32 +2608,10 @@ Although the message and title are plain text, this slot is technically unrestri
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Alert spans the full width of its container. It doesn't float or size to content.
 * When multiple alerts appear on the same page, stack them with standard spacing between; don't nest one inside another.
-
----
-
-### Breakpoints and responsive behaviour
-
-* Message text wraps at all breakpoints. The container never scrolls horizontally or truncates text.
-* Icon, title, and dismiss button stay fixed size across breakpoints. Only the text column reflows.
-
----
-
-### Interaction behaviour
-
-* Dismiss button removes the alert from the page on click, or on Enter/Space when focused.
-* On dismiss, focus moves to the next focusable element on the page.
-* The action button behaves like a standard secondary button. See the Button component for its interaction states.
-* The action button never acts as a dismiss control. An action can result in the Alert closing as a side effect (e.g. completing an "Undo"), but the dismiss (Close) button is always the dedicated, explicit way to close it.
-
-#### Focus and tab order
-
-* If an Alert contains no interactive elements (message text only, no link, action button, or dismiss button), it isn't part of the tab order at all. It's announced once via the live region when it appears; keyboard users tab straight past it as they would past any static text.
-* If an Alert contains one or more interactive elements, they follow natural DOM/tab order in this sequence: custom content (e.g. a link) → action button → dismiss button.
-* The dismiss button is always last in the tab sequence, even though it's positioned visually top-right. This matches reading order and avoids surfacing the dismiss control before the user has encountered the message it belongs to.
 
 ---
 
@@ -2793,7 +2773,7 @@ Badges should match the text size they sit next to.
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -2820,7 +2800,7 @@ Badges should match the text size they sit next to.
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Keep consistent spacing between badges when grouped.
 * Keep the icon size no larger than the label font size to keep height consistent with badges without an icon.
@@ -2833,14 +2813,6 @@ Badges should match the text size they sit next to.
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8046350/5914a055a1d59543ac462426e48cbbfb818f041333cb294f67a25b226124285e) |   | SHOULD match the icon size to the label text so badges with and without an icon stay the same height. |
 | Don't | ![](zeroheight://image/8046350/023f416ecef1e068df60ba5f4e5c0d2b7004f39716d6896d4d618560d8503fe0) |   | SHOULD NOT use a larger icon. It makes the badge taller than one without an icon. |
-
----
-
-### Responsive behaviour
-
-* Badges keep the same size at all breakpoints.
-* If space is tight, shorten the label instead of wrapping.
-* If a badge must wrap, it is usually the wrong component.
 
 ---
 
@@ -2902,7 +2874,7 @@ Full list of props and their types for Badge.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8046350/f6b7ca545e4e2f8c9cb6bb477284a2bf0b8c91c67ae01be73fc12a1c7c858a10)
@@ -2921,6 +2893,14 @@ Badges are not interactive, so they have no hover or pressed states.
 Instead of using a badge for a link or a button, use the Link or Button component. 
 
 Do not add custom interactions to badges.
+
+![](zeroheight://image/8046350/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Responsive behaviour
+
+* Badges keep the same size at all breakpoints.
+* If space is tight, shorten the label instead of wrapping.
+* If a badge must wrap, it is usually the wrong component.
 ---
 
 ---
@@ -2984,7 +2964,7 @@ Full list of props and their types for Progress bar.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8449677/e2716e4ad637fa6ea454f5418278d4b68e9a70b00d9d125606823792fbd22efd)
@@ -3011,6 +2991,19 @@ Set with the `status` prop: `in-progress`, `loading`, `error` or `warning`. If y
 | ![](zeroheight://image/8449677/0da3891382969cac1ffa2dcd200adacce9f1492230f51831a759b80e528e38cc) | **Completed** Use when the task is finished. The progress bar is 100 percent full and uses success styling. |
 | ![](zeroheight://image/8449677/a1d08b14e2ffd35079f9417ecdd0b4c596e636fc3e4d55b201251b6bf65c6e89) | **Error** Use when progress cannot continue because of a problem. The progress bar uses danger styling to show that something went wrong. |
 | ![](zeroheight://image/8449677/24db1648cdec8657847f750708b08b6184582866e5db964caee1249ca5709340) | **Warning** Use when progress can continue but something needs attention. The progress bar uses warning styling. |
+
+![](zeroheight://image/8449677/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* The progress bar is not interactive.
+* Do not make it clickable.
+* Do not allow keyboard focus on the bar itself.
+
+## Responsive behaviour
+
+* The progress bar scales with its container width.
+* At small widths, switch from inline to a label above the progress when the count no longer fits.
 ---
 
 # Usage
@@ -3059,7 +3052,7 @@ The label property controls which text is shown and where it appears. It can be 
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -3090,7 +3083,7 @@ The label property controls which text is shown and where it appears. It can be 
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Use an inline label only when the count fits. Otherwise, use a label above the progress bar.
 * Avoid using progress bars in very narrow spaces.
@@ -3099,21 +3092,6 @@ The label property controls which text is shown and where it appears. It can be 
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8449677/110eb5276a4ced38fdb6ca471abecfbc51e40d73c03b283d05118faa4c10d498) |   | SHOULD put the title, or the title and count, above the progress bar when horizontal space is tight, so the bar stays long enough to show progress clearly. |
 | Don't | ![](zeroheight://image/8449677/90ae0ac8844e8fb77605575e3ff5b6640e56b5b8750ee4bd7a8b6ae933ce7564) |   | SHOULD NOT put the count inline when horizontal space is tight. It can make the bar too short to show progress clearly. |
-
----
-
-### Breakpoints and responsive behaviour
-
-* The progress bar scales with its container width.
-* At small widths, switch from inline to a label above the progress when the count no longer fits.
-
----
-
-### Interaction behaviour
-
-* The progress bar is not interactive.
-* Do not make it clickable.
-* Do not allow keyboard focus on the bar itself.
 
 ---
 
@@ -3205,7 +3183,7 @@ Set with the `placement` prop. It controls which side of the trigger the tooltip
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -3224,11 +3202,6 @@ Set with the `placement` prop. It controls which side of the trigger the tooltip
 | Do | ![](zeroheight://image/8677359/ff753395ce5ae7c1321fd03429c5076e9fefd568bca480e29bb742ca5e3030ad) |   | MUST keep tooltip content to plain text only. |
 | Don't | ![](zeroheight://image/8677359/b5d2422005bdbd55baf3607625b3b8745247b2c1f521575625068fe4a3d77a0e) |   | MUST NOT put a link or other interactive element in a tooltip. |
 
-#### Content behaviour
-
-* If the trigger element already has a visible label, the tooltip should add context, not repeat the label.
-* Tooltip width fits the text, up to a maximum of 200px. Text wraps if it goes past that width.
-
 #### Copywriting
 
 * Use sentence case for all tooltip text.
@@ -3236,26 +3209,12 @@ Set with the `placement` prop. It controls which side of the trigger the tooltip
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Position the tooltip so the arrow points clearly at the trigger element.
 * Leave `--mds-spacing-xs` (8px) of space between the tooltip and the trigger element. The arrow tip sits at the 8px mark.
 * Leave at least `--mds-spacing-xs` (8px) space between the tooltip and the viewport edge to avoid clipping.
 * Do not stack multiple tooltips simultaneously.
-
----
-
-### Breakpoints and responsive behaviour
-
-* Do not rely on tooltips for essential information on small or touch screens.
-
----
-
-### Interaction behaviour
-
-* Tooltips appear on `mouseenter` and `:focus-visible` of the trigger element.
-* Tooltips disappear on `mouseleave` and `blur`.
-* Do not add animations longer than 150ms on entry or exit.
 
 ---
 
@@ -3329,7 +3288,7 @@ The tooltip content is exposed to assistive technology via `aria-describedby` on
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8677359/d1b151eb95988d19a77f9615333a30ca2fbc83e79958aadfebe38c55edaad26e)
@@ -3347,6 +3306,204 @@ Tooltips are display only. They do not have hover, pressed, disabled, or focus s
 | **States** | **Description** |
 | :--- | :--- |
 | ![](zeroheight://image/8677359/6b417a103b0ac2ac30fd853fc652d0046d4a8ad0d634a1a0b6c430c059531e63) ![](zeroheight://image/8677359/36fdce75cc31463b080ccda2f1aabf42aa8bc3abc974be8b4be40c25481c2dc5) | **Visible** Shown when the trigger element receives hover or focus. Colour and spacing tokens depend on Mode, see Variants > Mode for the token table. |
+
+![](zeroheight://image/8677359/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* If the trigger element already has a visible label, the tooltip should add context, not repeat the label.
+* Tooltip width fits the text, up to a maximum of 200px. Text wraps if it goes past that width.
+
+## Behaviour
+
+* Tooltips appear on `mouseenter` and `:focus-visible` of the trigger element.
+* Tooltips disappear on `mouseleave` and `blur`.
+* Do not add animations longer than 150ms on entry or exit.
+
+## Responsive behaviour
+
+* Do not rely on tooltips for essential information on small or touch screens.
+---
+
+---
+
+# Specs
+## Anatomy
+
+![](zeroheight://image/9108353/81b5444fddbdcd22f29fa6f0fafd47014e5cef4fa185a5384607766e1bb97ed3)
+
+1. **Track**: the faint full ring that shows the path the indicator travels.
+2. **Indicator**: the moving part that shows something is in progress.
+3. **Label** *(optional)*: visible text that says what's happening. When it isn't shown, an accessible label is still required.
+
+![](zeroheight://image/9108353/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## States
+
+### Motion
+
+| **States** | **Description** |
+| --- | --- |
+| ![](zeroheight://image/9108353/94d4b8b81ba7d6bb04767e5d4f861cf41f19d36db862dcc5efd4690d082893a9)  | **Loading**Applies whenever the wait is on. The indicator rotates continuously until the content, or a message, replaces the spinner. Use it for every wait, including inside a button. |
+| ![](zeroheight://image/9108353/31726ed42cdba518a7f417bf97c26fddaaa2997e9db490dad6dd295085fad278) | **Reduced motion**Applies when the person's device is set to reduce motion. The indicator rotates more slowly instead of stopping, so it still reads as activity. Keep the label so the wait is clear without relying on movement. |
+
+![](zeroheight://image/9108353/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* The spinner isn't interactive. It can't be focused, clicked or tapped.
+* For content that loads in a region or on a page, wait about 300ms before showing the spinner, so quick loads don't flash.
+* For a response to something the person has just done, show the spinner straight away.
+* Stop the control that started the action from being used again while the spinner shows, so the action can't be sent twice.
+* When someone has asked their device to reduce motion, the spinner stops turning and shows a still indicator that fades gently in and out. Keep the label so the wait is clear without the movement.
+
+## Responsive behaviour
+
+* The spinner doesn't change size at breakpoints. Choose the size for the space it sits in, not for the screen.
+---
+
+# Usage
+## Overview
+
+![](zeroheight://image/9108353/29ed47c30a3bbb6b11432dee838be4c8e0a398abadc6db1a73d665b3d148b9d8)
+
+A spinner tells people the system is working on something and they need to wait. It sits where the wait is happening, so people can see which part of the page is busy.
+
+It doesn't show how long the wait will be or how far along it is. When the wait is long, or the result isn't obvious, pair it with a short message.
+
+### When to use
+
+* Use when someone has started an action and the system needs a moment to respond.
+* Use when a small part of the page is loading content and its shape can't be predicted.
+* Use when the wait has no known length and progress can't be measured.
+* Use when the system is generating content that will appear in the place where the spinner sits.
+* Use when a page can't show anything useful until a check or a launch finishes, and there's no layout to preview.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use when the total is known or progress can be measured. Use a [Progress bar](/76a5ba-progress-bar) instead.
+* Don't use to load content for the first time when its layout is already known. Show a placeholder that matches the layout, and replace it when the content arrives.
+* Don't use for waits that finish almost straight away. Show nothing.
+* Don't use to cover content with a translucent layer. Show the wait where it happens: a placeholder for a first load, or a spinner next to the item for a save.
+* Don't use as a stand-in for an error or an empty state. Show the actual message.
+
+</callout>
+
+![](zeroheight://image/9108353/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Variants
+
+### Size
+
+Set with the `size` property. Size controls how much space the spinner takes and how much attention it asks for. Pick the size for the space the wait is happening in. The size also sets where the label goes: beside a Small spinner, beneath a Large one.
+
+| **Variant** | **When to use** |
+| :--- | :--- |
+| ![](zeroheight://image/9108353/055569f79a7c5481f048f30a6f5b58cce3c8d0aa2d8c4e8ffe0acb0fd76fc7f5) | **Small (****`small`****)**Use inside or beside a control or a line of text, where space is tight and the wait belongs to that one element. |
+| ![](zeroheight://image/9108353/8db2219555ae925299a0b1aec1b5c7bea94b3989bb8a303809dd636281a80ca9) | **Large (****`large`****)**Use when the whole page, or its main content area, is waiting on a check or on generated content. Always show a message beneath it |
+
+---
+
+### Label
+
+The label is optional visible text that says what's happening. Turn it on with the `showLabel` property and write the text in `labelText`. It is off by default. An accessible label is always present, whether the visible one is on or off.
+
+| **Variant** | **When to use** |
+| --- | --- |
+| ![](zeroheight://image/9108353/f4c8e8dc2f4c4335a073a1a0c2affd6f828942f446ff5c1772be61955ffa52a8) | **Label off**Use when the surrounding content already says what's happening. Screen readers still read the label out. |
+| ![](zeroheight://image/9108353/af54508446ebab5ddbc5014ac13961bfe4c1bc91f1396f828add99b669b798f0) | **Label on**Use for the Large size, and whenever the wait may run long or the reason for it isn't obvious. |
+
+---
+
+### Appearance
+
+Set with the `appearance` property. Appearance sets the colours of the spinner so it stays visible on the surface it sits on.
+
+| **Variant** | **When to use** |
+| --- | --- |
+| ![](zeroheight://image/9108353/a97023fb5daf4355f9adc8d536d84fda6a6eeedcf8ba5c886a3b7da9e7295059) | **Primary (****`primary`****)**Use on light and neutral surfaces. This is the appearance for most contexts. |
+| ![](zeroheight://image/9108353/b3db7615cc571e994882761827d1746722fb3eba36792b2039f24876ed05167b) | **Inverse (****`inverse`****)**Use on dark or strongly coloured surfaces, where a light spinner is needed to meet contrast, for example inside a filled primary button. |
+
+![](zeroheight://image/9108353/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Guidelines
+
+### Content guidelines
+
+#### Content structure and constraints
+
+* Show the label as visible text on the Large size, and whenever the wait may run long.
+* For a short wait inside or beside a control, the label can stay visually hidden.
+* Don't put other content, such as icons or counts, inside the spinner.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9108353/09a047d2ed760219c5364aa517b5779d4b47f9c95bfb40c1ec0a4047f11d9420) |   | MUST show a message beneath the Large size so people know what they're waiting for. |
+| Don't | ![](zeroheight://image/9108353/03994be6594c0e12d72a7f8777f247aaa8974ade58fbd5dc119a8098879ba1c7) |   | MUST NOT leave the Large size without a message. People can't tell what's happening. |
+
+#### Content behaviour
+
+* When a wait may run long, add text that says what's happening.
+* Don't let a spinner run without end. After a reasonable wait, replace it with a message that explains what happened and offers a retry.
+
+#### Copywriting
+
+* Say what's happening, not just that the system is working. Start with a verb ending in "-ing", then the thing it's acting on: "Saving changes…", "Checking your access…".
+
+* Use "Loading…" only when nothing more specific is true.
+* Use sentence case and end with an ellipsis character (…).
+* Keep it to one short line. Don't explain the delay or apologise for it.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9108353/2325eedd955b465179a611851d8b8e61ea36dd799bbba98d5b646e047d4c7dca) |   | SHOULD name what's happening in a short phrase. |
+| Don't | ![](zeroheight://image/9108353/1c0267941a803727a11edb0a96f844741f8e4e1e3e5091a3223124dffc63f6c8) |   | SHOULD NOT write a long sentence that explains the delay. |
+
+---
+
+### Placement
+
+* Put the spinner where the wait is happening: inside or beside the control for an action, and in the content area for a load.
+* In a field or an in-place edit, put the spinner at the end of the field.
+* Inside a button, show the spinner next to the button text or in place of it.
+* Show one spinner per region. Don't stack or nest spinners.
+* On a page or in its main content area, centre the Large spinner in the area that's waiting.
+* Put the visible label beside a Small spinner and beneath a Large one. This follows the size, so there is no separate position setting.
+* The gap between the spinner and its label is `--mds-spacing-xs` on a Small spinner and `--mds-spacing-md` on a Large one.
+
+---
+
+### Accessibility guidelines
+
+#### Colour and contrast
+
+* Make sure the spinner meets 3:1 contrast against the surface it sits on, including surfaces that aren't white.
+* Inside a button, the spinner takes the colour of the button text, so it meets contrast wherever the text does.
+
+#### Focus
+
+* Don't move focus to the spinner, and don't trap focus while it shows.
+
+#### Labelling
+
+* Every spinner needs an accessible label that says what's happening, even when the label isn't shown.
+* Write the label as a short phrase that makes sense when it's read out on its own.
+
+![](zeroheight://image/9108353/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Related 
+
+#### Alternatives
+
+<shortcut_tiles>
+<shortcut_tile url="https://design.moodle.com/98292f05f/p/76a5ba" page-id="8449677">
+**Progress bar**
+
+Use it instead when the total is known and you can show how much is done.
+</shortcut_tile>
+</shortcut_tiles>
 ---
 
 ---
@@ -3394,7 +3551,7 @@ When the error appears without focus moving into the group, announce it so scree
 ## GitHub
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/9089983/8afbfc85e7375e834f2b57d65909ac968d4d53a5a4571be33218774552d1f24a)
@@ -3413,6 +3570,29 @@ When the error appears without focus moving into the group, announce it so scree
 | :--- | :--- |
 | ![](zeroheight://image/9089983/9f26e0536f7bd8d646d9d0aa797f2d4cf31240b6e3286e8b39507963e1f7c1e5) | **Disabled**The group can't be focused or changed. Every radio is disabled and the supporting text mutes. The label and required indicator keep their colours so the field stays identifiable. Use it when the question doesn't apply in the current context, and don't use it as a substitute for hiding the group.  |
 | ![](zeroheight://image/9089983/97bce4e71aca52711ba6ef27699b629b5dac3ee9425242e2ecf98614d33e2afe) | **Invalid**Applied when a required group is submitted without a selection. The supporting text turns red and carries the error message, and every radio shows its invalid treatment. The label doesn't change. Always write the message, so the error doesn't rely on colour. |
+
+![](zeroheight://image/9089983/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* A vertical group grows taller with each option. A horizontal group stays on one line, so its options must fit the available width.
+* When the group becomes invalid, the error message takes the place of the supporting text.
+
+## Behaviour
+
+* Selecting an option clears any other selection, and removes the invalid state and the error message straight away.
+* Show the invalid state when someone submits a required group without a selection, not before they've had the chance to choose.
+* A disabled group can't be focused or changed. Use it only when the question doesn't apply in the current context, and hide the group when the reason isn't obvious.
+
+## Responsive behaviour
+
+* Vertical groups keep their layout at every breakpoint.
+* Horizontal groups don't wrap. Switch to Vertical when the options no longer fit on one line, which usually means small screens.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9089983/bd295645ff0fd3ecdd2abbb4c6f986134e229c35c1c741f10891b0adfb2830ca) |   | Switch a Horizontal group to Vertical when the options no longer fit. |
+| Don't | ![](zeroheight://image/9089983/70315eeba01cb8ffe6c001192367c55a0f3cc0d671a1e34c4db765300272e580) |   | On a narrow screen, avoid horizontal overflow, clipping or wrapping. |
 ---
 
 # Usage
@@ -3492,7 +3672,7 @@ Controls how the options sit relative to each other.
 
 ---
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -3505,11 +3685,6 @@ Controls how the options sit relative to each other.
 For how to write the option labels themselves, see [Radio button](https://design.moodle.com/98292f05f/v/latest/p/279392-radio-button).
 
 </callout>
-
-#### Content behaviour
-
-* A vertical group grows taller with each option. A horizontal group stays on one line, so its options must fit the available width.
-* When the group becomes invalid, the error message takes the place of the supporting text.
 
 #### Copywriting
 
@@ -3528,7 +3703,7 @@ For how to write the option labels themselves, see [Radio button](https://design
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Vertical groups space the options with spacing.xs. Horizontal groups use [spacing.md](http://spacing.md). Keep the built-in spacing, and don't add margins between the label, the options, and the supporting text.
 * Put 2 to 5 radio buttons in a group. One radio isn't a choice, and a longer list is a job for Select. In Figma, the Options slot accepts Radio button instances only and is set to this range.
@@ -3548,26 +3723,6 @@ For how to write the option labels themselves, see [Radio button](https://design
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/9089983/2467ed9d8c8fb567de7a42ea458188eae68ed5cca51acefce38be6778d3e8fd6) |   | Stack the options vertically by default. |
 | Caution | ![](zeroheight://image/9089983/2725145a1ecfcfb1f5293bebf1d184d4942fe007db06f226a9e37f72a1a8686a) |   | Use Horizontal sparingly, and only when every option fits on one line. |
-
----
-
-### Breakpoints and responsive behaviour
-
-* Vertical groups keep their layout at every breakpoint.
-* Horizontal groups don't wrap. Switch to Vertical when the options no longer fit on one line, which usually means small screens.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/9089983/bd295645ff0fd3ecdd2abbb4c6f986134e229c35c1c741f10891b0adfb2830ca) |   | Switch a Horizontal group to Vertical when the options no longer fit. |
-| Don't | ![](zeroheight://image/9089983/70315eeba01cb8ffe6c001192367c55a0f3cc0d671a1e34c4db765300272e580) |   | On a narrow screen, avoid horizontal overflow, clipping or wrapping. |
-
----
-
-### Interaction behaviour
-
-* Selecting an option clears any other selection, and removes the invalid state and the error message straight away.
-* Show the invalid state when someone submits a required group without a selection, not before they've had the chance to choose.
-* A disabled group can't be focused or changed. Use it only when the question doesn't apply in the current context, and hide the group when the reason isn't obvious.
 
 ---
 
@@ -3664,7 +3819,7 @@ Full list of props and their types for Radio button.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8052231/52fd4b810710b2b23f9a5e13c3684ca79c4cbec9b778b91a9320ce180df4ff80)
@@ -3685,6 +3840,19 @@ Full list of props and their types for Radio button.
 | ![](zeroheight://image/8052231/fc83d05d66c2ca65bf589bc231aa091e6a06b4afac04a1ea2d03c3e4a79a8c54) | **Disabled + Selected** A pre-selected option the user can't change. Use sparingly, only when the system locks the value and the user needs to see it. |
 | ![](zeroheight://image/8052231/7938c837851715fe9edf83e95b5b07240da9bcef639e5f839582c7567b8e1b30) | **Invalid** Applied when the radio group is required and the user tries to proceed without making a selection. The indicator border and label turn red to signal the error. Inside a Radio group, set the state on the group so every option shows it. Don't set it on a single option. |
 | ![](zeroheight://image/8052231/74ad236d06daa74d32ccaf10c6a814823d23d75a602eaf5bb596887c254b319f) | **Focus** Shown when the radio receives keyboard focus. A visible focus ring appears around the radio indicator. In the invalid state, the focus ring uses the danger token to maintain visual consistency with the error treatment. A 2px ring shows around the circle, offset from its edge. |
+
+![](zeroheight://image/8052231/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* Labels don't truncate: they wrap to a new line if the container is narrow. Define an appropriate maximum label length for your context.
+* The label is always positioned to the right of the radio indicator.
+
+## Behaviour
+
+* Clicking or tapping the radio indicator or its label selects that option.
+* Selecting a radio button in a group automatically deselects the previously selected option.
+* Radio buttons can't be deselected by clicking them again. To clear a selection, the user must select a different option. 
 ---
 
 # Usage
@@ -3722,17 +3890,14 @@ Radio button has no variants. Selected, invalid and disabled are states. See Sta
 
 ## Guidelines
 
+### Content guidelines
+
 #### Content structure and constraints
 
 * Radio button labels must be concise, ideally a single word or short phrase. Avoid full sentences unless the choice genuinely requires it.
 * Labels describe the option itself, not the action of selecting it. Write "Weekly" not "Select weekly".
 * Capitalise only the first word of each label (sentence case).
 * As a guide, aim for no more than 4–5 words per label.
-
-#### Content behaviour
-
-* Labels don't truncate: they wrap to a new line if the container is narrow. Define an appropriate maximum label length for your context.
-* The label is always positioned to the right of the radio indicator.
 
 #### Copywriting
 
@@ -3743,12 +3908,6 @@ Radio button has no variants. Selected, invalid and disabled are states. See Sta
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8052231/5e211125c7fb4ba1e138e0eb1ae9e821cb74b9c85949c6f21d265d198dd0600f) |   | SHOULD write short labels that follow the same structure. |
 | Don't | ![](zeroheight://image/8052231/fb3e52e9f0c67e135ac8645e785e0c80dc56eba15dc75bc5ffb3d130e7ee260a) |   | SHOULD NOT mix grammatical structures in the labels. |
-
-### Interaction behaviour
-
-* Clicking or tapping the radio indicator or its label selects that option.
-* Selecting a radio button in a group automatically deselects the previously selected option.
-* Radio buttons can't be deselected by clicking them again. To clear a selection, the user must select a different option. 
 
 ---
 
@@ -3845,7 +4004,7 @@ There's no live region. The validation message is linked to the field with `aria
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8942841/0a7669495f263ac81ac4a8af455c640fd851ac1c1154cca9745c47c4c4a218c3)
@@ -3873,6 +4032,20 @@ There's no live region. The validation message is linked to the field with `aria
 | ![](zeroheight://image/8942841/baa389f04f424949e42a1039e0a8dfd23fde31005ba920d8480d14e29849ffdb) | **Invalid** The value has failed validation. This is a modifier, not a standalone state. It layers onto Default, Hover, Active or Focus, swapping the border and supporting text to the danger palette and adding a trailing circle-exclamation icon. Disabled and Read-only don't carry an invalid state. |
 | ![](zeroheight://image/8942841/990e0b264cf4aa94055c46ebde5b45ac392d733cf0d991a04dd7d3ad0e1a4a08) | **Disabled** The field can't be focused, clicked, edited or copied. Use for a field that's conditionally unavailable in the current context, not for data the person simply isn't allowed to edit (that's Read-only). |
 | ![](zeroheight://image/8942841/6ca96b87b3465caadce9dbc8b47c497f0c4ff43fccc35e89710707fd60845452) | **Read-only** The field always shows a value and is focusable and copyable, but not editable. The value is muted. |
+
+![](zeroheight://image/8942841/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* Hover changes only the container fill; the border stays the same, keeping the affordance subtle.
+* Active swaps the border to the primary accent on press, ahead of focus landing.
+* Focus swaps the border to the focus token and doubles its weight, with padding compensating so the field doesn't visibly resize.
+* Disabled blocks all interaction.
+
+## Responsive behaviour
+
+* The field stays full-width of its container across breakpoints.
+* Content exceeding the field's width scrolls horizontally within the input (native browser behaviour). Keep values and validation messages concise rather than relying on this to reveal overflow.
 ---
 
 # Usage
@@ -3985,7 +4158,7 @@ See [Search](https://design.moodle.com/98292f05f/p/38ca1d).
 
 ---
 
-### Content design
+### Content guidelines
 
 The input should tell people exactly what to enter in the field, and how to fix any errors.
 
@@ -4041,27 +4214,11 @@ Most fields shouldn't need one. A clear label, a useful placeholder, and support
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Label, field, and support row stack vertically with `--mds-spacing-xxs` gap between them, same as Text area.
 * The field is full-width of its container (`w-full`) by default. There is no intrinsic min/max-width; sizing constraints belong to the container/layout, not the component.
 * The height is fixed and does not grow with the content; it is single-line. The Search variant is the one exception: it grows vertically once the badges wrap. See the [Search](https://design.moodle.com/98292f05f/p/38ca1d-search/t/eadf101af0) page.
-
----
-
-### Breakpoints and responsive behaviour
-
-* The field stays full-width of its container across breakpoints.
-* Content exceeding the field's width scrolls horizontally within the input (native browser behaviour). Keep values and validation messages concise rather than relying on this to reveal overflow.
-
----
-
-### Interaction behaviour
-
-* Hover changes only the container fill; the border stays the same, keeping the affordance subtle.
-* Active swaps the border to the primary accent on press, ahead of focus landing.
-* Focus swaps the border to the focus token and doubles its weight, with padding compensating so the field doesn't visibly resize.
-* Disabled blocks all interaction.
 
 ---
 
@@ -4146,7 +4303,7 @@ There's no live region. The validation message is linked to the field with `aria
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 *Shares* *[Text Input](https://design.moodle.com/98292f05f/p/56eea2-input)**'s Label, Required indicator, Info icon, Field container, Value/placeholder text and Supporting text exactly. Password-specific parts:*
@@ -4162,6 +4319,14 @@ There's no live region. The validation message is linked to the field with `aria
 ## States
 
 The password variant adheres to the shared state model of the[ Text input ](https://design.moodle.com/98292f05f/p/56eea2-input/t/e2b28fae53)field exactly, including the default, hover, active, focus, invalid, disabled and read-only states, as well as the same tokens and styles. The only exception is that the read-only password displays its value as plain text and is never masked.
+
+![](zeroheight://image/8951300/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+![](zeroheight://image/8951300/faf27693797c7d96f5c383fcccadb0430c4421ed33ad22c615c5166908430e11)
+
+* Password follows [text input's](/56eea2-input) shared interaction behaviour exactly. Hover, active and focus states behave identically on the field itself. One addition specific to Password: the toggle button is its own focusable control, separate from the field.
 ---
 
 # Usage
@@ -4212,7 +4377,7 @@ The password input has a toggle at the end of the field. It switches between sho
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 **Supporting text**
 
@@ -4228,14 +4393,6 @@ The password input has a toggle at the end of the field. It switches between sho
 **Placeholder**
 
 * Password fields usually don't need one. The label and supporting text should be enough.
-
----
-
-### Interaction behaviour
-
-![](zeroheight://image/8951300/faf27693797c7d96f5c383fcccadb0430c4421ed33ad22c615c5166908430e11)
-
-* Password follows [text input's](/56eea2-input) shared interaction behaviour exactly. Hover, active and focus states behave identically on the field itself. One addition specific to Password: the toggle button is its own focusable control, separate from the field.
 
 ---
 
@@ -4298,7 +4455,7 @@ There's no live region. The clear button is named by `clearLabel`. If results up
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 *Shares* *[Text Input](https://design.moodle.com/98292f05f/p/56eea2-input)**'s Label, Required indicator, Info icon, Field container, Value/placeholder text and Supporting text exactly. Search-specific parts:*
@@ -4319,6 +4476,12 @@ The Search variant adheres to the shared state model of the [Text input](https:/
 However, Invalid state applies only when content is Empty, for example, a required field that's submitted or loses focus with nothing chosen. Filled states don't carry an invalid treatment.
 
 The filled search input can only be disabled in a select scenario, whether single or multi, if it was previously prefilled intentionally.
+
+![](zeroheight://image/8951303/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* Tab order: Field → clear control (filled only) 
 ---
 
 # Usage
@@ -4364,17 +4527,11 @@ Search has no variants in code. Use the `SearchInput` component. Empty and fille
 
 ---
 
-### Content design
+### Content guidelines
 
 * Use the placeholder to hint at what can be searched, for example "Search courses". Never use it as a substitute for the label.
 * Name the clear control for the action it performs: "Clear search", not "Clear".
 * When a required Search field is submitted empty, say what's missing and how to fix it, not "This field is required."
-
----
-
-### Interaction behaviour
-
-* Tab order: Field → clear control (filled only) 
 
 ---
 
@@ -4444,7 +4601,7 @@ Full list of props and their types for Button.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8332388/4de6e0fd18ddb86d3938b7e8b5292c75caf0efd530481fdae7dca0006d279b49)
@@ -4532,6 +4689,25 @@ Full list of props and their types for Button.
 | ![](zeroheight://image/8332388/8cd378c30e5131b84221abec2155c9c4bcc436b9b11c540d120627e59c29bd87) | **Active / Pressed** Triggered while the button is being pressed. Transitions away immediately on release. Don't hold this state. |
 | ![](zeroheight://image/8332388/847c10ee46df24454201b71bb2f96d9c60723125ad9e71aea735d9f57913ace6) | **Disabled** Applied when the action is unavailable. Don't use as a substitute for validation. Keep the button active and show errors on the relevant fields instead. Transparent background. |
 | ![](zeroheight://image/8332388/868f15e295e960c7a967109f287a7b7c2030451fa8c5c7df333a45db9a591979) | **Focus** Triggered via keyboard navigation (Tab key). Must remain visible on all backgrounds used in your layout. A 2px focus ring shows around the button, offset from its edge. |
+
+![](zeroheight://image/8332388/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* The button width is determined by the label length, not a fixed container width.
+* In full-width contexts such as mobile bottom bars, the button fills the container width.
+
+## Behaviour
+
+* Cursor: pointer on hover, not-allowed when disabled.
+* Use disabled state only when the action is genuinely unavailable.
+
+## Responsive behaviour
+
+* At small breakpoints, buttons can expand to full width in single-column layouts.
+* Size variant doesn't change automatically at breakpoints. Choose the size intentionally for the context
+
+![](zeroheight://image/8332388/30796a0219e66fc81381419389d1adc3a137dec77be6a8a484d70b815165bae7)
 ---
 
 # Usage
@@ -4611,7 +4787,7 @@ Icon-only isn’t a size. A button is icon-only when it has a `startIcon` or `en
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -4624,11 +4800,6 @@ Icon-only isn’t a size. A button is icon-only when it has a `startIcon` or `en
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8332388/f0b203c62b98f441fd9c9b5b9c9f24e88fe33e5d681e095591106399b39f27e9) |   | SHOULD keep labels to 1 to 4 words. |
 | Don't | ![](zeroheight://image/8332388/131975fd34460e52c52ab5c5c354623de0b4b1930a6571b27ce85af56c13a769) |   | SHOULD NOT use labels that wrap to a second line. |
-
-#### Content behaviour
-
-* The button width is determined by the label length, not a fixed container width (Hug behaviour).
-* In full-width contexts such as mobile bottom bars, the button fills the container width.
 
 #### Copywriting
 
@@ -4650,7 +4821,7 @@ Icon-only isn’t a size. A button is icon-only when it has a `startIcon` or `en
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Place the primary action on the right when buttons appear in a group.
 * In modal footers and form footers, align buttons to the right.
@@ -4666,22 +4837,6 @@ Icon-only isn’t a size. A button is icon-only when it has a `startIcon` or `en
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8332388/1793bf134253c0f960e910bce47778f9f74d1bc36997ec19d3a390c85fb38680) |   | MUST use only 1 primary button per view. |
 | Don't | ![](zeroheight://image/8332388/8059d85fb5938c12407ad04a4edb9bf13b8295b2a1561fb35a0c6b5cd9780e59) |   | MUST NOT use 2 primary buttons in the same context. |
-
----
-
-### Responsive behaviour
-
-* At small breakpoints, buttons can expand to full width in single-column layouts.
-* Size variant doesn't change automatically at breakpoints. Choose the size intentionally for the context
-
-![](zeroheight://image/8332388/30796a0219e66fc81381419389d1adc3a137dec77be6a8a484d70b815165bae7)
-
----
-
-### Interaction behaviour
-
-* Cursor: pointer on hover, not-allowed when disabled.
-* Use disabled state only when the action is genuinely unavailable.
 
 ---
 
@@ -4761,7 +4916,7 @@ Full list of props and their types for Checkbox.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8052226/63cdac4ebceb92eb802691a37f6315b5c8f362e23f316e0292a6d544dd90a31b)
@@ -4789,6 +4944,32 @@ Full list of props and their types for Checkbox.
 | ![](zeroheight://image/8052226/42dba410e8e288cce6f791f580b55168a9fccccd27a38ca2dc96553c9673045e) | **Disabled ** The option can't be interacted with. Both the indicator and label render with muted colours. Don't use the disabled state instead of conditional logic. If an option is unavailable in a given context, hide it or explain why. |
 | ![](zeroheight://image/8052226/d1d0c64ea145377f0380fb0ae61dba0bb58fd0bbc6ddae2e1e58eb7dad37a98f) | **Disabled + Checked** A pre-selected option the user can't change. Use sparingly, only when the system locks the value and the user needs to see it. |
 | ![](zeroheight://image/8052226/8e57b157fe5cfb89560a796876514f05df123e82f554b4575be423daeac63727) | **Focus ** Shown when the checkbox receives keyboard focus. A visible focus ring appears around the checkbox indicator. In the Invalid state, the focus ring uses the danger token to maintain visual consistency with the error treatment. A 2px ring shows around the box, offset from its edge. |
+
+![](zeroheight://image/8052226/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* Labels don't truncate: they wrap to a new line if the container is narrow.
+* The label is always positioned to the right of the checkbox indicator.
+* Feedback text wraps naturally below the label and aligns with the label text, not with the indicator.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8052226/56342a3d131b61d0a99df6347878f9ba83048cc7320c24bfd2b4137e4e0ce6e5) |   | SHOULD let label text wrap naturally in narrow containers. |
+| Don't | ![](zeroheight://image/8052226/7632626494b6bf0e8c7c84ec90c90bf5cf8bb560e68ba236c31b69a15e299f6c) |   | MUST NOT truncate label text or move the indicator from its default position. |
+
+## Behaviour
+
+* Clicking or tapping the label or the hit area toggles the checkbox.
+* Checkboxes in a group operate independently. Selecting one doesn't affect the others.
+* When a selection is required and the user submits without checking, transition to the Invalid state and show feedback text that explains what's needed. Clear the Invalid state when the user checks the option.
+* The Indeterminate state can't be set by the user. It's driven by child selection state.
+
+## Responsive behaviour
+
+* The checkbox indicator remains the same size at all breakpoints.
+* The hit area is maintained at all breakpoints.
+* Label text wraps at narrow viewports. The indicator stays top-aligned with the first line of the label.
 ---
 
 # Usage
@@ -4821,7 +5002,7 @@ Checkboxes are form controls that let users select one or more options from a se
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Usage guidelines
 
@@ -4842,17 +5023,6 @@ Checkboxes are form controls that let users select one or more options from a se
 | Do | ![](zeroheight://image/8052226/a06406febee47163dd27038507e610ff6a22d45de66fc08849adca8472400328) |   | MUST write feedback text that says what's wrong and what to do. |
 | Don't | ![](zeroheight://image/8052226/24075a9b2ec6b136ad830989b2a37c44b808f20d0b5af18fc38bd4bd9e667f7a) |   | SHOULD NOT use default system messages. |
 
-#### Content behaviour
-
-* Labels don't truncate: they wrap to a new line if the container is narrow.
-* The label is always positioned to the right of the checkbox indicator.
-* Feedback text wraps naturally below the label and aligns with the label text, not with the indicator.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8052226/56342a3d131b61d0a99df6347878f9ba83048cc7320c24bfd2b4137e4e0ce6e5) |   | SHOULD let label text wrap naturally in narrow containers. |
-| Don't | ![](zeroheight://image/8052226/7632626494b6bf0e8c7c84ec90c90bf5cf8bb560e68ba236c31b69a15e299f6c) |   | MUST NOT truncate label text or move the indicator from its default position. |
-
 #### Copywriting
 
 * Write labels so they complete the phrase "By checking this, I am selecting or agreeing to…"
@@ -4861,7 +5031,7 @@ Checkboxes are form controls that let users select one or more options from a se
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Stack checkboxes vertically in a group. This is the recommended layout.
 * Don't mix checkboxes and radio buttons in the same option group.
@@ -4874,23 +5044,6 @@ Checkboxes are form controls that let users select one or more options from a se
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8052226/c521d760d251ad5fe531b70ffeb52a15a950e57244516c62349b4ec6afd15689) |   | SHOULD stack checkbox options vertically by default. |
 | Caution | ![](zeroheight://image/8052226/9058d7d5969f19edd7688df0d793660edd06ba798c327cff7da5f7218de48edc) |   | SHOULD use a horizontal layout sparingly, as it can break on narrow screens. Space options with --mds-spacing-md (16px) between each. |
-
----
-
-### Breakpoints and responsive behaviour
-
-* The checkbox indicator remains the same size at all breakpoints.
-* The hit area is maintained at all breakpoints.
-* Label text wraps at narrow viewports. The indicator stays top-aligned with the first line of the label.
-
----
-
-### Interaction behaviour 
-
-* Clicking or tapping the label or the hit area toggles the checkbox.
-* Checkboxes in a group operate independently. Selecting one doesn't affect the others.
-* When a selection is required and the user submits without checking, transition to the Invalid state and show feedback text that explains what's needed. Clear the Invalid state when the user checks the option.
-* The Indeterminate state can't be set by the user. It's driven by child selection state.
 
 ---
 
@@ -4976,7 +5129,7 @@ Full list of props and their types for Choicebox.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8608900/5ef30a28212c32653e9e6a00d040949987031ee9ce7eee7ec54c246eceab2ca2)
@@ -5012,6 +5165,25 @@ Full list of props and their types for Choicebox.
 | ![](zeroheight://image/8608900/34f9397278e127e485f1a9f23f7b0f17e8b0b80cd03ebf2f5d172ac95441c4bf) | **Pressed** Applied on click or tap of a selected card before the pointer is released. |
 | ![](zeroheight://image/8608900/24a81917766500d592f0454cd8a03fdcf6dfb74f7fade49696a8af818a2587b0) | **Disabled (selected)** The option is pre-selected but interaction is locked. |
 | ![](zeroheight://image/8608900/ded6525cb6db321761c17d1e76ad9c170644eca279ff2da0ba0685225447c33e) | **Focus** Applied when a selected card receives keyboard focus. The focus ring appears on the choice indicator. |
+
+![](zeroheight://image/8608900/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* Label text wraps to a second line if needed. Avoid labels that exceed 2 lines.
+* Supporting text wraps below the label. Avoid copy that wraps beyond 3 lines.
+* The card height expands to fit the content; text is never truncated or clipped.
+
+## Behaviour
+
+* Clicking or tapping anywhere on the card selects the option.
+* Only one Choicebox in a group can be selected at a time (mutually exclusive selection).
+* Cursor: pointer on hover, not-allowed when disabled.
+
+## Responsive behaviour
+
+* In narrow viewports, the container or layout pattern is responsible for managing card stacking; the card itself does not change size or shape.
+* Text within the card wraps naturally within the available card width.
 ---
 
 # Usage
@@ -5058,7 +5230,7 @@ The Choicebox supports two optional content slots, supporting text and icon, tha
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -5077,12 +5249,6 @@ The Choicebox supports two optional content slots, supporting text and icon, tha
 | Do | ![](zeroheight://image/8608900/9ef2e6c888c041459d5af34b1804ff74ca2a5af680bd3008bce96c776918be36) |   | SHOULD use supporting text to explain what the option does and add context the label can't. |
 | Don't | ![](zeroheight://image/8608900/9866d4617e0e82d75ddc29c04000f718cb60afd7c091092ee4c068fdefc3bd1a) |   | SHOULD NOT repeat the label in the supporting text. It adds noise without adding value. |
 
-#### Content behaviour
-
-* Label text wraps to a second line if needed. Avoid labels that exceed 2 lines.
-* Supporting text wraps below the label. Avoid copy that wraps beyond 3 lines.
-* The card height expands to fit the content; text is never truncated or clipped.
-
 #### Copywriting 
 
 * Write labels in sentence case. Don't use title case.
@@ -5096,7 +5262,7 @@ The Choicebox supports two optional content slots, supporting text and icon, tha
 
 ---
 
-### Layout and spacing
+### Placement
 
 * The card's width adapts to its container. In wide containers, apply a maximum width at the container level to maintain readability.
 * Vertical stacking is the recommended layout for groups. Horizontal stacking is possible but use it with caution, ensuring available space and context support optimal readability.
@@ -5107,21 +5273,6 @@ The Choicebox supports two optional content slots, supporting text and icon, tha
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8608900/69383d60b1c967e6e054df217cadd52f8aec77886a02355b1512dd7d81be374d) |   | MUST use only 1 component type per selection group. |
 | Don't | ![](zeroheight://image/8608900/7c5e9a18e25505a23d971ac0365b9cd7c2216730f11db0ab7d5cb168f2b9f27b) |   | MUST NOT mix Choicebox with Radio button or Checkbox in the same selection group. |
-
----
-
-### Breakpoints and responsive behaviour
-
-* In narrow viewports, the container or layout pattern is responsible for managing card stacking; the card itself does not change size or shape.
-* Text within the card wraps naturally within the available card width.
-
----
-
-### Interaction behaviour
-
-* Clicking or tapping anywhere on the card selects the option.
-* Only one Choicebox in a group can be selected at a time (mutually exclusive selection).
-* Cursor: pointer on hover, not-allowed when disabled.
 
 ---
 
@@ -5173,7 +5324,7 @@ Use for binary on/off settings that take effect immediately without a form submi
 
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8052227/0a532caa6c47bd9d6604d676f71d46b8b17d18372405eff91e967f9f95f54ce4)
@@ -5191,6 +5342,34 @@ Use for binary on/off settings that take effect immediately without a form submi
 | ![](zeroheight://image/8052227/521a8a8048e1d62bbf759ac5e9f436cf1ed2befa8150d76ad0960793ef8e150a) | **Hover** Shown when the cursor moves over the button. Do not remove this state. The icon changes to its emphasis colour. |
 | ![](zeroheight://image/8052227/ffb26224f5210dd182737b1d2b2a3f29f710b12a965078da9e18a2fc08db394c) | **Focus** Shown when the button receives keyboard focus. Must stay visible on all backgrounds. The icon changes to its emphasis colour and a 2px focus ring shows around the button. |
 | ![](zeroheight://image/8052227/b82d26a62aab5c53494c95275309a124b01830f7e6a706d27bdf31d5363bb5e6) | **Disabled** Shown when the close action is not available. The icon is muted. |
+
+![](zeroheight://image/8052227/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+### Mouse and touch
+
+* Click or tap closes the surface, or clears the value when the button is used as a clear action
+
+---
+
+### Keyboard
+
+* Tab moves focus to the close button
+* Enter or Space activates it
+* Escape should also close the surface when used in a modal or other dismissible overlay
+* Escape is not required to trigger the clear action when the button is used inside an input, to avoid conflicting with other Escape behaviour on the page (for example closing a dropdown)
+
+---
+
+### Cursor
+
+* Pointer on hover
+* Not allowed when disabled
+
+## Responsive behaviour
+
+* Keep the close button visible in the header area so it stays reachable when content scrolls.
 ---
 
 # Code
@@ -5293,7 +5472,7 @@ The component supports three sizes: SM, MD, LG
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 * The close button has no visible label.
 * Always provide an accessible name that matches the action it performs.
@@ -5302,7 +5481,7 @@ The component supports three sizes: SM, MD, LG
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Place the close button where users expect it, usually the top right of the surface header.
 * Keep enough space around it so it is easy to click and tap.
@@ -5311,32 +5490,6 @@ The component supports three sizes: SM, MD, LG
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8052227/3be3af48c1383ea3133726e86b0a72ff170f7d00c68b7c4be3a86ffb7edd08a7) |   | SHOULD place the close button on the right of the alert dialogue. |
 | Don't | ![](zeroheight://image/8052227/dd970a76f40b99a1bca3a8cdac2209f5693179f8cbf99929eb1945e5daf3f915) |   | SHOULD NOT place the close button on the left of the alert dialogue. |
-
----
-
-### Responsive behaviour
-
-* Keep the close button visible in the header area so it stays reachable when content scrolls.
-
----
-
-### Interaction behaviour
-
-#### Mouse and touch
-
-* Click or tap closes the surface, or clears the value when the button is used as a clear action
-
-#### Keyboard
-
-* Tab moves focus to the close button
-* Enter or Space activates it
-* Escape should also close the surface when used in a modal or other dismissible overlay
-* Escape is not required to trigger the clear action when the button is used inside an input, to avoid conflicting with other Escape behaviour on the page (for example closing a dropdown)
-
-#### Cursor
-
-* Pointer on hover
-* Not allowed when disabled
 
 ---
 
@@ -5365,7 +5518,7 @@ Because the control is icon only, it must have an accessible label.
 
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/9016909/5e442b3261e719dabf4d95f3f987fcd0473ff35d9c891c4b10d0f14119b9a2e3)
@@ -5391,6 +5544,24 @@ The item is the wrapper for every row in the menu. Every item shares the same st
 | ![](zeroheight://image/9016909/94ee5d5f44d46e9c81a67b7c32c42b8979f39b07d3fab261ee18254c51556152) | **Hover** Triggered when the cursor moves over the item, or it's highlighted with the arrow keys.  |
 | ![](zeroheight://image/9016909/d11b5cd51ada08ffda29a7217f1965531c5c9d8d52ab0957e42217c95bdeb5cd) | **Disabled** Applied when the option is unavailable. Keep the item visible rather than removing it, to preserve the list structure.  |
 | ![](zeroheight://image/9016909/13beb07712428b3a3a8e4397b411b683bc20d0a0c1f9effc3d273c3f35f96d1a) | **Focus** Triggered via keyboard navigation.  |
+
+![](zeroheight://image/9016909/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* The menu opens when the user types, presses Arrow Down, or selects the chevron. The open state is reflected on the field via `aria-expanded`.
+* Choosing an item adds it to the field as a removable tag and clears the typed text. The menu stays open so more values can be picked.
+* Clicking outside the menu, pressing Escape, or tabbing away closes the menu.
+* Filtering ignores case and accents, and matches anywhere in the label: "jose" finds "José".
+* If the user leaves the field with text that doesn't match an option, the text is cleared and the chosen tags stay. Typed text never becomes a value on its own.
+* Show the loading message straight away while results load, so a slow connection doesn't look like a broken field.
+* Cursor: text cursor in the field, pointer on items and on each tag's close button, not-allowed on disabled items.
+
+## Responsive behaviour
+
+* The field stays full width at every breakpoint.
+* On small viewports, the menu repositions to stay fully on screen rather than being clipped.
+* Item height and tap targets stay the same across breakpoints. Don't shrink rows on mobile.
 ---
 
 # Usage
@@ -5449,7 +5620,7 @@ Every item in the menu is the same `combobox.item`. Its content comes from a nes
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -5478,7 +5649,7 @@ Every item in the menu is the same `combobox.item`. Its content comes from a nes
 
 ---
 
-### Layout and spacing
+### Placement
 
 * The field fills the width of its container, and the menu matches the field's width.
 * The menu opens `--mds-spacing-xxs` below the field and flips above it when there isn't room below.
@@ -5489,26 +5660,6 @@ Every item in the menu is the same `combobox.item`. Its content comes from a nes
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/9016909/2515abb10497338e9dbb1532c373823f50b2f7fba449e70803cff9007a51e942) |   | SHOULD keep the menu the same width as the field. |
 | Don't | ![](zeroheight://image/9016909/04f3074e96aef0df1d2474b6e153f2c8130485ded59873616031215d90dc25fc) |   | SHOULD NOT let the menu shrink to its content or drift away from the field. |
-
----
-
-### Responsive behaviour
-
-* The field stays full width at every breakpoint.
-* On small viewports, the menu repositions to stay fully on screen rather than being clipped.
-* Item height and tap targets stay the same across breakpoints. Don't shrink rows on mobile.
-
----
-
-### Interaction behaviour
-
-* The menu opens when the user types, presses Arrow Down, or selects the chevron. The open state is reflected on the field via `aria-expanded`.
-* Choosing an item adds it to the field as a removable tag and clears the typed text. The menu stays open so more values can be picked.
-* Clicking outside the menu, pressing Escape, or tabbing away closes the menu.
-* Filtering ignores case and accents, and matches anywhere in the label: "jose" finds "José".
-* If the user leaves the field with text that doesn't match an option, the text is cleared and the chosen tags stay. Typed text never becomes a value on its own.
-* Show the loading message straight away while results load, so a slow connection doesn't look like a broken field.
-* Cursor: text cursor in the field, pointer on items and on each tag's close button, not-allowed on disabled items.
 
 ---
 
@@ -5600,7 +5751,7 @@ Full list of props and their types for Dropdown.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8742550/434c12927fd0ac1082526330c60b1aaae9d41c0cc09b215a587f6559cb5e5581)
@@ -5735,6 +5886,22 @@ Follows the action item state model (default, hover, disabled, focus) with a tra
 | ![](zeroheight://image/8742550/024c2f01603f05dfb62a084ea4cea6ac255031509b25a7a3d7e28d9ccc445ad5) | **To do** The item's resting state. |
 | --- | :--- |
 | ![](zeroheight://image/8742550/49189c30a5dfd2f3ab5282d49a2b266d9a28f8b5c223d8f5a23da01d7e82eceb) | **Done** The item's resting state. |
+
+![](zeroheight://image/8742550/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* The trigger toggles the menu open and closed. The open state is reflected on the trigger via `aria-expanded`.
+* Activating an action or selectable item closes the menu. Toggling a multi-select item keeps it open.
+* Clicking outside the menu, pressing Escape, or tabbing away closes the menu.
+* Cursor: pointer on interactive items, not-allowed on disabled items. Headers and dividers show the default cursor.
+* Use the disabled state on items only when the action is genuinely unavailable in the current context. Keep the item visible so the menu structure stays stable.
+
+## Responsive behaviour
+
+* The menu width is content-driven with a sensible minimum; it doesn't stretch to the trigger width.
+* On small viewports, ensure the menu repositions to stay fully on screen rather than being clipped.
+* Item height and tap targets remain constant across breakpoints. Don't shrink rows on mobile.
 ---
 
 # Usage
@@ -5833,7 +6000,7 @@ Each item type is its own component. Put them inside the `Dropdown`.
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -5863,7 +6030,7 @@ Each item type is its own component. Put them inside the `Dropdown`.
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Order items by frequency of use, with the most common actions first.
 * Place destructive (danger) actions last, separated from other items by a divider.
@@ -5874,24 +6041,6 @@ Each item type is its own component. Put them inside the `Dropdown`.
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8742550/ac2d29da8479a054dd738eea63a5785899e5422209c367a9333d0b63f8fda641) |   | MUST separate the destructive action with a divider and place it last. |
 | Don't | ![](zeroheight://image/8742550/7ae19fc06bb07e60e7f1f68d9bf83905bb2fd214f04c6278db55f511b3438aba) |   | MUST NOT mix a danger action into the middle of the list. |
-
----
-
-### Responsive behaviour
-
-* The menu width is content-driven with a sensible minimum; it doesn't stretch to the trigger width.
-* On small viewports, ensure the menu repositions to stay fully on screen rather than being clipped.
-* Item height and tap targets remain constant across breakpoints. Don't shrink rows on mobile.
-
----
-
-### Interaction behaviour
-
-* The trigger toggles the menu open and closed. The open state is reflected on the trigger via `aria-expanded`.
-* Activating an action or selectable item closes the menu. Toggling a multi-select item keeps it open.
-* Clicking outside the menu, pressing Escape, or tabbing away closes the menu.
-* Cursor: pointer on interactive items, not-allowed on disabled items. Headers and dividers show the default cursor.
-* Use the disabled state on items only when the action is genuinely unavailable in the current context. Keep the item visible so the menu structure stays stable.
 
 ---
 
@@ -5973,7 +6122,7 @@ Full list of props and their types for Favourite button.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8623878/02c2a32e6fba1bf968d8da12bffdc6cca9d78d86c1b84af57f01f4e154b78e71)
@@ -6008,6 +6157,24 @@ Each interaction state applies to both favourited and not favourited.
 | ![](zeroheight://image/8623878/7aff31b0de4699f3f3207fcc5ceeddfc35bc106fc69a3ef72f3d50c9f1e373d8) | **Hover** Triggered when the pointer moves over a favourited button. The icon changes colour to signal it can be toggled off. |
 | ![](zeroheight://image/8623878/0665610072166c68820f02d66c5bea075c983fe95b4be31f62c823e41fe19e76) | **Pressed** Triggered while the user holds the pointer down on a favourited button. Confirms the removal action is being activated. The background changes. |
 | ![](zeroheight://image/8623878/94f65261c9fd282d9f365b0dd14c5c20318eafdb071dd08b6d7719d6495524cc) | **Disabled** Use when a favourited item cannot be changed. The filled icon is dimmed. |
+
+![](zeroheight://image/8623878/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* The button toggles between favourited and not favourited on each click or activation.
+* Use a pointer cursor on hover.
+* Use a not-allowed cursor when disabled.
+* The focus ring must be visible at all viewport sizes.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/8623878/ce63eadb109ce6e3ee8678546612d69398cfec05acc32222abfe61a1ee285c91) |   | MUST use the filled icon to show an item is already favourited. |
+| Don't | ![](zeroheight://image/8623878/187f1cd067df3054e13dbec1d5ac8bf48c435bd0b9a9af2eed0a2ed39802ada2) |   | MUST NOT leave the icon in the same state whether or not the item is saved. People can't tell if their action worked. |
+
+## Responsive behaviour
+
+* The button size stays fixed across breakpoints. No layout changes are needed.
 ---
 
 # Usage
@@ -6048,7 +6215,7 @@ The favourite button has one toggle property: `Selected`.
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Labelling
 
@@ -6068,31 +6235,11 @@ The favourite button has one toggle property: `Selected`.
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Place the favourite button in a consistent position within its parent container, such as the top-right corner of a card.
 * Do not group multiple favourite buttons side by side.
 * Ensure the touch target meets the minimum 44×44px requirement on touch devices, even if the visible icon is smaller.
-
----
-
-### Breakpoints
-
-* The button size stays fixed across breakpoints. No layout changes are needed.
-
----
-
-### Interaction behaviour
-
-* The button toggles between favourited and not favourited on each click or activation.
-* Use a pointer cursor on hover.
-* Use a not-allowed cursor when disabled.
-* The focus ring must be visible at all viewport sizes.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/8623878/ce63eadb109ce6e3ee8678546612d69398cfec05acc32222abfe61a1ee285c91) |   | MUST use the filled icon to show an item is already favourited. |
-| Don't | ![](zeroheight://image/8623878/187f1cd067df3054e13dbec1d5ac8bf48c435bd0b9a9af2eed0a2ed39802ada2) |   | MUST NOT leave the icon in the same state whether or not the item is saved. People can't tell if their action worked. |
 
 ---
 
@@ -6117,7 +6264,7 @@ The favourite button has one toggle property: `Selected`.
 
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/9029119/63de3532e352cc09562883a9ac1f9bbf4e51c9ce53b5289e43e4eecfcc4199cc)
@@ -6146,6 +6293,31 @@ The favourite button has one toggle property: `Selected`.
 | ![](zeroheight://image/9029119/fae3e28c1368240fd135b04081fecf229bc529f567baaa33d094de39b4c81ca4) | **Invalid (Hover)** The pointer is over a field that has failed validation. |
 | ![](zeroheight://image/9029119/437611394bda2791e4e76b6fbda5f1905c3d96ff87f8296f82e797736d610cb0) | **Invalid (Active)** The moment of mouse-down on a field that has failed validation. |
 | ![](zeroheight://image/9029119/118f70a88f995a93703666ec787facfe83ab765e3bbf6c4ef173cdfa24fd7e0f) | **Invalid (Focus)** Focus ring uses a lighter danger tone than the resting border, so the ring itself stays legible against the solid red border. |
+
+![](zeroheight://image/9029119/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* Adding more options doesn't change the size of the closed field, only the open native list grows or shrinks to fit them.
+* Choosing an option updates the value immediately, there's no separate confirm step.
+* A long option label truncates with an ellipsis inside the closed field rather than wrapping the field or resizing it.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9029119/6e090599536d32ab2cd55da3b24646e50df90964d448d3552ea0db18c3c5396d) |   | SHOULD keep option labels short enough to read at a glance in the closed field. |
+| Don't | ![](zeroheight://image/9029119/cb60a33021ddef120e69143f07f725bb330ff8a4d4d215112dd1aca7225e3511) |   | SHOULD NOT rely on truncation to hide a label that's usually too long to be useful once cut off. |
+
+## Behaviour
+
+* Touch target: the field measures 42px tall.
+* Opening the list: a click, a tap, or Space/Enter while focused opens the device's native option list, this is native browser behaviour, Select doesn't render its own overlay.
+* Focus stays on the closed field itself the entire time, even while the native list is open, exactly how a plain `<select>` element behaves. Don't try to move focus into the list.
+* Cursor: pointer on hover, not-allowed when disabled.
+
+## Responsive behaviour
+
+* The field stays full width of its container across all breakpoints.
+* On touch devices, the browser or OS renders its own native option list (a wheel, a full-screen list, a native dropdown).
 ---
 
 # Usage
@@ -6201,7 +6373,7 @@ For deeper guidance on writing labels, using the info icon, and working with sup
 * Keep the option list short enough to scan without scrolling fatigue. Once it's long enough that typing to filter would help, that's Combobox's job, not a reason to make Select do more than it's built for.
 * Don't reach for Select for a single yes/no toggle, that reads as over-engineering a Switch.
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -6213,17 +6385,6 @@ For deeper guidance on writing labels, using the info icon, and working with sup
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/9029119/5633939dbdd531cd778ed937c602ec8bee13d354b210a5dffceb1faf877cb985) |   | SHOULD pre-select a clear instructional default, e.g. "Select a country". |
 | Don't | ![](zeroheight://image/9029119/cff23daef1d13f35d2fbb491c75d97e1374c2d0e0432945d2051d47b3207af24) |   | SHOULD NOT leave the field showing a dash, a blank space or nothing at all. |
-
-#### Content behaviour
-
-* Adding more options doesn't change the size of the closed field, only the open native list grows or shrinks to fit them.
-* Choosing an option updates the value immediately, there's no separate confirm step.
-* A long option label truncates with an ellipsis inside the closed field rather than wrapping the field or resizing it.
-
-| Rule | Image | Caption | Description |
-| :--- | :--- | :--- | :--- |
-| Do | ![](zeroheight://image/9029119/6e090599536d32ab2cd55da3b24646e50df90964d448d3552ea0db18c3c5396d) |   | SHOULD keep option labels short enough to read at a glance in the closed field. |
-| Don't | ![](zeroheight://image/9029119/cb60a33021ddef120e69143f07f725bb330ff8a4d4d215112dd1aca7225e3511) |   | SHOULD NOT rely on truncation to hide a label that's usually too long to be useful once cut off. |
 
 #### Copywriting 
 
@@ -6238,26 +6399,10 @@ For deeper guidance on writing labels, using the info icon, and working with sup
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Label, field, and support row stack vertically with `--mds-spacing-xxs` gap between them.
 * The field is full width of its container by default, no intrinsic min or max width of its own, sizing constraints belong to the container or layout, not the component.
-
----
-
-### Breakpoints and responsive behaviour
-
-* The field stays full width of its container across all breakpoints.
-* On touch devices, the browser or OS renders its own native option list (a wheel, a full-screen list, a native dropdown).
-
----
-
-### Interaction behaviour
-
-* Touch target: the field measures 42px tall.
-* Opening the list: a click, a tap, or Space/Enter while focused opens the device's native option list, this is native browser behaviour, Select doesn't render its own overlay.
-* Focus stays on the closed field itself the entire time, even while the native list is open, exactly how a plain `<select>` element behaves. Don't try to move focus into the list.
-* Cursor: pointer on hover, not-allowed when disabled.
 
 ---
 
@@ -6364,7 +6509,7 @@ Full list of props and their types for Switch.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8737402/a7145beb7993857cb44086f82bad443186d8b028047b176855ad53f6369f15fc)
@@ -6392,6 +6537,19 @@ Full list of props and their types for Switch.
 | ![](zeroheight://image/8737402/ac9d8830c903b4fe9f9907496161ec996cf858dfffc61d55be3daf1b50e2f689) ![](zeroheight://image/8737402/1024df986adc53f53f18c3f32fdf2792e5f7adff89dcfcfd5579667b9971e6f9) | **Focus ** The switch has keyboard focus. A visible focus ring appears around the entire indicator. Track and thumb remain at their current state colours. The ring is 2px, offset from the indicator. |
 | ![](zeroheight://image/8737402/228dbd02fe456dc0d1aae3c3237ebaf8d9a1c3792e8ae054f7ba7fc272a4b155) | **Disabled (off) ** The switch can't be interacted with and is currently off. All elements render with muted colours. Provide a reason nearby when possible. |
 | ![](zeroheight://image/8737402/02900ed20bc6e44b71e646df9ad0d6e287103b1b98beb3259ab50a4bccb30e8d) | **Disabled (on) ** The switch can't be interacted with and is currently on. All elements render with muted colours. |
+
+![](zeroheight://image/8737402/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* Clicking or tapping anywhere on the indicator or label toggles the switch.
+* State changes are immediate within the component. Whether the change affects the system immediately or on form submission depends on the implementation context.
+
+## Responsive behaviour
+
+* The switch indicator is fixed in size at all breakpoints.
+* The label remains visible at all breakpoints. Don't hide the label based on viewport size.
+* If a visually hidden label is genuinely required (for example, inside a data table column), always ensure an accessible name is still present in the DOM for assistive technology.
 ---
 
 # Usage
@@ -6445,7 +6603,7 @@ The variant determines which icon pair is shown inside the thumb, communicating 
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Usage guidelines
 
@@ -6478,7 +6636,7 @@ The variant determines which icon pair is shown inside the thumb, communicating 
 
 ---
 
-### Layout and spacing
+### Placement
 
 * **Always use a visible label when:**
     * The switch is standalone, not part of a structured layout.
@@ -6513,21 +6671,6 @@ A Switch can be used without a visible label when the surrounding context makes 
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8737402/f7369889b1a7013c47809cb1aca465c7bc83fbacab0eff676593e7e425ce1c32) |   | SHOULD use a Switch with a visually hidden label in data tables and settings grids when a column header or row label gives enough context. The thumb position and icon make the current state clear. |
 | Caution | ![](zeroheight://image/8737402/0db7b5eb1ca57eac043c5b604ec66be049879b8cb3a2bcea51cf18fb53ead86d) |   | MUST NOT rely on icons alone to show state. |
-
----
-
-### Responsive behaviour
-
-* The switch indicator is fixed in size at all breakpoints.
-* The label remains visible at all breakpoints. Don't hide the label based on viewport size.
-* If a visually hidden label is genuinely required (for example, inside a data table column), always ensure an accessible name is still present in the DOM for assistive technology.
-
----
-
-### Interaction behaviour
-
-* Clicking or tapping anywhere on the indicator or label toggles the switch.
-* State changes are immediate within the component. Whether the change affects the system immediately or on form submission depends on the implementation context.
 
 ---
 
@@ -6597,7 +6740,7 @@ Full list of props and their types for Tag.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8991684/bc332d304e88518e315623849bd26807208dacdfbfaf230ef0c91861f89ee899)
@@ -6648,6 +6791,19 @@ Full list of props and their types for Tag.
 | ![](zeroheight://image/8991684/d15a6e1ca3432c92dae15570f4efefeffbf6bbcbb7477fcc9a75c7ee6d1babd3) | **Default** The tag’s resting state. It has a 1px border. |
 | :--- | :--- |
 | ![](zeroheight://image/8991684/22d4962769e30f2557dc0ee8fb322431c8d4da86f64d910c0411536f963988f5) | **Disabled** Shown when the tag can’t be removed. The background and border change, the text is muted and the Close button is disabled. |
+
+![](zeroheight://image/8991684/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Layout and sizing
+
+* All four fields (Avatar, Email, Username / short name, Institution) can be turned on independently. The layout adapts automatically as more are shown, moving to a taller radius and a larger avatar once Institution is on.
+* More fields make the tag taller, which affects how much space it takes up when several tags sit together.
+
+## Behaviour
+
+* Link: the whole pill is clickable and navigates to the linked content.
+* Removable: the label itself is static; only the Close button is interactive. Activating it removes the tag.
+* Cursor: pointer on the Link tag and on the Close button; default cursor on the static label area of Removable tags.
 ---
 
 # Usage
@@ -6722,7 +6878,7 @@ Removable has four independent toggles, all optional except the name/category la
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 #### Content structure and constraints
 
@@ -6730,11 +6886,6 @@ Removable has four independent toggles, all optional except the name/category la
 * When any identity field (Email, Username / short name, Institution) is on, the name/category label is required and always shown first.
 * Email and username truncate with an ellipsis rather than wrap.
 * Keep labels short: Tag is a compact, scannable element, not a place for long descriptions.
-
-#### Content density
-
-* All four fields (Avatar, Email, Username / short name, Institution) can be turned on independently. The layout adapts automatically as more are shown, moving to a taller radius and a larger avatar once Institution is on.
-* More fields make the tag taller, which affects how much space it takes up when several tags sit together.
 
 #### Copywriting 
 
@@ -6749,7 +6900,7 @@ Removable has four independent toggles, all optional except the name/category la
 
 ---
 
-### Layout and spacing
+### Placement
 
 * Use `--mds-spacing-xxs` (4px) between tags in a group, horizontally and vertically.
 * Tags wrap onto multiple lines when a group doesn't fit the available width.
@@ -6760,14 +6911,6 @@ Removable has four independent toggles, all optional except the name/category la
 | :--- | :--- | :--- | :--- |
 | Do | ![](zeroheight://image/8991684/1cb1f14f9d6d923c19305b6ca216a56c2cd1d577c4bbbb055152144973a787f0) |   | MUST keep 1 interaction model per group, so every tag in the set behaves the same way. |
 | Don't | ![](zeroheight://image/8991684/7feeade3efd63992e324e771b0133af5f9dc07811081fbad61644cddc94153da) |   | MUST NOT mix Link and Removable tags in one group. They look alike, but one navigates and the other only removes. |
-
----
-
-### Interaction behaviour
-
-* Link: the whole pill is clickable and navigates to the linked content.
-* Removable: the label itself is static; only the Close button is interactive. Activating it removes the tag.
-* Cursor: pointer on the Link tag and on the Close button; default cursor on the static label area of Removable tags.
 
 ---
 
@@ -6854,7 +6997,7 @@ Full list of props and their types for Text area.
 </shortcut_tiles>
 ---
 
-# Design
+# Specs
 ## Anatomy
 
 ![](zeroheight://image/8874779/86dfc9d9e89c77c1e89c55508d068911110d4ab4c1ed77e3e0a1f8aba1bd2165)
@@ -6868,7 +7011,9 @@ Full list of props and their types for Text area.
 7. **Support row** *(optional)*: a row beneath the field holding supporting text and/or the counter. Supporting text sits left and grows to fill the row; the counter sits right in a fixed-width column and isn’t affected by validation state. If both are off, the row doesn't render at all. The field's gap collapses back to just Label + Text-field.
 8. **Validation icon** *(invalid state only)*: FA Icon `circle-exclamation`, rendered inline inside the Text-field alongside the value/placeholder text.
 
-### States
+![](zeroheight://image/8874779/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## States
 
 The component spans **7 interaction states**.
 
@@ -6886,6 +7031,23 @@ The component spans **7 interaction states**.
 **Disabled vs. read-only:** Disabled is defined only for the empty presentation and read-only only for the populated one. That's intentional. Disabled communicates "not available for input", read-only communicates "here's existing content you can't edit". If a field already holds content someone should be able to review or copy, use read-only.
 
 </callout>
+
+![](zeroheight://image/8874779/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+* Hover only changes the fill (transparent → white); it doesn't touch the border, so hover reads as a subtle "this is interactive" cue rather than a state change.
+* Active swaps the border to the primary accent on press, ahead of focus landing.
+* Focus swaps the border to the focus token and doubles its weight to 2px, with padding compensating so the field doesn't visibly resize when the ring appears.
+* Disabled blocks all pointer and keyboard interaction and never renders the resizer, even if resizable is true.
+* Read-only allows focus and text selection but blocks editing, and keeps the resizer (if enabled) since people may still want to expand the box to read long content.
+* Invalid can combine with any of hover/active/focus/disabled/read-only in principle, but is typically shown alongside default, hover, active, or focus as the result of a validation check.
+
+## Responsive behaviour
+
+* The field stays full-width of its container across breakpoints.
+* On touch devices, give the resizer a larger hit target than its 8×8px visual size. It's easy to miss otherwise.
+* Avoid placing a text area in a very short container where it would have to scroll immediately; the ~3-line default height needs room to breathe.
 ---
 
 # Usage
@@ -6950,7 +7112,7 @@ Set with the `resizable` prop. It’s on by default.
 
 ## Guidelines
 
-### Content design
+### Content guidelines
 
 * Keep the label short: a few words naming what belongs in the field ("Course description", "Feedback").
 * Supporting text is one short line: a formatting hint, a length expectation, or (in the invalid state) the specific validation error.
@@ -6977,32 +7139,13 @@ Set with the `resizable` prop. It’s on by default.
 
 ---
 
-### Layout and spacing
+### Placement
 
 * The field, label, and support row stack vertically with `--mds-spacing-xxs` gap between them.
 The field defaults to roughly a 3-line content area before scrolling or resizing is needed.
 * When the counter appears without supporting text, it right-aligns on its own row rather than floating inside the field.
 * The field is full-width of its container (`w-full`) by default; it doesn't have an intrinsic fixed width.
 
-
----
-
-### Responsive behaviour
-
-* The field stays full-width of its container across breakpoints.
-* On touch devices, give the resizer a larger hit target than its 8×8px visual size. It's easy to miss otherwise.
-* Avoid placing a text area in a very short container where it would have to scroll immediately; the ~3-line default height needs room to breathe.
-
----
-
-### Interaction behaviour
-
-* Hover only changes the fill (transparent → white); it doesn't touch the border, so hover reads as a subtle "this is interactive" cue rather than a state change.
-* Active swaps the border to the primary accent on press, ahead of focus landing.
-* Focus swaps the border to the focus token and doubles its weight to 2px, with padding compensating so the field doesn't visibly resize when the ring appears.
-* Disabled blocks all pointer and keyboard interaction and never renders the resizer, even if resizable is true.
-* Read-only allows focus and text selection but blocks editing, and keeps the resizer (if enabled) since people may still want to expand the box to read long content.
-* Invalid can combine with any of hover/active/focus/disabled/read-only in principle, but is typically shown alongside default, hover, active, or focus as the result of a validation check.
 
 ---
 
