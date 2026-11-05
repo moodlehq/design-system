@@ -178,6 +178,18 @@
   inline-size: 100%;
 }
 
+/*
+ * custom: an image supplied through `src`. Registry glyphs sit inside their 24px
+ * artboard with about 12.5% of whitespace on each side (median ~75% fill), so the
+ * custom image is inset by the same amount to look the same size beside them, and
+ * fitted with contain so non-square artwork is not stretched.
+ */
+.mds-activity-icon--custom .mds-activity-icon__asset {
+  box-sizing: border-box;
+  object-fit: contain;
+  padding: 12.5%;
+}
+
 /* Hide the broken-image placeholder while the icon has no source. */
 .mds-activity-icon__asset:not([src]) {
   visibility: hidden;

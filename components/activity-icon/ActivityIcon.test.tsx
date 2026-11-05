@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import type {
   ActivityIconAppearance,
@@ -6,6 +6,14 @@ import type {
   ActivityIconSize,
 } from './ActivityIcon';
 import { ActivityIcon } from './ActivityIcon';
+
+// A stand-in for third-party artwork that is not in the icon registry.
+const customSrc = 'jessica.jpeg';
+
+const iconVariants = [
+  ['a registry icon', { icon: 'assignment' }],
+  ['a custom src', { src: customSrc }],
+] as const;
 
 describe('ActivityIcon: Unit Test', () => {
   it('applies mds class name', () => {
@@ -46,30 +54,24 @@ describe('ActivityIcon: Unit Test', () => {
     });
   });
 
-  it('uses the filter fallback instead of the overlay for flagged brand icons', () => {
-    render(
-      <ActivityIcon
-        data-testid="icon"
-        icon="bigbluebutton"
-        appearance="muted"
-      />,
-    );
-    const root = screen.getByTestId('icon');
-    expect(root.classList.contains('mds-activity-icon--muted-filter')).toBe(
-      true,
-    );
-    expect(root.classList.contains('mds-activity-icon--muted')).toBe(false);
-    expect(root.querySelector('.mds-activity-icon__mask')).toBeNull();
-  });
-
-  it('uses the filter fallback for h5p', () => {
-    render(<ActivityIcon data-testid="icon" icon="h5p" appearance="muted" />);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--muted-filter'),
-    ).toBe(true);
-  });
+  it.each([
+    ['bigbluebutton', { icon: 'bigbluebutton' }],
+    ['h5p', { icon: 'h5p' }],
+    ['a custom src image', { src: customSrc }],
+  ] as const)(
+    'uses the filter fallback instead of the overlay for %s',
+    (_label, iconProps) => {
+      render(
+        <ActivityIcon data-testid="icon" {...iconProps} appearance="muted" />,
+      );
+      const root = screen.getByTestId('icon');
+      expect(root.classList.contains('mds-activity-icon--muted-filter')).toBe(
+        true,
+      );
+      expect(root.classList.contains('mds-activity-icon--muted')).toBe(false);
+      expect(root.querySelector('.mds-activity-icon__mask')).toBeNull();
+    },
+  );
 
   it('keeps the image accessible name when muted', () => {
     render(
@@ -108,88 +110,40 @@ describe('ActivityIcon: Unit Test', () => {
     warn.mockRestore();
   });
 
-  it('applies default container by default', () => {
-    render(<ActivityIcon data-testid="icon" icon="assignment" />);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--default'),
-    ).toBe(true);
-  });
+  describe.each(iconVariants)('%s', (_label, iconProps) => {
+    it('applies default container and md size by default', () => {
+      render(<ActivityIcon data-testid="icon" {...iconProps} />);
+      const { classList } = screen.getByTestId('icon');
+      expect(classList.contains('mds-activity-icon--default')).toBe(true);
+      expect(classList.contains('mds-activity-icon--size-md')).toBe(true);
+    });
 
-  it('applies md size by default', () => {
-    render(<ActivityIcon data-testid="icon" icon="assignment" />);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--size-md'),
-    ).toBe(true);
-  });
+    it.each(['sm', 'md', 'lg', 'xl'] as const)('applies size %s', (size) => {
+      render(<ActivityIcon data-testid="icon" {...iconProps} size={size} />);
+      expect(
+        screen
+          .getByTestId('icon')
+          .classList.contains(`mds-activity-icon--size-${size}`),
+      ).toBe(true);
+    });
 
-  it('applies explicit size variants', () => {
-    const { rerender } = render(
-      <ActivityIcon data-testid="icon" icon="assignment" size="sm" />,
+    it.each(['none', 'default', 'large'] as const)(
+      'applies %s container',
+      (container) => {
+        render(
+          <ActivityIcon
+            data-testid="icon"
+            {...iconProps}
+            container={container}
+          />,
+        );
+        expect(
+          screen
+            .getByTestId('icon')
+            .classList.contains(`mds-activity-icon--${container}`),
+        ).toBe(true);
+      },
     );
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--size-sm'),
-    ).toBe(true);
-
-    rerender(<ActivityIcon data-testid="icon" icon="assignment" size="md" />);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--size-md'),
-    ).toBe(true);
-
-    rerender(<ActivityIcon data-testid="icon" icon="assignment" size="lg" />);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--size-lg'),
-    ).toBe(true);
-
-    rerender(<ActivityIcon data-testid="icon" icon="assignment" size="xl" />);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--size-xl'),
-    ).toBe(true);
-  });
-
-  it('applies none container', () => {
-    render(
-      <ActivityIcon data-testid="icon" icon="assignment" container="none" />,
-    );
-    expect(
-      screen.getByTestId('icon').classList.contains('mds-activity-icon--none'),
-    ).toBe(true);
-  });
-
-  it('applies default container', () => {
-    render(
-      <ActivityIcon data-testid="icon" icon="assignment" container="default" />,
-    );
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--default'),
-    ).toBe(true);
-  });
-
-  it('applies large container', () => {
-    render(
-      <ActivityIcon data-testid="icon" icon="assignment" container="large" />,
-    );
-    expect(
-      screen.getByTestId('icon').classList.contains('mds-activity-icon--large'),
-    ).toBe(true);
-    expect(
-      screen
-        .getByTestId('icon')
-        .classList.contains('mds-activity-icon--size-md'),
-    ).toBe(true);
   });
 
   it('falls back to file-unknown for an invalid icon name', async () => {
@@ -217,6 +171,17 @@ describe('ActivityIcon: Unit Test', () => {
     expect(error).toHaveBeenCalledWith(
       expect.stringContaining('[MDS ActivityIcon] Invalid icon "invalid"'),
     );
+    error.mockRestore();
+  });
+
+  it('does not log an invalid icon error outside development', () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.stubEnv('DEV', false);
+
+    render(<ActivityIcon icon="invalid" />);
+
+    expect(error).not.toHaveBeenCalled();
+    vi.unstubAllEnvs();
     error.mockRestore();
   });
 
@@ -347,5 +312,137 @@ describe('ActivityIcon: Unit Test', () => {
         .getByTestId('icon')
         .classList.contains('mds-activity-icon--category-other'),
     ).toBe(true);
+  });
+
+  it('tints a custom src as other unless a category is supplied', () => {
+    const { rerender } = render(
+      <ActivityIcon data-testid="icon" src={customSrc} />,
+    );
+    const root = screen.getByTestId('icon');
+    expect(root.classList.contains('mds-activity-icon--category-other')).toBe(
+      true,
+    );
+    expect(root.classList.contains('mds-activity-icon--custom')).toBe(true);
+
+    rerender(
+      <ActivityIcon data-testid="icon" src={customSrc} category="assessment" />,
+    );
+    expect(
+      root.classList.contains('mds-activity-icon--category-assessment'),
+    ).toBe(true);
+    expect(root.classList.contains('mds-activity-icon--category-other')).toBe(
+      false,
+    );
+  });
+
+  describe('custom src', () => {
+    it('renders the supplied image immediately without an icon key', () => {
+      render(<ActivityIcon src={customSrc} alt="LTI tool" />);
+      expect(
+        screen.getByRole('img', { name: 'LTI tool' }).getAttribute('src'),
+      ).toBe(customSrc);
+    });
+
+    it('does not log an invalid icon error when only src is passed', () => {
+      const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+      render(<ActivityIcon src={customSrc} />);
+      expect(error).not.toHaveBeenCalled();
+      error.mockRestore();
+    });
+
+    it('falls back to other and warns for an invalid category', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <ActivityIcon
+          data-testid="icon"
+          src={customSrc}
+          category={'nope' as unknown as 'other'}
+        />,
+      );
+      expect(
+        screen
+          .getByTestId('icon')
+          .classList.contains('mds-activity-icon--category-other'),
+      ).toBe(true);
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid category "nope"'),
+      );
+      warn.mockRestore();
+    });
+
+    it('ignores the registry category for registry icons', () => {
+      render(
+        <ActivityIcon data-testid="icon" icon="assignment" category="other" />,
+      );
+      expect(
+        screen
+          .getByTestId('icon')
+          .classList.contains('mds-activity-icon--category-assessment'),
+      ).toBe(true);
+    });
+
+    it('prefers src over icon and warns', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <ActivityIcon
+          data-testid="icon"
+          icon="assignment"
+          src={customSrc}
+          alt="custom"
+        />,
+      );
+      expect(
+        screen.getByRole('img', { name: 'custom' }).getAttribute('src'),
+      ).toBe(customSrc);
+      expect(
+        screen
+          .getByTestId('icon')
+          .classList.contains('mds-activity-icon--category-other'),
+      ).toBe(true);
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('Both "src" and "icon"'),
+      );
+      warn.mockRestore();
+    });
+
+    it('swaps to the generic glyph when the image fails to load', async () => {
+      const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+      render(
+        <ActivityIcon
+          data-testid="icon"
+          src="https://example.invalid/missing.png"
+          alt="broken"
+        />,
+      );
+      const image = screen.getByRole('img', { name: 'broken' });
+      expect(image.getAttribute('src')).toBe(
+        'https://example.invalid/missing.png',
+      );
+
+      fireEvent.error(image);
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole('img', { name: 'broken' }).getAttribute('src'),
+        ).toContain('data:image/svg+xml');
+      });
+      expect(
+        screen
+          .getByTestId('icon')
+          .classList.contains('mds-activity-icon--custom'),
+      ).toBe(false);
+      error.mockRestore();
+    });
+
+    it('tries a new src after a previous one failed', () => {
+      const { rerender } = render(
+        <ActivityIcon src="https://example.invalid/a.png" alt="icon" />,
+      );
+      fireEvent.error(screen.getByRole('img', { name: 'icon' }));
+      rerender(<ActivityIcon src={customSrc} alt="icon" />);
+      expect(
+        screen.getByRole('img', { name: 'icon' }).getAttribute('src'),
+      ).toBe(customSrc);
+    });
   });
 });
