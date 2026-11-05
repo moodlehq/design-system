@@ -206,7 +206,7 @@ function collectComponent(slug: string): ComponentIndexItem | null {
   ]);
   const test = findFirstExisting([path.join(dir, `${componentName}.test.tsx`)]);
   const figma = findFirstExisting([
-    path.join(dir, `${componentName}.figma.tsx`),
+    path.join(dir, `${componentName}.figma.ts`),
   ]);
   const css = findFirstExisting([path.join(dir, `${slug}.css`)]);
 
