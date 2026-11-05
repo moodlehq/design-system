@@ -8,6 +8,21 @@ describe('Badge: Unit Test', () => {
     expect(screen.getByText('New')).toBeInTheDocument();
   });
 
+  it('renders a node as the label', () => {
+    render(
+      <Badge
+        label={
+          <>
+            <span>Due:</span> <span>Monday</span>
+          </>
+        }
+      />,
+    );
+    expect(screen.getByText('Due:')).toBeInTheDocument();
+    expect(screen.getByText('Monday')).toBeInTheDocument();
+    expect(screen.getByText('Due:').parentElement).toHaveClass('mds-badge');
+  });
+
   it('applies mds-badge and badge base classes', () => {
     render(<Badge label="Label" />);
     const badge = screen.getByText('Label');

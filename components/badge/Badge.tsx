@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactElement } from 'react';
+import type { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { isValidElement } from 'react';
 
 type BadgeVariant =
@@ -25,8 +25,11 @@ const allowedVariants: BadgeVariant[] = [
 ];
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  /** Visible badge text. Must be a caller-supplied translated string. */
-  label: string;
+  /**
+   * Visible badge content. Must be a caller-supplied translated string, or a node (e.g. a fragment of
+   * `<span>`s) built from translated strings when parts of the label need separate markup.
+   */
+  label: ReactNode;
   /** Colour/semantic variant. Defaults to `primary`. */
   variant?: BadgeVariant;
   /** When true, renders the low-contrast (subtle) style with a light background and border. */
