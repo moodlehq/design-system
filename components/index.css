@@ -20,6 +20,7 @@
 @import './progress-bar/progress-bar.css';
 @import './radio/radio.css';
 @import './radio/radio-group.css';
+@import './select/select.css';
 @import './switch/switch.css';
 @import './tag/tag.css';
 @import './textarea/textarea.css';
