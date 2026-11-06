@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.6.0](https://github.com/moodlehq/design-system/compare/design-system-v5.5.0...design-system-v5.6.0) (2026-11-06)
+
+
+### Features
+
+* **tokens:** Add new tokens for Moodle Grid ([#397](https://github.com/moodlehq/design-system/issues/397)) ([e68bd9d](https://github.com/moodlehq/design-system/commit/e68bd9d781dc241f6f39620d6746f6cc200fbd25))
+
 ## [5.5.0](https://github.com/moodlehq/design-system/compare/design-system-v5.4.0...design-system-v5.5.0) (2026-10-21)
 
 
