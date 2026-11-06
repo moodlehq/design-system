@@ -122,7 +122,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 
 **Fonts are not bundled:** `--mds-font-family-base` resolves to `Noto Sans` with no CSS fallback chain. When scaffolding a consuming app (not the library itself), always include the README's "Fonts" instructions (Google Fonts link or self-hosted `@font-face`) — otherwise text silently renders in the browser default font with no warning.
 
-**When multiple `Radio`, `Checkbox`, or `NavPill` instances are rendered together:** none of these components ships a layout wrapper. Lay them out with a consumer-provided container (for example, flex) and a `--mds-spacing-*` gap token — see each component's stories for the reference pattern.
+**When multiple `Radio` options answer one question:** use `RadioGroup`, which owns the group label, required marker, info button, supporting/error text, and option spacing. Don't lay out loose `Radio`s by hand.
+
+**When multiple `Checkbox` or `NavPill` instances are rendered together:** neither component ships a layout wrapper. Lay them out with a consumer-provided container (for example, flex) and a `--mds-spacing-*` gap token — see each component's stories for the reference pattern.
 
 **When working from a Figma design:**
 
