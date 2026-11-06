@@ -1,0 +1,241 @@
+/* ==========================================================================
+   Select component
+   Native <select> built on Bootstrap's .form-select. Field chrome lives on the
+   <select> itself (like Textarea) so the entire box is the native hit target;
+   the chevron and invalid icon are decorative overlays with
+   pointer-events: none. All values use --mds-* tokens bound in Figma
+   (Select, node 15857:3800) unless commented as Figma-fixed.
+   ========================================================================== */
+
+/* --- Wrapper ---------------------------------------------------------------- */
+
+.mds-select[class] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+}
+
+/* --- Label ------------------------------------------------------------------ */
+
+.mds-select[class] .mds-select-label-row {
+  display: flex;
+  align-items: center;
+  min-height: 16px; /* Figma defines the label row min-height as fixed 16px. */
+  gap: var(--mds-spacing-xxs);
+}
+
+.mds-select[class] .mds-select-label {
+  /* Reset Bootstrap's form-label bottom margin — the wrapper gap owns spacing. */
+  margin-bottom: 0;
+
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xxs);
+
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+  line-height: var(--mds-line-height-paragraph-xs);
+  letter-spacing: var(--mds-letter-spacing-default);
+  color: var(--mds-text-subtle);
+}
+
+.mds-select[class] .mds-select-required {
+  color: var(--mds-text-danger);
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-medium);
+}
+
+/* --- Field ------------------------------------------------------------------ */
+
+/* Positioning context for the decorative icon overlay. */
+.mds-select[class] .mds-select-field-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* [class] outranks Bootstrap's single-class .form-select rules. Logical
+   padding properties cover all four sides, replacing Bootstrap's physical
+   padding so the reserved icon space mirrors under RTL. */
+.mds-select[class] .mds-select-field[class] {
+  display: block;
+  width: 100%;
+  height: 42px; /* Figma defines the field height as fixed 42px. */
+  padding-block: var(--mds-spacing-xs);
+  padding-inline-start: var(--mds-spacing-sm);
+  /* Reserve room for the chevron: edge padding + chevron + gap before value. */
+  padding-inline-end: calc(
+    var(--mds-spacing-sm) + var(--mds-icons-lg) + var(--mds-spacing-xs)
+  );
+
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-default);
+  letter-spacing: var(--mds-letter-spacing-default);
+  color: var(--mds-text-default);
+
+  /* Long option labels truncate in the closed field (ZeroHeight: Layout). */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Default fill is transparent; hover/active/focus switch to surface. */
+  background-color: transparent;
+  /* Drop Bootstrap's background-image chevron — MDS renders Figma's chevron
+     as a masked element so its colour follows the text-subtle token. */
+  background-image: none;
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
+  border-radius: var(--mds-border-radius-sm);
+  cursor: pointer;
+
+  transition: background-color 150ms ease;
+}
+
+/* Hover */
+.mds-select[class] .mds-select-field[class]:hover:not(:disabled):not(:focus) {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-default);
+}
+
+/* Active (mouse-down) — primary accent border. Invalid fields keep danger. */
+.mds-select[class] .mds-select-field[class]:active:not(:disabled, .is-invalid) {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-primary-default);
+}
+
+/* Focus — reset Bootstrap's :focus box-shadow and border colour. Browsers
+   only match :focus-visible on a <select> for keyboard focus, so pointer
+   focus gets the surface fill without a ring and needs no extra tracking. */
+.mds-select[class] .mds-select-field[class]:focus {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-default);
+  box-shadow: none;
+  outline: none;
+}
+
+/* Focus ring is outline-based (components.instructions.md: Focus ring
+   pattern) — Figma's 2px border is rendered as border colour + outline,
+   matching Input/Textarea. */
+.mds-select[class] .mds-select-field[class]:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: 0;
+  border-color: var(--mds-focus-default);
+  box-shadow: none;
+}
+
+/* --- Invalid ---------------------------------------------------------------- */
+
+/* Bootstrap's .form-select.is-invalid adds its own icon via background-image
+   and widens padding-right; both are replaced by the MDS overlay icon and the
+   logical padding below. */
+.mds-select[class] .mds-select-field.is-invalid[class] {
+  background-image: none;
+  border-color: var(--mds-border-interactive-danger-default);
+  /* Edge padding + chevron + gap + invalid icon + gap before value. */
+  padding-inline-end: calc(
+    var(--mds-spacing-sm) + var(--mds-icons-lg) + var(--mds-spacing-xs) +
+      var(--mds-icons-xs) + var(--mds-spacing-xs)
+  );
+}
+
+.mds-select[class]
+  .mds-select-field.is-invalid[class]:hover:not(:disabled):not(:focus) {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-danger-hover);
+}
+
+.mds-select[class] .mds-select-field.is-invalid[class]:active:not(:disabled) {
+  background-color: var(--mds-bg-surface-default);
+  border-color: var(--mds-border-interactive-danger-default);
+}
+
+.mds-select[class] .mds-select-field.is-invalid[class]:focus {
+  border-color: var(--mds-border-interactive-danger-default);
+  box-shadow: none;
+}
+
+/* Lighter danger tone keeps the ring legible against the red border. */
+.mds-select[class] .mds-select-field.is-invalid[class]:focus-visible {
+  outline-color: var(--mds-focus-danger);
+  border-color: var(--mds-focus-danger);
+}
+
+/* --- Disabled --------------------------------------------------------------- */
+
+.mds-select[class] .mds-select-field[class]:disabled {
+  background-color: var(--mds-bg-surface-strong);
+  border-color: var(--mds-border-interactive-secondary-default);
+  color: var(--mds-text-muted);
+  cursor: not-allowed;
+}
+
+/* --- Icons ------------------------------------------------------------------ */
+
+.mds-select[class] .mds-select-icons {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--mds-spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--mds-spacing-xs);
+  pointer-events: none;
+}
+
+.mds-select[class] .mds-select-invalid-icon {
+  color: var(--mds-text-danger);
+  font-size: var(--mds-icons-xs);
+  line-height: 1;
+}
+
+/* Figma's 24×24 chevron asset, masked so its colour comes from the
+   text-subtle token Figma binds to it. */
+.mds-select[class] .mds-select-chevron {
+  display: block;
+  flex-shrink: 0;
+  inline-size: var(--mds-icons-lg);
+  block-size: var(--mds-icons-lg);
+  background-color: var(--mds-text-subtle);
+  mask-image: url('./assets/select-chevron.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-image: url('./assets/select-chevron.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+/* --- Supporting text / feedback --------------------------------------------- */
+
+.mds-select[class] .mds-select-supporting-text,
+.mds-select[class] .mds-select-invalid-feedback {
+  margin: 0;
+  font-size: var(--mds-font-size-paragraph-small);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-small);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+/* Figma binds text-subtle here (Input/Textarea use text-muted). */
+.mds-select[class] .mds-select-supporting-text {
+  color: var(--mds-text-subtle);
+}
+
+/* Supporting text stays visible when invalid without invalidFeedback, so it
+   takes the danger colour to reinforce the state. */
+.mds-select[class]:has(.mds-select-field.is-invalid:not(:disabled))
+  .mds-select-supporting-text {
+  color: var(--mds-text-danger);
+}
+
+.mds-select[class]:has(.mds-select-field:disabled) .mds-select-supporting-text {
+  color: var(--mds-text-muted);
+}
+
+.mds-select[class] .mds-select-invalid-feedback {
+  color: var(--mds-text-danger);
+}
