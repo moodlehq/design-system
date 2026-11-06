@@ -175,7 +175,9 @@
   --mds-color-lg: rgba(0, 0, 0, 0.17);
   --mds-color-md: rgba(0, 0, 0, 0.15);
   --mds-color-sm: rgba(0, 0, 0, 0.08);
+  --mds-spinner-inverse-track: rgba(255, 255, 255, 0.35);
   --mds-border-translucent: rgba(0, 0, 0, 0);
+  --mds-breakpoints-xxxl: 120rem;
   --mds-breakpoints-xxl: 87.5rem;
   --mds-breakpoints-xl: 75rem;
   --mds-breakpoints-lg: 62rem;
@@ -258,6 +260,9 @@
   --mds-text-feedback-success: var(--mds-color-green-800);
   --mds-text-feedback-secondary: var(--mds-color-gray-800);
   --mds-text-feedback-primary: var(--mds-color-blue-800);
+  --mds-spinner-primary-track: var(--mds-color-blue-100);
+  --mds-spinner-primary-indicator: var(--mds-color-blue-700);
+  --mds-spinner-inverse-indicator: var(--mds-color-gray-white);
   --mds-focus-danger: var(--mds-color-red-200);
   --mds-border-subtle: var(--mds-color-gray-200);
   --mds-border-default: var(--mds-color-gray-300);

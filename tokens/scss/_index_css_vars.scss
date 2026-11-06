@@ -256,6 +256,10 @@
   --mds-text-feedback-success: #{$mds-text-feedback-success};
   --mds-text-feedback-secondary: #{$mds-text-feedback-secondary};
   --mds-text-feedback-primary: #{$mds-text-feedback-primary};
+  --mds-spinner-primary-track: #{$mds-spinner-primary-track};
+  --mds-spinner-primary-indicator: #{$mds-spinner-primary-indicator};
+  --mds-spinner-inverse-indicator: #{$mds-spinner-inverse-indicator};
+  --mds-spinner-inverse-track: #{$mds-spinner-inverse-track};
   --mds-focus-danger: #{$mds-focus-danger};
   --mds-focus-default: #{$mds-focus-default};
   --mds-border-subtle: #{$mds-border-subtle};
@@ -353,6 +357,7 @@
   --mds-avatars-md: #{$mds-avatars-md};
   --mds-avatars-sm: #{$mds-avatars-sm};
   --mds-avatars-xs: #{$mds-avatars-xs};
+  --mds-breakpoints-xxxl: #{$mds-breakpoints-xxxl};
   --mds-breakpoints-xxl: #{$mds-breakpoints-xxl};
   --mds-breakpoints-xl: #{$mds-breakpoints-xl};
   --mds-breakpoints-lg: #{$mds-breakpoints-lg};
