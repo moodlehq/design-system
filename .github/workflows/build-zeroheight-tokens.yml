@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
+    env:
+      COMMIT_MESSAGE: "chore(tokens): Regenerate CSS/SCSS from updated DTCG tokens"
 
     steps:
       - name: Checkout PR branch
@@ -43,6 +46,18 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated token changes to commit."
           else
-            git commit -m "chore(tokens): Regenerate CSS/SCSS from updated DTCG tokens"
+            git commit -m "$COMMIT_MESSAGE"
             git push origin HEAD:"$HEAD_REF"
+          fi
+
+      - name: Rename PR to match the commit message
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [ "$PR_TITLE" = "$COMMIT_MESSAGE" ]; then
+            echo "PR title already up to date."
+          else
+            gh pr edit "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --title "$COMMIT_MESSAGE"
           fi
