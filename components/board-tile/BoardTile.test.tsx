@@ -316,20 +316,75 @@ describe('BoardTile', () => {
     expect(move).toHaveAttribute('data-pointer-focus', 'true');
     fireEvent.blur(move);
     expect(move).not.toHaveAttribute('data-pointer-focus');
+    fireEvent.pointerUp(window);
   });
 
-  it('reports a pointer press on the move handle', () => {
+  it('picks up a handle on click and shows its arrows, then drops on a second click', async () => {
+    const user = userEvent.setup();
+    const Harness = () => {
+      const [active, setActive] = useState<BoardTileProps['active']>(null);
+      return (
+        <BoardTile
+          title="Block title"
+          labels={labels}
+          editing
+          active={active}
+          onActivate={setActive}
+          onCommit={() => setActive(null)}
+          onCancel={() => setActive(null)}
+        />
+      );
+    };
+    render(<Harness />);
+    const move = screen.getByRole('button', { name: labels.move });
+    await user.click(move);
+    expect(move).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: labels.up })).toBeInTheDocument();
+    await user.click(move);
+    expect(move).toHaveAttribute('aria-pressed', 'false');
+    expect(
+      screen.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
+
+    const resize = screen.getByRole('button', { name: labels.resize });
+    await user.click(resize);
+    expect(resize).toHaveAttribute('aria-pressed', 'true');
+    expect(move).toHaveAttribute('aria-pressed', 'false');
+    expect(
+      screen.getByRole('button', { name: labels.down }),
+    ).toBeInTheDocument();
+  });
+
+  it('does not show arrows when a handle press becomes a drag', () => {
+    const onActivate = vi.fn();
     const onHandlePointerDown = vi.fn();
-    renderTile({ editing: true, onHandlePointerDown });
-    fireEvent.pointerDown(screen.getByRole('button', { name: labels.move }), {
-      button: 0,
-      clientX: 4,
-      clientY: 6,
-    });
+    renderTile({ editing: true, onActivate, onHandlePointerDown });
+    const move = screen.getByRole('button', { name: labels.move });
+    fireEvent.pointerDown(move, { button: 0, clientX: 4, clientY: 6 });
+    expect(onActivate).not.toHaveBeenCalled();
+    expect(onHandlePointerDown).not.toHaveBeenCalled();
+    fireEvent.pointerMove(window, { clientX: 20, clientY: 6 });
     expect(onHandlePointerDown).toHaveBeenCalledWith(
       'move',
       expect.objectContaining({ clientX: 4, clientY: 6 }),
     );
+    fireEvent.pointerUp(window);
+    expect(onActivate).not.toHaveBeenCalled();
+    expect(
+      screen.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('treats a handle press that stays under the threshold as a click', () => {
+    const onActivate = vi.fn();
+    const onHandlePointerDown = vi.fn();
+    renderTile({ editing: true, onActivate, onHandlePointerDown });
+    const resize = screen.getByRole('button', { name: labels.resize });
+    fireEvent.pointerDown(resize, { button: 0, clientX: 2, clientY: 2 });
+    fireEvent.pointerMove(window, { clientX: 4, clientY: 3 });
+    fireEvent.pointerUp(window);
+    expect(onHandlePointerDown).not.toHaveBeenCalled();
+    expect(onActivate).toHaveBeenCalledWith('resize');
   });
 
   it('drops a pressed handle on a second pointer press', () => {

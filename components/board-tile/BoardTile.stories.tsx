@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, fn, waitFor } from 'storybook/test';
-import type { BoardTileInteraction, BoardTileLabels } from './BoardTile';
+import type {
+  BoardTileInteraction,
+  BoardTileLabels,
+  BoardTileProps,
+} from './BoardTile';
 import { BoardTile } from './BoardTile';
 
 const labels: BoardTileLabels = {
@@ -66,7 +70,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Frame for one block on the Flexible dashboard. View shows the title and content. Edit adds the move handle, remove button, actions menu, and resize handle. The header uses a grab cursor in edit mode; a press that moves 4px calls `onHeaderDragStart`. Pickup is controlled with `active`. `dropped` plays the landing outline.',
+          'Frame for one block on the Flexible dashboard. View shows the title and content. Edit adds the move handle, remove button, actions menu, and resize handle. The header uses a grab cursor in edit mode; a press that moves 4px calls `onHeaderDragStart`. A click on a handle picks that mode up and shows its arrows; a press that moves 4px is a drag and does not. Pickup is controlled with `active`. `dropped` plays the landing outline.',
       },
     },
   },
@@ -104,19 +108,52 @@ type Story = StoryObj<typeof meta>;
 
 export const View: Story = {};
 
+const ActivatingTile = ({
+  active: activeProp,
+  onActivate,
+  onCommit,
+  onCancel,
+  ...props
+}: BoardTileProps) => {
+  const [active, setActive] = useState<BoardTileInteraction | null>(
+    activeProp ?? null,
+  );
+  return (
+    <BoardTile
+      {...props}
+      active={active}
+      onActivate={(mode) => {
+        setActive(mode);
+        onActivate?.(mode);
+      }}
+      onCommit={(mode) => {
+        setActive(null);
+        onCommit?.(mode);
+      }}
+      onCancel={(mode) => {
+        setActive(null);
+        onCancel?.(mode);
+      }}
+    />
+  );
+};
+
 export const Edit: Story = {
   args: editingArgs,
-  play: async ({ canvas }) => {
+  render: (args) => (
+    <div style={frameStyle}>
+      <ActivatingTile {...args} />
+    </div>
+  ),
+  play: async ({ canvas, userEvent }) => {
     const tile = canvas.getByRole('region', { name: 'Block title' });
     const border = await borderColor(tile, '--mds-border-default');
     await expect(border.actual).toBe(border.expected);
     await expect(border.outline).toBe('rgba(0, 0, 0, 0)');
-    await expect(
-      canvas.getByRole('button', { name: labels.move }),
-    ).toBeVisible();
-    await expect(
-      canvas.getByRole('button', { name: labels.resize }),
-    ).toBeVisible();
+    const move = canvas.getByRole('button', { name: labels.move });
+    const resize = canvas.getByRole('button', { name: labels.resize });
+    await expect(move).toBeVisible();
+    await expect(resize).toBeVisible();
     await expect(
       canvas.getByRole('button', { name: labels.remove }),
     ).toBeVisible();
@@ -126,6 +163,38 @@ export const Edit: Story = {
     await expect(
       canvas.queryByRole('button', { name: labels.up }),
     ).not.toBeInTheDocument();
+
+    await userEvent.click(move);
+    await expect(move).toHaveAttribute('aria-pressed', 'true');
+    await expect(canvas.getByRole('button', { name: labels.up })).toBeVisible();
+    await userEvent.click(move);
+    await expect(move).toHaveAttribute('aria-pressed', 'false');
+    await expect(
+      canvas.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
+
+    await userEvent.click(resize);
+    await expect(resize).toHaveAttribute('aria-pressed', 'true');
+    await expect(move).toHaveAttribute('aria-pressed', 'false');
+    await expect(
+      canvas.getByRole('button', { name: labels.down }),
+    ).toBeVisible();
+    await userEvent.click(resize);
+    await expect(resize).toHaveAttribute('aria-pressed', 'false');
+    await expect(
+      canvas.queryByRole('button', { name: labels.down }),
+    ).not.toBeInTheDocument();
+
+    await userEvent.pointer([
+      { keys: '[MouseLeft>]', target: move, coords: { x: 4, y: 4 } },
+      { coords: { x: 28, y: 4 } },
+      { keys: '[/MouseLeft]' },
+    ]);
+    await expect(move).toHaveAttribute('aria-pressed', 'false');
+    await expect(
+      canvas.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
+    move.blur();
   },
 };
 
@@ -312,27 +381,35 @@ const DropFeedbackDemo = () => {
   const [plays, setPlays] = useState(0);
   return (
     <>
-      <button
-        type="button"
-        onClick={() => {
-          setDropped(false);
-          requestAnimationFrame(() => setDropped(true));
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--mds-spacing-md)',
         }}
       >
-        Replay drop
-      </button>
-      <div style={frameStyle}>
-        <BoardTile
-          title="Block title"
-          labels={labels}
-          content={content}
-          editing
-          dropped={dropped}
-          onDropEnd={() => {
-            setPlays((count) => count + 1);
+        <button
+          type="button"
+          onClick={() => {
             setDropped(false);
+            requestAnimationFrame(() => setDropped(true));
           }}
-        />
+        >
+          Replay drop
+        </button>
+        <div style={frameStyle}>
+          <BoardTile
+            title="Block title"
+            labels={labels}
+            content={content}
+            editing
+            dropped={dropped}
+            onDropEnd={() => {
+              setPlays((count) => count + 1);
+              setDropped(false);
+            }}
+          />
+        </div>
       </div>
       <p className="visually-hidden" data-testid="drop-log">
         {String(plays)}

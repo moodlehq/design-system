@@ -96,8 +96,9 @@ export interface BoardTileProps extends Omit<
   hidden?: boolean;
   /**
    * Which handle is picked up. Controlled by the dashboard: set it from
-   * `onActivate` or `onHandlePointerDown`, and clear it from `onCommit` or
-   * `onCancel`. Arrow buttons are shown for this handle.
+   * `onActivate`, and clear it from `onCommit` or `onCancel`. Arrow buttons
+   * are shown for this handle. A drag reports `onHandlePointerDown` and does
+   * not pick the handle up, so it does not show arrows.
    */
   active?: BoardTileInteraction | null;
   /**
@@ -109,7 +110,11 @@ export interface BoardTileProps extends Omit<
   actions?: BoardTileAction[];
   /** Shows the remove button and is called when it is pressed. */
   onRemove?: () => void;
-  /** Keyboard or assistive tech picked a handle up. */
+  /**
+   * A handle was picked up without a drag: Enter, Space, an assistive click,
+   * or a pointer press released before it moved 4px. The dashboard sets
+   * `active` so the direction arrows appear.
+   */
   onActivate?: (mode: BoardTileInteraction) => void;
   /** The picked-up tile was dropped (Enter, Space, second press, or focus leaving the handle). */
   onCommit?: (mode: BoardTileInteraction) => void;
@@ -127,11 +132,12 @@ export interface BoardTileProps extends Omit<
     vertical: number,
   ) => void;
   /**
-   * Pointer pressed a move or resize handle.
+   * A handle press moved at least 4px, so it is a drag rather than a click.
+   * The event is the original press. Arrows are not shown for this gesture;
+   * a click that does not cross the threshold calls `onActivate` instead.
    * Touch press-and-hold, when required, stays in the dashboard.
-   * A header drag also calls this with mode `move`, after `onHeaderDragStart`,
-   * so one listener can start every move. Wire that listener or
-   * `onHeaderDragStart`, not both.
+   * A header drag also calls this with mode `move`, after `onHeaderDragStart`.
+   * Wire that listener or `onHeaderDragStart`, not both.
    */
   onHandlePointerDown?: (
     mode: BoardTileInteraction,
@@ -277,6 +283,9 @@ const Handle = ({
   onDirection,
   onHandlePointerDown,
 }: HandleProps) => {
+  const gestureStop = useRef<(() => void) | null>(null);
+  useEffect(() => () => gestureStop.current?.(), []);
+
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     const target = event.target;
     if (
@@ -326,7 +335,40 @@ const Handle = ({
     // scripted focus, so the press is marked and the ring is suppressed in CSS.
     event.currentTarget.dataset.pointerFocus = 'true';
     event.currentTarget.focus({ focusVisible: false });
-    onHandlePointerDown?.(mode, event.nativeEvent);
+
+    const startX = event.clientX;
+    const startY = event.clientY;
+    const startEvent = event.nativeEvent;
+    let dragged = false;
+    const stop = () => {
+      gestureStop.current = null;
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', cancel);
+    };
+    const move = (moveEvent: PointerEvent) => {
+      if (
+        Math.abs(moveEvent.clientX - startX) < HEADER_DRAG_THRESHOLD &&
+        Math.abs(moveEvent.clientY - startY) < HEADER_DRAG_THRESHOLD
+      ) {
+        return;
+      }
+      if (dragged) return;
+      dragged = true;
+      // A drag keeps the press coordinates. Arrows stay hidden because this
+      // is not a click pickup.
+      onHandlePointerDown?.(mode, startEvent);
+    };
+    const up = () => {
+      stop();
+      if (!dragged) onActivate?.(mode);
+    };
+    const cancel = () => stop();
+    gestureStop.current?.();
+    gestureStop.current = stop;
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', cancel);
   };
 
   return (
@@ -369,9 +411,9 @@ const Handle = ({
             delete event.currentTarget.dataset.pointerFocus;
           }}
           onClick={(event) => {
-            // Pointer pickup starts on pointerdown. A zero-detail click is an
-            // assistive-technology activation that does not produce a keydown.
-            // A second press is Enter, Space, or another pointerdown.
+            // A real pointer click is decided on pointerup, so a drag is not
+            // also a pickup. A zero-detail click is assistive technology,
+            // which does not produce a pointer gesture.
             if (event.detail !== 0 || pressed) return;
             onActivate?.(mode);
           }}
