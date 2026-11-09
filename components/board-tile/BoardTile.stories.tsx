@@ -1,50 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { expect, fn, waitFor } from 'storybook/test';
-import type {
-  BoardTileInteraction,
-  BoardTileLabels,
-  BoardTileProps,
-} from './BoardTile';
+import { expect, waitFor } from 'storybook/test';
+import type { BoardTileInteraction, BoardTileProps } from './BoardTile';
 import { BoardTile } from './BoardTile';
+import { content, editingArgs, frameStyle, labels } from './story-fixtures';
 
-const labels: BoardTileLabels = {
-  move: 'Move Timeline',
-  resize: 'Resize Timeline',
-  moveInstructions:
-    'Press Enter or Space to pick up. Use the arrow keys to move. Press Enter or Space to drop, or Escape to cancel.',
-  resizeInstructions:
-    'Press Enter or Space to pick up. Use the arrow keys to resize. Press Enter or Space to drop, or Escape to cancel.',
-  up: 'Up',
-  down: 'Down',
-  left: 'Left',
-  right: 'Right',
-  moveControls: 'Move controls',
-  resizeControls: 'Resize controls',
-  hidden: 'Hidden from students',
-  remove: 'Remove Timeline',
-  actions: 'Timeline actions',
-};
-
-const actions = [
-  { id: 'configure', label: 'Configure Timeline block' },
-  { id: 'hide', label: 'Hide Timeline block' },
-];
-
-const content = <p style={{ margin: 0 }}>Block content goes in this slot.</p>;
-
-const frameStyle = {
-  inlineSize: '38rem',
-  blockSize: '20rem',
-  display: 'flex',
-  flexDirection: 'column' as const,
-};
-
-const editingArgs = {
-  editing: true,
-  onRemove: fn(),
-  actions,
-};
+const dashboardHook = (note: string) => ({
+  control: false as const,
+  description: `Behaviour hook. No Figma property. ${note}`,
+  table: { category: 'Dashboard integration' },
+});
 
 const borderColor = async (
   tile: HTMLElement,
@@ -70,24 +35,101 @@ const meta = {
     docs: {
       description: {
         component:
-          'Frame for one block on the Flexible dashboard. View shows the title and content. Edit adds the move handle, remove button, actions menu, and resize handle. The header uses a grab cursor in edit mode; a press that moves 4px calls `onHeaderDragStart`. A click on a handle picks that mode up and shows its arrows; a press that moves 4px is a drag and does not. Pickup is controlled with `active`. `dropped` plays the landing outline.',
+          'Frame for one block on the Flexible dashboard. Figma states are View, Edit, Edit hover, Active, and Hidden. Title is the block name. Content is the block slot. After a drop, the tile moves into place and an outline animation fades. Reduced motion keeps that move and drops the outline. Props under Dashboard integration are behaviour hooks. They are not Figma properties.',
       },
     },
   },
   tags: ['autodocs', 'test', 'beta'],
   argTypes: {
-    content: { control: false },
-    labels: { control: false },
-    actions: { control: false },
+    title: {
+      table: { category: 'Figma' },
+      description: 'Figma Title.',
+    },
+    content: {
+      control: false,
+      table: { category: 'Figma' },
+      description: 'Figma Content slot. The tile does not restyle it.',
+    },
+    editing: {
+      control: 'boolean',
+      table: { category: 'State' },
+      description:
+        'Figma State Edit. Shows the move handle, resize handle, remove, and actions.',
+    },
+    hidden: {
+      control: 'boolean',
+      table: { category: 'State' },
+      description:
+        'Figma State Hidden. Dashed border, Hidden from students badge, and dimmed content.',
+    },
     active: {
       control: 'select',
       options: ['move', 'resize'],
+      table: { category: 'State' },
+      description:
+        'Figma State Active. move or resize is the handle Type that is picked up.',
     },
-    editing: { control: 'boolean' },
-    hidden: { control: 'boolean' },
-    showDirectionControls: { control: 'boolean' },
-    pointerDragging: { control: 'boolean' },
-    dropped: { control: 'boolean' },
+    children: { control: false, table: { disable: true } },
+    label: {
+      ...dashboardHook('Accessible name when it should differ from Title.'),
+      control: 'text',
+    },
+    labels: {
+      control: false,
+      ...dashboardHook('Strings for the controls. Moodle supplies the copy.'),
+    },
+    actions: {
+      control: false,
+      ...dashboardHook('Block actions menu, excluding remove.'),
+    },
+    onRemove: {
+      ...dashboardHook('Called when Remove is pressed.'),
+    },
+    showDirectionControls: {
+      ...dashboardHook(
+        'Arrow buttons while Active. Pass false, with active still set, for the slide into place.',
+      ),
+      control: 'boolean',
+    },
+    onActivate: {
+      ...dashboardHook('Click, Enter, or Space picked a handle up.'),
+    },
+    onCommit: {
+      ...dashboardHook(
+        'Second press, Enter, Space, or blur dropped the handle.',
+      ),
+    },
+    onCancel: {
+      ...dashboardHook('Escape cancelled the pickup.'),
+    },
+    onDirection: {
+      ...dashboardHook('Arrow key or direction button.'),
+    },
+    onHandlePointerDown: {
+      ...dashboardHook('A handle press moved at least 4px, so it is a drag.'),
+    },
+    onHeaderDragStart: {
+      ...dashboardHook('A header press moved at least 4px.'),
+    },
+    pointerDragging: {
+      ...dashboardHook('Pointer drag is in progress.'),
+      control: 'boolean',
+    },
+    dropped: {
+      ...dashboardHook(
+        'Plays the move into place. The outline plays with it, except under reduced motion.',
+      ),
+      control: 'boolean',
+    },
+    onDropEnd: {
+      ...dashboardHook(
+        'Outline finished, or reduced motion skipped the outline.',
+      ),
+    },
+    statusMessage: {
+      ...dashboardHook('Polite live-region text. The wording stays in Moodle.'),
+      control: 'text',
+    },
   },
   args: {
     title: 'Block title',
@@ -106,7 +148,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const View: Story = {};
+export const View: Story = {
+  name: 'View',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When people are not editing. Shows the block without handles or editing actions.',
+      },
+    },
+  },
+};
 
 const ActivatingTile = ({
   active: activeProp,
@@ -139,7 +191,16 @@ const ActivatingTile = ({
 };
 
 export const Edit: Story = {
+  name: 'Edit',
   args: editingArgs,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When the dashboard is in edit mode. Shows the move handle, Remove, Block actions, and the resize handle. A click on a handle picks that handle up.',
+      },
+    },
+  },
   render: (args) => (
     <div style={frameStyle}>
       <ActivatingTile {...args} />
@@ -199,6 +260,7 @@ export const Edit: Story = {
 };
 
 export const EditHover: Story = {
+  name: 'Edit hover',
   args: {
     ...editingArgs,
     // The pseudo-states addon also adds this class. Setting it here keeps the
@@ -221,7 +283,7 @@ export const EditHover: Story = {
     docs: {
       description: {
         story:
-          'Edit at rest uses the neutral default border. This story forces the hover border with the pseudo-states addon. A real pointer hover does the same.',
+          'When the pointer is over the tile. The border changes. Each handle responds only when the pointer is on that handle.',
       },
     },
   },
@@ -243,6 +305,15 @@ export const EditHover: Story = {
 };
 
 export const Active: Story = {
+  name: 'Active',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When people pick up the tile to move or resize it. Stronger border and shadow, without tilt or scale. This story picks up the Move handle.',
+      },
+    },
+  },
   args: {
     ...editingArgs,
     active: 'move',
@@ -257,14 +328,16 @@ export const Active: Story = {
   },
 };
 
-export const ActiveResize: Story = {
-  args: {
-    ...editingArgs,
-    active: 'resize',
-  },
-};
-
 export const Hidden: Story = {
+  name: 'Hidden',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'When the block is hidden from students. Dashed border, Hidden from students badge, and reduced content opacity.',
+      },
+    },
+  },
   args: {
     ...editingArgs,
     hidden: true,
@@ -275,349 +348,4 @@ export const Hidden: Story = {
       canvas.getByRole('heading', { name: 'Block title' }),
     ).toBeVisible();
   },
-};
-
-const KeyboardDemo = () => {
-  const [active, setActive] = useState<BoardTileInteraction | null>(null);
-  const [log, setLog] = useState('idle');
-  return (
-    <div style={frameStyle}>
-      <BoardTile
-        title="Block title"
-        labels={labels}
-        content={content}
-        editing
-        active={active}
-        onActivate={(mode) => {
-          setActive(mode);
-          setLog(`activate ${mode}`);
-        }}
-        onCommit={(mode) => {
-          setActive(null);
-          setLog(`commit ${mode}`);
-        }}
-        onCancel={(mode) => {
-          setActive(null);
-          setLog(`cancel ${mode}`);
-        }}
-        onDirection={(mode, horizontal, vertical) => {
-          setLog(`direction ${mode} ${horizontal} ${vertical}`);
-        }}
-      />
-      <p className="visually-hidden" data-testid="board-tile-log">
-        {log}
-      </p>
-    </div>
-  );
-};
-
-export const Keyboard: Story = {
-  render: () => <KeyboardDemo />,
-  play: async ({ canvas, userEvent }) => {
-    const move = canvas.getByRole('button', { name: labels.move });
-    const log = canvas.getByTestId('board-tile-log');
-    await userEvent.tab();
-    await expect(move).toHaveFocus();
-    await userEvent.keyboard('{Enter}');
-    await expect(log).toHaveTextContent('activate move');
-    await expect(canvas.getByRole('button', { name: labels.up })).toBeVisible();
-    await userEvent.keyboard('{ArrowRight}');
-    await expect(log).toHaveTextContent('direction move 1 0');
-    await userEvent.keyboard('{Escape}');
-    await expect(log).toHaveTextContent('cancel move');
-    await expect(
-      canvas.queryByRole('button', { name: labels.up }),
-    ).not.toBeInTheDocument();
-    await userEvent.keyboard(' ');
-    await expect(log).toHaveTextContent('activate move');
-    await userEvent.keyboard('{Enter}');
-    await expect(log).toHaveTextContent('commit move');
-
-    const resize = canvas.getByRole('button', { name: labels.resize });
-    await userEvent.tab();
-    await expect(resize).toHaveFocus();
-    await userEvent.keyboard('{Enter}');
-    await expect(log).toHaveTextContent('activate resize');
-    await userEvent.keyboard('{ArrowDown}');
-    await expect(log).toHaveTextContent('direction resize 0 1');
-    await userEvent.keyboard(' ');
-    await expect(log).toHaveTextContent('commit resize');
-  },
-};
-
-export const RightToLeft: Story = {
-  args: {
-    ...editingArgs,
-    active: 'move',
-    hidden: true,
-  },
-  decorators: [
-    (Story) => (
-      <div dir="rtl">
-        <Story />
-      </div>
-    ),
-  ],
-  tags: ['test', 'beta'],
-};
-
-export const Landing: Story = {
-  args: {
-    ...editingArgs,
-    landing: true,
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Set `landing` while the dashboard slides a released tile into place. The border and shadow match Active. The slide itself stays in Moodle.',
-      },
-    },
-  },
-};
-
-export const DropFeedback: Story = {
-  args: {
-    ...editingArgs,
-    dropped: true,
-  },
-  parameters: {
-    chromatic: { disableSnapshot: true },
-    docs: {
-      description: {
-        story:
-          'After a drop, the tile lifts and settles while the held outline splits and fades. The animation plays once when the story loads. Reduced motion skips the outline. The stable picture of the outline is Drop feedback frame.',
-      },
-    },
-  },
-  play: async ({ canvas }) => {
-    const tile = canvas.getByRole('region', { name: 'Block title' });
-    await expect(
-      tile.querySelector('.mds-board-tile-drop-outline'),
-    ).not.toBeNull();
-    await expect(
-      canvas.queryByRole('button', { name: 'Replay drop' }),
-    ).not.toBeInTheDocument();
-  },
-};
-
-export const DropFeedbackFrame: Story = {
-  args: {
-    ...editingArgs,
-    dropped: true,
-    className: 'mds-board-tile--drop-frame',
-  },
-  parameters: {
-    chromatic: { pauseAnimationAtEnd: true },
-    docs: {
-      description: {
-        story:
-          'The outline frozen at its first frame, with the settle raised by one extra-small spacing step. Chromatic pauses animations so this frame does not move.',
-      },
-    },
-  },
-};
-
-export const DropFeedbackReducedMotion: Story = {
-  args: {
-    ...editingArgs,
-    dropped: true,
-  },
-  parameters: {
-    chromatic: { prefersReducedMotion: 'reduce', pauseAnimationAtEnd: true },
-    docs: {
-      description: {
-        story:
-          'With reduced motion, the outline is not shown. Chromatic captures this story with `prefers-reduced-motion: reduce`.',
-      },
-    },
-  },
-};
-
-const HeaderDragDemo = () => {
-  const [log, setLog] = useState('idle');
-  return (
-    <>
-      <div style={frameStyle}>
-        <BoardTile
-          title="Block title"
-          labels={labels}
-          content={content}
-          editing
-          onRemove={() => undefined}
-          actions={actions}
-          onHeaderDragStart={() => setLog('header')}
-        />
-      </div>
-      <p className="visually-hidden" data-testid="header-drag-log">
-        {log}
-      </p>
-    </>
-  );
-};
-
-export const HeaderDrag: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-    docs: {
-      description: {
-        story:
-          'In edit mode the header uses a grab cursor. A press on the title or header background that travels at least 4px calls `onHeaderDragStart`, and also `onHandlePointerDown` with mode `move`. Presses on the remove button, the actions menu, links, and the handles do not. The dashboard owns the drag coordinates. Wire one of those callbacks, not both.',
-      },
-    },
-  },
-  render: () => <HeaderDragDemo />,
-  play: async ({ canvas, userEvent }) => {
-    const log = canvas.getByTestId('header-drag-log');
-    const title = canvas.getByRole('heading', { name: 'Block title' });
-    await userEvent.pointer([
-      { keys: '[MouseLeft>]', target: title, coords: { x: 8, y: 8 } },
-      { coords: { x: 24, y: 10 } },
-      { keys: '[/MouseLeft]' },
-    ]);
-    await expect(log).toHaveTextContent('header');
-  },
-};
-
-const cellStyle = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: 'var(--mds-spacing-xs)',
-  padding: 'var(--mds-spacing-xl)',
-};
-
-const tileStates = [
-  { key: 'view', label: 'View', props: { editing: false } },
-  { key: 'edit', label: 'Edit', props: { editing: true } },
-  {
-    key: 'edit-hover',
-    label: 'Edit hover',
-    props: { editing: true },
-    state: 'tile-hover',
-  },
-  {
-    key: 'active',
-    label: 'Active',
-    props: { editing: true, active: 'move' as const },
-  },
-  { key: 'hidden', label: 'Hidden', props: { editing: true, hidden: true } },
-];
-
-export const StateMatrix: Story = {
-  parameters: {
-    pseudo: {
-      hover: [
-        '[data-matrix-state="tile-hover"] .mds-board-tile',
-        '[data-matrix-state="move-hover"] .mds-board-tile-handle--move .mds-board-tile-handle-control',
-        '[data-matrix-state="resize-hover"] .mds-board-tile-handle--resize .mds-board-tile-handle-control',
-      ],
-      focusVisible: [
-        '[data-matrix-state="move-focus"] .mds-board-tile-handle--move .mds-board-tile-handle-control',
-        '[data-matrix-state="resize-focus"] .mds-board-tile-handle--resize .mds-board-tile-handle-control',
-      ],
-    },
-  },
-  render: () => (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--mds-spacing-xl)',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 'var(--mds-spacing-lg)',
-        }}
-      >
-        {tileStates.map((state) => (
-          <div
-            key={state.key}
-            data-matrix-state={state.state}
-            style={cellStyle}
-          >
-            <span>{state.label}</span>
-            <div style={frameStyle}>
-              <BoardTile
-                title={`Block title, ${state.label}`}
-                labels={labels}
-                content={content}
-                onRemove={() => undefined}
-                actions={actions}
-                {...state.props}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, auto)',
-          gap: 'var(--mds-spacing-lg)',
-          alignItems: 'start',
-        }}
-      >
-        {(['Rest', 'Hover', 'Focus', 'Active'] as const).map((label) => (
-          <span key={label}>{label}</span>
-        ))}
-        {(
-          [
-            ['move', undefined],
-            ['move', 'move-hover'],
-            ['move', 'move-focus'],
-            ['move', undefined],
-          ] as const
-        ).map(([mode, state], index) => (
-          <div
-            key={`move-${index}`}
-            data-matrix-state={state}
-            style={cellStyle}
-          >
-            <div style={{ inlineSize: '16rem', blockSize: '10rem' }}>
-              <BoardTile
-                title={`Move handle ${index + 1}`}
-                labels={labels}
-                content={content}
-                editing
-                active={index === 3 ? 'move' : null}
-                onRemove={() => undefined}
-                actions={actions}
-              />
-            </div>
-            <span>{mode}</span>
-          </div>
-        ))}
-        {(
-          [
-            ['resize', undefined],
-            ['resize', 'resize-hover'],
-            ['resize', 'resize-focus'],
-            ['resize', undefined],
-          ] as const
-        ).map(([mode, state], index) => (
-          <div
-            key={`resize-${index}`}
-            data-matrix-state={state}
-            style={cellStyle}
-          >
-            <div style={{ inlineSize: '16rem', blockSize: '10rem' }}>
-              <BoardTile
-                title={`Resize handle ${index + 1}`}
-                labels={labels}
-                content={content}
-                editing
-                active={index === 3 ? 'resize' : null}
-                onRemove={() => undefined}
-                actions={actions}
-              />
-            </div>
-            <span>{mode}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  ),
 };

@@ -30,7 +30,6 @@
 @media (hover: hover) {
   .mds-board-tile--editing:hover:not(
       .mds-board-tile--active,
-      .mds-board-tile--landing,
       .mds-board-tile--hidden
     ) {
     border-color: var(--mds-border-interactive-primary-hover);
@@ -55,9 +54,7 @@
 }
 
 .mds-board-tile--active,
-.mds-board-tile--active:hover,
-.mds-board-tile--landing,
-.mds-board-tile--landing:hover {
+.mds-board-tile--active:hover {
   z-index: 1;
   border-style: solid;
   border-color: var(--mds-border-interactive-primary-default);
@@ -322,7 +319,9 @@ body:has(.mds-board-tile-handle-control[aria-pressed='true'])
     mds-board-tile-drop-fade 0.85s ease-in-out both;
 }
 
-.mds-board-tile:has(> .mds-board-tile-drop-outline) {
+/* The move into place. It does not depend on the outline, so reduced
+   motion can keep this and drop the border animation. */
+.mds-board-tile--dropped {
   transition: none;
   animation: mds-board-tile-drop-settle 0.42s both;
 }
@@ -543,7 +542,7 @@ body:has(.mds-board-tile-handle-control[aria-pressed='true'])
 /* Chromatic frame: the spin's first instant (two halves of the held edge)
    and the settle's raised point. Nothing is running, so the snapshot
    does not depend on the clock. */
-.mds-board-tile--drop-frame:has(> .mds-board-tile-drop-outline) {
+.mds-board-tile--dropped.mds-board-tile--drop-frame {
   animation: none;
   translate: 0 calc(-1 * var(--mds-spacing-xxs));
 }
@@ -560,13 +559,7 @@ body:has(.mds-board-tile-handle-control[aria-pressed='true'])
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mds-board-tile,
-  .mds-board-tile:has(> .mds-board-tile-drop-outline) {
+  .mds-board-tile {
     transition: none;
-    animation: none;
-  }
-
-  .mds-board-tile-drop-outline {
-    display: none;
   }
 }

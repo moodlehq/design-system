@@ -63,7 +63,6 @@
    by the pseudo-states addon into an empty selector. */
 .mds-board-tile--editing.pseudo-hover:not(
     .mds-board-tile--active,
-    .mds-board-tile--landing,
     .mds-board-tile--hidden
   ) {
   border-color: var(--mds-border-interactive-primary-hover);

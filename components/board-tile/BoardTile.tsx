@@ -102,8 +102,10 @@ export interface BoardTileProps extends Omit<
    */
   active?: BoardTileInteraction | null;
   /**
-   * Shows the four direction buttons while `active` is set.
-   * The dashboard hides these during a pointer drag. Defaults to true.
+   * Shows the four direction buttons while `active` is set. Defaults to true.
+   * Keep `active` set and pass false for the slide into place: the Active
+   * border and shadow stay, and the arrows stay hidden. The slide itself
+   * stays in the dashboard.
    */
   showDirectionControls?: boolean;
   /** Block actions, excluding remove. Rendered in a Dropdown. Omit or pass `[]` to hide the menu. */
@@ -153,14 +155,15 @@ export interface BoardTileProps extends Omit<
   /** Pointer drag is in progress. Holds the grabbing cursor and skips transitions. */
   pointerDragging?: boolean;
   /**
-   * The dashboard is sliding a released tile into place. Keeps the active
-   * border and shadow without showing direction buttons. The slide itself
-   * stays in the dashboard.
+   * The tile has just been dropped. It plays the move into place.
+   * The outline animation plays with that move, and is not rendered when
+   * reduced motion is requested.
    */
-  landing?: boolean;
-  /** Plays the drop outline once. Ignored when reduced motion is requested. */
   dropped?: boolean;
-  /** Called when the drop outline finishes, or immediately when motion is reduced. */
+  /**
+   * Called when the outline animation finishes. When reduced motion is
+   * requested the outline is not rendered and this fires immediately.
+   */
   onDropEnd?: () => void;
   /**
    * Caller-supplied text announced through a polite live region while a tile
@@ -553,7 +556,6 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
       onHandlePointerDown,
       onHeaderDragStart,
       pointerDragging = false,
-      landing = false,
       dropped = false,
       onDropEnd,
       statusMessage,
@@ -650,7 +652,7 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
         `mds-board-tile--${resolvedActive}`,
       );
     }
-    if (landing) classes.push('mds-board-tile--landing');
+    if (dropped) classes.push('mds-board-tile--dropped');
     if (pointerDragging) classes.push('mds-board-tile--dragging');
     if (className) classes.push(className);
 

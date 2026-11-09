@@ -124,6 +124,8 @@ describe('BoardTile', () => {
       active: 'resize',
       showDirectionControls: false,
     });
+    const tile = screen.getByRole('region', { name: 'Block title' });
+    expect(tile).toHaveClass('mds-board-tile--active');
     expect(
       screen.queryByRole('button', { name: labels.up }),
     ).not.toBeInTheDocument();
@@ -299,16 +301,6 @@ describe('BoardTile', () => {
     expect(onHeaderDragStart).not.toHaveBeenCalled();
   });
 
-  it('applies the landing look without direction buttons', () => {
-    renderTile({ editing: true, landing: true });
-    const tile = screen.getByRole('region', { name: 'Block title' });
-    expect(tile).toHaveClass('mds-board-tile--landing');
-    expect(tile).not.toHaveClass('mds-board-tile--active');
-    expect(
-      screen.queryByRole('button', { name: labels.up }),
-    ).not.toBeInTheDocument();
-  });
-
   it('clears the pointer-focus mark when the handle blurs', () => {
     renderTile({ editing: true });
     const move = screen.getByRole('button', { name: labels.move });
@@ -399,6 +391,8 @@ describe('BoardTile', () => {
   it('renders the drop outline and ends it when the spin finishes', () => {
     const onDropEnd = vi.fn();
     const { container } = renderTile({ dropped: true, onDropEnd });
+    const tile = screen.getByRole('region', { name: 'Block title' });
+    expect(tile).toHaveClass('mds-board-tile--dropped');
     const outline = container.querySelector('.mds-board-tile-drop-outline');
     expect(outline).not.toBeNull();
     const end = new Event('animationend', { bubbles: true });
@@ -420,6 +414,8 @@ describe('BoardTile', () => {
       dispatchEvent: vi.fn(),
     })) as unknown as typeof window.matchMedia;
     const { container } = renderTile({ dropped: true, onDropEnd });
+    const tile = screen.getByRole('region', { name: 'Block title' });
+    expect(tile).toHaveClass('mds-board-tile--dropped');
     expect(container.querySelector('.mds-board-tile-drop-outline')).toBeNull();
     expect(onDropEnd).toHaveBeenCalledOnce();
     window.matchMedia = original;
