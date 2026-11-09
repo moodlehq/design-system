@@ -116,10 +116,16 @@
   white-space: nowrap;
 }
 
-/* Badge sets align-self: flex-start. Centre it with the header instead. */
+/* Badge sets align-self: flex-start. Centre it with the header instead.
+   Figma draws the badge border inside its padding, so give that pixel back. */
 .mds-board-tile-badge.mds-badge {
+  display: inline-flex;
   flex: 0 0 auto;
+  gap: var(--mds-spacing-xxs);
+  align-items: center;
   align-self: center;
+  padding-block: calc(var(--mds-spacing-xxs) - var(--mds-stroke-weight-sm));
+  padding-inline: calc(var(--mds-spacing-xs) - var(--mds-stroke-weight-sm));
 }
 
 .mds-board-tile-actions {
@@ -201,11 +207,6 @@
   background: transparent;
 }
 
-.mds-board-tile-handle--resize
-  .mds-board-tile-handle-control[aria-pressed='true'] {
-  cursor: nwse-resize;
-}
-
 .mds-board-tile-handle-control:focus {
   outline: none;
   box-shadow: none;
@@ -275,8 +276,16 @@
   display: flex;
 }
 
-[dir='rtl'] .mds-board-tile-handle--resize .mds-board-tile-handle-control {
+[dir='rtl']
+  .mds-board-tile-handle--resize
+  .mds-board-tile-handle-control:not([aria-pressed='true']) {
   cursor: nesw-resize;
+}
+
+/* A held handle's tooltip would cover the up arrow. */
+body:has(.mds-board-tile-handle-control[aria-pressed='true'])
+  .mds-tooltip__bubble {
+  display: none;
 }
 
 [dir='rtl'] .mds-board-tile-resize-grip {

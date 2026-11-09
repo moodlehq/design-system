@@ -238,6 +238,10 @@ describe('BoardTile', () => {
     renderTile({ editing: true, active: 'resize', onDirection });
     await user.click(screen.getByRole('button', { name: labels.down }));
     expect(onDirection).toHaveBeenCalledWith('resize', 0, 1);
+    expect(screen.getByRole('button', { name: labels.down })).toHaveAttribute(
+      'tabindex',
+      '-1',
+    );
   });
 
   it('starts a move from a header drag past the threshold', () => {
@@ -256,11 +260,11 @@ describe('BoardTile', () => {
     expect(onHandlePointerDown).not.toHaveBeenCalled();
     fireEvent.pointerMove(window, { clientX: 8, clientY: 1 });
     expect(onHeaderDragStart).toHaveBeenCalledWith(
-      expect.objectContaining({ clientX: 8 }),
+      expect.objectContaining({ clientX: 0, clientY: 0 }),
     );
     expect(onHandlePointerDown).toHaveBeenCalledWith(
       'move',
-      expect.objectContaining({ clientX: 8 }),
+      expect.objectContaining({ clientX: 0, clientY: 0 }),
     );
   });
 

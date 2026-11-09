@@ -5,10 +5,18 @@ import type {
   ReactNode,
   PointerEvent as ReactPointerEvent,
 } from 'react';
-import { forwardRef, isValidElement, useEffect, useId, useRef } from 'react';
+import {
+  forwardRef,
+  isValidElement,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import { Badge } from '../badge';
 import { Button } from '../button';
 import { Dropdown, DropdownItemAction } from '../dropdown';
+import { Tooltip } from '../tooltip';
 
 export type BoardTileInteraction = 'move' | 'resize';
 
@@ -324,7 +332,18 @@ const Handle = ({
   return (
     <div
       className={`mds-board-tile-handle mds-board-tile-handle--${mode}${pressed ? ' mds-board-tile-handle--pressed' : ''}`}
-      onKeyDown={onKeyDown}
+      onKeyDown={(event) => {
+        // The handle's own keydown runs on the button, inside the tooltip,
+        // so Escape is handled before the tooltip dismisses it.
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          target.classList.contains('mds-board-tile-handle-control')
+        ) {
+          return;
+        }
+        onKeyDown(event);
+      }}
       onBlur={(event) => {
         const next = event.relatedTarget;
         if (
@@ -335,32 +354,35 @@ const Handle = ({
         }
       }}
     >
-      <button
-        type="button"
-        className="mds-board-tile-handle-control"
-        aria-label={label}
-        aria-describedby={instructionsId}
-        aria-pressed={pressed}
-        onPointerDown={onPointerDown}
-        onBlur={(event) => {
-          // The pointer-press mark lasts only for that focus, so a later
-          // keyboard visit still shows the focus ring.
-          delete event.currentTarget.dataset.pointerFocus;
-        }}
-        onClick={(event) => {
-          // Pointer pickup starts on pointerdown. A zero-detail click is an
-          // assistive-technology activation, which does not produce a keydown.
-          if (event.detail !== 0) return;
-          if (pressed) onCommit?.(mode);
-          else onActivate?.(mode);
-        }}
-      >
-        {mode === 'move' ? (
-          <i className="fa-solid fa-grip-vertical" aria-hidden="true" />
-        ) : (
-          <ResizeGrip />
-        )}
-      </button>
+      <Tooltip label={label}>
+        <button
+          type="button"
+          className="mds-board-tile-handle-control"
+          aria-label={label}
+          aria-describedby={instructionsId}
+          aria-pressed={pressed}
+          onKeyDown={onKeyDown}
+          onPointerDown={onPointerDown}
+          onBlur={(event) => {
+            // The pointer-press mark lasts only for that focus, so a later
+            // keyboard visit still shows the focus ring.
+            delete event.currentTarget.dataset.pointerFocus;
+          }}
+          onClick={(event) => {
+            // Pointer pickup starts on pointerdown. A zero-detail click is an
+            // assistive-technology activation that does not produce a keydown.
+            // A second press is Enter, Space, or another pointerdown.
+            if (event.detail !== 0 || pressed) return;
+            onActivate?.(mode);
+          }}
+        >
+          {mode === 'move' ? (
+            <i className="fa-solid fa-grip-vertical" aria-hidden="true" />
+          ) : (
+            <ResizeGrip />
+          )}
+        </button>
+      </Tooltip>
       {pressed && showDirectionControls && (
         <div
           className="mds-board-tile-directions"
@@ -375,6 +397,13 @@ const Handle = ({
               size="lg"
               className={`mds-board-tile-direction mds-board-tile-direction--${direction.key}`}
               aria-label={labels?.[direction.labelKey] ?? ''}
+              tabIndex={-1}
+              onPointerDown={(event) => {
+                // Keep focus on the handle. A direction button taking focus
+                // would look like the handle had been left.
+                event.preventDefault();
+                event.stopPropagation();
+              }}
               startIcon={
                 <i
                   className={`fa-solid ${direction.icon}`}
@@ -397,23 +426,34 @@ const DropOutline = ({ onEnd }: { onEnd?: () => void }) => {
     onEndRef.current = onEnd;
   }, [onEnd]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const svg = svgRef.current;
     const tile = svg?.parentElement;
     if (!svg || !tile) return undefined;
     // One measurement when the outline mounts, so the stroke sits on the
-    // tile's border. Not a resize loop.
+    // tile's border. A transform (the dashboard's slide) is removed first,
+    // and the box is snapped to device pixels. Not a resize loop.
     const style = getComputedStyle(tile);
+    const transform = style.transform;
+    const shift =
+      transform &&
+      transform !== 'none' &&
+      typeof DOMMatrixReadOnly !== 'undefined'
+        ? new DOMMatrixReadOnly(transform)
+        : null;
     const box = tile.getBoundingClientRect();
+    const left = box.left - (shift?.e ?? 0);
+    const top = box.top - (shift?.f ?? 0);
     const ratio = window.devicePixelRatio || 1;
     const snap = (value: number) => Math.round(value * ratio) / ratio;
-    const width = snap(box.width);
-    const height = snap(box.height);
+    const width = snap(left + box.width) - snap(left);
+    const height = snap(top + box.height) - snap(top);
     const border = Number.parseFloat(style.borderTopWidth) || 0;
     const innerWidth = Math.max(0, width - border * 2);
     const innerHeight = Math.max(0, height - border * 2);
     svg.style.width = `${innerWidth}px`;
     svg.style.height = `${innerHeight}px`;
+    svg.style.transform = `translate(${snap(left) - left}px, ${snap(top) - top}px)`;
     const radius = (Number.parseFloat(style.borderTopLeftRadius) || 0) - border;
     const path = outlinePath(innerWidth, innerHeight, radius);
     svg
@@ -587,6 +627,7 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
       event.preventDefault();
       const startX = event.clientX;
       const startY = event.clientY;
+      const startEvent = event.nativeEvent;
       const stop = () => {
         headerDragStop.current = null;
         window.removeEventListener('pointermove', move);
@@ -601,8 +642,8 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
           return;
         }
         stop();
-        onHeaderDragStart?.(moveEvent);
-        onHandlePointerDown?.('move', moveEvent);
+        onHeaderDragStart?.(startEvent);
+        onHandlePointerDown?.('move', startEvent);
       };
       headerDragStop.current = stop;
       window.addEventListener('pointermove', move);
