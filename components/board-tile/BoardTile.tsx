@@ -12,6 +12,7 @@ import {
   useId,
   useLayoutEffect,
   useRef,
+  useState,
 } from 'react';
 import { Badge } from '../badge';
 import { Button } from '../button';
@@ -95,19 +96,14 @@ export interface BoardTileProps extends Omit<
   /** Hidden from students: dashed border, badge, and dimmed content. */
   hidden?: boolean;
   /**
-   * Which handle is picked up. Controlled by the dashboard: set it from
-   * `onActivate`, and clear it from `onCommit` or `onCancel`. Arrow buttons
-   * are shown for this handle. A drag reports `onHandlePointerDown` and does
-   * not pick the handle up, so it does not show arrows.
+   * Figma State Active for one handle: the 2px primary border and large
+   * shadow. This does not show direction arrows. Arrows appear only after a
+   * click, Enter, or Space on that handle in this tile, and only while
+   * `active` is that same mode. Set it from `onActivate`. Clear it from
+   * `onCommit` or `onCancel`. A drag reports `onHandlePointerDown` and does
+   * not show arrows.
    */
   active?: BoardTileInteraction | null;
-  /**
-   * Shows the four direction buttons while `active` is set. Defaults to true.
-   * Keep `active` set and pass false for the slide into place: the Active
-   * border and shadow stay, and the arrows stay hidden. The slide itself
-   * stays in the dashboard.
-   */
-  showDirectionControls?: boolean;
   /** Block actions, excluding remove. Rendered in a Dropdown. Omit or pass `[]` to hide the menu. */
   actions?: BoardTileAction[];
   /** Shows the remove button and is called when it is pressed. */
@@ -115,7 +111,8 @@ export interface BoardTileProps extends Omit<
   /**
    * A handle was picked up without a drag: Enter, Space, an assistive click,
    * or a pointer press released before it moved 4px. The dashboard sets
-   * `active` so the direction arrows appear.
+   * `active` to that mode. The arrows are shown by the tile for that
+   * pickup, not by `active` on its own.
    */
   onActivate?: (mode: BoardTileInteraction) => void;
   /** The picked-up tile was dropped (Enter, Space, second press, or focus leaving the handle). */
@@ -264,7 +261,7 @@ interface HandleProps {
   controlsLabel: string;
   labels?: BoardTileLabels;
   pressed: boolean;
-  showDirectionControls: boolean;
+  arrows: boolean;
   onActivate?: BoardTileProps['onActivate'];
   onCommit?: BoardTileProps['onCommit'];
   onCancel?: BoardTileProps['onCancel'];
@@ -279,7 +276,7 @@ const Handle = ({
   controlsLabel,
   labels,
   pressed,
-  showDirectionControls,
+  arrows,
   onActivate,
   onCommit,
   onCancel,
@@ -428,7 +425,7 @@ const Handle = ({
           )}
         </button>
       </Tooltip>
-      {pressed && showDirectionControls && (
+      {arrows && (
         <div
           className="mds-board-tile-directions"
           role="group"
@@ -546,7 +543,6 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
       editing = false,
       hidden = false,
       active,
-      showDirectionControls = true,
       actions,
       onRemove,
       onActivate,
@@ -580,6 +576,24 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
       active && allowedInteractions.includes(active as BoardTileInteraction)
         ? active
         : null;
+    // Arrows belong to a click or keyboard pickup in this tile, not to
+    // `active` on its own. Drop the pickup when Active is cleared or switched.
+    const [pickedUp, setPickedUp] = useState<BoardTileInteraction | null>(null);
+    if (pickedUp && resolvedActive !== pickedUp) {
+      setPickedUp(null);
+    }
+    const pickup = (mode: BoardTileInteraction) => {
+      setPickedUp(mode);
+      onActivate?.(mode);
+    };
+    const release = (mode: BoardTileInteraction) => {
+      setPickedUp(null);
+      onCommit?.(mode);
+    };
+    const cancelPickup = (mode: BoardTileInteraction) => {
+      setPickedUp(null);
+      onCancel?.(mode);
+    };
     const reduceMotion = dropped && prefersReducedMotion();
 
     useEffect(() => {
@@ -726,10 +740,10 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
               controlsLabel={labels?.moveControls ?? ''}
               labels={labels}
               pressed={resolvedActive === 'move'}
-              showDirectionControls={showDirectionControls}
-              onActivate={onActivate}
-              onCommit={onCommit}
-              onCancel={onCancel}
+              arrows={pickedUp === 'move'}
+              onActivate={pickup}
+              onCommit={release}
+              onCancel={cancelPickup}
               onDirection={onDirection}
               onHandlePointerDown={onHandlePointerDown}
             />
@@ -825,10 +839,10 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
               controlsLabel={labels?.resizeControls ?? ''}
               labels={labels}
               pressed={resolvedActive === 'resize'}
-              showDirectionControls={showDirectionControls}
-              onActivate={onActivate}
-              onCommit={onCommit}
-              onCancel={onCancel}
+              arrows={pickedUp === 'resize'}
+              onActivate={pickup}
+              onCommit={release}
+              onCancel={cancelPickup}
               onDirection={onDirection}
               onHandlePointerDown={onHandlePointerDown}
             />

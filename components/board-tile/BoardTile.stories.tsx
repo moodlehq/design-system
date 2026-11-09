@@ -67,7 +67,7 @@ const meta = {
       options: ['move', 'resize'],
       table: { category: 'State' },
       description:
-        'Figma State Active. move or resize is the handle Type that is picked up.',
+        'Figma State Active: 2px primary border and large shadow. No direction arrows. move or resize chooses the handle.',
     },
     children: { control: false, table: { disable: true } },
     label: {
@@ -85,14 +85,10 @@ const meta = {
     onRemove: {
       ...dashboardHook('Called when Remove is pressed.'),
     },
-    showDirectionControls: {
-      ...dashboardHook(
-        'Arrow buttons while Active. Pass false, with active still set, for the slide into place.',
-      ),
-      control: 'boolean',
-    },
     onActivate: {
-      ...dashboardHook('Click, Enter, or Space picked a handle up.'),
+      ...dashboardHook(
+        'Click, Enter, or Space picked a handle up. Set active to that mode and the tile shows its arrows.',
+      ),
     },
     onCommit: {
       ...dashboardHook(
@@ -310,7 +306,7 @@ export const Active: Story = {
     docs: {
       description: {
         story:
-          'When people pick up the tile to move or resize it. Stronger border and shadow, without tilt or scale. This story picks up the Move handle.',
+          'Figma State Active. A 2px primary border and large shadow, with no direction arrows. Arrows appear only after a click, Enter, or Space on a handle.',
       },
     },
   },
@@ -321,7 +317,9 @@ export const Active: Story = {
   play: async ({ canvas }) => {
     const move = canvas.getByRole('button', { name: labels.move });
     await expect(move).toHaveAttribute('aria-pressed', 'true');
-    await expect(canvas.getByRole('button', { name: labels.up })).toBeVisible();
+    await expect(
+      canvas.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
     await expect(
       canvas.getByRole('button', { name: labels.resize }),
     ).toHaveAttribute('aria-pressed', 'false');

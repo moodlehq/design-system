@@ -165,7 +165,7 @@ export const Keyboard: Story = {
     docs: {
       description: {
         story:
-          'Tab focuses a handle. Enter or Space picks the tile up, and again drops it. Arrow keys move or resize. Escape cancels.',
+          "Tab focuses a handle. Enter or Space picks it up and shows that handle's arrows, the same as a click. Press again to drop. Arrow keys move or resize. Escape cancels.",
       },
     },
   },
@@ -322,7 +322,7 @@ export const HandleStates: Story = {
     docs: {
       description: {
         story:
-          'Handle Type is Move or Resize. Handle State is Rest, Hover, Focus, or Active. These are nested handle properties, not extra Board tile states.',
+          'Handle Type is Move or Resize. Handle State is Rest, Hover, Focus, or Active. Active here is the border and shadow only. Direction arrows are not part of it.',
       },
     },
     pseudo: {
@@ -336,6 +336,11 @@ export const HandleStates: Story = {
         '[data-matrix-state="resize-focus"] .mds-board-tile-handle--resize .mds-board-tile-handle-control',
       ],
     },
+  },
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
   },
   render: () => (
     <div

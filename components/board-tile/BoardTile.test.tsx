@@ -103,7 +103,7 @@ describe('BoardTile', () => {
     expect(screen.getByText(labels.hidden)).toBeInTheDocument();
   });
 
-  it('applies the active class and shows direction buttons for that handle', () => {
+  it('applies the active look without direction arrows', () => {
     renderTile({ editing: true, active: 'move' });
     const tile = screen.getByRole('region', { name: 'Block title' });
     expect(tile).toHaveClass('mds-board-tile--active');
@@ -112,27 +112,12 @@ describe('BoardTile', () => {
       'aria-pressed',
       'true',
     );
-    expect(screen.getByRole('button', { name: labels.up })).toBeInTheDocument();
-    expect(
-      screen.getByRole('group', { name: labels.moveControls }),
-    ).toBeInTheDocument();
-  });
-
-  it('hides direction buttons when showDirectionControls is false', () => {
-    renderTile({
-      editing: true,
-      active: 'resize',
-      showDirectionControls: false,
-    });
-    const tile = screen.getByRole('region', { name: 'Block title' });
-    expect(tile).toHaveClass('mds-board-tile--active');
     expect(
       screen.queryByRole('button', { name: labels.up }),
     ).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: labels.resize })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    expect(
+      screen.queryByRole('group', { name: labels.moveControls }),
+    ).not.toBeInTheDocument();
   });
 
   it('falls back when active is invalid and warns in development', () => {
@@ -215,6 +200,7 @@ describe('BoardTile', () => {
     await user.keyboard('{Enter}');
     expect(onActivate).toHaveBeenCalledWith('move');
     expect(move).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: labels.up })).toBeInTheDocument();
     await user.keyboard('{ArrowLeft}');
     expect(onDirection).toHaveBeenCalledWith('move', -1, 0);
     await user.keyboard('{Escape}');
@@ -234,16 +220,31 @@ describe('BoardTile', () => {
     expect(onCommit).toHaveBeenCalledWith('move');
   });
 
-  it('nudges from a direction button', async () => {
+  it('nudges from a direction button after the resize grip is clicked', async () => {
     const user = userEvent.setup();
     const onDirection = vi.fn();
-    renderTile({ editing: true, active: 'resize', onDirection });
-    await user.click(screen.getByRole('button', { name: labels.down }));
+    const Harness = () => {
+      const [active, setActive] = useState<BoardTileProps['active']>(null);
+      return (
+        <BoardTile
+          title="Block title"
+          labels={labels}
+          editing
+          active={active}
+          onActivate={setActive}
+          onDirection={onDirection}
+        />
+      );
+    };
+    render(<Harness />);
+    await user.click(screen.getByRole('button', { name: labels.resize }));
+    const down = screen.getByRole('button', { name: labels.down });
+    expect(down).toHaveAttribute('tabindex', '-1');
+    await user.click(down);
     expect(onDirection).toHaveBeenCalledWith('resize', 0, 1);
-    expect(screen.getByRole('button', { name: labels.down })).toHaveAttribute(
-      'tabindex',
-      '-1',
-    );
+    expect(
+      screen.queryByRole('button', { name: labels.up }),
+    ).toBeInTheDocument();
   });
 
   it('starts a move from a header drag past the threshold', () => {

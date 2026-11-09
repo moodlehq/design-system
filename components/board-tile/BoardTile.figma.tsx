@@ -71,6 +71,8 @@ figma.connect(BoardTile, url, {
   ),
 });
 
+// Active is the border and shadow. Direction arrows are not part of this
+// variant; a click, Enter, or Space on a handle shows that handle's arrows.
 figma.connect(BoardTile, url, {
   variant: { State: 'Active' },
   props: sharedProps,
