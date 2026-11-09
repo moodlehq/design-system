@@ -961,6 +961,240 @@ AI prototyping tools are evolving rapidly, and the best ways to integrate MDS in
 # Specs
 ## Anatomy
 
+![Board tile anatomy: Edit state showing move handle, title, actions, content slot, and resize handle](zeroheight://image/9183265/c9e92f6f5e0f3db5657518197a1b6de911839a307011cba29d3beb57829be290)
+*The Edit state shows the tile's structure. The Hidden state adds the Hidden from students badge.*
+
+1. **Move handle** — a vertical grip at the start of the header. Starts a move interaction.
+2. **Title** — names the block.
+3. **Actions** — Remove and the Block actions dropdown in the header.
+4. **Content slot** — holds the block's own content.
+5. **Resize handle** — a custom corner grip with 2 diagonal lines. Starts resizing from the bottom corner.
+
+![](zeroheight://image/9183265/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## States
+
+| ![View state without editing controls](zeroheight://image/9183265/d43c9b92b98630d4481e0df177369fcfddf9b19498d4ba320ccf322e7f48537e) | **View** When people aren't editing. Shows the block without handles or editing actions. |
+| :---: | --- |
+| ![Edit state with move handle, actions, and resize handle](zeroheight://image/9183265/05034ea715cc9d920eb997e25ae7a0ee115f5a91a38e1226e7802acdc57a3991) | **Edit** When the dashboard is in edit mode. Shows the move handle, Remove, Block actions, and resize handle. |
+| ![Edit hover state with a highlighted tile border](zeroheight://image/9183265/1c18a791e13a0144ef448bea514c6bfc2d0640bd039a37b000207134229c68e1) | **Edit hover** When the pointer is over the tile. The border changes; each handle responds only when the pointer is on that handle. |
+| ![Active state with a stronger border and shadow](zeroheight://image/9183265/1929107dceba8be5fca3633378e3a571a6015a2569cb3c5350a16820bd6b4d13) | **Active** When people pick up the tile to move or resize it. Uses a stronger border and shadow, without tilt or scale. |
+| ![Hidden state with a dashed border and Hidden from students badge](zeroheight://image/9183265/c194155a8bec5622d773f71714a3cd1d7fdf18ecb616c4ec17ff1ae8c41854e5) | **Hidden** When the block is hidden from students. Uses a dashed border, a Hidden from students badge, and reduced content opacity. |
+
+---
+
+### Handle types and states
+
+The tile's handles have 2 types: Move and Resize. Both use Rest, Hover, Focus, and Active states. The handle design defaults to Type=Move and State=Rest. These are nested handle properties, not additional Board tile states or code props.
+
+#### Move handle
+
+| ![Move handle Rest state](zeroheight://image/9183265/546025353049f76cc429af2ea1ba8629282d173be5b7fc31eab1bdb52ed04990) | **Rest** Uses the muted icon colour. |
+| :--- | :--- |
+| ![Move handle Hover state](zeroheight://image/9183265/643bd21a82eb01e4ccac0e659f85fa236b50b048e651f97a6594ea0cf0cb2559) | **Hover** Uses the default icon colour only for the handle under the pointer. |
+| ![Move handle Focus state with a 2 px focus ring](zeroheight://image/9183265/5fe1a17aeb949e1fd0122065b204b38fd9fb4f6395fa245b0451d584b07c71df) | **Focus** Shows a 2 px focus ring for keyboard focus only. |
+| ![Move handle Active state with directional arrow buttons](zeroheight://image/9183265/e492d7de24d8a505bd59f43e43f8d94eef065553f7b352ed7cafeb30f641ed11) | **Active** Shows directional arrow buttons around the activated handle to move or resize the tile. |
+
+---
+
+#### Resize handle
+
+| ![Resize handle Rest state](zeroheight://image/9183265/40864c0234dac875ac7f2efa621789ec9f9660d5301a546f6190eb9a85810266) | **Rest** Uses the muted icon colour. |
+| :--- | :--- |
+| ![Resize handle Hover state](zeroheight://image/9183265/834f69eebcf9aee10b47b70021b7dbcf3b559486748c328ac6f3b123eeb891ce) | **Hover** Uses the default icon colour only for the handle under the pointer. |
+| ![Resize handle Focus state with a 2 px focus ring](zeroheight://image/9183265/0ef82c705e672af8542945ece9a8f39a25980698df05e8f797aa31c64d5a6f0f) | **Focus** Shows a 2 px focus ring for keyboard focus only. |
+| ![Resize handle Active state with directional arrow buttons](zeroheight://image/9183265/b4ea51ed3ef5ae9871aaa615df8fbfd0eb0048536be47a4994430f789490f209) | **Active** Shows directional arrow buttons around the activated handle to move or resize the tile. |
+
+![](zeroheight://image/9183265/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Behaviour
+
+The design supports moving and resizing with a placement preview. These are design specifications, not tested implementation behaviour.
+
+* Drag the header or move handle to move a tile. Drag the corner handle to resize.
+* Show handles and editing actions in edit mode, not View.
+* Use the Active border while the tile is picked up. The design uses a 2 px border and shadow, without tilt or scale.
+* After a drop, the design slides the tile into place and fades an outline animation. Turn this motion off for reduced motion.
+
+---
+
+### Move and Resize handles
+
+Board handle is part of Board tile, not a separate component for general use. Use Move in the header and Resize in the bottom corner. These focusable controls aren't MDS Buttons: don't add a background or hover fill.
+
+Give each handle a button role and a tab stop. Name it “Move {block name}” or “Resize {block name}”. The design specifies a 24 × 24 px hit area; the minimum standards evaluation's target-size gap still needs a decision.
+
+Use a grab cursor for Move and nwse-resize for Resize, then grabbing while held. Each handle responds only when the pointer is on that handle. Show the 2 px focus ring for keyboard focus only, not pointer clicking or dragging.
+
+When a handle is Active, show 4 secondary, icon-only MDS Buttons around it: up, down, left, and right. For Move, they move the tile. For Resize, they make it bigger or smaller.
+
+---
+
+### Keyboard interaction
+
+Keyboard interaction is designed but untested.
+
+| **Key** | **Designed action** |
+| --- | --- |
+| Tab | Focus a handle. |
+| Enter or Space | Pick up the tile; press again to drop it. Arrow buttons appear around the active handle. |
+| Arrow keys | Move or resize the tile. The active handle also provides arrow buttons. |
+| Escape | Cancel and return the tile to its previous position. |
+
+## Responsive behaviour
+
+Tiles span board grid columns and rows rather than using named size variants. Follow the MDS breakpoints for the board layout.
+
+## Properties and variants
+
+These are Figma properties, not code props.
+
+| **Property** | **Type** | **Options or purpose** | **Default** |
+| --- | --- | --- | --- |
+| State | Variant | View, Edit, Edit hover, Active, Hidden | View |
+| Title | Text | Block title | Block title |
+| Content | Slot | The block's own content | Not specified |
+---
+
+# Code
+## Implementation
+
+Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
+
+Props and types (TypeScript API):
+
+Full list of props and their types for Board tile.
+
+![](zeroheight://image/9183265/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Accessibility implementation
+
+### Keyboard interaction
+
+Keyboard interaction is designed but untested. The component isn't implemented yet.
+
+| **Key** | **Action** |
+| --- | --- |
+| `Tab` | Moves focus to a handle |
+| `Enter` / `Space` | Picks up the tile; press again to drop it. Arrow buttons appear around the active handle |
+| `Arrow keys` | Moves or resizes the tile. The active handle also provides arrow buttons |
+| `Escape` | Cancels and returns the tile to its previous position |
+
+---
+
+### ARIA
+
+* Role:
+    * Move and Resize handles use `role="button"` with a tab stop (`tabindex="0"`). They aren't MDS Buttons.
+* Required attributes:
+    * Provide an accessible name for each handle: `Move {block name}` or `Resize {block name}`.
+    * Keep a visible title for the block. The title is the block's name for people and for naming the handles.
+* Optional attributes:
+    * Show the 2 px focus ring with `:focus-visible` for keyboard focus only, not while clicking or dragging.
+    * Screen reader announcements during move and resize still need deciding in implementation.
+
+---
+
+### Dynamic announcements
+
+* What screen readers announce while a tile is picked up, moved, resized, or dropped isn't decided yet.
+* After a drop, turn motion off when reduced motion is on. Announcement behaviour for reduced motion still needs deciding.
+
+![](zeroheight://image/9183265/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## GitHub
+---
+
+# Usage
+## Overview
+
+![Board tile in View state, containing a block title and content slot](zeroheight://image/9183265/38bb31baf310b2b2a65a666107430f71be87edd580c29ee0da70160c956c4e1e)
+
+Use Board tile for every block on the Flexible dashboard board. It works with Board cell for placement. Its Move and Resize handles let people arrange the tile. The block supplies its own content.
+
+### When to use
+
+* Contain one block inside the Flexible dashboard board.
+* Let people arrange blocks in edit mode, using Board cell and the tile's Move and Resize handles.
+
+<callout background="4" fullWidth="true">
+
+### ❌ When not to use
+
+* Don't use Board tile as a general page card, course card, or content card outside the board.
+* Don't use it to define the board grid. Board cell and the board layout handle placement.
+
+</callout>
+
+![](zeroheight://image/9183265/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Guidelines
+
+### Placement
+
+Keep Board tile inside the Flexible dashboard board, with Board cell. Tiles span grid columns and rows; they don't have a fixed set of sizes. Column rules belong to the board layout, not the tile.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9183265/d43c9b92b98630d4481e0df177369fcfddf9b19498d4ba320ccf322e7f48537e) |   | SHOULD use Board tile with Board cell inside the Flexible dashboard board. |
+
+---
+
+### Editing
+
+* Show move and resize handles only in edit mode.
+* Apply handle hover styling only to the handle under the pointer, not both handles when the tile is hovered.
+* Use a press and hold before touch dragging, so scrolling doesn't move tiles by accident.
+* Keep Remove secondary. It shouldn't compete with the block's content.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9183265/05034ea715cc9d920eb997e25ae7a0ee115f5a91a38e1226e7802acdc57a3991) |   | SHOULD show handles in edit mode. |
+
+---
+
+### Content
+
+Put the block's content in the Content slot. Board tile doesn't restyle it. Use the Title property for the block title.
+
+---
+
+### Hidden blocks
+
+Keep the Hidden from students badge and dashed border. Reduced opacity supports these signals; it doesn't replace them.
+
+| Rule | Image | Caption | Description |
+| :--- | :--- | :--- | :--- |
+| Do | ![](zeroheight://image/9183265/c194155a8bec5622d773f71714a3cd1d7fdf18ecb616c4ec17ff1ae8c41854e5) |   | SHOULD use the Hidden from students badge and dashed border together. |
+| Don't | ![](zeroheight://image/9183265/d43c9b92b98630d4481e0df177369fcfddf9b19498d4ba320ccf322e7f48537e) |   | SHOULD NOT rely on opacity or colour alone to communicate that a block is hidden. |
+
+---
+
+### Accessibility guidelines
+
+The minimum standards evaluation records passing contrast, visible focus, and signals that don't rely on colour alone. Its outcome is Enhance — the gaps below still need work.
+
+* Keep keyboard focus visible on interactive controls. Figma specifies focus-visible rings for keyboard use, not pointer dragging.
+* Keep the text badge and dashed border when showing a hidden block.
+
+![](zeroheight://image/9183265/3dac0741a89f9bc2108e1ea5425e68a9c397ae4d9f8ac61fec5f2def693ef2d2)
+
+## Related
+
+<shortcut_tiles>
+<shortcut_tile url="https://moodle.zeroheight.com/styleguide/s/131542/p/889e50" page-id="7242090">
+**Layout**
+
+Grid and breakpoint foundations.
+</shortcut_tile>
+</shortcut_tiles>
+---
+
+---
+
+# Specs
+## Anatomy
+
 ![](zeroheight://image/8729151/89b669a00d81cac5df08b2f87a8998668575a2395410437c85a5d4b9fd3dbd06)
 
 1. **Breadcrumb item (link):** A text link. It represents a page above the current page and takes the user there when clicked.
@@ -3525,6 +3759,10 @@ Use it instead when the total is known and you can show how much is done.
 | `Arrow Down` / `Arrow Right` | Moves focus to the next radio and selects it. From the last radio, moves to the first. |
 | `Arrow Up` / `Arrow Left` | Moves focus to the previous radio and selects it. From the first radio, moves to the last. |
 
+### Invalid interaction
+
+* In code, the required-field error clears automatically. If you set invalid yourself, clear it in onChange when you re-validate.
+
 ---
 
 ### ARIA
@@ -5689,6 +5927,12 @@ Every item in the menu is the same `combobox.item`. Its content comes from a nes
 # Code
 ## Implementation
 
+<callout background="2">
+
+Large (`lg`) button triggers are design-only. The package currently accepts `sm` and `md`; `lg` support is pending. The Storybook below shows the current package, not the LG design.
+
+</callout>
+
 Use the panel below to test every prop, state, and variant of this component interactively. Changes you make here are reflected in the code snippet, so you can copy exactly what you need. For the full list of props and detailed documentation, click **View in Storybook**.
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-dropdown-dropdown--default)
@@ -5782,6 +6026,8 @@ The Dropdown is composed from dedicated sub-components. The assembled Dropdown i
 The trigger is a wrapper: it renders the [Button](/877c50-button) component (`variant="button"`) or the [Nav pill](/981bd1-nav-pill) component (`variant="nav-pill"`) and adds the chevron. Its surface, label, and border tokens are **inherited** from whichever component it wraps.
 
 Appearance maps to a Button token family: **emphasis → Secondary fill**, **default → Secondary outline**, **subtle → Ghost**. The nav.pill variant is fixed to the default appearance and md size.
+
+In design, button triggers support `sm`, `md`, and `lg`. The large trigger uses the Button LG sub-component and inherits its sizing, spacing, and visual tokens. It supports the same appearances, icon configurations, and states as the medium button trigger. Package support for `lg` is pending. Trigger size does not change menu item sizing or keyboard interaction.
 
 #### Button.default
 
@@ -5960,10 +6206,11 @@ Applies to the button trigger only.
 
 ### Trigger size
 
-Set with the `size` prop. If you leave it out, you get `md`.
+Set the trigger size with the `size` prop. Medium (`md`) is the default. Large (`lg`) is available in design only; package support is pending. Nav pill remains fixed to `md`.
 
 | **Variant** | **When to use** |
 | :--- | --- |
+| ![Large button trigger with a label and chevron](zeroheight://image/8742550/1778fd6f507e7c370692c6715c9f3fbd3dc75f41d34092345aa319607e1a1bf8) | **Large (`lg`)** Use in hero areas, empty states, or standalone actions where extra visual weight is needed. Design only; package support is pending. |
 | ![](zeroheight://image/8742550/cce9f1d49325866b26f346f13fdde2bee21782e58e4efe62580195e33443a78d) | **Medium (`md`, default)** The standard size for most interface contexts. |
 | ![](zeroheight://image/8742550/715b566406452efb52e199578f8b267944fb5b325e657ee74be170f4e14e15c5) | **Small (`sm`)** Dense layouts such as tables, inline filters, or compact toolbars. |
 
@@ -8031,6 +8278,21 @@ Spacing serves as **the gap size** between elements (the padding of a component 
 **SCSS**
 </shortcut_tile>
 </shortcut_tiles>
+
+### Breakpoints
+
+| Token | Value (px) |
+| --- | --- |
+| `breakpoints.sm` | 576 |
+| `breakpoints.md` | 768 |
+| `breakpoints.lg` | 992 |
+| `breakpoints.xl` | 1200 |
+| `breakpoints.xxl` | 1400 |
+| `breakpoints.xxxl` | 1920 |
+
+### Grid gutter
+
+`grid/gutter` aliases `spacing/md` (16px). Set the column count from the container width rules on the Grid tab.
 ---
 
 # Breakpoints
@@ -8038,30 +8300,32 @@ Spacing serves as **the gap size** between elements (the padding of a component 
 
 ### Overview
 
-Breakpoints are the viewport min-widths at which layouts and components can adapt their sizing. MDS breakpoints align with the Bootstrap 5 default scale, keeping design and implementation consistent.
+Use breakpoints to adapt layouts and components at defined widths. The Moodle Design System (MDS) uses the Bootstrap 5 scale from sm to xxl and adds xxxl at 1920px. Page layouts measure the viewport; layout grids reuse these values to measure their container.
 
 ---
 
 ### Breakpoints
 
-![](zeroheight://image/7242090/345634cb35bfb66083efd231f58c39c194a5726e3079ba460bd84f06f9c02b01)
+![Breakpoint minimum widths from sm at 576px to xxxl at 1920px](zeroheight://image/7242090/f83db5e9f993aadb92e810aacc727fae27cf8b3264d6a646bde42bc935e8f96b)
 
-| **Token** | **Min-width** | **Screen size** |
-| --- | --- | --- |
-| `sm` | ≥ 576px | Small |
-| `md` | ≥ 768px | Medium |
-| `lg` | ≥ 992px | Large |
-| `xl` | ≥ 1200px | Extra large |
-| `xxl` | ≥ 1400px | Extra extra large |
+| **Token** | **Min-width** |
+| --- | --- |
+| `sm` | ≥ 576px |
+| `md` | ≥ 768px |
+| `lg` | ≥ 992px |
+| `xl` | ≥ 1200px |
+| `xxl` | ≥ 1400px |
+| `xxxl` | ≥ 1920px |
 
 ---
 
 ### Usage
 
+For column counts, apply breakpoint values to the grid container width, not the viewport width. See the Grid tab.
+
 * Use breakpoint tokens from the MDS Figma variable library. Don't use hardcoded pixel values.
 * Breakpoint variables are scoped to **width** only. Use spacing tokens for padding, margin, and gap decisions.
 * You don't need to provide designs for every breakpoint. Focus on the breakpoints where the layout or component changes meaningfully.
-* For responsive utility classes and media query implementation, refer to [Bootstrap's breakpoints documentation](https://getbootstrap.com/docs/5.0/layout/breakpoints/).
 ---
 
 # Tokens
@@ -8092,6 +8356,50 @@ For the full list of tokens and their values, see [tokens/css/light.css](https:/
 | breakpoints.lg | 992 |
 | breakpoints.xl | 1200 |
 | breakpoints.xxl | 1400 |
+
+| Token | Value (px) |
+| --- | --- |
+| `breakpoints.xxxl` | 1920 |
+
+### Grid gutter
+
+`grid/gutter` aliases spacing.md (16) (16px).
+---
+
+# Grid
+## Grid
+
+### Overview
+
+Use 1, 2, 4, or 6 equal-width columns to organise content. Choose the column count from the grid container width using the shared breakpoint tokens. Column counts are layout rules, not tokens. Use `grid/gutter` as the only grid token.
+
+![Grid container widths: below 768px uses 1 column, 768px to below 992px uses 2, 992px to below 1920px uses 4, and 1920px and above uses 6. Gutters stay at 16px.](zeroheight://image/7242090/b7b8898841ea422c5f0c7484260a84d7c143d74b9d20f952a5081aeff488a373)
+*Column counts follow container width. Schematics are not to scale.*
+
+Measure the space available to the grid, not the viewport. A wide viewport can still contain a narrower grid.
+
+## Column counts
+
+| Container width | Breakpoint | Columns |
+| --- | --- | --- |
+| Below 768px | Under `md` | 1 |
+| 768px to below 992px | `md` | 2 |
+| 992px to below 1920px | `lg`, `xl`, and `xxl` | 4 |
+| 1920px and above | `xxxl` | 6 |
+
+### Gutter
+
+Use `grid/gutter` between columns. It aliases spacing.md (16) (16px). Keep this gap consistent at every column count.
+
+### Column width
+
+Stretch columns equally to fill the container after subtracting the gutters.
+
+`Column width = (container width − 16 × (column count − 1)) ÷ column count`
+
+### In Design
+
+Use the layout grid styles named `576`, `768`, `992`, `1200`, `1400`, and `1920`. The Grid page has 1 empty showcase frame per breakpoint: frame widths use the breakpoint variables, and the grids use these styles. There are no column boxes inside the frames.
 ---
 
 ---
