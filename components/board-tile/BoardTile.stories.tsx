@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { expect, fn } from 'storybook/test';
+import { expect, fn, waitFor } from 'storybook/test';
 import type { BoardTileInteraction, BoardTileLabels } from './BoardTile';
 import { BoardTile } from './BoardTile';
 
@@ -42,6 +42,22 @@ const editingArgs = {
   actions,
 };
 
+const borderColor = async (
+  tile: HTMLElement,
+  token: '--mds-border-default' | '--mds-border-interactive-primary-hover',
+) => {
+  const probe = document.createElement('div');
+  probe.style.borderTop = `1px solid var(${token})`;
+  document.body.appendChild(probe);
+  const expected = getComputedStyle(probe).borderTopColor;
+  probe.remove();
+  return {
+    actual: getComputedStyle(tile).borderTopColor,
+    outline: getComputedStyle(tile).outlineColor,
+    expected,
+  };
+};
+
 const meta = {
   title: 'Components/BoardTile',
   component: BoardTile,
@@ -50,7 +66,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Frame for one block on the Flexible dashboard. View shows the title and content. Edit adds the move handle, remove button, actions menu, and resize handle. Pickup is controlled with `active`.',
+          'Frame for one block on the Flexible dashboard. View shows the title and content. Edit adds the move handle, remove button, actions menu, and resize handle. The header uses a grab cursor in edit mode; a press that moves 4px calls `onHeaderDragStart`. Pickup is controlled with `active`. `dropped` plays the landing outline.',
       },
     },
   },
@@ -91,6 +107,10 @@ export const View: Story = {};
 export const Edit: Story = {
   args: editingArgs,
   play: async ({ canvas }) => {
+    const tile = canvas.getByRole('region', { name: 'Block title' });
+    const border = await borderColor(tile, '--mds-border-default');
+    await expect(border.actual).toBe(border.expected);
+    await expect(border.outline).toBe('rgba(0, 0, 0, 0)');
     await expect(
       canvas.getByRole('button', { name: labels.move }),
     ).toBeVisible();
@@ -110,11 +130,46 @@ export const Edit: Story = {
 };
 
 export const EditHover: Story = {
-  args: editingArgs,
+  args: {
+    ...editingArgs,
+    // The pseudo-states addon also adds this class. Setting it here keeps the
+    // hover border visible when that rewrite does not run.
+    className: 'pseudo-hover',
+  },
+  decorators: [
+    (Story) => (
+      <div data-edit-hover>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
+    // Scoped so the selector cannot paint every tile once the addon stores
+    // it in Storybook globals.
     pseudo: {
-      hover: '.mds-board-tile',
+      hover: '[data-edit-hover] .mds-board-tile',
     },
+    docs: {
+      description: {
+        story:
+          'Edit at rest uses the neutral default border. This story forces the hover border with the pseudo-states addon. A real pointer hover does the same.',
+      },
+    },
+  },
+  play: async ({ canvas }) => {
+    const tile = canvas.getByRole('region', { name: 'Block title' });
+    await waitFor(
+      async () => {
+        const border = await borderColor(
+          tile,
+          '--mds-border-interactive-primary-hover',
+        );
+        await expect(border.actual).toBe(border.expected);
+        const rest = await borderColor(tile, '--mds-border-default');
+        await expect(border.actual).not.toBe(rest.expected);
+      },
+      { timeout: 2000 },
+    );
   },
 };
 
@@ -235,6 +290,152 @@ export const RightToLeft: Story = {
     ),
   ],
   tags: ['test', 'beta'],
+};
+
+export const Landing: Story = {
+  args: {
+    ...editingArgs,
+    landing: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Set `landing` while the dashboard slides a released tile into place. The border and shadow match Active. The slide itself stays in Moodle.',
+      },
+    },
+  },
+};
+
+const DropFeedbackDemo = () => {
+  const [dropped, setDropped] = useState(true);
+  const [plays, setPlays] = useState(0);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          setDropped(false);
+          requestAnimationFrame(() => setDropped(true));
+        }}
+      >
+        Replay drop
+      </button>
+      <div style={frameStyle}>
+        <BoardTile
+          title="Block title"
+          labels={labels}
+          content={content}
+          editing
+          dropped={dropped}
+          onDropEnd={() => {
+            setPlays((count) => count + 1);
+            setDropped(false);
+          }}
+        />
+      </div>
+      <p className="visually-hidden" data-testid="drop-log">
+        {String(plays)}
+      </p>
+    </>
+  );
+};
+
+export const DropFeedback: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+    docs: {
+      description: {
+        story:
+          'After a drop, the tile lifts and settles while the held outline splits and fades. Replay runs it again. Reduced motion skips the outline and calls `onDropEnd` immediately. The stable picture of the outline is Drop feedback frame.',
+      },
+    },
+  },
+  render: () => <DropFeedbackDemo />,
+  play: async ({ canvas, userEvent }) => {
+    const log = canvas.getByTestId('drop-log');
+    await waitFor(() => expect(log).toHaveTextContent('1'), { timeout: 2500 });
+    await userEvent.click(canvas.getByRole('button', { name: 'Replay drop' }));
+    await waitFor(() => expect(log).toHaveTextContent('2'), { timeout: 2500 });
+  },
+};
+
+export const DropFeedbackFrame: Story = {
+  args: {
+    ...editingArgs,
+    dropped: true,
+    className: 'mds-board-tile--drop-frame',
+  },
+  parameters: {
+    chromatic: { pauseAnimationAtEnd: true },
+    docs: {
+      description: {
+        story:
+          'The outline frozen at its first frame, with the settle raised by one extra-small spacing step. Chromatic pauses animations so this frame does not move.',
+      },
+    },
+  },
+};
+
+export const DropFeedbackReducedMotion: Story = {
+  args: {
+    ...editingArgs,
+    dropped: true,
+  },
+  parameters: {
+    chromatic: { prefersReducedMotion: 'reduce', pauseAnimationAtEnd: true },
+    docs: {
+      description: {
+        story:
+          'With reduced motion, the outline is not shown. Chromatic captures this story with `prefers-reduced-motion: reduce`.',
+      },
+    },
+  },
+};
+
+const HeaderDragDemo = () => {
+  const [log, setLog] = useState('idle');
+  return (
+    <>
+      <div style={frameStyle}>
+        <BoardTile
+          title="Block title"
+          labels={labels}
+          content={content}
+          editing
+          onRemove={() => undefined}
+          actions={actions}
+          onHeaderDragStart={() => setLog('header')}
+        />
+      </div>
+      <p className="visually-hidden" data-testid="header-drag-log">
+        {log}
+      </p>
+    </>
+  );
+};
+
+export const HeaderDrag: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+    docs: {
+      description: {
+        story:
+          'In edit mode the header uses a grab cursor. A press on the title or header background that travels at least 4px calls `onHeaderDragStart`, and also `onHandlePointerDown` with mode `move`. Presses on the remove button, the actions menu, links, and the handles do not. The dashboard owns the drag coordinates. Wire one of those callbacks, not both.',
+      },
+    },
+  },
+  render: () => <HeaderDragDemo />,
+  play: async ({ canvas, userEvent }) => {
+    const log = canvas.getByTestId('header-drag-log');
+    const title = canvas.getByRole('heading', { name: 'Block title' });
+    await userEvent.pointer([
+      { keys: '[MouseLeft>]', target: title, coords: { x: 8, y: 8 } },
+      { coords: { x: 24, y: 10 } },
+      { keys: '[/MouseLeft]' },
+    ]);
+    await expect(log).toHaveTextContent('header');
+  },
 };
 
 const cellStyle = {

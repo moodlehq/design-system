@@ -30,6 +30,7 @@
 @media (hover: hover) {
   .mds-board-tile--editing:hover:not(
       .mds-board-tile--active,
+      .mds-board-tile--landing,
       .mds-board-tile--hidden
     ) {
     border-color: var(--mds-border-interactive-primary-hover);
@@ -54,7 +55,9 @@
 }
 
 .mds-board-tile--active,
-.mds-board-tile--active:hover {
+.mds-board-tile--active:hover,
+.mds-board-tile--landing,
+.mds-board-tile--landing:hover {
   z-index: 1;
   border-style: solid;
   border-color: var(--mds-border-interactive-primary-default);
@@ -64,6 +67,11 @@
 
 .mds-board-tile--dragging {
   transition: none;
+  will-change: transform, width, height;
+}
+
+.mds-board-tile--dragging .mds-board-tile-header {
+  cursor: grabbing;
 }
 
 .mds-board-tile-header {
@@ -521,6 +529,25 @@
     stroke-dasharray: 0.03 0.97;
     stroke-dashoffset: -1.27;
   }
+}
+
+/* Chromatic frame: the spin's first instant (two halves of the held edge)
+   and the settle's raised point. Nothing is running, so the snapshot
+   does not depend on the clock. */
+.mds-board-tile--drop-frame:has(> .mds-board-tile-drop-outline) {
+  animation: none;
+  translate: 0 calc(-1 * var(--mds-spacing-xxs));
+}
+
+.mds-board-tile--drop-frame .mds-board-tile-drop-outline-path {
+  animation: none;
+  opacity: 1;
+  stroke-dasharray: 0.5 0.5;
+  stroke-dashoffset: 0;
+}
+
+.mds-board-tile--drop-frame .mds-board-tile-drop-outline-path:nth-child(2) {
+  stroke-dashoffset: -0.5;
 }
 
 @media (prefers-reduced-motion: reduce) {

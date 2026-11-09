@@ -119,15 +119,31 @@ export interface BoardTileProps extends Omit<
     vertical: number,
   ) => void;
   /**
-   * Pointer pressed a handle, or a drag started from the header.
+   * Pointer pressed a move or resize handle.
    * Touch press-and-hold, when required, stays in the dashboard.
+   * A header drag also calls this with mode `move`, after `onHeaderDragStart`,
+   * so one listener can start every move. Wire that listener or
+   * `onHeaderDragStart`, not both.
    */
   onHandlePointerDown?: (
     mode: BoardTileInteraction,
     event: PointerEvent,
   ) => void;
+  /**
+   * A press on the header background or title moved at least 4px while editing.
+   * Presses on buttons, links, and other controls in the header are ignored.
+   * The event is the pointer move that crossed the threshold. The dashboard
+   * owns the drag coordinates and the grid.
+   */
+  onHeaderDragStart?: (event: PointerEvent) => void;
   /** Pointer drag is in progress. Holds the grabbing cursor and skips transitions. */
   pointerDragging?: boolean;
+  /**
+   * The dashboard is sliding a released tile into place. Keeps the active
+   * border and shadow without showing direction buttons. The slide itself
+   * stays in the dashboard.
+   */
+  landing?: boolean;
   /** Plays the drop outline once. Ignored when reduced motion is requested. */
   dropped?: boolean;
   /** Called when the drop outline finishes, or immediately when motion is reduced. */
@@ -326,6 +342,11 @@ const Handle = ({
         aria-describedby={instructionsId}
         aria-pressed={pressed}
         onPointerDown={onPointerDown}
+        onBlur={(event) => {
+          // The pointer-press mark lasts only for that focus, so a later
+          // keyboard visit still shows the focus ring.
+          delete event.currentTarget.dataset.pointerFocus;
+        }}
         onClick={(event) => {
           // Pointer pickup starts on pointerdown. A zero-detail click is an
           // assistive-technology activation, which does not produce a keydown.
@@ -448,7 +469,9 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
       onCancel,
       onDirection,
       onHandlePointerDown,
+      onHeaderDragStart,
       pointerDragging = false,
+      landing = false,
       dropped = false,
       onDropEnd,
       statusMessage,
@@ -545,11 +568,15 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
         `mds-board-tile--${resolvedActive}`,
       );
     }
+    if (landing) classes.push('mds-board-tile--landing');
     if (pointerDragging) classes.push('mds-board-tile--dragging');
     if (className) classes.push(className);
 
     const accessibleName = label?.trim() ? label : undefined;
     const menuActions = actions ?? [];
+
+    const headerDragStop = useRef<(() => void) | null>(null);
+    useEffect(() => () => headerDragStop.current?.(), []);
 
     const onHeaderPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
       if (!editing || event.button !== 0) return;
@@ -561,6 +588,7 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
       const startX = event.clientX;
       const startY = event.clientY;
       const stop = () => {
+        headerDragStop.current = null;
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', stop);
         window.removeEventListener('pointercancel', stop);
@@ -573,8 +601,10 @@ export const BoardTile = forwardRef<HTMLElement, BoardTileProps>(
           return;
         }
         stop();
+        onHeaderDragStart?.(moveEvent);
         onHandlePointerDown?.('move', moveEvent);
       };
+      headerDragStop.current = stop;
       window.addEventListener('pointermove', move);
       window.addEventListener('pointerup', stop);
       window.addEventListener('pointercancel', stop);

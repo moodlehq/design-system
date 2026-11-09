@@ -242,7 +242,8 @@ describe('BoardTile', () => {
 
   it('starts a move from a header drag past the threshold', () => {
     const onHandlePointerDown = vi.fn();
-    renderTile({ editing: true, onHandlePointerDown });
+    const onHeaderDragStart = vi.fn();
+    renderTile({ editing: true, onHandlePointerDown, onHeaderDragStart });
     const header = document.querySelector('.mds-board-tile-header');
     expect(header).not.toBeNull();
     fireEvent.pointerDown(header as Element, {
@@ -251,8 +252,12 @@ describe('BoardTile', () => {
       clientY: 0,
     });
     fireEvent.pointerMove(window, { clientX: 2, clientY: 0 });
+    expect(onHeaderDragStart).not.toHaveBeenCalled();
     expect(onHandlePointerDown).not.toHaveBeenCalled();
     fireEvent.pointerMove(window, { clientX: 8, clientY: 1 });
+    expect(onHeaderDragStart).toHaveBeenCalledWith(
+      expect.objectContaining({ clientX: 8 }),
+    );
     expect(onHandlePointerDown).toHaveBeenCalledWith(
       'move',
       expect.objectContaining({ clientX: 8 }),
@@ -261,14 +266,52 @@ describe('BoardTile', () => {
 
   it('does not start a header drag from a control or outside edit mode', () => {
     const onHandlePointerDown = vi.fn();
-    renderTile({ editing: true, onRemove: vi.fn(), onHandlePointerDown });
+    const onHeaderDragStart = vi.fn();
+    const { unmount } = renderTile({
+      editing: true,
+      onRemove: vi.fn(),
+      onHandlePointerDown,
+      onHeaderDragStart,
+    });
     fireEvent.pointerDown(screen.getByRole('button', { name: labels.remove }), {
       button: 0,
       clientX: 0,
       clientY: 0,
     });
     fireEvent.pointerMove(window, { clientX: 20, clientY: 0 });
+    expect(onHeaderDragStart).not.toHaveBeenCalled();
     expect(onHandlePointerDown).not.toHaveBeenCalled();
+    unmount();
+
+    onHeaderDragStart.mockClear();
+    renderTile({ onHeaderDragStart });
+    const header = document.querySelector('.mds-board-tile-header');
+    fireEvent.pointerDown(header as Element, {
+      button: 0,
+      clientX: 0,
+      clientY: 0,
+    });
+    fireEvent.pointerMove(window, { clientX: 20, clientY: 0 });
+    expect(onHeaderDragStart).not.toHaveBeenCalled();
+  });
+
+  it('applies the landing look without direction buttons', () => {
+    renderTile({ editing: true, landing: true });
+    const tile = screen.getByRole('region', { name: 'Block title' });
+    expect(tile).toHaveClass('mds-board-tile--landing');
+    expect(tile).not.toHaveClass('mds-board-tile--active');
+    expect(
+      screen.queryByRole('button', { name: labels.up }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('clears the pointer-focus mark when the handle blurs', () => {
+    renderTile({ editing: true });
+    const move = screen.getByRole('button', { name: labels.move });
+    fireEvent.pointerDown(move, { button: 0, clientX: 1, clientY: 1 });
+    expect(move).toHaveAttribute('data-pointer-focus', 'true');
+    fireEvent.blur(move);
+    expect(move).not.toHaveAttribute('data-pointer-focus');
   });
 
   it('reports a pointer press on the move handle', () => {
