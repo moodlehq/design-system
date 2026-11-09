@@ -73,3 +73,21 @@
   inline-size: var(--mds-icons-sm);
   block-size: var(--mds-icons-sm);
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* The ✕ is a mask over background-color, which forced colors repaints to
+   Canvas, leaving an empty button. Opt the glyph out and paint it with system
+   colour keywords. currentColor can't be used: once opted out it resolves to
+   the unforced token colour, not the system colour. */
+@media (forced-colors: active) {
+  .mds-close-button.btn-close::before {
+    forced-color-adjust: none;
+    background-color: ButtonText;
+  }
+
+  .mds-close-button.btn-close:disabled::before,
+  .mds-close-button.btn-close.disabled::before {
+    background-color: GrayText;
+  }
+}

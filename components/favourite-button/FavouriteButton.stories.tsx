@@ -172,6 +172,37 @@ export const Disabled = {
   },
 } satisfies Story;
 
+/** Forced-colors (Windows High Contrast) snapshot for Chromatic. */
+export const ForcedColors = {
+  tags: ['test', 'stable'],
+  parameters: {
+    ...showcaseParameters,
+    chromatic: { forcedColors: 'active' },
+    docs: {
+      ...showcaseParameters.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. The outline and filled stars should stay visible, including when disabled.',
+      },
+    },
+  },
+  render: () => (
+    <div style={showcaseStyle}>
+      <FavouriteButton aria-label="Add to favourites" />
+      <FavouriteButton aria-label="Remove from favourites" selected />
+      <FavouriteButton aria-label="Add to favourites (disabled)" disabled />
+      <FavouriteButton
+        aria-label="Remove from favourites (disabled)"
+        selected
+        disabled
+      />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getAllByRole('button')).toHaveLength(4);
+  },
+} satisfies Story;
+
 export const StateMatrix = {
   parameters: {
     layout: 'padded',

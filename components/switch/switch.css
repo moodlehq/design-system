@@ -253,3 +253,78 @@
     transition: none;
   }
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* The track, thumb and in-thumb icons are all drawn with background-color,
+   which forced colors repaints to Canvas, so the whole control disappears and
+   on/off look identical. Opt them out and paint them with system colours:
+   an outlined track with a CanvasText thumb when off, a Highlight track with a
+   HighlightText thumb when on, and GrayText when disabled. */
+@media (forced-colors: active) {
+  .mds-switch-track,
+  .mds-switch-thumb,
+  .mds-switch-icon-item {
+    forced-color-adjust: none;
+  }
+
+  .mds-switch-track,
+  .mds-switch-input:not(:disabled)
+    + .mds-switch-control:hover
+    .mds-switch-track {
+    background-color: Canvas;
+    outline: var(--mds-stroke-weight-sm) solid CanvasText;
+    outline-offset: calc(var(--mds-stroke-weight-sm) * -1);
+  }
+
+  .mds-switch-thumb,
+  .mds-switch-input:not(:disabled)
+    + .mds-switch-control:hover
+    .mds-switch-thumb {
+    background-color: CanvasText;
+  }
+
+  .mds-switch-icon-item {
+    background-color: Canvas;
+  }
+
+  .mds-switch-input:checked + .mds-switch-control .mds-switch-track,
+  .mds-switch-input:checked + .mds-switch-control:hover .mds-switch-track {
+    background-color: Highlight;
+    outline-color: Highlight;
+  }
+
+  .mds-switch-input:checked + .mds-switch-control .mds-switch-thumb,
+  .mds-switch-input:checked:not(:disabled)
+    + .mds-switch-control:hover
+    .mds-switch-thumb {
+    background-color: HighlightText;
+  }
+
+  .mds-switch-input:checked + .mds-switch-control .mds-switch-icon-item {
+    background-color: Highlight;
+  }
+
+  .mds-switch-input:disabled + .mds-switch-control .mds-switch-track {
+    background-color: Canvas;
+    outline-color: GrayText;
+  }
+
+  .mds-switch-input:disabled + .mds-switch-control .mds-switch-thumb {
+    background-color: GrayText;
+  }
+
+  .mds-switch-input:checked:disabled + .mds-switch-control .mds-switch-track {
+    background-color: GrayText;
+  }
+
+  .mds-switch-input:checked:disabled + .mds-switch-control .mds-switch-thumb {
+    background-color: Canvas;
+  }
+
+  .mds-switch-input:checked:disabled
+    + .mds-switch-control
+    .mds-switch-icon-item {
+    background-color: GrayText;
+  }
+}

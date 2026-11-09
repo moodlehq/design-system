@@ -115,3 +115,15 @@
   ~ .mds-radio-feedback {
   opacity: 0.5;
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* Bootstrap draws the selected dot as a white background-image on a filled
+   circle. Forced colors repaints that fill to Canvas, so selected and
+   unselected look identical. Fall back to the native radio, which the OS
+   renders with system colours. */
+@media (forced-colors: active) {
+  .mds-radio[class] .mds-radio-input {
+    appearance: auto;
+  }
+}
