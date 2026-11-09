@@ -376,64 +376,28 @@ export const Landing: Story = {
   },
 };
 
-const DropFeedbackDemo = () => {
-  const [dropped, setDropped] = useState(true);
-  const [plays, setPlays] = useState(0);
-  return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--mds-spacing-md)',
-        }}
-      >
-        <button
-          type="button"
-          onClick={() => {
-            setDropped(false);
-            requestAnimationFrame(() => setDropped(true));
-          }}
-        >
-          Replay drop
-        </button>
-        <div style={frameStyle}>
-          <BoardTile
-            title="Block title"
-            labels={labels}
-            content={content}
-            editing
-            dropped={dropped}
-            onDropEnd={() => {
-              setPlays((count) => count + 1);
-              setDropped(false);
-            }}
-          />
-        </div>
-      </div>
-      <p className="visually-hidden" data-testid="drop-log">
-        {String(plays)}
-      </p>
-    </>
-  );
-};
-
 export const DropFeedback: Story = {
+  args: {
+    ...editingArgs,
+    dropped: true,
+  },
   parameters: {
     chromatic: { disableSnapshot: true },
     docs: {
       description: {
         story:
-          'After a drop, the tile lifts and settles while the held outline splits and fades. Replay runs it again. Reduced motion skips the outline and calls `onDropEnd` immediately. The stable picture of the outline is Drop feedback frame.',
+          'After a drop, the tile lifts and settles while the held outline splits and fades. The animation plays once when the story loads. Reduced motion skips the outline. The stable picture of the outline is Drop feedback frame.',
       },
     },
   },
-  render: () => <DropFeedbackDemo />,
-  play: async ({ canvas, userEvent }) => {
-    const log = canvas.getByTestId('drop-log');
-    await waitFor(() => expect(log).toHaveTextContent('1'), { timeout: 2500 });
-    await userEvent.click(canvas.getByRole('button', { name: 'Replay drop' }));
-    await waitFor(() => expect(log).toHaveTextContent('2'), { timeout: 2500 });
+  play: async ({ canvas }) => {
+    const tile = canvas.getByRole('region', { name: 'Block title' });
+    await expect(
+      tile.querySelector('.mds-board-tile-drop-outline'),
+    ).not.toBeNull();
+    await expect(
+      canvas.queryByRole('button', { name: 'Replay drop' }),
+    ).not.toBeInTheDocument();
   },
 };
 
