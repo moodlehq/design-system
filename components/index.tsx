@@ -10,6 +10,14 @@ export type { AvatarProps, AvatarSize } from './avatar';
 export { Badge } from './badge';
 export type { BadgeProps } from './badge';
 
+export { BoardTile } from './board-tile';
+export type {
+  BoardTileAction,
+  BoardTileInteraction,
+  BoardTileLabels,
+  BoardTileProps,
+} from './board-tile';
+
 export { Breadcrumb } from './breadcrumb';
 export type { BreadcrumbItem, BreadcrumbProps } from './breadcrumb';
 
