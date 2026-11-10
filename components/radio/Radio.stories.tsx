@@ -432,6 +432,49 @@ export const RightToLeft: Story = {
   ],
 };
 
+/** Forced-colors (Windows High Contrast) snapshot for Chromatic. */
+export const ForcedColors: Story = {
+  tags: ['test', 'stable'],
+  parameters: {
+    controls: { disable: true },
+    chromatic: { forcedColors: 'active' },
+    docs: {
+      source: { code: null },
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. Selected and unselected must look different, including when disabled.',
+      },
+    },
+  },
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 'var(--mds-spacing-sm)' }}>
+      <Radio {...args} name="fc-enabled" value="a" label="Unselected" />
+      <Radio
+        {...args}
+        name="fc-enabled"
+        value="b"
+        label="Selected"
+        defaultChecked
+      />
+      <Radio {...args} name="fc-disabled" value="a" label="Disabled" disabled />
+      <Radio
+        {...args}
+        name="fc-disabled"
+        value="b"
+        label="Disabled selected"
+        disabled
+        defaultChecked
+      />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('radio', { name: 'Selected' })).toBeChecked();
+    await expect(
+      canvas.getByRole('radio', { name: 'Disabled selected' }),
+    ).toBeDisabled();
+  },
+};
+
 /**
  * `hideLabel` with the `label` prop used as the accessible name fallback. No explicit
  * `aria-label` is provided — the component derives the accessible name from `label`.

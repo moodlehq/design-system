@@ -394,3 +394,20 @@ export const RightToLeft: Story = {
     ).toBeInTheDocument();
   },
 };
+
+/** Forced-colors (Windows High Contrast) snapshot of `States` for Chromatic. */
+export const ForcedColors: Story = {
+  ...States,
+  tags: ['test', 'stable'],
+  parameters: {
+    ...States.parameters,
+    chromatic: { ...States.parameters?.chromatic, forcedColors: 'active' },
+    docs: {
+      ...States.parameters?.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. The show/hide toggle icon should stay visible in every state.',
+      },
+    },
+  },
+};

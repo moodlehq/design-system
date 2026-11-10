@@ -272,3 +272,20 @@ export const RightToLeft: Story = {
     children: <Button label="مرر هنا" variant="secondary" />,
   },
 };
+
+/** Forced-colors (Windows High Contrast) snapshot of `Variants` for Chromatic. */
+export const ForcedColors: Story = {
+  ...Variants,
+  tags: ['test', 'stable'],
+  parameters: {
+    ...Variants.parameters,
+    chromatic: { ...Variants.parameters?.chromatic, forcedColors: 'active' },
+    docs: {
+      ...Variants.parameters?.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. Both bubbles should keep a visible outline and arrow.',
+      },
+    },
+  },
+};

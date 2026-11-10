@@ -501,3 +501,40 @@
   align-items: flex-start;
   /* No position:relative needed — the menu is portaled via FloatingPortal */
 }
+
+/* ------------------------------------------------------------------ */
+/* Forced colors (Windows High Contrast)                               */
+/* ------------------------------------------------------------------ */
+
+/* Chevrons, the selection check and the list circle are masks over
+   background-color, and the divider is a background-color line. Forced
+   colors repaints all of them to Canvas, so the trigger loses its affordance
+   and selected/submenu cues vanish. Opt them out and paint them with system
+   colour keywords. currentColor can't be used: once opted out it resolves to
+   the unforced token colour, e.g. white on the dark trigger. */
+@media (forced-colors: active) {
+  .mds-dropdown-trigger__chevron,
+  .mds-dropdown-item__check,
+  .mds-dropdown-item__chevron-right {
+    forced-color-adjust: none;
+    background-color: ButtonText;
+  }
+
+  .mds-dropdown-trigger:disabled .mds-dropdown-trigger__chevron,
+  .mds-dropdown-item:disabled .mds-dropdown-item__check,
+  .mds-dropdown-item[aria-disabled='true'] .mds-dropdown-item__check,
+  .mds-dropdown-item[aria-disabled='true'] .mds-dropdown-item__chevron-right {
+    background-color: GrayText;
+  }
+
+  /* List items are aria-disabled only for read-only semantics; like the
+     normal-mode rule above, keep their indicator at full strength. */
+  .mds-dropdown-item--list[aria-disabled='true'] .mds-dropdown-item__check {
+    background-color: ButtonText;
+  }
+
+  .mds-dropdown-divider {
+    forced-color-adjust: none;
+    background-color: GrayText;
+  }
+}

@@ -132,3 +132,17 @@
 .mds-alert-dismiss-button {
   color: inherit;
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* The status icon is a mask over background-color, which forced colors
+   repaints to Canvas, so every variant loses its icon and they look
+   identical. Opt it out and paint it CanvasText (currentColor would resolve to
+   the unforced token colour once opted out). The icon shape still
+   distinguishes info, success, warning and danger. */
+@media (forced-colors: active) {
+  .mds-alert .mds-alert-icon {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+}
