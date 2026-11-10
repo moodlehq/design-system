@@ -135,12 +135,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for branch, PR, review, and release proce
 
 **When adding a new component:**
 
-Every component requires a `ComponentName.figma.tsx` Code Connect file alongside the implementation. See `.github/instructions/components.instructions.md` for the full workflow. In brief:
+Every component requires a `ComponentName.figma.ts` Code Connect template file alongside the implementation. See `.github/instructions/components.instructions.md` for the full workflow. In brief:
 
 1. Get the Figma node URL for the component from the design team.
 2. Use Figma MCP `get_context_for_code_connect` to fetch the Figma property structure.
-3. Create `ComponentName.figma.tsx` in the component folder mapping Figma props to React props.
-4. Publish via Figma MCP `add_code_connect_map` or `npx figma connect publish`.
+3. Create `ComponentName.figma.ts` in the component folder mapping Figma props to React props (template file, `@figma/code-connect` v2).
+4. Validate with `npx figma connect parse -f components/<folder>/ComponentName.figma.ts`, then publish via Figma MCP `add_code_connect_map` or `npx figma connect publish`.
 
 **When making any change:**
 
