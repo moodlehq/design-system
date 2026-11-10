@@ -14,6 +14,7 @@ Quick reference for AI agents and developers.
 | Alert           | Persistent inline status banner with semantic variants and optional actions/dismiss                                 | type, title, message, isDismissible, isActionable                                                                    |
 | Avatar          | Circular user/entity identity display — photo or initials                                                           | type, size, initials, imageSrc, imageAlt                                                                             |
 | Badge           | Short status, metadata, or count labels                                                                             | type, contrast, style, icon, label                                                                                   |
+| BoardTile       | Frame for one Flexible dashboard block, with edit-mode move and resize handles                                      | title, content, labels, editing, hidden, active                                                                      |
 | Breadcrumb      | Hierarchical page trail with truncation and overflow support                                                        | items, ariaLabel, overflowAriaLabel                                                                                  |
 | Button          | Primary and secondary actions                                                                                       | variant, size, disabled, startIcon, endIcon                                                                          |
 | Checkbox        | Independent multi-select controls                                                                                   | checked, label, disabled, invalid, indeterminate                                                                     |
@@ -63,6 +64,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [Breadcrumb stories](../../components/breadcrumb/Breadcrumb.stories.tsx)
 - [Badge implementation](../../components/badge/Badge.tsx)
 - [Badge stories](../../components/badge/Badge.stories.tsx)
+- [BoardTile implementation](../../components/board-tile/BoardTile.tsx)
+- [BoardTile stories](../../components/board-tile/BoardTile.stories.tsx)
 - [Button implementation](../../components/button/Button.tsx)
 - [Button stories](../../components/button/Button.stories.tsx)
 - [Checkbox implementation](../../components/checkbox/Checkbox.tsx)
@@ -127,6 +130,7 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - Keep Storybook variants and tests aligned with component API changes.
 - `Radio`, `Checkbox`, and `NavPill` do not ship a group/layout wrapper — when multiple instances are rendered together, layout is supplied by the consumer (for example, a flex container + gap). See each component's stories for the reference pattern; do not invent a new wrapper component.
 - `Radio` and `Choicebox` both render single-select options but are not interchangeable: use `Radio` for a plain list of text options, `Choicebox` for larger card-style options with an icon and/or supporting text.
+- Use `BoardTile` for one block on the Flexible dashboard board. It frames the block title and content, and while `editing` is set it shows the move handle, resize handle, remove button, and actions menu. Dragging the header (4px, ignoring controls) calls `onHeaderDragStart`. Don't use it as a general page card, course card, or content card, and don't use it to place blocks on the grid — that stays with the dashboard. The handles are not `Button`s. The remove control and the direction buttons around a picked-up handle are.
 - **Badge is never interactive. If it links or removes, it's a Tag.** A static badge rendered beside a link is a layout pattern, not an interactive component — do not wrap a `Badge` in an anchor or add a click handler to it. Use `Tag` (`type="link"` or `type="removable"`) whenever the element should navigate or be dismissed. `Tag` nests the existing `Avatar` and `CloseButton` components and shares `Badge`'s surface tokens rather than redrawing either.
 - Use `Alert` for a persistent, in-flow message tied to the current page or section: the outcome of an action someone may want to reference, something that needs attention, or a warning or error that must stay visible until acted on or dismissed. Don't use it for:
   - a brief confirmation that doesn't need to stay on the page → a toast (MDS has no Toast yet; flag the need rather than using `Alert` with auto-dismiss);

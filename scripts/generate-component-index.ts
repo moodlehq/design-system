@@ -144,6 +144,8 @@ const PURPOSES: Record<string, string> = {
     "Persistent, in-flow status message (info/success/warning/danger) that stays until dismissed or the user navigates away. Not for brief auto-dismissing confirmations (toast), single-field validation errors (use the field's invalidFeedback), or blocking messages that need confirmation (modal).",
   avatar: 'Circular user/entity identity display — photo or initials.',
   badge: 'Short status, metadata, or count labels.',
+  'board-tile':
+    'Frame for one block on the Flexible dashboard board: title, content slot, and, while editing, move and resize handles, a remove button, and an actions menu. Not a general page card, and not the board grid.',
   breadcrumb:
     'Hierarchical navigation path (2+ levels) with optional truncation and overflow support. Separators are CSS-only — never add separator elements or characters to item labels. The last item is always the current page (plain text, not a link). Not for unrelated top-level sections (tabs) or sequential pages (Pagination).',
   button: 'Primary and secondary actions.',
