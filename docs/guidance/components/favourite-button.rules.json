@@ -1,0 +1,19 @@
+{
+  "component": "Favourite button",
+  "slug": "favourite-button",
+  "must": [],
+  "mustNot": [
+    "Do not use for primary calls to action. Use a labelled button instead.",
+    "Do not use when the action needs an explicit text label for clarity. Use a button with an icon and label instead.",
+    "Don't use vague labels like \"Toggle\" or \"Star\".",
+    "Do not group multiple favourite buttons side by side.",
+    "Do not rely on colour alone to communicate the toggle state. The icon fill change (unfilled vs filled) provides a second visual indicator."
+  ],
+  "useInstead": [
+    "labelled button",
+    "button with an icon and label"
+  ],
+  "lookAlikes": [
+    "Button"
+  ]
+}

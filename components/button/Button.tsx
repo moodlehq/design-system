@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactElement } from 'react';
 import { forwardRef, isValidElement } from 'react';
 
+/** Visual style of a Button, from `primary` to `ghost` and the `outline-*` variants. */
 export type ButtonVariant =
   | 'primary'
   | 'secondary'
@@ -14,11 +15,26 @@ type ButtonSize = 'sm' | 'md' | 'lg';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
+/** Props for Button. */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * Visible button text. Omit for an icon-only button, and then provide
+   * `aria-label` or `aria-labelledby` so it has an accessible name.
+   */
   label?: string;
+  /**
+   * Visual style of the button.
+   * @default 'primary'
+   */
   variant?: ButtonVariant;
+  /**
+   * Button size.
+   * @default 'md'
+   */
   size?: ButtonSize;
+  /** Icon shown before the label. Must be an `<i>` or `<svg>` element. */
   startIcon?: IconElement;
+  /** Icon shown after the label. Must be an `<i>` or `<svg>` element. */
   endIcon?: IconElement;
 }
 
@@ -43,6 +59,7 @@ const allowedVariants: ButtonVariant[] = [
 
 const allowedSizes: ButtonSize[] = ['sm', 'md', 'lg'];
 
+/** Triggers an action such as submitting a form or opening a dialog. For navigation to another page use Link; for an icon-only dismiss control use CloseButton. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {

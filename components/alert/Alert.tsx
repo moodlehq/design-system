@@ -5,8 +5,10 @@ import type { ButtonProps } from '../button';
 import { Button } from '../button';
 import { CloseButton } from '../close-button';
 
+/** Semantic type of an Alert: `info`, `success`, `warning` or `danger`. */
 export type AlertType = 'info' | 'success' | 'warning' | 'danger';
 
+/** Props for Alert. */
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   /** Semantic alert type that controls icon, colours, and live-region role. */
   type?: AlertType;
@@ -54,6 +56,7 @@ const roleByType: Record<AlertType, 'alert' | 'status'> = {
   danger: 'alert',
 };
 
+/** Inline message that tells the user about the status of a page or action, with optional dismiss control and a single action button. Use for persistent, in-context feedback; use Tooltip for brief hints. */
 export const Alert = ({
   type,
   title,

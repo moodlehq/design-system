@@ -1,0 +1,15 @@
+{
+  "component": "Progress bar",
+  "slug": "progress-bar",
+  "must": [],
+  "mustNot": [
+    "Do not use when the total is unknown or progress cannot be measured.",
+    "Do not use when you cannot estimate progress, even roughly.",
+    "Do not use for a simple done or not done status.",
+    "Do not write a full sentence inside the component.",
+    "Do not rely on colour alone to show status. Use a label or a count.",
+    "Do not rely on colour alone to show completion. Use a label or a count."
+  ],
+  "useInstead": [],
+  "lookAlikes": []
+}

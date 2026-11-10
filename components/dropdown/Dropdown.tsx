@@ -43,6 +43,7 @@ type CustomTriggerElement = ReactElement<CustomTriggerProps>;
 
 // ── Context ──────────────────────────────────────────────────────────────────
 
+/** Value shared by a Dropdown with its items for keyboard navigation and item interaction props. */
 export interface DropdownContextValue {
   /** Merge Floating UI item-interaction props with the caller's own props. */
   getItemProps: (
@@ -53,6 +54,7 @@ export interface DropdownContextValue {
   activeIndex: number | null;
 }
 
+/** Context providing a Dropdown's item interaction state to its items. */
 // Exported so DropdownItemExpandable can re-provide a nested instance for its
 // own submenu children.
 export const DropdownContext = createContext<DropdownContextValue | null>(null);
@@ -75,6 +77,7 @@ export function useDropdownContext(): DropdownContextValue {
 
 // ── DropdownMenu ─────────────────────────────────────────────────────────────
 
+/** Props for DropdownMenu. */
 export type DropdownMenuProps = HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -109,6 +112,7 @@ DropdownMenu.displayName = 'DropdownMenu';
 
 // ── Dropdown ─────────────────────────────────────────────────────────────────
 
+/** Props for Dropdown. */
 export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
   /** Trigger label. Must be a caller-supplied translated string. Required
    *  unless `trigger` is provided. */
@@ -136,7 +140,12 @@ export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
   trigger?: CustomTriggerElement;
   /** Controlled open state; leave undefined for uncontrolled behavior. */
   open?: boolean;
+  /**
+   * Initial open state when uncontrolled.
+   * @default false
+   */
   defaultOpen?: boolean;
+  /** Called with the next open state whenever the menu opens or closes. */
   onOpenChange?: (open: boolean) => void;
   /** Menu placement relative to the trigger. Defaults to 'bottom-start'.
    *  flip() will invert to the opposite side when space is insufficient. */
@@ -154,6 +163,7 @@ export interface DropdownProps extends HTMLAttributes<HTMLDivElement> {
 // --mds-spacing-xxs = var(--mds-scale-100) = 0.25rem = 4px
 const MENU_OFFSET = 4;
 
+/** Root of a Dropdown: a trigger that opens a floating menu of items, with controlled or uncontrolled open state. Compose with DropdownMenu and the DropdownItem* components; use Tooltip for non-interactive hints. */
 export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   function Dropdown(
     {

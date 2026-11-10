@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { forwardRef } from 'react';
 
+/** Props for DropdownItemCustom. */
 export interface DropdownItemCustomProps extends HTMLAttributes<HTMLDivElement> {
   /** Arbitrary slot content. The custom item is the escape hatch for item
    *  layouts not covered by the typed variants; interactivity and ARIA for

@@ -1,6 +1,7 @@
 import { type InputHTMLAttributes, forwardRef, useId } from 'react';
 
 // Extend InputHTMLAttributes to allow passing any valid input attributes, but also add our custom props like feedback and label.
+/** Props for Radio. */
 export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
   /** Visible label text. When hideLabel is true this also serves as the aria-label fallback
    *  if no explicit aria-label prop is provided. */
@@ -22,6 +23,7 @@ export interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
   invalidFeedback?: string;
 }
 
+/** Labelled radio button for choosing exactly one option from a set; give the options a shared `name`. For multiple selections use Checkbox; for card-style options use Choicebox. */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   (
     {

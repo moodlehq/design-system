@@ -40,6 +40,7 @@ export type TagContentAvatar = Pick<
   'imageSrc' | 'alt' | 'initials'
 >;
 
+/** Props for TagContent. */
 export interface TagContentProps {
   /** Line 1 — the name/category label. Always rendered. */
   content: string;
@@ -71,6 +72,7 @@ const avatarSizeByLines: Record<1 | 2 | 3, AvatarSize> = {
   3: 'lg',
 };
 
+/** Internal content layout for Tag: an optional avatar beside up to three lines of text (name, username and email, institution). */
 export const TagContent = ({
   content,
   username,

@@ -1,0 +1,22 @@
+{
+  "component": "Switch",
+  "slug": "switch",
+  "must": [
+    "Always provide a label that describes the setting being toggled, not the action.",
+    "Always provide a label. The icon inside the thumb reinforces state, but the label provides context: what is being toggled."
+  ],
+  "mustNot": [
+    "Don't use a Switch when supporting text is needed to explain the option, or when the selection is submitted as part of a form. Use a [Checkbox](https://design.moodle.com/98292f05f/p/12e8f6) instead.",
+    "Don't use a Switch when users must choose one option from a mutually exclusive set. Use a [Radio group](https://design.moodle.com/98292f05f/p/366522) instead.",
+    "Don't use a Switch when the action has irreversible or destructive consequences. Use a button with a confirmation step.",
+    "Don't change the label based on the current state. Keep it consistent regardless of whether the Switch is on or off.",
+    "Don't start a label with a verb. The switch itself implies action.",
+    "Don't rely on colour alone to communicate state. The icon in the thumb (check/cross, eye/crossed eye, lock/unlock) provides a non-colour indicator in every state."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Checkbox",
+    "Radio group",
+    "Button"
+  ]
+}

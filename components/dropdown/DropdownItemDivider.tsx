@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 
+/** Props for DropdownItemDivider. */
 export type DropdownItemDividerProps = HTMLAttributes<HTMLDivElement>;
 
 /** Dropdown.item.divider — a horizontal rule separating groups of items. */

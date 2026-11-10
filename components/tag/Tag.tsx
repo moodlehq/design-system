@@ -77,6 +77,7 @@ interface TagIdentityProps {
 /** The two interaction modes a Tag can render. Never both at once. */
 export type TagType = 'link' | 'removable';
 
+/** Props for Tag in `link` mode, which renders an interactive `<a>`. */
 export interface TagLinkProps
   extends
     TagSharedProps,
@@ -92,6 +93,7 @@ export interface TagLinkProps
   variant?: TagVariant;
 }
 
+/** Props for Tag in `removable` mode, which renders a `<span>` with a nested CloseButton. */
 export interface TagRemovableProps
   extends
     TagSharedProps,
@@ -154,6 +156,7 @@ const resolveVariant = (
   return undefined;
 };
 
+/** Interactive chip that is either a link (`type="link"`) or a removable value (`type="removable"`, e.g. a selected person). For a non-interactive label use Badge. */
 export const Tag = forwardRef<HTMLAnchorElement | HTMLSpanElement, TagProps>(
   (rawProps, ref) => {
     const props = rawProps as unknown as TagKnownProps;

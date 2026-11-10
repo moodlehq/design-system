@@ -23,15 +23,39 @@ const isIconElement = (el: unknown, propName: string): el is IconElement => {
   return valid;
 };
 
+/** Props for BaseInput, the shared field shell behind Input, PasswordInput and SearchInput. */
 export interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  /** Visible label text. Must be a caller-supplied translated string. */
   label?: string;
+  /**
+   * Hides the label visually while keeping it as the accessible name.
+   * @default false
+   */
   hideLabel?: boolean;
+  /**
+   * Marks the field as invalid. Native constraint-validation failures also
+   * mark it invalid unless `suppressNativeInvalid` is set. Ignored while the
+   * field is disabled or read-only.
+   * @default false
+   */
   invalid?: boolean;
+  /**
+   * Error text shown below the field while it is invalid. Falls back to the
+   * browser's validation message when omitted.
+   */
   invalidFeedback?: string;
+  /** Helper text shown below the field while it is not showing an error. */
   supportingText?: string;
+  /** Tooltip text for an info button beside the label. Omit to hide the button. */
   infoTooltipLabel?: string;
+  /**
+   * Native `type` of the underlying `<input>`.
+   * @default 'text'
+   */
   inputType?: InputHTMLAttributes<HTMLInputElement>['type'];
+  /** Icon shown at the start of the field. Must be an `<i>` or `<svg>` element. */
   startIcon?: IconElement;
+  /** Control rendered at the end of the field, such as a clear or show-password button. */
   trailingAction?: ReactNode;
   /**
    * When true, native constraint-validation failures (e.g. `pattern`,
@@ -53,6 +77,7 @@ export interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   >;
 }
 
+/** Internal field shell providing the label, feedback, icon and validation behaviour shared by the input components. Use Input, PasswordInput or SearchInput rather than rendering this directly. */
 export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
   function BaseInput(
     {

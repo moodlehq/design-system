@@ -74,7 +74,7 @@ jobs:
 
       - name: Format check
         # --check exits non-zero if any file differs from Prettier's output, failing the build.
-        run: npx prettier --config .github/linters/.prettierrc --ignore-path .github/linters/.prettierignore --check . '**/*.{ts,tsx,js,jsx,yml}'
+        run: npx prettier --config .github/linters/.prettierrc --ignore-path .prettierignore --check . '**/*.{ts,tsx,js,jsx,yml}'
 
       - name: Build
         run: npm run build

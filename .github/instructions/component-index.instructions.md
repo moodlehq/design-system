@@ -151,8 +151,6 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 
 ## Documentation Routing
 
-- Primary design guidance source: ZeroHeight documentation and MCP lookups.
-- Local fallback for quick orientation: this index and scoped instruction files.
-- Large fallback context file: [Design system fallback instructions](design-system.instructions.md).
-
-Load the large fallback file only when the agent cannot access ZeroHeight guidance and asks for it explicitly.
+- Per-component guidance: `docs/guidance/components/<slug>.md` (map: `llms.txt`, `docs/guidance/index.md`).
+- Optional extra for HQ: ZeroHeight MCP lookups.
+- Scoped instruction files and this index cover code conventions.
