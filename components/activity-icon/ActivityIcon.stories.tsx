@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect } from 'storybook/test';
+import { expect, waitFor } from 'storybook/test';
 import { ActivityIcon } from './ActivityIcon';
 import {
   type ActivityIconCategory,
   type ActivityIconName,
+  activityIconCategories,
   activityIconNames,
   activityIconRegistry,
 } from './activityIconRegistry';
@@ -19,10 +20,34 @@ const meta = {
     icon: {
       control: { type: 'select' },
       options: activityIconNames,
+      // `src` takes precedence, so `icon` is ignored while a custom image is set.
+      if: { arg: 'src', truthy: false },
       description:
         'Activity icon name derived from assets in components/activity-icon/assets.',
       table: {
         type: { summary: activityIconNames.join(' | ') },
+      },
+    },
+    src: {
+      control: { type: 'text' },
+      description:
+        'URL of a custom image for activities that bring their own artwork (e.g. LTI tools, third-party plugins). Takes precedence over `icon`.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+    category: {
+      control: { type: 'select' },
+      options: activityIconCategories,
+      // Only tints the container behind a custom `src` image.
+      if: { arg: 'src', truthy: true },
+      description:
+        'Container tint for a custom `src` image. Ignored for registry icons.',
+      table: {
+        type: {
+          summary: activityIconCategories.join(' | '),
+        },
+        defaultValue: { summary: 'other' },
       },
     },
     size: {
@@ -89,6 +114,12 @@ const showcaseStyles = {
   gap: 'var(--mds-spacing-md)',
 };
 
+// Stand-in for third-party artwork (an LTI tool or plugin icon) that is not in the
+// icon registry. Served from .storybook/assets/ via staticDirs; relative (no leading
+// slash) so it resolves when Storybook is hosted from a subpath. It is a non-square
+// portrait photo, so it also shows the contain fitting.
+const CUSTOM_IMG = 'jessica.jpeg';
+
 export const Default: Story = {};
 
 export const Containers: Story = {
@@ -113,6 +144,16 @@ export const Containers: Story = {
         icon="assignment"
         alt="Large container"
       />
+      {(['none', 'default', 'large'] as const).map((container) => (
+        <ActivityIcon
+          {...args}
+          icon={undefined}
+          key={container}
+          container={container}
+          src={CUSTOM_IMG}
+          alt={`Custom ${container} container`}
+        />
+      ))}
     </div>
   ),
   play: async ({ canvas }) => {
@@ -125,6 +166,9 @@ export const Containers: Story = {
     await expect(
       await canvas.findByRole('img', { name: 'Large container' }),
     ).toBeVisible();
+    await expect(
+      await canvas.findByRole('img', { name: 'Custom default container' }),
+    ).toHaveAttribute('src', CUSTOM_IMG);
   },
 };
 
@@ -160,6 +204,17 @@ export const Sizes: Story = {
         icon="assignment"
         alt="Extra large size"
       />
+      {(['sm', 'md', 'lg', 'xl'] as const).map((size) => (
+        <ActivityIcon
+          {...args}
+          icon={undefined}
+          key={size}
+          size={size}
+          container="default"
+          src={CUSTOM_IMG}
+          alt={`Custom size ${size}`}
+        />
+      ))}
     </div>
   ),
   play: async ({ canvas }) => {
@@ -175,6 +230,9 @@ export const Sizes: Story = {
     await expect(
       await canvas.findByRole('img', { name: 'Extra large size' }),
     ).toBeVisible();
+    await expect(
+      await canvas.findByRole('img', { name: 'Custom size xl' }),
+    ).toHaveAttribute('src', CUSTOM_IMG);
   },
 };
 
@@ -218,6 +276,17 @@ export const Categories: Story = {
         icon="file-pdf"
         alt="Resource category"
       />
+      {activityIconCategories.map((category) => (
+        <ActivityIcon
+          {...args}
+          icon={undefined}
+          key={category}
+          container="default"
+          src={CUSTOM_IMG}
+          category={category}
+          alt={`Custom image, ${category} category`}
+        />
+      ))}
     </div>
   ),
   play: async ({ canvas }) => {
@@ -239,6 +308,13 @@ export const Categories: Story = {
     await expect(
       await canvas.findByRole('img', { name: 'Resource category' }),
     ).toBeVisible();
+    for (const category of activityIconCategories) {
+      await expect(
+        await canvas.findByRole('img', {
+          name: `Custom image, ${category} category`,
+        }),
+      ).toHaveAttribute('src', CUSTOM_IMG);
+    }
   },
 };
 
@@ -279,6 +355,19 @@ export const Muted: Story = {
           />
         ))}
       </div>
+      <div style={showcaseStyles}>
+        {(['none', 'default', 'large'] as const).map((container) => (
+          <ActivityIcon
+            {...args}
+            appearance="muted"
+            container={container}
+            icon={undefined}
+            key={container}
+            src={CUSTOM_IMG}
+            alt={`Muted custom ${container} container`}
+          />
+        ))}
+      </div>
     </div>
   ),
   play: async ({ canvas }) => {
@@ -288,6 +377,9 @@ export const Muted: Story = {
       'Muted none container',
       'Muted default container',
       'Muted large container',
+      'Muted custom none container',
+      'Muted custom default container',
+      'Muted custom large container',
     ]) {
       await expect(
         await canvas.findByRole('img', { name }),
@@ -323,6 +415,14 @@ export const MutedForcedColors: Story = {
               alt={`${appearance} ${container} container`}
             />
           ))}
+          <ActivityIcon
+            {...args}
+            appearance={appearance}
+            container="default"
+            icon={undefined}
+            src={CUSTOM_IMG}
+            alt={`${appearance} custom image`}
+          />
         </div>
       ))}
     </div>
@@ -331,6 +431,41 @@ export const MutedForcedColors: Story = {
     await expect(
       await canvas.findByRole('img', { name: 'muted default container' }),
     ).toBeInTheDocument();
+  },
+};
+
+export const CustomImageLoadError: Story = {
+  parameters: {
+    ...showcaseParameters,
+    docs: {
+      ...showcaseParameters.docs,
+      description: {
+        story:
+          'If the `src` image fails to load, the generic fallback glyph is shown instead of a broken-image box.',
+      },
+    },
+  },
+  render: (args) => (
+    <ActivityIcon
+      {...args}
+      icon={undefined}
+      container="default"
+      src="/missing-activity-icon.png"
+      alt="Failed custom image"
+    />
+  ),
+  play: async ({ canvas }) => {
+    const image = await canvas.findByRole('img', {
+      name: 'Failed custom image',
+    });
+    await expect(image).toBeVisible();
+    // The fallback glyph is a lazy chunk, so its src arrives after the swap. Allow
+    // for a cold load and tolerate the attribute being absent in the meantime.
+    await waitFor(
+      () =>
+        expect(image.getAttribute('src') ?? '').toContain('data:image/svg+xml'),
+      { timeout: 5000 },
+    );
   },
 };
 

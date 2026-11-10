@@ -1,10 +1,13 @@
-export type ActivityIconCategory =
-  | 'assessment'
-  | 'collaboration'
-  | 'communication'
-  | 'interactive'
-  | 'other'
-  | 'resource';
+export const activityIconCategories = [
+  'assessment',
+  'collaboration',
+  'communication',
+  'interactive',
+  'other',
+  'resource',
+] as const;
+
+export type ActivityIconCategory = (typeof activityIconCategories)[number];
 
 export interface ActivityIconRegistryEntry {
   fileName: string;
