@@ -78,6 +78,14 @@ export type { ProgressBarProps } from './progress-bar';
 export { Radio } from './radio';
 export type { RadioProps } from './radio';
 
+export { Select } from './select';
+export type {
+  SelectOption,
+  SelectOptionGroup,
+  SelectOptionItem,
+  SelectProps,
+} from './select';
+
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
 

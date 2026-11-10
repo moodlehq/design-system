@@ -163,6 +163,8 @@ const PURPOSES: Record<string, string> = {
   'progress-bar': 'Visual progress indicator with status and label variants.',
   radio:
     'Single-select options in a compact list (native radio input, label only). No group wrapper is provided — see the Group story for consumer-supplied layout.',
+  select:
+    'Native <select> form field for picking one value from a short, fixed list. The value submits with the form — not Dropdown (actions/view settings), Combobox (type-to-filter or multi-select), or Choicebox (options with icon/description).',
   switch: 'Binary toggle control for on/off settings.',
   tag: 'Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise). Nests Avatar and CloseButton rather than redrawing either.',
   textarea:

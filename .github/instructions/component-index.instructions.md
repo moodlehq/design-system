@@ -29,6 +29,7 @@ Quick reference for AI agents and developers.
 | ProgressBar     | Visual progress indicator with status and label variants                                                            | value, min, max, status, labelVariant, title                                                                         |
 | SearchInput     | Search field (`type="search"`) with magnifier and clear button — never Input with a magnifier icon                  | label, invalid, invalidFeedback, supportingText, clearLabel, onDebouncedChange, debounceMs, landmark                 |
 | Radio           | Single-select options in a compact list (native radio input, label only)                                            | checked, label, disabled, invalid                                                                                    |
+| Select          | Native `<select>` form field for picking one value from a short, fixed list — not Dropdown, Combobox, or Choicebox  | options, label, invalid, invalidFeedback, supportingText, required                                                   |
 | Switch          | Binary toggle control for on/off settings                                                                           | checked, label, disabled, onChange                                                                                   |
 | Tag             | Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise) | content, type, disabled; link: href, variant; removable: onRemove, removeLabel, username, email, institution, avatar |
 | Textarea        | Multi-line plain-text input with label, supporting text, counter, and validation — not a rich text editor           | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
@@ -110,6 +111,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [ProgressBar stories](../../components/progress-bar/ProgressBar.stories.tsx)
 - [Radio implementation](../../components/radio/Radio.tsx)
 - [Radio stories](../../components/radio/Radio.stories.tsx)
+- [Select implementation](../../components/select/Select.tsx)
+- [Select stories](../../components/select/Select.stories.tsx)
 - [Switch implementation](../../components/switch/Switch.tsx)
 - [Switch stories](../../components/switch/Switch.stories.tsx)
 - [Tag implementation](../../components/tag/Tag.tsx)
@@ -145,6 +148,12 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
   - No to both → `SearchInput`. The query finds or filters content shown elsewhere, even when results update as you type.
   - Yes to both → a combobox. MDS has no combobox yet — flag the need rather than composing `SearchInput` with a `Dropdown`.
   - Not picked from a list, but saved with the form → `Input` (or `PasswordInput` when it must be masked); `Textarea` when it spans multiple lines.
+- `Select` and `Dropdown` both look like "a dropdown" but are not interchangeable — ask: **does the chosen value submit with a form?**
+  - Yes, one value from a short fixed list → `Select` (native `<select>`, OS-drawn option list, plain-text options only).
+  - No — the trigger runs an action or reflects a view setting such as sort order → `Dropdown`.
+  - 2–5 options people should see at once → `Radio`; options that need an icon or description → `Choicebox`; a single on/off choice → `Switch`.
+  - A list long enough that typing to filter helps, or more than one value → a combobox. MDS has no combobox yet — flag the need rather than adding search or `multiple` to `Select`.
+- `Select` always shows a chosen option. For "nothing chosen yet", pass an instructional first option with `value: ''` (e.g. "Select a country") together with `required`, so native validation fails until a real choice is made. Never pass `children`; options go in the `options` prop (`{ value, label }` or `{ label, options }` groups).
 - A search field is `SearchInput`, which renders `<input type="search">`. Never build one from `Input` with a magnifying-glass `startIcon` — that reports as a plain text field, not a searchbox. Moodle's own templates mostly use `type="text"` for search, so don't copy them.
 - Pass `landmark` to `SearchInput` only for a page- or site-level search. Leave it off for filters in tables, toolbars, or panels, and when the field is already inside `<search>` or `<form role="search">`.
 - This package does not bundle font files. `--mds-font-family-base` resolves to `Noto Sans` with no fallback chain — the consuming application must load Noto Sans itself (see the README "Fonts" section) or text will fall back to the browser default with no build-time warning.
