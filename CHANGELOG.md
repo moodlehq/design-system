@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.6.0](https://github.com/moodlehq/design-system/compare/design-system-v5.5.0...design-system-v5.6.0) (2026-11-10)
+
+
+### Features
+
+* **ActivityIcon:** Allow custom icons within frame via escape hatch ([#396](https://github.com/moodlehq/design-system/issues/396)) ([df8e6a3](https://github.com/moodlehq/design-system/commit/df8e6a353313295abe9e41e643757e0dc730b355))
+* Ship generated agent guidance with the package ([#382](https://github.com/moodlehq/design-system/issues/382)) ([5eab395](https://github.com/moodlehq/design-system/commit/5eab3958f7b35a2e7ed1be564cc24c4ca629f196))
+* **tokens:** Add new tokens for Moodle Grid ([#397](https://github.com/moodlehq/design-system/issues/397)) ([e68bd9d](https://github.com/moodlehq/design-system/commit/e68bd9d781dc241f6f39620d6746f6cc200fbd25))
+
 ## [5.5.0](https://github.com/moodlehq/design-system/compare/design-system-v5.4.0...design-system-v5.5.0) (2026-10-21)
 
 
