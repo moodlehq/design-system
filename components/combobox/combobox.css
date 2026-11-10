@@ -1,0 +1,194 @@
+/*
+ * Combobox — field extensions, menu panel, and option rows.
+ * Figma: "Combobox" component set (file bPRkRtSszcbWw9f9p9rXvA, node 15758:399).
+ *
+ * The field is a nested SearchInput, so its border, radius,
+ * hover, focus ring and invalid styling all come from input.css — nothing here
+ * restyles them. Rules below only let the field grow to hold wrapped tags and
+ * style the trailing buttons, the menu, and its rows.
+ * Option content (avatar + name + supporting lines) uses the shared
+ * _internal/tag-content.css hooks. Field overrides use a higher-specificity
+ * selector than input.css, so stylesheet load order doesn't matter.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Field                                                               */
+/* ------------------------------------------------------------------ */
+
+/* Chosen tags wrap onto extra rows, so the field grows instead of holding
+   input.css's fixed 42px height (kept as the minimum). */
+.mds-combobox.mds-input[class] .mds-input-field-wrapper {
+  block-size: auto;
+  min-block-size: 42px; /* Matches the Input field height, fixed in Figma. */
+  padding-block: var(--mds-spacing-xxs);
+}
+
+/* Tags and the native input share one wrapping row; the input takes the
+   remaining space and drops to its own row when it would get too narrow. */
+.mds-combobox__field {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mds-spacing-xs);
+  min-inline-size: 0;
+  cursor: text;
+}
+
+/* Tag sets align-self: flex-start so it keeps its own height beside taller
+   siblings. In this row that pins it to the top while the input (taller, from
+   its own padding) is centred, so tag and placeholder misalign. */
+.mds-combobox__field .mds-tag[class] {
+  align-self: center;
+}
+
+.mds-combobox.mds-input[class] .mds-combobox__field .mds-input-field[class] {
+  flex: 1 1 25%;
+  inline-size: auto;
+  min-inline-size: 0;
+}
+
+/* Announcement text for assistive tech only. Pixel size and clip are the
+   standard visually-hidden recipe, not a design value. */
+.mds-combobox__live {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Chevron button. The clear button is SearchInput's own. */
+.mds-combobox__action {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px; /* Figma defines the chevron frame as fixed 24x24. */
+  block-size: 24px; /* Figma defines the chevron frame as fixed 24x24. */
+  padding: 0;
+  border: none;
+  border-radius: var(--mds-border-radius-xs);
+  background: none;
+  color: var(--mds-text-default);
+  font-size: var(--mds-icons-xxs);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mds-combobox__action:disabled {
+  color: var(--mds-text-muted);
+  cursor: not-allowed;
+}
+
+.mds-combobox__action:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.mds-combobox__action:focus-visible {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(--mds-spacing-offset);
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Menu                                                                */
+/* ------------------------------------------------------------------ */
+
+/* Same surface as the Dropdown menu. Width and max height are applied inline by
+   Floating UI's size() middleware (field width, available viewport height). */
+.mds-combobox__menu {
+  z-index: 1000; /* Above page content, in step with Bootstrap's dropdown layer. */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: var(--mds-spacing-xxs);
+  background-color: var(--mds-bg-surface-default);
+  border: var(--mds-stroke-weight-sm) solid var(--mds-border-default);
+  border-radius: var(--mds-border-radius-md);
+  overflow: hidden;
+}
+
+/* Shows up to 10 single-line rows before the list scrolls — the menu scrolls,
+   not the page. Rows with supporting lines are taller, so fewer fit. */
+.mds-combobox__listbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mds-spacing-xxs);
+  min-block-size: 0;
+  max-block-size: calc(
+    10 * (2 * var(--mds-spacing-xs) + var(--mds-line-height-paragraph-small)) +
+      9 * var(--mds-spacing-xxs)
+  );
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mds-combobox__option,
+.mds-combobox__status {
+  box-sizing: border-box;
+  padding: var(--mds-spacing-xs) var(--mds-spacing-sm);
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-small);
+  line-height: var(--mds-line-height-paragraph-small);
+  letter-spacing: var(--mds-letter-spacing-default);
+}
+
+.mds-combobox__option {
+  display: flex;
+  flex: 0 0 auto;
+  border-radius: var(--mds-border-radius-xs);
+  color: var(--mds-text-emphasis);
+  font-weight: var(--mds-font-weight-medium);
+  cursor: pointer;
+}
+
+/* Moodle core styles `[role="listbox"] [role="option"][aria-selected="true"]`
+   in bold (specificity 0,3,0). `aria-selected` follows the highlight here, so
+   without this the hovered or arrowed row turns bold. The extra class lifts
+   this rule above core's so Figma's medium weight holds in every state. */
+.mds-combobox__menu
+  .mds-combobox__listbox
+  .mds-combobox__option[aria-selected='true'] {
+  font-weight: var(--mds-font-weight-medium);
+}
+
+/* Mouse hover and the arrow-key highlight share one treatment. */
+.mds-combobox__option:hover:not(.mds-combobox__option--disabled),
+.mds-combobox__option--active:not(.mds-combobox__option--disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+/* Keyboard focus ring on the highlighted row (DOM focus stays on the input,
+   so this is drawn from the active class rather than :focus-visible). */
+.mds-combobox__listbox--keyboard
+  .mds-combobox__option--active:not(.mds-combobox__option--disabled) {
+  outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
+  outline-offset: var(--mds-spacing-offset);
+}
+
+.mds-combobox__option:active:not(.mds-combobox__option--disabled) {
+  background-color: var(--mds-bg-interactive-primary-default-light);
+}
+
+/* Same disabled treatment as Dropdown items. */
+.mds-combobox__option--disabled {
+  color: var(--mds-text-muted);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Disabled mutes every line of the row, not just the name. */
+.mds-combobox__option--disabled .mds-tag__supporting-text,
+.mds-combobox__option--disabled .mds-tag__institution {
+  color: inherit;
+}
+
+/* Loading and no-results messages. */
+.mds-combobox__status {
+  color: var(--mds-text-subtle);
+  font-weight: var(--mds-font-weight-regular);
+}
