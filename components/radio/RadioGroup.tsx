@@ -69,6 +69,13 @@ function useFitsOnOneLine(enabled: boolean, contentKey: string) {
     [contentKey],
   );
 
+  // The layout on screen, for the resize observer. Updated in a layout effect
+  // rather than during render, so a render React discards never reaches it.
+  const fitsRef = useRef(fits);
+  useLayoutEffect(() => {
+    fitsRef.current = fits;
+  }, [fits]);
+
   // Every horizontal render is measured before paint.
   useLayoutEffect(() => {
     if (enabled && fits && ref.current) setFits(isOnOneLine(ref.current));
@@ -90,11 +97,8 @@ function useFitsOnOneLine(enabled: boolean, contentKey: string) {
       }
       if (!widthChanged) return;
 
-      const horizontal = element.classList.contains(
-        'mds-radio-group-options--horizontal',
-      );
       // Horizontal: check it still fits. Vertical: try horizontal again.
-      setFits(horizontal ? isOnOneLine(element) : true);
+      setFits(fitsRef.current ? isOnOneLine(element) : true);
     });
     // The group and every ancestor: in a container sized to its content, a
     // change in the space available only shows further up the tree.
@@ -127,8 +131,10 @@ export interface RadioGroupOption {
 
 /**
  * `aria-label`, `aria-labelledby`, and `aria-describedby` apply to the inner
- * `radiogroup` element. `className`, `ref`, and every other attribute apply
- * to the root wrapper.
+ * `radiogroup` element. `aria-label` and `aria-labelledby` only take effect
+ * when `hideLabel` is true; otherwise the visible label names the group and
+ * they are ignored. `className`, `ref`, and every other attribute apply to
+ * the root wrapper.
  */
 export interface RadioGroupProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -184,7 +190,7 @@ export interface RadioGroupProps extends Omit<
   invalidFeedback?: string;
   /** Pre-translated guidance shown below the options. */
   supportingText?: string;
-  /** Pre-translated accessible name for the info button. The button is rendered only when this is set. */
+  /** Pre-translated accessible name for the info button. Include the field label so the button is identifiable out of context (for example, "More information about Delivery method"). The button is rendered only when this is set. */
   infoTooltipLabel?: string;
 }
 
@@ -228,6 +234,13 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     const [nativeMessage, setNativeMessage] = useState<string | undefined>(
       undefined,
     );
+    // The error a failed submit announced by moving focus onto one of this
+    // group's radios. Kept out of the live region: the focused radio already
+    // reads it as its description, and VoiceOver lets the live region cut off
+    // the focus announcement (radio name, position and group name).
+    const [errorReadOnFocus, setErrorReadOnFocus] = useState<
+      string | undefined
+    >(undefined);
 
     if (import.meta.env.DEV) {
       if (
@@ -251,6 +264,20 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       if (options.length < MIN_OPTIONS || options.length > MAX_OPTIONS) {
         console.warn(
           `[MDS RadioGroup] received ${options.length} options. Use ${MIN_OPTIONS} to ${MAX_OPTIONS}; use Checkbox or Switch for a single option and Select for 6 or more.`,
+        );
+      }
+      // Values are the radios' React keys and decide which option is checked,
+      // so a repeat renders a duplicate key, checks every matching option at
+      // once, and submits a value that can't tell the options apart.
+      const seenValues = new Set<string>();
+      const duplicateValues = new Set<string>();
+      for (const option of options) {
+        if (seenValues.has(option.value)) duplicateValues.add(option.value);
+        seenValues.add(option.value);
+      }
+      if (duplicateValues.size > 0) {
+        console.warn(
+          `[MDS RadioGroup] option values must be unique. Duplicated: ${[...duplicateValues].map((duplicate) => `"${duplicate}"`).join(', ')}. Each value is submitted with the form and decides which option is checked, so repeated values can't be told apart.`,
         );
       }
       if (
@@ -315,6 +342,17 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     const footerText = showInvalidFeedback ? errorText : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
 
+    // Forget the silenced error once it's gone, so a later error is announced.
+    // Set during render (not in an effect) so the live region never briefly
+    // holds a stale value.
+    if (!showInvalidFeedback && errorReadOnFocus !== undefined) {
+      setErrorReadOnFocus(undefined);
+    }
+    // A different message (e.g. the caller swaps invalidFeedback) is still
+    // announced; only the one the focus move already read is skipped.
+    const liveText =
+      showInvalidFeedback && errorText !== errorReadOnFocus ? errorText : '';
+
     const describedBy =
       [ariaDescribedByProp, feedbackId].filter(Boolean).join(' ') || undefined;
 
@@ -339,11 +377,18 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     const handleInvalid = (event: InvalidEvent<HTMLInputElement>) => {
       // Suppress the native bubble; the message is shown in the footer instead.
       event.preventDefault();
-      setNativeMessage(event.currentTarget.validationMessage);
+      const message = event.currentTarget.validationMessage;
+      setNativeMessage(message);
       // On submit, focus moves to the form's first invalid control. When that's
       // this group's first radio, which the footer describes, the error is
-      // announced rather than appearing silently.
-      focusFirstInvalidOnSubmit(event.currentTarget);
+      // announced with it rather than appearing silently.
+      const focused = focusFirstInvalidOnSubmit(event.currentTarget);
+      // Only an actual focus move announces the radio. With focus already on
+      // it (Enter pressed on the radio), nothing is read on focus, so the live
+      // region still has to announce the error.
+      if (focused && optionsRef.current?.contains(focused)) {
+        setErrorReadOnFocus(invalidFeedback ?? message);
+      }
     };
 
     const pressingOptionRef = useRef(false);
@@ -459,7 +504,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
             same update as their content. Mirrors the error so it is announced
             when it shows without focus moving into the group (e.g. on blur). */}
         <span className="visually-hidden" aria-live="polite" aria-atomic="true">
-          {showInvalidFeedback ? errorText : ''}
+          {liveText}
         </span>
       </div>
     );

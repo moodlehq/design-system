@@ -78,17 +78,28 @@ const isInvalidControl = (element: Element) =>
  * Call from a cancelled `invalid` handler. During a submit attempt, focuses
  * the form's first invalid control, as the browser would have, whichever
  * component it belongs to. Does nothing outside a submit attempt.
+ *
+ * Returns the control focus moved to, or null when focus didn't move (no
+ * submit attempt, or the first invalid control already had focus). Callers
+ * use it to tell whether the screen reader is about to announce the control.
  */
 export const focusFirstInvalidOnSubmit = (control: {
   form: HTMLFormElement | null;
-}) => {
+}): HTMLElement | null => {
   const form = control.form;
-  if (!form || form !== submitAttemptForm) return;
+  if (!form || form !== submitAttemptForm) return null;
   // One focus move per attempt, like the browser. Cleared first, because
   // moving focus can blur another control that validates itself on blur.
   submitAttemptForm = null;
   // form.elements only holds form-associated HTML elements, all focusable.
   const firstInvalid = Array.from(form.elements).find(isInvalidControl) as
     HTMLElement | undefined;
-  firstInvalid?.focus();
+  if (!firstInvalid) return null;
+  const ownerDocument = form.ownerDocument;
+  const previouslyFocused = ownerDocument.activeElement;
+  firstInvalid.focus();
+  return previouslyFocused !== firstInvalid &&
+    ownerDocument.activeElement === firstInvalid
+    ? firstInvalid
+    : null;
 };

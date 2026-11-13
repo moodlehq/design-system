@@ -460,6 +460,39 @@ describe('RadioGroup: Unit Test', () => {
     });
   });
 
+  describe('option values', () => {
+    it('warns once, naming each duplicated value', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      // React also reports the duplicate key via console.error.
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      render(
+        <RadioGroup
+          label="Frequency"
+          options={[
+            { value: 'daily', label: 'Daily' },
+            { value: 'weekly', label: 'Weekly' },
+            { value: 'daily', label: 'Every day' },
+            { value: 'weekly', label: 'Every week' },
+            { value: 'daily', label: 'Each day' },
+          ]}
+        />,
+      );
+      const duplicateWarnings = warn.mock.calls.filter(([message]) =>
+        String(message).includes('must be unique'),
+      );
+      expect(duplicateWarnings).toHaveLength(1);
+      expect(duplicateWarnings[0][0]).toContain(
+        'Duplicated: "daily", "weekly".',
+      );
+    });
+
+    it('does not warn when every value is unique', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(<RadioGroup label="Frequency" options={options} />);
+      expect(warn).not.toHaveBeenCalled();
+    });
+  });
+
   describe('supporting text', () => {
     it('renders supporting text and links it to the group', () => {
       render(
@@ -798,6 +831,69 @@ describe('RadioGroup: Unit Test', () => {
             frame.getByRole('textbox', { name: 'Name' }),
           );
           iframe.remove();
+        });
+      });
+
+      describe('live region', () => {
+        const liveRegion = () => document.querySelector('[aria-live="polite"]');
+
+        // The focused radio reads the error as its description. Announcing it
+        // again through the live region cuts off VoiceOver's focus
+        // announcement (radio name, position, group name).
+        it('stays silent when the submit moves focus onto a radio', async () => {
+          renderForm();
+          await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+          expect(screen.getByRole('radio', { name: 'Daily' })).toHaveFocus();
+          expect(liveRegion()).toBeEmptyDOMElement();
+        });
+
+        it('announces the error when the first radio already had focus', () => {
+          renderForm();
+          const daily = screen.getByRole('radio', { name: 'Daily' });
+          daily.focus();
+          // Enter on a radio submits implicitly; focus has nowhere to move.
+          act(() => {
+            fireEvent.keyDown(daily, { key: 'Enter' });
+            (screen.getByTestId('form') as HTMLFormElement).requestSubmit();
+            fireEvent.keyUp(daily, { key: 'Enter' });
+          });
+          expect(daily).toHaveFocus();
+          expect(liveRegion()).toHaveTextContent(daily.validationMessage);
+        });
+
+        it('announces the error when focus goes to an earlier invalid Input', async () => {
+          renderForm(<Input label="Name" required />);
+          await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+          expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus();
+          expect(liveRegion()).not.toBeEmptyDOMElement();
+        });
+
+        it('announces a later error after the silenced one clears', async () => {
+          const props = {
+            label: 'Frequency',
+            options,
+            required: true,
+            invalidFeedback: 'Choose how often we email you',
+          };
+          const { rerender } = render(
+            <form onSubmit={(event) => event.preventDefault()}>
+              <RadioGroup {...props} />
+              <button type="submit">Save</button>
+            </form>,
+          );
+          await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+          expect(liveRegion()).toBeEmptyDOMElement();
+
+          await userEvent.click(screen.getByRole('radio', { name: 'Daily' }));
+          rerender(
+            <form onSubmit={(event) => event.preventDefault()}>
+              <RadioGroup {...props} invalid />
+              <button type="submit">Save</button>
+            </form>,
+          );
+          expect(liveRegion()).toHaveTextContent(
+            'Choose how often we email you',
+          );
         });
       });
 

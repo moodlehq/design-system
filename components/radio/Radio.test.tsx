@@ -339,12 +339,16 @@ describe('Radio: Unit Test', () => {
     it('renders feedback text for arbitrary invalidFeedback strings', () => {
       // invalidFeedback is caller-supplied and untransformed — confirm arbitrary
       // strings always appear in the DOM when invalid and a label are also present.
+      // Asserted via the radio's description, not getByText: the fuzzer can
+      // generate a label equal to the feedback, which would match twice.
       fc.assert(
         fc.property(visibleString, visibleString, (label, feedback) => {
           const { unmount } = render(
             <Radio label={label} invalid invalidFeedback={feedback} />,
           );
-          expect(screen.getByText(feedback)).toBeInTheDocument();
+          expect(screen.getByRole('radio')).toHaveAccessibleDescription(
+            feedback,
+          );
           unmount();
         }),
         { numRuns: 100 },
