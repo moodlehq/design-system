@@ -61,6 +61,19 @@ describe('Radio: Unit Test', () => {
     expect(container.firstChild).toHaveClass('mds-radio');
   });
 
+  it('applies lang to the whole radio so the label inherits it', () => {
+    const { container } = render(<Radio label="Deutsch" lang="de" />);
+    expect(container.firstElementChild).toHaveAttribute('lang', 'de');
+    expect(screen.getByText('Deutsch').closest('[lang]')).toHaveAttribute(
+      'lang',
+      'de',
+    );
+    expect(screen.getByRole('radio').closest('[lang]')).toHaveAttribute(
+      'lang',
+      'de',
+    );
+  });
+
   it('applies form-check class to the wrapper when hideLabel is false', () => {
     const { container } = render(<Radio label="Option" />);
     expect(container.firstChild).toHaveClass('form-check');
