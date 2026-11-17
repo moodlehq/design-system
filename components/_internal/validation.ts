@@ -1,4 +1,4 @@
-import { type RefObject, useEffect } from 'react';
+import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
 // Form controls that cancel `invalid` (to show their own message instead of
 // the native bubble) also stop the browser focusing the first invalid control
@@ -102,4 +102,54 @@ export const focusFirstInvalidOnSubmit = (control: {
     ownerDocument.activeElement === firstInvalid
     ? firstInvalid
     : null;
+};
+
+/**
+ * Calls `onReset` after the form that owns `ref`'s control is reset, unless
+ * a consumer's onReset handler cancelled it. `ref` is the control itself, or
+ * an element that contains it (e.g. a radio group's wrapper).
+ *
+ * form.reset() restores default values without firing change, so controls
+ * that keep their own native error use this to drop it: a reset form is
+ * pristine, and required errors only surface on the next submit.
+ *
+ * Pass the control's `form` attribute as `formAttribute`, since it can
+ * re-associate the control with another form.
+ */
+export const useFormReset = (
+  ref: RefObject<Element | null>,
+  onReset: () => void,
+  formAttribute?: string,
+) => {
+  // Kept in a ref so an inline callback doesn't re-subscribe every render.
+  const onResetRef = useRef(onReset);
+  useLayoutEffect(() => {
+    onResetRef.current = onReset;
+  });
+
+  useEffect(() => {
+    const element = ref.current;
+    const control = (
+      element && 'form' in element
+        ? element
+        : element?.querySelector('input, select, textarea')
+    ) as { form: HTMLFormElement | null } | null | undefined;
+    const form = control?.form;
+    if (!form) return;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const handleReset = (event: Event) => {
+      // Deferred because React's onReset handlers run after this native
+      // listener (they're delegated to the root), so a consumer's
+      // preventDefault() isn't visible yet.
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        if (!event.defaultPrevented) onResetRef.current();
+      });
+    };
+    form.addEventListener('reset', handleReset);
+    return () => {
+      form.removeEventListener('reset', handleReset);
+      clearTimeout(timeout);
+    };
+  }, [ref, formAttribute]);
 };

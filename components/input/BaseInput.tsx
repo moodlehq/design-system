@@ -5,14 +5,18 @@ import {
   type ReactNode,
   forwardRef,
   isValidElement,
+  useCallback,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import { mergeRefs } from '../_internal/mergeRefs';
 import {
   focusFirstInvalidOnSubmit,
+  useFormReset,
   useSubmitAttemptTracking,
 } from '../_internal/validation';
 
@@ -129,6 +133,26 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     );
     const fieldWrapperRef = useRef<HTMLDivElement>(null);
     useSubmitAttemptTracking(fieldWrapperRef);
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    // inputRef is a stable ref object, so it's safe to omit from deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const setRefs = useCallback(mergeRefs(ref, inputRef), [ref]);
+
+    // A reset form is pristine: drop the native error with it.
+    useFormReset(inputRef, () => setNativeMessage(undefined), inputProps.form);
+
+    // handleChange only sees user edits. A controlled value set from outside
+    // (e.g. a form library) never fires change, so re-check validity whenever
+    // it changes. Layout effect so the stale error is never painted.
+    // `validity.valid` rather than checkValidity(), which would fire 'invalid'
+    // and flag a field the user hasn't touched yet.
+    const controlledValue = inputProps.value;
+    useLayoutEffect(() => {
+      if (inputRef.current?.validity.valid) {
+        setNativeMessage(undefined);
+      }
+    }, [controlledValue]);
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
     // even if the consumer never passed the invalid prop — unless the consumer opts out
@@ -278,7 +302,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           )}
 
           <input
-            ref={ref}
+            ref={setRefs}
             id={id}
             className={fieldClasses}
             type={inputType}

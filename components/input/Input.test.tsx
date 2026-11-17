@@ -1,4 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
+import type { FormEvent } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { Input } from './Input';
 
@@ -223,6 +230,67 @@ describe('Input: Unit Test', () => {
     fireEvent.blur(input);
 
     expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('clears the native invalid state when the form is reset', async () => {
+    render(
+      <form>
+        <Input label="Label" required />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    const form = (input as HTMLInputElement).form as HTMLFormElement;
+    act(() => {
+      form.requestSubmit();
+    });
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    act(() => {
+      form.reset();
+    });
+    await waitFor(() => expect(input).not.toHaveAttribute('aria-invalid'));
+    expect(
+      document.querySelector('.mds-input-invalid-feedback'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('keeps the native invalid state when the reset is prevented', async () => {
+    const onReset = vi.fn((event: FormEvent) => event.preventDefault());
+    render(
+      <form onReset={onReset}>
+        <Input label="Label" required />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    const form = (input as HTMLInputElement).form as HTMLFormElement;
+    act(() => {
+      form.requestSubmit();
+    });
+    act(() => {
+      form.reset();
+    });
+    expect(onReset).toHaveBeenCalled();
+    // Let the deferred reset check run before asserting nothing changed.
+    await act(() => new Promise((resolve) => setTimeout(resolve)));
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('clears the native invalid state when a controlled value becomes valid', () => {
+    const { rerender } = render(
+      <form>
+        <Input label="Label" required value="" onChange={() => {}} />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    act(() => {
+      ((input as HTMLInputElement).form as HTMLFormElement).requestSubmit();
+    });
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    rerender(
+      <form>
+        <Input label="Label" required value="Ada" onChange={() => {}} />
+      </form>,
+    );
+    expect(input).not.toHaveAttribute('aria-invalid');
   });
 
   it('takes focus when a submit fails on it, since the native bubble is cancelled', () => {
