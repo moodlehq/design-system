@@ -128,6 +128,12 @@ export interface RadioGroupOption {
    * the group's `disabled` instead.
    */
   disabled?: boolean;
+  /**
+   * BCP 47 language tag, set when the label is in a different language from
+   * the page (e.g. a language picker listing "Deutsch", "日本語") so screen
+   * readers switch pronunciation. Required for WCAG 3.1.2 Language of Parts.
+   */
+  lang?: string;
 }
 
 /**
@@ -491,6 +497,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
               name={name}
               value={option.value}
               label={option.label}
+              lang={option.lang}
               required={required}
               disabled={disabled || option.disabled}
               invalid={effectiveInvalid}

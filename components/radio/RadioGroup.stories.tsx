@@ -682,6 +682,30 @@ export const LongLabel: Story = {
 };
 
 /**
+ * Set `lang` on each option whose label is in a different language from the
+ * page, so screen readers pronounce it correctly (WCAG 3.1.2 Language of
+ * Parts).
+ */
+export const LanguagePicker: Story = {
+  args: {
+    label: 'Preferred language',
+    options: [
+      { value: 'en', label: 'English', lang: 'en' },
+      { value: 'de', label: 'Deutsch', lang: 'de' },
+      { value: 'fr', label: 'Français', lang: 'fr' },
+      { value: 'ja', label: '日本語', lang: 'ja' },
+      { value: 'ar', label: 'العربية', lang: 'ar' },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const label = Array.from(
+      canvasElement.querySelectorAll('.mds-radio-label'),
+    ).find((element) => element.textContent === 'Deutsch');
+    await expect(label?.closest('[lang]')).toHaveAttribute('lang', 'de');
+  },
+};
+
+/**
  * No specific Figma design for RTL; confirms the label row, options, and
  * supporting text mirror correctly.
  */

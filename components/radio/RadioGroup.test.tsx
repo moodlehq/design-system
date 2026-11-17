@@ -467,6 +467,28 @@ describe('RadioGroup: Unit Test', () => {
     });
   });
 
+  it('applies an option lang to its radio and label', () => {
+    render(
+      <RadioGroup
+        label="Language"
+        options={[
+          { value: 'en', label: 'English' },
+          { value: 'de', label: 'Deutsch', lang: 'de' },
+        ]}
+      />,
+    );
+    expect(
+      screen.getByRole('radio', { name: 'Deutsch' }).closest('[lang]'),
+    ).toHaveAttribute('lang', 'de');
+    expect(screen.getByText('Deutsch').closest('[lang]')).toHaveAttribute(
+      'lang',
+      'de',
+    );
+    expect(
+      screen.getByRole('radio', { name: 'English' }).closest('[lang]'),
+    ).toBeNull();
+  });
+
   describe('option values', () => {
     it('warns once, naming each duplicated value', () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
