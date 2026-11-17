@@ -84,3 +84,21 @@
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
   outline-offset: 0;
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* The star is a mask over background-color, which forced colors repaints to
+   Canvas, leaving an empty button and hiding the selected state. Opt the
+   glyph out and paint it with system colour keywords (currentColor would
+   resolve to the unforced token colour once opted out). The outline vs filled
+   star shape still distinguishes selected. */
+@media (forced-colors: active) {
+  .mds-favourite-button__icon {
+    forced-color-adjust: none;
+    background-color: ButtonText;
+  }
+
+  .mds-favourite-button:disabled .mds-favourite-button__icon {
+    background-color: GrayText;
+  }
+}

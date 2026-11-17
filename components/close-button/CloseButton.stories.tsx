@@ -180,6 +180,23 @@ export const Disabled = {
   },
 } satisfies Story;
 
+/** Forced-colors (Windows High Contrast) snapshot of `Disabled` for Chromatic. */
+export const ForcedColors = {
+  ...Disabled,
+  tags: ['test', 'stable'],
+  parameters: {
+    ...Disabled.parameters,
+    chromatic: { ...Disabled.parameters?.chromatic, forcedColors: 'active' },
+    docs: {
+      ...Disabled.parameters?.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. The ✕ should stay visible in both the enabled and disabled buttons.',
+      },
+    },
+  },
+} satisfies Story;
+
 export const StateMatrix = {
   parameters: {
     layout: 'padded',

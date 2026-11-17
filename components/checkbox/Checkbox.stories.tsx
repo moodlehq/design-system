@@ -464,3 +464,47 @@ export const RightToLeft: Story = {
     await expect(canvas.getByText('هذا الحقل مطلوب')).toBeVisible();
   },
 };
+
+/** Forced-colors (Windows High Contrast) snapshot for Chromatic. */
+export const ForcedColors: Story = {
+  tags: ['test', 'stable'],
+  parameters: {
+    controls: { disable: true },
+    chromatic: { forcedColors: 'active' },
+    docs: {
+      source: { code: null },
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. Checked, indeterminate and unchecked must look different, including when disabled.',
+      },
+    },
+  },
+  render: (args) => (
+    <div style={{ display: 'grid', gap: 'var(--mds-spacing-sm)' }}>
+      <Checkbox {...args} name="fc-unchecked" label="Unchecked" />
+      <Checkbox {...args} name="fc-checked" label="Checked" defaultChecked />
+      <Checkbox
+        {...args}
+        name="fc-indeterminate"
+        label="Indeterminate"
+        indeterminate
+      />
+      <Checkbox {...args} name="fc-disabled" label="Disabled" disabled />
+      <Checkbox
+        {...args}
+        name="fc-disabled-checked"
+        label="Disabled checked"
+        disabled
+        defaultChecked
+      />
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole('checkbox', { name: 'Checked' }),
+    ).toBeChecked();
+    await expect(
+      canvas.getByRole('checkbox', { name: 'Disabled checked' }),
+    ).toBeDisabled();
+  },
+};

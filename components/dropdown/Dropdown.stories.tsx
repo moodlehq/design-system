@@ -361,6 +361,23 @@ export const RightToLeft: Story = {
   ],
 };
 
+/** Forced-colors (Windows High Contrast) snapshot of `MixedItems` for Chromatic. */
+export const ForcedColors: Story = {
+  ...MixedItems,
+  tags: ['test', 'stable'],
+  parameters: {
+    ...MixedItems.parameters,
+    chromatic: { ...MixedItems.parameters?.chromatic, forcedColors: 'active' },
+    docs: {
+      ...MixedItems.parameters?.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. The trigger chevron, divider, selection check, submenu chevron, multiselect checkbox and list check should all stay visible.',
+      },
+    },
+  },
+};
+
 // ── Shared helpers — also used by DropdownMenu/placement stories below ────────
 
 // Minimal items reused inside showcase Dropdowns.

@@ -191,3 +191,22 @@
   max-inline-size: 40%;
   text-align: start;
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* Track and fill are both background-color, which forced colors repaints to
+   Canvas, so no progress is visible. Outline the track and paint the fill
+   Highlight; status is still conveyed by the label text. */
+@media (forced-colors: active) {
+  .mds-progress-bar-track.progress {
+    forced-color-adjust: none;
+    background-color: Canvas;
+    outline: var(--mds-stroke-weight-sm) solid CanvasText;
+    outline-offset: calc(var(--mds-stroke-weight-sm) * -1);
+  }
+
+  .mds-progress-bar-fill.progress-bar {
+    forced-color-adjust: none;
+    background-color: Highlight;
+  }
+}

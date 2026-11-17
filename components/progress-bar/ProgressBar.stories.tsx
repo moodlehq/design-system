@@ -313,3 +313,20 @@ export const RightToLeft: Story = {
     </div>
   ),
 };
+
+/** Forced-colors (Windows High Contrast) snapshot of `Statuses` for Chromatic. */
+export const ForcedColors: Story = {
+  ...Statuses,
+  tags: ['test', 'stable'],
+  parameters: {
+    ...Statuses.parameters,
+    chromatic: { ...Statuses.parameters?.chromatic, forcedColors: 'active' },
+    docs: {
+      ...Statuses.parameters?.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. The track and fill should stay visible for every status.',
+      },
+    },
+  },
+};
