@@ -11,6 +11,7 @@ import {
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
 import { mergeRefs } from '../_internal/mergeRefs';
+import { usePointerFocus } from '../_internal/usePointerFocus';
 import {
   focusFirstInvalidOnSubmit,
   useFormReset,
@@ -193,13 +194,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     // Tracks the previous remaining count to detect milestone crossings.
     const prevRemainingRef = useRef<number | null>(null);
 
-    // Tracks whether the current focus was initiated by a pointer (mouse/touch).
-    // Used to suppress the focus ring for pointer-initiated focus — the border
-    // change alone indicates the typing/selected state; the ring is reserved for
-    // keyboard navigation (WCAG 2.4.11 focus appearance is still satisfied because
-    // the focus ring is always shown for keyboard users).
-    const isPointerDownRef = useRef(false);
-    const [isPointerFocus, setIsPointerFocus] = useState(false);
+    const pointerFocus = usePointerFocus();
+    const { isPointerFocus } = pointerFocus;
     // Announcement text for the visually-hidden live region. Updated only at
     // thresholds so the counter does not announce on every keystroke.
     const [announcement, setAnnouncement] = useState('');
@@ -385,18 +381,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             onChange={handleChange}
             onInvalid={handleInvalid}
             onPointerDown={(e) => {
-              isPointerDownRef.current = true;
+              pointerFocus.markPointerDown();
               onPointerDown?.(e);
             }}
             onFocus={(e) => {
-              if (isPointerDownRef.current) {
-                setIsPointerFocus(true);
-                isPointerDownRef.current = false;
-              }
+              pointerFocus.handleFocus();
               onFocus?.(e);
             }}
             onBlur={(e) => {
-              setIsPointerFocus(false);
+              pointerFocus.handleBlur();
               // Check minLength on blur rather than waiting for submit. An
               // empty required field is skipped: tabbing past an unanswered
               // field isn't a mistake, so required errors surface on submit.

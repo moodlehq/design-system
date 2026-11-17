@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
 import { mergeRefs } from '../_internal/mergeRefs';
+import { usePointerFocus } from '../_internal/usePointerFocus';
 import {
   focusFirstInvalidOnSubmit,
   useFormReset,
@@ -195,25 +196,23 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
         )
         .join(' ') || undefined;
 
-    const isPointerDownRef = useRef(false);
-    const [isPointerFocus, setIsPointerFocus] = useState(false);
+    const pointerFocus = usePointerFocus();
+    const { isPointerFocus } = pointerFocus;
 
     const handlePointerDown: NonNullable<BaseInputProps['onPointerDown']> = (
       event,
     ) => {
-      isPointerDownRef.current = true;
+      pointerFocus.markPointerDown();
       onPointerDown?.(event);
     };
 
     const handleFocus: NonNullable<BaseInputProps['onFocus']> = (event) => {
-      setIsPointerFocus(isPointerDownRef.current);
-      isPointerDownRef.current = false;
+      pointerFocus.handleFocus();
       onFocus?.(event);
     };
 
     const handleBlur: NonNullable<BaseInputProps['onBlur']> = (event) => {
-      isPointerDownRef.current = false;
-      setIsPointerFocus(false);
+      pointerFocus.handleBlur();
       // Check format errors (type, pattern, minLength) on blur rather than
       // waiting for submit: checkValidity() synchronously fires the 'invalid'
       // event handleInvalid listens for. An empty required field is skipped:
