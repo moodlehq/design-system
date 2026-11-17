@@ -131,6 +131,13 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const [nativeMessage, setNativeMessage] = useState<string | undefined>(
       undefined,
     );
+    // The error a failed submit announced by moving focus onto this field.
+    // Kept out of the live region: the focused field already reads it as its
+    // description, and VoiceOver lets the live region cut off the focus
+    // announcement (label, value and role). Same model as RadioGroup.
+    const [errorReadOnFocus, setErrorReadOnFocus] = useState<
+      string | undefined
+    >(undefined);
     const fieldWrapperRef = useRef<HTMLDivElement>(null);
     useSubmitAttemptTracking(fieldWrapperRef);
 
@@ -165,12 +172,21 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const effectiveInvalid =
       (invalid || !!activeNativeMessage) && !disabled && !readOnly;
 
-    const showInvalidFeedback =
-      effectiveInvalid && !!(invalidFeedback || activeNativeMessage);
-    const footerText = showInvalidFeedback
-      ? (invalidFeedback ?? activeNativeMessage)
-      : supportingText;
+    const errorText = invalidFeedback ?? activeNativeMessage;
+    const showInvalidFeedback = effectiveInvalid && !!errorText;
+    const footerText = showInvalidFeedback ? errorText : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
+
+    // Forget the silenced error once it's gone, so a later error is announced.
+    // Set during render (not in an effect) so the live region never briefly
+    // holds a stale value.
+    if (!showInvalidFeedback && errorReadOnFocus !== undefined) {
+      setErrorReadOnFocus(undefined);
+    }
+    // A different message (e.g. the caller swaps invalidFeedback) is still
+    // announced; only the one the focus move already read is skipped.
+    const liveText =
+      showInvalidFeedback && errorText !== errorReadOnFocus ? errorText : '';
 
     const describedBy =
       [ariaDescribedByProp, feedbackId]
@@ -213,9 +229,16 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const handleInvalid: NonNullable<BaseInputProps['onInvalid']> = (event) => {
       // Suppress the native validation bubble; the message is surfaced via invalidFeedback instead.
       event.preventDefault();
-      setNativeMessage(event.currentTarget.validationMessage);
+      const message = event.currentTarget.validationMessage;
+      setNativeMessage(message);
       // Cancelling also stops the browser focusing the first invalid control on submit.
-      focusFirstInvalidOnSubmit(event.currentTarget);
+      const focused = focusFirstInvalidOnSubmit(event.currentTarget);
+      // Only a real focus move onto this field makes the screen reader read
+      // its description. If it already had focus, or another control took
+      // it, the live region still has to announce the error.
+      if (focused === event.currentTarget) {
+        setErrorReadOnFocus(invalidFeedback ?? message);
+      }
       onInvalid?.(event);
     };
 
@@ -349,6 +372,16 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
             {footerText}
           </div>
         )}
+
+        {/* Always mounted: screen readers skip live regions that appear in the
+            same update as their content. Mirrors the error so it is announced
+            when it shows without focus moving onto the field (e.g. a submit
+            while it already had focus or while an earlier control is the
+            first invalid one, a format error on blur, or the consumer setting
+            invalid after an async check). */}
+        <span className="visually-hidden" aria-live="polite" aria-atomic="true">
+          {liveText}
+        </span>
       </div>
     );
   },

@@ -358,7 +358,9 @@ export const Invalid: Story = {
     const input = canvas.getByRole('textbox', { name: 'Label text' });
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(
-      canvas.getByText('This field is required.'),
+      canvas.getByText('This field is required.', {
+        selector: '.mds-input-invalid-feedback',
+      }),
     ).toBeInTheDocument();
   },
 };
@@ -413,7 +415,10 @@ export const NativeValidationDemo: Story = {
 
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(
-      canvas.getByText('Please include an', { exact: false }),
+      canvas.getByText('Please include an', {
+        exact: false,
+        selector: '.mds-input-invalid-feedback',
+      }),
     ).toBeInTheDocument();
   },
 };
@@ -440,7 +445,11 @@ export const RightToLeft: Story = {
     const input = canvas.getByRole('textbox', { name: 'التسمية النصية' });
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(canvas.getByText('*')).toBeInTheDocument();
-    await expect(canvas.getByText('هذا الحقل مطلوب')).toBeInTheDocument();
+    await expect(
+      canvas.getByText('هذا الحقل مطلوب', {
+        selector: '.mds-input-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
     await expect(
       canvas.getByRole('button', { name: 'معلومات إضافية حول هذا الحقل' }),
     ).toBeInTheDocument();

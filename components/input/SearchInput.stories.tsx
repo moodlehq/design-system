@@ -484,7 +484,9 @@ export const RightToLeftInvalid: Story = {
     await expect(input).toHaveValue('');
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(
-      canvas.getByText('لا توجد مقررات مطابقة لهذا البحث.'),
+      canvas.getByText('لا توجد مقررات مطابقة لهذا البحث.', {
+        selector: '.mds-input-invalid-feedback',
+      }),
     ).toBeInTheDocument();
     await expect(
       canvas.getByRole('button', {

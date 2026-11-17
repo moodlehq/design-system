@@ -903,7 +903,9 @@ describe('RadioGroup: Unit Test', () => {
       });
 
       describe('live region', () => {
-        const liveRegion = () => document.querySelector('[aria-live="polite"]');
+        // Scoped to the group: an Input in the same form has its own.
+        const liveRegion = () =>
+          document.querySelector('.mds-radio-group > [aria-live="polite"]');
 
         // The focused radio reads the error as its description. Announcing it
         // again through the live region cuts off VoiceOver's focus
@@ -934,6 +936,11 @@ describe('RadioGroup: Unit Test', () => {
           await userEvent.click(screen.getByRole('button', { name: 'Save' }));
           expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus();
           expect(liveRegion()).not.toBeEmptyDOMElement();
+          // The Input took focus, which reads its error, so its own live
+          // region stays silent.
+          expect(
+            document.querySelector('.mds-input > [aria-live="polite"]'),
+          ).toBeEmptyDOMElement();
         });
 
         it('announces a later error after the silenced one clears', async () => {

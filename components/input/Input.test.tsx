@@ -103,7 +103,11 @@ describe('Input: Unit Test', () => {
       'aria-invalid',
       'true',
     );
-    expect(screen.getByText('This field is required.')).toBeInTheDocument();
+    expect(
+      screen.getByText('This field is required.', {
+        selector: '.mds-input-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
   });
 
   it('does not apply invalid styling when invalid is true and disabled', () => {
@@ -199,7 +203,11 @@ describe('Input: Unit Test', () => {
     expect(input).toHaveAttribute('aria-invalid', 'true');
     const nativeMessage = input.validationMessage;
     expect(nativeMessage).not.toBe('');
-    expect(screen.getByText(nativeMessage)).toBeInTheDocument();
+    expect(
+      screen.getByText(nativeMessage, {
+        selector: '.mds-input-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
 
     fireEvent.change(input, { target: { value: 'name@example.com' } });
 
@@ -304,6 +312,106 @@ describe('Input: Unit Test', () => {
     save.focus();
     fireEvent.click(save);
     expect(screen.getByRole('textbox', { name: 'Label' })).toHaveFocus();
+  });
+
+  describe('live region', () => {
+    const liveRegionOf = (container: HTMLElement) =>
+      container.querySelector('.mds-input > [aria-live="polite"]');
+
+    it('announces the error through a pre-mounted live region', () => {
+      const { container, rerender } = render(
+        <Input label="Label" invalidFeedback="Enter your name." />,
+      );
+      const liveRegion = liveRegionOf(container);
+      expect(liveRegion).toBeInTheDocument();
+      expect(liveRegion).toBeEmptyDOMElement();
+
+      rerender(
+        <Input label="Label" invalid invalidFeedback="Enter your name." />,
+      );
+
+      expect(liveRegionOf(container)).toBe(liveRegion);
+      expect(liveRegion).toHaveTextContent('Enter your name.');
+    });
+
+    it('keeps resting supporting text out of the live region', () => {
+      const { container } = render(
+        <Input label="Label" supportingText="As it appears on your ID" />,
+      );
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+    });
+
+    it('stays silent when the submit moves focus onto the field', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Input label="Label" required invalidFeedback="Enter your name." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+      const input = screen.getByRole('textbox', { name: 'Label' });
+      expect(input).toHaveFocus();
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+    });
+
+    it('announces the error when the field already had focus on submit', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Input label="Label" required invalidFeedback="Enter your name." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      const input = screen.getByRole('textbox', { name: 'Label' });
+      input.focus();
+      act(() => {
+        fireEvent.keyDown(input, { key: 'Enter' });
+        ((input as HTMLInputElement).form as HTMLFormElement).requestSubmit();
+        fireEvent.keyUp(input, { key: 'Enter' });
+      });
+      expect(input).toHaveFocus();
+      expect(liveRegionOf(container)).toHaveTextContent('Enter your name.');
+    });
+
+    it('announces an error that is not focused on submit', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <input aria-label="Name" required />
+          <Input label="Email" required invalidFeedback="Enter your email." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+      expect(screen.getByRole('textbox', { name: 'Email' })).not.toHaveFocus();
+      expect(liveRegionOf(container)).toHaveTextContent('Enter your email.');
+    });
+
+    it('announces the next error after a silenced one clears', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Input label="Label" required invalidFeedback="Enter your name." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      const save = screen.getByRole('button', { name: 'Save' });
+      const input = screen.getByRole('textbox', { name: 'Label' });
+      fireEvent.click(save);
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+
+      fireEvent.change(input, { target: { value: 'Ada' } });
+      expect(input).not.toHaveAttribute('aria-invalid');
+      fireEvent.change(input, { target: { value: '' } });
+      // Submitting while the field already has focus means no focus move
+      // reads the error, so the live region must announce it again.
+      act(() => {
+        fireEvent.keyDown(input, { key: 'Enter' });
+        ((input as HTMLInputElement).form as HTMLFormElement).requestSubmit();
+        fireEvent.keyUp(input, { key: 'Enter' });
+      });
+      expect(input).toHaveFocus();
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(liveRegionOf(container)).toHaveTextContent('Enter your name.');
+    });
   });
 
   it('applies the pointer-focus class when focus follows a pointerdown', () => {
