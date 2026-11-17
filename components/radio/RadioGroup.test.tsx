@@ -1,6 +1,13 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { type ReactNode, createRef, useState } from 'react';
+import { type FormEvent, type ReactNode, createRef, useState } from 'react';
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest';
 import { Input } from '../input';
 import { RadioGroup, type RadioGroupOption } from './RadioGroup';
@@ -713,6 +720,67 @@ describe('RadioGroup: Unit Test', () => {
         container.querySelector('.mds-radio-group-supporting-text--invalid'),
       ).toBeInTheDocument();
       expect(first).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('clears the native error when the form is reset', async () => {
+      render(
+        <form data-testid="form">
+          <RadioGroup label="Frequency" options={options} required />
+        </form>,
+      );
+      const form = screen.getByTestId('form') as HTMLFormElement;
+      const [first] = screen.getAllByRole('radio');
+      act(() => {
+        form.requestSubmit();
+      });
+      expect(first).toHaveAttribute('aria-invalid', 'true');
+      act(() => {
+        form.reset();
+      });
+      await waitFor(() => expect(first).not.toHaveAttribute('aria-invalid'));
+    });
+
+    it('keeps the native error when the reset is prevented', async () => {
+      const onReset = vi.fn((event: FormEvent) => event.preventDefault());
+      render(
+        <form data-testid="form" onReset={onReset}>
+          <RadioGroup label="Frequency" options={options} required />
+        </form>,
+      );
+      const form = screen.getByTestId('form') as HTMLFormElement;
+      const [first] = screen.getAllByRole('radio');
+      act(() => {
+        form.requestSubmit();
+      });
+      act(() => {
+        form.reset();
+      });
+      expect(onReset).toHaveBeenCalled();
+      // Let the deferred reset check run before asserting nothing changed.
+      await act(() => new Promise((resolve) => setTimeout(resolve)));
+      expect(first).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('clears the native error when a controlled value becomes valid', () => {
+      const renderGroup = (value: string | undefined) => (
+        <form data-testid="form">
+          <RadioGroup
+            label="Frequency"
+            options={options}
+            required
+            value={value}
+            onChange={() => {}}
+          />
+        </form>
+      );
+      const { rerender } = render(renderGroup(''));
+      const [first] = screen.getAllByRole('radio');
+      act(() => {
+        (screen.getByTestId('form') as HTMLFormElement).requestSubmit();
+      });
+      expect(first).toHaveAttribute('aria-invalid', 'true');
+      rerender(renderGroup('weekly'));
+      expect(first).not.toHaveAttribute('aria-invalid');
     });
 
     describe('focus on a failed submit', () => {
