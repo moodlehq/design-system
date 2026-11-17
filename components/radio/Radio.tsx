@@ -33,6 +33,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       label,
       hideLabel = false,
       disabled,
+      lang,
       ...props
     }: RadioProps,
     ref,
@@ -94,8 +95,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       [props['aria-describedby'], feedbackId].filter(Boolean).join(' ') ||
       undefined;
 
+    // `lang` goes on the root rather than the input, so the visible label
+    // (which supplies the accessible name) inherits it too and screen
+    // readers pronounce the label in that language.
     return (
-      <div className={classes.join(' ')}>
+      <div className={classes.join(' ')} lang={lang}>
         <div className="mds-radio-input-wrapper">
           <input
             className={[

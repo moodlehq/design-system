@@ -1,4 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
+import type { FormEvent } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { Input } from './Input';
 
@@ -96,7 +103,11 @@ describe('Input: Unit Test', () => {
       'aria-invalid',
       'true',
     );
-    expect(screen.getByText('This field is required.')).toBeInTheDocument();
+    expect(
+      screen.getByText('This field is required.', {
+        selector: '.mds-input-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
   });
 
   it('does not apply invalid styling when invalid is true and disabled', () => {
@@ -183,8 +194,8 @@ describe('Input: Unit Test', () => {
     errorSpy.mockRestore();
   });
 
-  it('surfaces the native validation message on blur when invalidFeedback is not supplied, then clears it once the value becomes valid', () => {
-    render(<Input label="Label" required />);
+  it('surfaces a native format error on blur when invalidFeedback is not supplied, then clears it once the value becomes valid', () => {
+    render(<Input label="Label" type="email" defaultValue="not-an-email" />);
     const input = screen.getByRole('textbox', { name: 'Label' });
 
     fireEvent.blur(input);
@@ -192,12 +203,102 @@ describe('Input: Unit Test', () => {
     expect(input).toHaveAttribute('aria-invalid', 'true');
     const nativeMessage = input.validationMessage;
     expect(nativeMessage).not.toBe('');
-    expect(screen.getByText(nativeMessage)).toBeInTheDocument();
+    expect(
+      screen.getByText(nativeMessage, {
+        selector: '.mds-input-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
 
-    fireEvent.change(input, { target: { value: 'some value' } });
+    fireEvent.change(input, { target: { value: 'name@example.com' } });
 
     expect(input).not.toHaveAttribute('aria-invalid');
     expect(screen.queryByText(nativeMessage)).not.toBeInTheDocument();
+  });
+
+  it('lets focus leave an empty required field without flagging it', () => {
+    render(<Input label="Label" required />);
+    const input = screen.getByRole('textbox', { name: 'Label' });
+
+    fireEvent.blur(input);
+
+    expect(input).not.toHaveAttribute('aria-invalid');
+  });
+
+  it('keeps a required error from a failed submit when focus leaves the field', () => {
+    render(
+      <form onSubmit={(event) => event.preventDefault()}>
+        <Input label="Label" required />
+        <button type="submit">Save</button>
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+
+    fireEvent.blur(input);
+
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('clears the native invalid state when the form is reset', async () => {
+    render(
+      <form>
+        <Input label="Label" required />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    const form = (input as HTMLInputElement).form as HTMLFormElement;
+    act(() => {
+      form.requestSubmit();
+    });
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    act(() => {
+      form.reset();
+    });
+    await waitFor(() => expect(input).not.toHaveAttribute('aria-invalid'));
+    expect(
+      document.querySelector('.mds-input-invalid-feedback'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('keeps the native invalid state when the reset is prevented', async () => {
+    const onReset = vi.fn((event: FormEvent) => event.preventDefault());
+    render(
+      <form onReset={onReset}>
+        <Input label="Label" required />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    const form = (input as HTMLInputElement).form as HTMLFormElement;
+    act(() => {
+      form.requestSubmit();
+    });
+    act(() => {
+      form.reset();
+    });
+    expect(onReset).toHaveBeenCalled();
+    // Let the deferred reset check run before asserting nothing changed.
+    await act(() => new Promise((resolve) => setTimeout(resolve)));
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('clears the native invalid state when a controlled value becomes valid', () => {
+    const { rerender } = render(
+      <form>
+        <Input label="Label" required value="" onChange={() => {}} />
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    act(() => {
+      ((input as HTMLInputElement).form as HTMLFormElement).requestSubmit();
+    });
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+    rerender(
+      <form>
+        <Input label="Label" required value="Ada" onChange={() => {}} />
+      </form>,
+    );
+    expect(input).not.toHaveAttribute('aria-invalid');
   });
 
   it('takes focus when a submit fails on it, since the native bubble is cancelled', () => {
@@ -211,6 +312,142 @@ describe('Input: Unit Test', () => {
     save.focus();
     fireEvent.click(save);
     expect(screen.getByRole('textbox', { name: 'Label' })).toHaveFocus();
+  });
+
+  describe('required without invalidFeedback warning', () => {
+    const warnings = () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      return () => {
+        const calls = warn.mock.calls.filter(([message]) =>
+          String(message).includes('should pass invalidFeedback'),
+        );
+        warn.mockRestore();
+        return calls;
+      };
+    };
+
+    it('warns when a required field has no invalidFeedback', () => {
+      const collect = warnings();
+      render(<Input label="Label" required />);
+      expect(collect()).toHaveLength(1);
+    });
+
+    it('does not warn when invalidFeedback is supplied', () => {
+      const collect = warnings();
+      render(<Input label="Label" required invalidFeedback="Enter a value." />);
+      expect(collect()).toHaveLength(0);
+    });
+
+    it('does not warn for disabled or read-only fields', () => {
+      const collect = warnings();
+      render(
+        <>
+          <Input label="A" required disabled supportingText="Locked" />
+          <Input label="B" required readOnly />
+        </>,
+      );
+      expect(collect()).toHaveLength(0);
+    });
+  });
+
+  describe('live region', () => {
+    const liveRegionOf = (container: HTMLElement) =>
+      container.querySelector('.mds-input > [aria-live="polite"]');
+
+    it('announces the error through a pre-mounted live region', () => {
+      const { container, rerender } = render(
+        <Input label="Label" invalidFeedback="Enter your name." />,
+      );
+      const liveRegion = liveRegionOf(container);
+      expect(liveRegion).toBeInTheDocument();
+      expect(liveRegion).toBeEmptyDOMElement();
+
+      rerender(
+        <Input label="Label" invalid invalidFeedback="Enter your name." />,
+      );
+
+      expect(liveRegionOf(container)).toBe(liveRegion);
+      expect(liveRegion).toHaveTextContent('Enter your name.');
+    });
+
+    it('keeps resting supporting text out of the live region', () => {
+      const { container } = render(
+        <Input label="Label" supportingText="As it appears on your ID" />,
+      );
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+    });
+
+    it('stays silent when the submit moves focus onto the field', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Input label="Label" required invalidFeedback="Enter your name." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+      const input = screen.getByRole('textbox', { name: 'Label' });
+      expect(input).toHaveFocus();
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+    });
+
+    it('announces the error when the field already had focus on submit', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Input label="Label" required invalidFeedback="Enter your name." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      const input = screen.getByRole('textbox', { name: 'Label' });
+      input.focus();
+      act(() => {
+        fireEvent.keyDown(input, { key: 'Enter' });
+        ((input as HTMLInputElement).form as HTMLFormElement).requestSubmit();
+        fireEvent.keyUp(input, { key: 'Enter' });
+      });
+      expect(input).toHaveFocus();
+      expect(liveRegionOf(container)).toHaveTextContent('Enter your name.');
+    });
+
+    it('announces an error that is not focused on submit', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <input aria-label="Name" required />
+          <Input label="Email" required invalidFeedback="Enter your email." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+      expect(screen.getByRole('textbox', { name: 'Email' })).not.toHaveFocus();
+      expect(liveRegionOf(container)).toHaveTextContent('Enter your email.');
+    });
+
+    it('announces the next error after a silenced one clears', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Input label="Label" required invalidFeedback="Enter your name." />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      const save = screen.getByRole('button', { name: 'Save' });
+      const input = screen.getByRole('textbox', { name: 'Label' });
+      fireEvent.click(save);
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+
+      fireEvent.change(input, { target: { value: 'Ada' } });
+      expect(input).not.toHaveAttribute('aria-invalid');
+      fireEvent.change(input, { target: { value: '' } });
+      // Submitting while the field already has focus means no focus move
+      // reads the error, so the live region must announce it again.
+      act(() => {
+        fireEvent.keyDown(input, { key: 'Enter' });
+        ((input as HTMLInputElement).form as HTMLFormElement).requestSubmit();
+        fireEvent.keyUp(input, { key: 'Enter' });
+      });
+      expect(input).toHaveFocus();
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(liveRegionOf(container)).toHaveTextContent('Enter your name.');
+    });
   });
 
   it('applies the pointer-focus class when focus follows a pointerdown', () => {

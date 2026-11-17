@@ -286,6 +286,7 @@ export const WithInfoButton: Story = {
 export const Required: Story = {
   args: {
     required: true,
+    invalidFeedback: 'Enter your password to continue.',
   },
 };
 
@@ -387,7 +388,9 @@ export const RightToLeft: Story = {
     await expect(input).toHaveAttribute('aria-invalid', 'true');
     await expect(canvas.getByText('*')).toBeInTheDocument();
     await expect(
-      canvas.getByText('كلمة المرور قصيرة جدًا.'),
+      canvas.getByText('كلمة المرور قصيرة جدًا.', {
+        selector: '.mds-input-invalid-feedback',
+      }),
     ).toBeInTheDocument();
     await expect(
       canvas.getByRole('button', { name: 'معلومات إضافية حول كلمة المرور' }),

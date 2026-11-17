@@ -17,6 +17,7 @@ import {
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
 import {
   focusFirstInvalidOnSubmit,
+  useFormReset,
   useSubmitAttemptTracking,
 } from '../_internal/validation';
 import { Radio } from './Radio';
@@ -127,6 +128,12 @@ export interface RadioGroupOption {
    * the group's `disabled` instead.
    */
   disabled?: boolean;
+  /**
+   * BCP 47 language tag, set when the label is in a different language from
+   * the page (e.g. a language picker listing "Deutsch", "日本語") so screen
+   * readers switch pronunciation. Required for WCAG 3.1.2 Language of Parts.
+   */
+  lang?: string;
 }
 
 /**
@@ -329,6 +336,19 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         .join('\u0001'),
     );
     useSubmitAttemptTracking(optionsRef);
+    // A reset form is pristine: drop the native error with it.
+    useFormReset(optionsRef, () => setNativeMessage(undefined));
+
+    // handleChange only sees user picks. A controlled value set from outside
+    // (e.g. a form library) never fires change, so re-check validity whenever
+    // it changes. Every radio in the group shares the same `required` state,
+    // so the first one speaks for the group. Layout effect so the stale error
+    // is never painted; `validity.valid` rather than checkValidity(), which
+    // would fire 'invalid'.
+    useLayoutEffect(() => {
+      const radio = optionsRef.current?.querySelector('input');
+      if (radio?.validity.valid) setNativeMessage(undefined);
+    }, [value, optionsRef]);
     const layoutOrientation: RadioGroupOrientation = fitsOnOneLine
       ? resolvedOrientation
       : 'vertical';
@@ -477,6 +497,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
               name={name}
               value={option.value}
               label={option.label}
+              lang={option.lang}
               required={required}
               disabled={disabled || option.disabled}
               invalid={effectiveInvalid}

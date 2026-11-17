@@ -2,13 +2,13 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
   type MouseEvent,
-  type Ref,
   forwardRef,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
+import { mergeRefs } from '../_internal/mergeRefs';
 import { CloseButton } from '../close-button/CloseButton';
 import type { BaseInputProps } from './BaseInput';
 import { BaseInput } from './BaseInput';
@@ -62,22 +62,6 @@ const searchIcon = (
     aria-hidden="true"
   />
 );
-
-// Merges the ref this component needs (to imperatively clear the native
-// input's value) with whatever ref the consumer forwarded in.
-function mergeRefs<T>(...refs: Array<Ref<T> | undefined>) {
-  return (node: T | null) => {
-    for (const ref of refs) {
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        // RefObject.current is technically read-only from the consumer's
-        // perspective, but forwardRef/useRef both hand back a mutable object.
-        (ref as { current: T | null }).current = node;
-      }
-    }
-  };
-}
 
 /** Search field with a clear button and optional debounced change callback. Use for filtering or searching content; use Input for other short text. */
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(

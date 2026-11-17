@@ -5,6 +5,7 @@ import {
   useId,
   useRef,
 } from 'react';
+import { mergeRefs } from '../_internal/mergeRefs';
 
 /** Props for Checkbox. */
 export interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -112,15 +113,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ]
               .filter(Boolean)
               .join(' ')}
-            ref={(node) => {
-              // Keep a local ref for the native indeterminate property while still forwarding refs.
-              inputRef.current = node;
-              if (typeof ref === 'function') {
-                ref(node);
-              } else if (ref) {
-                ref.current = node;
-              }
-            }}
+            // Keep a local ref for the native indeterminate property while
+            // still forwarding the consumer's ref.
+            ref={mergeRefs(inputRef, ref)}
             {...inputProps}
             type="checkbox"
             required={required}

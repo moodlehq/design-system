@@ -1,6 +1,13 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { type ReactNode, createRef, useState } from 'react';
+import { type FormEvent, type ReactNode, createRef, useState } from 'react';
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest';
 import { Input } from '../input';
 import { RadioGroup, type RadioGroupOption } from './RadioGroup';
@@ -460,6 +467,28 @@ describe('RadioGroup: Unit Test', () => {
     });
   });
 
+  it('applies an option lang to its radio and label', () => {
+    render(
+      <RadioGroup
+        label="Language"
+        options={[
+          { value: 'en', label: 'English' },
+          { value: 'de', label: 'Deutsch', lang: 'de' },
+        ]}
+      />,
+    );
+    expect(
+      screen.getByRole('radio', { name: 'Deutsch' }).closest('[lang]'),
+    ).toHaveAttribute('lang', 'de');
+    expect(screen.getByText('Deutsch').closest('[lang]')).toHaveAttribute(
+      'lang',
+      'de',
+    );
+    expect(
+      screen.getByRole('radio', { name: 'English' }).closest('[lang]'),
+    ).toBeNull();
+  });
+
   describe('option values', () => {
     it('warns once, naming each duplicated value', () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -715,6 +744,67 @@ describe('RadioGroup: Unit Test', () => {
       expect(first).toHaveAttribute('aria-invalid', 'true');
     });
 
+    it('clears the native error when the form is reset', async () => {
+      render(
+        <form data-testid="form">
+          <RadioGroup label="Frequency" options={options} required />
+        </form>,
+      );
+      const form = screen.getByTestId('form') as HTMLFormElement;
+      const [first] = screen.getAllByRole('radio');
+      act(() => {
+        form.requestSubmit();
+      });
+      expect(first).toHaveAttribute('aria-invalid', 'true');
+      act(() => {
+        form.reset();
+      });
+      await waitFor(() => expect(first).not.toHaveAttribute('aria-invalid'));
+    });
+
+    it('keeps the native error when the reset is prevented', async () => {
+      const onReset = vi.fn((event: FormEvent) => event.preventDefault());
+      render(
+        <form data-testid="form" onReset={onReset}>
+          <RadioGroup label="Frequency" options={options} required />
+        </form>,
+      );
+      const form = screen.getByTestId('form') as HTMLFormElement;
+      const [first] = screen.getAllByRole('radio');
+      act(() => {
+        form.requestSubmit();
+      });
+      act(() => {
+        form.reset();
+      });
+      expect(onReset).toHaveBeenCalled();
+      // Let the deferred reset check run before asserting nothing changed.
+      await act(() => new Promise((resolve) => setTimeout(resolve)));
+      expect(first).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('clears the native error when a controlled value becomes valid', () => {
+      const renderGroup = (value: string | undefined) => (
+        <form data-testid="form">
+          <RadioGroup
+            label="Frequency"
+            options={options}
+            required
+            value={value}
+            onChange={() => {}}
+          />
+        </form>
+      );
+      const { rerender } = render(renderGroup(''));
+      const [first] = screen.getAllByRole('radio');
+      act(() => {
+        (screen.getByTestId('form') as HTMLFormElement).requestSubmit();
+      });
+      expect(first).toHaveAttribute('aria-invalid', 'true');
+      rerender(renderGroup('weekly'));
+      expect(first).not.toHaveAttribute('aria-invalid');
+    });
+
     describe('focus on a failed submit', () => {
       const renderForm = (before?: ReactNode) =>
         render(
@@ -835,7 +925,9 @@ describe('RadioGroup: Unit Test', () => {
       });
 
       describe('live region', () => {
-        const liveRegion = () => document.querySelector('[aria-live="polite"]');
+        // Scoped to the group: an Input in the same form has its own.
+        const liveRegion = () =>
+          document.querySelector('.mds-radio-group > [aria-live="polite"]');
 
         // The focused radio reads the error as its description. Announcing it
         // again through the live region cuts off VoiceOver's focus
@@ -866,6 +958,11 @@ describe('RadioGroup: Unit Test', () => {
           await userEvent.click(screen.getByRole('button', { name: 'Save' }));
           expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus();
           expect(liveRegion()).not.toBeEmptyDOMElement();
+          // The Input took focus, which reads its error, so its own live
+          // region stays silent.
+          expect(
+            document.querySelector('.mds-input > [aria-live="polite"]'),
+          ).toBeEmptyDOMElement();
         });
 
         it('announces a later error after the silenced one clears', async () => {

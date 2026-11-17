@@ -5,14 +5,19 @@ import {
   type ReactNode,
   forwardRef,
   isValidElement,
+  useCallback,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import { mergeRefs } from '../_internal/mergeRefs';
+import { usePointerFocus } from '../_internal/usePointerFocus';
 import {
   focusFirstInvalidOnSubmit,
+  useFormReset,
   useSubmitAttemptTracking,
 } from '../_internal/validation';
 
@@ -127,8 +132,35 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const [nativeMessage, setNativeMessage] = useState<string | undefined>(
       undefined,
     );
+    // The error a failed submit announced by moving focus onto this field.
+    // Kept out of the live region: the focused field already reads it as its
+    // description, and VoiceOver lets the live region cut off the focus
+    // announcement (label, value and role). Same model as RadioGroup.
+    const [errorReadOnFocus, setErrorReadOnFocus] = useState<
+      string | undefined
+    >(undefined);
     const fieldWrapperRef = useRef<HTMLDivElement>(null);
     useSubmitAttemptTracking(fieldWrapperRef);
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    // inputRef is a stable ref object, so it's safe to omit from deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const setRefs = useCallback(mergeRefs(ref, inputRef), [ref]);
+
+    // A reset form is pristine: drop the native error with it.
+    useFormReset(inputRef, () => setNativeMessage(undefined), inputProps.form);
+
+    // handleChange only sees user edits. A controlled value set from outside
+    // (e.g. a form library) never fires change, so re-check validity whenever
+    // it changes. Layout effect so the stale error is never painted.
+    // `validity.valid` rather than checkValidity(), which would fire 'invalid'
+    // and flag a field the user hasn't touched yet.
+    const controlledValue = inputProps.value;
+    useLayoutEffect(() => {
+      if (inputRef.current?.validity.valid) {
+        setNativeMessage(undefined);
+      }
+    }, [controlledValue]);
 
     // Native validation failures (e.g. required, type mismatch) mark the field invalid
     // even if the consumer never passed the invalid prop — unless the consumer opts out
@@ -141,12 +173,21 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const effectiveInvalid =
       (invalid || !!activeNativeMessage) && !disabled && !readOnly;
 
-    const showInvalidFeedback =
-      effectiveInvalid && !!(invalidFeedback || activeNativeMessage);
-    const footerText = showInvalidFeedback
-      ? (invalidFeedback ?? activeNativeMessage)
-      : supportingText;
+    const errorText = invalidFeedback ?? activeNativeMessage;
+    const showInvalidFeedback = effectiveInvalid && !!errorText;
+    const footerText = showInvalidFeedback ? errorText : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
+
+    // Forget the silenced error once it's gone, so a later error is announced.
+    // Set during render (not in an effect) so the live region never briefly
+    // holds a stale value.
+    if (!showInvalidFeedback && errorReadOnFocus !== undefined) {
+      setErrorReadOnFocus(undefined);
+    }
+    // A different message (e.g. the caller swaps invalidFeedback) is still
+    // announced; only the one the focus move already read is skipped.
+    const liveText =
+      showInvalidFeedback && errorText !== errorReadOnFocus ? errorText : '';
 
     const describedBy =
       [ariaDescribedByProp, feedbackId]
@@ -155,38 +196,48 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
         )
         .join(' ') || undefined;
 
-    const isPointerDownRef = useRef(false);
-    const [isPointerFocus, setIsPointerFocus] = useState(false);
+    const pointerFocus = usePointerFocus();
+    const { isPointerFocus } = pointerFocus;
 
     const handlePointerDown: NonNullable<BaseInputProps['onPointerDown']> = (
       event,
     ) => {
-      isPointerDownRef.current = true;
+      pointerFocus.markPointerDown();
       onPointerDown?.(event);
     };
 
     const handleFocus: NonNullable<BaseInputProps['onFocus']> = (event) => {
-      setIsPointerFocus(isPointerDownRef.current);
-      isPointerDownRef.current = false;
+      pointerFocus.handleFocus();
       onFocus?.(event);
     };
 
     const handleBlur: NonNullable<BaseInputProps['onBlur']> = (event) => {
-      isPointerDownRef.current = false;
-      setIsPointerFocus(false);
-      // Trigger native constraint validation on blur rather than waiting for
-      // form submit — synchronously fires the 'invalid' event handleInvalid
-      // already listens for.
-      event.currentTarget.checkValidity();
+      pointerFocus.handleBlur();
+      // Check format errors (type, pattern, minLength) on blur rather than
+      // waiting for submit: checkValidity() synchronously fires the 'invalid'
+      // event handleInvalid listens for. An empty required field is skipped:
+      // tabbing past an unanswered field isn't a mistake, and flagging it
+      // would mark the form red before the user is done and announce an error
+      // over the next field's label. Required errors surface on submit. An
+      // empty value can't fail any other constraint, so nothing else is lost.
+      const input = event.currentTarget;
+      if (!input.validity.valueMissing) input.checkValidity();
       onBlur?.(event);
     };
 
     const handleInvalid: NonNullable<BaseInputProps['onInvalid']> = (event) => {
       // Suppress the native validation bubble; the message is surfaced via invalidFeedback instead.
       event.preventDefault();
-      setNativeMessage(event.currentTarget.validationMessage);
+      const message = event.currentTarget.validationMessage;
+      setNativeMessage(message);
       // Cancelling also stops the browser focusing the first invalid control on submit.
-      focusFirstInvalidOnSubmit(event.currentTarget);
+      const focused = focusFirstInvalidOnSubmit(event.currentTarget);
+      // Only a real focus move onto this field makes the screen reader read
+      // its description. If it already had focus, or another control took
+      // it, the live region still has to announce the error.
+      if (focused === event.currentTarget) {
+        setErrorReadOnFocus(invalidFeedback ?? message);
+      }
       onInvalid?.(event);
     };
 
@@ -246,6 +297,22 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           'Input: disabled fields should include supportingText that explains why input is unavailable.',
         );
       }
+      // Without invalidFeedback, a failed `required` check falls back to the
+      // browser's validationMessage, which follows the browser's UI language
+      // rather than the page's (Moodle) language. Disabled and read-only
+      // fields are barred from constraint validation, and
+      // suppressNativeInvalid never shows the native message.
+      if (
+        required &&
+        !disabled &&
+        !readOnly &&
+        !suppressNativeInvalid &&
+        !invalidFeedback?.trim()
+      ) {
+        console.warn(
+          "Input: required fields should pass invalidFeedback so a failed submit does not fall back to the browser's message, which follows the browser's language rather than the user's.",
+        );
+      }
     }
 
     return (
@@ -273,7 +340,7 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           )}
 
           <input
-            ref={ref}
+            ref={setRefs}
             id={id}
             className={fieldClasses}
             type={inputType}
@@ -320,6 +387,16 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
             {footerText}
           </div>
         )}
+
+        {/* Always mounted: screen readers skip live regions that appear in the
+            same update as their content. Mirrors the error so it is announced
+            when it shows without focus moving onto the field (e.g. a submit
+            while it already had focus or while an earlier control is the
+            first invalid one, a format error on blur, or the consumer setting
+            invalid after an async check). */}
+        <span className="visually-hidden" aria-live="polite" aria-atomic="true">
+          {liveText}
+        </span>
       </div>
     );
   },
