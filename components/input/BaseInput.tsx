@@ -298,6 +298,22 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
           'Input: disabled fields should include supportingText that explains why input is unavailable.',
         );
       }
+      // Without invalidFeedback, a failed `required` check falls back to the
+      // browser's validationMessage, which follows the browser's UI language
+      // rather than the page's (Moodle) language. Disabled and read-only
+      // fields are barred from constraint validation, and
+      // suppressNativeInvalid never shows the native message.
+      if (
+        required &&
+        !disabled &&
+        !readOnly &&
+        !suppressNativeInvalid &&
+        !invalidFeedback?.trim()
+      ) {
+        console.warn(
+          "Input: required fields should pass invalidFeedback so a failed submit does not fall back to the browser's message, which follows the browser's language rather than the user's.",
+        );
+      }
     }
 
     return (

@@ -302,6 +302,7 @@ export const WithInfoButton: Story = {
 export const Required: Story = {
   args: {
     required: true,
+    invalidFeedback: 'Enter a search term to continue.',
   },
 };
 

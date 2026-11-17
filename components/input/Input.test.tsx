@@ -314,6 +314,42 @@ describe('Input: Unit Test', () => {
     expect(screen.getByRole('textbox', { name: 'Label' })).toHaveFocus();
   });
 
+  describe('required without invalidFeedback warning', () => {
+    const warnings = () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      return () => {
+        const calls = warn.mock.calls.filter(([message]) =>
+          String(message).includes('should pass invalidFeedback'),
+        );
+        warn.mockRestore();
+        return calls;
+      };
+    };
+
+    it('warns when a required field has no invalidFeedback', () => {
+      const collect = warnings();
+      render(<Input label="Label" required />);
+      expect(collect()).toHaveLength(1);
+    });
+
+    it('does not warn when invalidFeedback is supplied', () => {
+      const collect = warnings();
+      render(<Input label="Label" required invalidFeedback="Enter a value." />);
+      expect(collect()).toHaveLength(0);
+    });
+
+    it('does not warn for disabled or read-only fields', () => {
+      const collect = warnings();
+      render(
+        <>
+          <Input label="A" required disabled supportingText="Locked" />
+          <Input label="B" required readOnly />
+        </>,
+      );
+      expect(collect()).toHaveLength(0);
+    });
+  });
+
   describe('live region', () => {
     const liveRegionOf = (container: HTMLElement) =>
       container.querySelector('.mds-input > [aria-live="polite"]');

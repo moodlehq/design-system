@@ -345,6 +345,7 @@ export const WithInfoButton: Story = {
 export const Required: Story = {
   args: {
     required: true,
+    invalidFeedback: 'Enter a value to continue.',
   },
 };
 
