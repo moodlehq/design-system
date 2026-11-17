@@ -264,6 +264,7 @@ export const Required: Story = {
   args: {
     label: 'Label text',
     required: true,
+    invalidFeedback: 'Enter a description to continue.',
     placeholder: 'Placeholder text goes here',
   },
 };
@@ -280,7 +281,9 @@ export const Invalid: Story = {
     const textarea = canvas.getByRole('textbox');
     await expect(textarea).toHaveAttribute('aria-invalid', 'true');
     await expect(
-      canvas.getByText('This field is required.'),
+      canvas.getByText('This field is required.', {
+        selector: '.mds-textarea-invalid-feedback',
+      }),
     ).toBeInTheDocument();
   },
 };
@@ -428,7 +431,11 @@ export const RightToLeft: Story = {
     await expect(
       canvas.getByRole('button', { name: 'معلومات إضافية حول هذا الحقل' }),
     ).toBeInTheDocument();
-    await expect(canvas.getByText('هذا الحقل مطلوب')).toBeInTheDocument();
+    await expect(
+      canvas.getByText('هذا الحقل مطلوب', {
+        selector: '.mds-textarea-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
     await userEvent.type(textarea, 'مرحبا');
     await expect(textarea).toHaveValue('مرحبا');
     await expect(canvas.getByText('5 / 100')).toBeInTheDocument();

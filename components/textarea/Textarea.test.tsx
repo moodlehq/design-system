@@ -1,6 +1,13 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createRef } from 'react';
+import { type FormEvent, createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { Textarea } from './Textarea';
 
@@ -44,7 +51,11 @@ describe('Textarea: Unit Test', () => {
         invalidFeedback="Error message"
       />,
     );
-    expect(screen.getByText('Error message')).toBeInTheDocument();
+    expect(
+      screen.getByText('Error message', {
+        selector: '.mds-textarea-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
   });
 
   it('uses aria-label from label prop when hideLabel is true', () => {
@@ -100,7 +111,11 @@ describe('Textarea: Unit Test', () => {
 
   it('renders invalidFeedback when invalid is true', () => {
     render(<Textarea label="Field" invalid invalidFeedback="Error message" />);
-    expect(screen.getByText('Error message')).toBeInTheDocument();
+    expect(
+      screen.getByText('Error message', {
+        selector: '.mds-textarea-invalid-feedback',
+      }),
+    ).toBeInTheDocument();
   });
 
   it('does not render invalidFeedback when invalid is false', () => {
@@ -133,7 +148,9 @@ describe('Textarea: Unit Test', () => {
       />,
     );
     expect(screen.queryByText('Helper')).not.toBeInTheDocument();
-    expect(screen.getByText('Error')).toBeInTheDocument();
+    expect(
+      screen.getByText('Error', { selector: '.mds-textarea-invalid-feedback' }),
+    ).toBeInTheDocument();
   });
 
   it('renders the counter when showCounter and maxLength are provided', () => {
@@ -623,5 +640,179 @@ describe('Textarea: Unit Test', () => {
 
     await user.type(textarea, 'e');
     expect(status).toHaveTextContent('20 characters left out of 25');
+  });
+
+  describe('native validation', () => {
+    const FEEDBACK = { selector: '.mds-textarea-invalid-feedback' };
+    const liveRegionOf = (container: HTMLElement) =>
+      container.querySelector('.mds-textarea > [aria-live="polite"]');
+    const submitForm = () =>
+      fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    const renderForm = (props = {}) =>
+      render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Textarea
+            label="Description"
+            required
+            invalidFeedback="Describe the activity."
+            {...props}
+          />
+          <button type="submit">Save</button>
+        </form>,
+      );
+
+    it('shows invalidFeedback, not the native bubble, when a required field fails on submit', () => {
+      renderForm();
+      submitForm();
+      const textarea = screen.getByRole('textbox', { name: 'Description' });
+      expect(textarea).toHaveAttribute('aria-invalid', 'true');
+      expect(
+        screen.getByText('Describe the activity.', FEEDBACK),
+      ).toBeInTheDocument();
+    });
+
+    it("falls back to the browser's message without invalidFeedback", () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
+      renderForm({ invalidFeedback: undefined });
+      submitForm();
+      const textarea = screen.getByRole('textbox', {
+        name: 'Description',
+      }) as HTMLTextAreaElement;
+      expect(
+        screen.getByText(textarea.validationMessage, FEEDBACK),
+      ).toBeInTheDocument();
+      vi.restoreAllMocks();
+    });
+
+    it('moves focus to the field on a failed submit and keeps the live region silent', () => {
+      const { container } = renderForm();
+      submitForm();
+      expect(
+        screen.getByRole('textbox', { name: 'Description' }),
+      ).toHaveFocus();
+      expect(liveRegionOf(container)).toBeEmptyDOMElement();
+    });
+
+    it('does not move focus when the form is validated programmatically', () => {
+      renderForm();
+      const save = screen.getByRole('button', { name: 'Save' });
+      save.focus();
+      const textarea = screen.getByRole('textbox', {
+        name: 'Description',
+      }) as HTMLTextAreaElement;
+      act(() => {
+        (textarea.form as HTMLFormElement).checkValidity();
+      });
+      expect(save).toHaveFocus();
+      expect(textarea).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('announces an error that is not focused on submit', () => {
+      const { container } = render(
+        <form onSubmit={(event) => event.preventDefault()}>
+          <input aria-label="Name" required />
+          <Textarea
+            label="Description"
+            required
+            invalidFeedback="Describe the activity."
+          />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      submitForm();
+      expect(
+        screen.getByRole('textbox', { name: 'Description' }),
+      ).not.toHaveFocus();
+      expect(liveRegionOf(container)).toHaveTextContent(
+        'Describe the activity.',
+      );
+    });
+
+    it('clears the native error once the value becomes valid', () => {
+      renderForm();
+      submitForm();
+      const textarea = screen.getByRole('textbox', { name: 'Description' });
+      fireEvent.change(textarea, {
+        target: { value: 'A quiz on fractions' },
+      });
+      expect(textarea).not.toHaveAttribute('aria-invalid');
+    });
+
+    it('lets focus leave an empty required field without flagging it', () => {
+      renderForm();
+      const textarea = screen.getByRole('textbox', { name: 'Description' });
+      fireEvent.blur(textarea);
+      expect(textarea).not.toHaveAttribute('aria-invalid');
+    });
+
+    it('clears the native error when the form is reset', async () => {
+      renderForm();
+      submitForm();
+      const textarea = screen.getByRole('textbox', {
+        name: 'Description',
+      }) as HTMLTextAreaElement;
+      expect(textarea).toHaveAttribute('aria-invalid', 'true');
+      act(() => {
+        (textarea.form as HTMLFormElement).reset();
+      });
+      await waitFor(() => expect(textarea).not.toHaveAttribute('aria-invalid'));
+    });
+
+    it('keeps the native error when the reset is prevented', async () => {
+      const onReset = vi.fn((event: FormEvent) => event.preventDefault());
+      render(
+        <form onReset={onReset} onSubmit={(event) => event.preventDefault()}>
+          <Textarea
+            label="Description"
+            required
+            invalidFeedback="Describe the activity."
+          />
+          <button type="submit">Save</button>
+        </form>,
+      );
+      submitForm();
+      const textarea = screen.getByRole('textbox', {
+        name: 'Description',
+      }) as HTMLTextAreaElement;
+      act(() => {
+        (textarea.form as HTMLFormElement).reset();
+      });
+      expect(onReset).toHaveBeenCalled();
+      // Let the deferred reset check run before asserting nothing changed.
+      await act(() => new Promise((resolve) => setTimeout(resolve)));
+      expect(textarea).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    it('clears the native error when a controlled value becomes valid', () => {
+      const renderField = (value: string) => (
+        <form onSubmit={(event) => event.preventDefault()}>
+          <Textarea
+            label="Description"
+            required
+            invalidFeedback="Describe the activity."
+            value={value}
+            onChange={() => {}}
+          />
+          <button type="submit">Save</button>
+        </form>
+      );
+      const { rerender } = render(renderField(''));
+      submitForm();
+      const textarea = screen.getByRole('textbox', { name: 'Description' });
+      expect(textarea).toHaveAttribute('aria-invalid', 'true');
+      rerender(renderField('A quiz on fractions'));
+      expect(textarea).not.toHaveAttribute('aria-invalid');
+    });
+
+    it('warns when required is set without invalidFeedback', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(<Textarea label="Description" required />);
+      expect(
+        warn.mock.calls.some(([message]) =>
+          String(message).includes('should pass invalidFeedback'),
+        ),
+      ).toBe(true);
+      warn.mockRestore();
+    });
   });
 }) as unknown as void;

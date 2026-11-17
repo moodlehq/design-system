@@ -5,10 +5,17 @@ import {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
 import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import { mergeRefs } from '../_internal/mergeRefs';
+import {
+  focusFirstInvalidOnSubmit,
+  useFormReset,
+  useSubmitAttemptTracking,
+} from '../_internal/validation';
 
 /** A pre-translated counter message, or a callback that builds one from the
  *  current value and maxLength (e.g. `(n, max) => t('chars', { n, max })`). */
@@ -25,10 +32,14 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   hideLabel?: boolean;
   /** Marks the field as invalid: applies danger border colour and sets aria-invalid.
    *  Independent of invalidFeedback — invalid styling can be shown without a message.
-   *  Has no effect when disabled or readOnly — those states don't carry an invalid state. */
+   *  Native constraint-validation failures (e.g. `required`, `minLength`) also mark
+   *  it invalid. Has no effect when disabled or readOnly — those states don't carry
+   *  an invalid state. */
   invalid?: boolean;
-  /** Pre-translated error message rendered below the field. Requires invalid={true}
-   *  to be displayed. */
+  /** Pre-translated error message rendered below the field while it is invalid.
+   *  Also shown when native validation fails, in place of the browser's message
+   *  (which follows the browser's language, not the user's), so pass it whenever
+   *  `required` or `minLength` is set. */
   invalidFeedback?: string;
   /** Optional supporting/helper text shown in the footer row when the field is not
    *  in the invalid+feedback state. */
@@ -89,6 +100,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onPointerDown,
       onFocus,
       onBlur,
+      onInvalid,
       'aria-label': ariaLabelProp,
       'aria-describedby': ariaDescribedByProp,
       ...textareaProps
@@ -97,17 +109,68 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const generatedId = useId();
     const id = idProp ?? generatedId;
+
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    // textareaRef is a stable ref object, so it's safe to omit from deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const setRefs = useCallback(mergeRefs(ref, textareaRef), [ref]);
+    useSubmitAttemptTracking(textareaRef);
+
+    // Native constraint-validation message (e.g. "Please fill out this field")
+    // surfaced when `required` or `minLength` fails, in place of the native
+    // bubble — same model as Input's BaseInput.
+    const [nativeMessage, setNativeMessage] = useState<string | undefined>(
+      undefined,
+    );
+    // The error a failed submit announced by moving focus onto this field.
+    // Kept out of the live region: the focused field already reads it as its
+    // description, and VoiceOver lets the live region cut off the focus
+    // announcement (label, value and role). Same model as RadioGroup.
+    const [errorReadOnFocus, setErrorReadOnFocus] = useState<
+      string | undefined
+    >(undefined);
+
     // Disabled and read-only fields don't carry an invalid state — invalid is only
     // ever a modifier on top of default/hover/active/focus per the design spec.
-    const isInvalid = !!invalid && !disabled && !readOnly;
+    const isInvalid = (!!invalid || !!nativeMessage) && !disabled && !readOnly;
     const hasVisibleLabel = !hideLabel;
     const ariaLabel = hideLabel ? (ariaLabelProp ?? label) : undefined;
 
     // Invalid feedback is tied to invalid state, independent of label visibility.
     // Supporting text is replaced when feedback is shown.
-    const showInvalidFeedback = isInvalid && !!invalidFeedback;
-    const footerText = showInvalidFeedback ? invalidFeedback : supportingText;
+    const errorText = invalidFeedback ?? nativeMessage;
+    const showInvalidFeedback = isInvalid && !!errorText;
+    const footerText = showInvalidFeedback ? errorText : supportingText;
     const feedbackId = footerText ? `${id}-feedback` : undefined;
+
+    // Forget the silenced error once it's gone, so a later error is announced.
+    // Set during render (not in an effect) so the live region never briefly
+    // holds a stale value.
+    if (!showInvalidFeedback && errorReadOnFocus !== undefined) {
+      setErrorReadOnFocus(undefined);
+    }
+    // A different message (e.g. the caller swaps invalidFeedback) is still
+    // announced; only the one the focus move already read is skipped.
+    const liveText =
+      showInvalidFeedback && errorText !== errorReadOnFocus ? errorText : '';
+
+    // A reset form is pristine: drop the native error with it.
+    useFormReset(
+      textareaRef,
+      () => setNativeMessage(undefined),
+      textareaProps.form,
+    );
+
+    // handleChange only sees user edits. A controlled value set from outside
+    // (e.g. a form library) never fires change, so re-check validity whenever
+    // it changes. Layout effect so the stale error is never painted.
+    // `validity.valid` rather than checkValidity(), which would fire 'invalid'
+    // and flag a field the user hasn't touched yet.
+    useLayoutEffect(() => {
+      if (textareaRef.current?.validity.valid) {
+        setNativeMessage(undefined);
+      }
+    }, [value]);
 
     // Character count is derived from controlled value length or defaultValue length at mount.
     // Counter only renders when showCounter=true and maxLength is provided.
@@ -201,7 +264,27 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       }
     }, [value, maxLength, showCounterEl, updateAnnouncementForRemaining]);
 
+    const handleInvalid: NonNullable<TextareaProps['onInvalid']> = (event) => {
+      // Suppress the native bubble; the message is shown as invalid feedback.
+      event.preventDefault();
+      const message = event.currentTarget.validationMessage;
+      setNativeMessage(message);
+      // Cancelling also stops the browser focusing the first invalid control
+      // on submit; the shared helper restores that, for submit attempts only.
+      const focused = focusFirstInvalidOnSubmit(event.currentTarget);
+      // Only a real focus move onto this field makes the screen reader read
+      // its description. If it already had focus, or another control took
+      // it, the live region still has to announce the error.
+      if (focused === event.currentTarget) {
+        setErrorReadOnFocus(invalidFeedback ?? message);
+      }
+      onInvalid?.(event);
+    };
+
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      if (nativeMessage && event.currentTarget.checkValidity()) {
+        setNativeMessage(undefined);
+      }
       if (showCounterEl) {
         const newLength = event.target.value.length;
         setCurrentLength(newLength);
@@ -243,6 +326,20 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           'Textarea: disabled fields should include supportingText that explains why input is unavailable.',
         );
       }
+      // Without invalidFeedback, a failed native check falls back to the
+      // browser's validationMessage, which follows the browser's UI language
+      // rather than the page's (Moodle) language. Disabled and read-only
+      // fields are barred from constraint validation.
+      if (
+        (required || textareaProps.minLength != null) &&
+        !disabled &&
+        !readOnly &&
+        !invalidFeedback?.trim()
+      ) {
+        console.warn(
+          "Textarea: required and minLength fields should pass invalidFeedback so a failed check does not fall back to the browser's message, which follows the browser's language rather than the user's.",
+        );
+      }
     }
 
     const wrapperClasses = ['mds-textarea'];
@@ -272,7 +369,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
         <div className="mds-textarea-field-wrapper">
           <textarea
-            ref={ref}
+            ref={setRefs}
             id={id}
             className={textareaClasses.join(' ')}
             disabled={disabled}
@@ -286,6 +383,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             aria-label={ariaLabel}
             aria-describedby={describedBy}
             onChange={handleChange}
+            onInvalid={handleInvalid}
             onPointerDown={(e) => {
               isPointerDownRef.current = true;
               onPointerDown?.(e);
@@ -299,6 +397,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             }}
             onBlur={(e) => {
               setIsPointerFocus(false);
+              // Check minLength on blur rather than waiting for submit. An
+              // empty required field is skipped: tabbing past an unanswered
+              // field isn't a mistake, so required errors surface on submit.
+              // An empty value can't fail any other constraint.
+              const textarea = e.currentTarget;
+              if (!textarea.validity.valueMissing) textarea.checkValidity();
               onBlur?.(e);
             }}
             {...textareaProps}
@@ -356,6 +460,16 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             )}
           </div>
         )}
+
+        {/* Always mounted: screen readers skip live regions that appear in the
+            same update as their content. Mirrors the error so it is announced
+            when it shows without focus moving onto the field (e.g. a submit
+            while it already had focus or while an earlier control is the
+            first invalid one, or the consumer setting invalid after an async
+            check). Separate from the counter's milestone announcements. */}
+        <span className="visually-hidden" aria-live="polite" aria-atomic="true">
+          {liveText}
+        </span>
       </div>
     );
   },
