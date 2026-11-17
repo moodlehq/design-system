@@ -7,6 +7,7 @@ import type {
 } from 'react';
 import { forwardRef, useRef } from 'react';
 import { getNextFocusableElement } from '../_internal/focus';
+import { mergeRefs } from '../_internal/mergeRefs';
 import type { TagContentAvatar } from '../_internal/TagContent';
 import { countTagContentLines, TagContent } from '../_internal/TagContent';
 import { CloseButton } from '../close-button';
@@ -246,11 +247,7 @@ export const Tag = forwardRef<HTMLAnchorElement | HTMLSpanElement, TagProps>(
     const density =
       densityByLines[countTagContentLines({ username, email, institution })];
 
-    const setRemovableRef = (node: HTMLSpanElement | null) => {
-      removableRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) ref.current = node;
-    };
+    const setRemovableRef = mergeRefs(removableRef, ref);
 
     const handleRemove = (event: MouseEvent<HTMLButtonElement>) => {
       const root = removableRef.current;
