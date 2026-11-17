@@ -183,8 +183,8 @@ describe('Input: Unit Test', () => {
     errorSpy.mockRestore();
   });
 
-  it('surfaces the native validation message on blur when invalidFeedback is not supplied, then clears it once the value becomes valid', () => {
-    render(<Input label="Label" required />);
+  it('surfaces a native format error on blur when invalidFeedback is not supplied, then clears it once the value becomes valid', () => {
+    render(<Input label="Label" type="email" defaultValue="not-an-email" />);
     const input = screen.getByRole('textbox', { name: 'Label' });
 
     fireEvent.blur(input);
@@ -194,10 +194,35 @@ describe('Input: Unit Test', () => {
     expect(nativeMessage).not.toBe('');
     expect(screen.getByText(nativeMessage)).toBeInTheDocument();
 
-    fireEvent.change(input, { target: { value: 'some value' } });
+    fireEvent.change(input, { target: { value: 'name@example.com' } });
 
     expect(input).not.toHaveAttribute('aria-invalid');
     expect(screen.queryByText(nativeMessage)).not.toBeInTheDocument();
+  });
+
+  it('lets focus leave an empty required field without flagging it', () => {
+    render(<Input label="Label" required />);
+    const input = screen.getByRole('textbox', { name: 'Label' });
+
+    fireEvent.blur(input);
+
+    expect(input).not.toHaveAttribute('aria-invalid');
+  });
+
+  it('keeps a required error from a failed submit when focus leaves the field', () => {
+    render(
+      <form onSubmit={(event) => event.preventDefault()}>
+        <Input label="Label" required />
+        <button type="submit">Save</button>
+      </form>,
+    );
+    const input = screen.getByRole('textbox', { name: 'Label' });
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+    expect(input).toHaveAttribute('aria-invalid', 'true');
+
+    fireEvent.blur(input);
+
+    expect(input).toHaveAttribute('aria-invalid', 'true');
   });
 
   it('takes focus when a submit fails on it, since the native bubble is cancelled', () => {

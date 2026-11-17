@@ -395,7 +395,7 @@ export const NativeValidationDemo: Story = {
     docs: {
       description: {
         story:
-          'Demonstrates HTML5 constraint validation (e.g. `required`, `type="email"`) wired into `invalidFeedback`. Validation runs on blur: leave the field with an empty or invalid value and, instead of the native browser bubble, the field switches to its invalid state and shows the browser\'s own validation message inline. This fallback only applies when `invalidFeedback` is not provided — pass `invalidFeedback` to show your own message instead of the native one.',
+          'Demonstrates HTML5 constraint validation (e.g. `required`, `type="email"`) wired into `invalidFeedback`. Format errors are checked on blur: leave the field with an invalid value and, instead of the native browser bubble, the field switches to its invalid state and shows the browser\'s own validation message inline. An empty `required` field is only flagged on submit, so tabbing past it doesn\'t mark the form red. This fallback only applies when `invalidFeedback` is not provided — pass `invalidFeedback` to show your own message instead of the native one.',
       },
     },
   },

@@ -174,10 +174,15 @@ export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
     const handleBlur: NonNullable<BaseInputProps['onBlur']> = (event) => {
       isPointerDownRef.current = false;
       setIsPointerFocus(false);
-      // Trigger native constraint validation on blur rather than waiting for
-      // form submit — synchronously fires the 'invalid' event handleInvalid
-      // already listens for.
-      event.currentTarget.checkValidity();
+      // Check format errors (type, pattern, minLength) on blur rather than
+      // waiting for submit: checkValidity() synchronously fires the 'invalid'
+      // event handleInvalid listens for. An empty required field is skipped:
+      // tabbing past an unanswered field isn't a mistake, and flagging it
+      // would mark the form red before the user is done and announce an error
+      // over the next field's label. Required errors surface on submit. An
+      // empty value can't fail any other constraint, so nothing else is lost.
+      const input = event.currentTarget;
+      if (!input.validity.valueMissing) input.checkValidity();
       onBlur?.(event);
     };
 
