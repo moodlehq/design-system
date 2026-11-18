@@ -83,6 +83,9 @@ export type {
   RadioProps,
 } from './radio';
 
+export { Select } from './select';
+export type { SelectOption, SelectOptionGroup, SelectProps } from './select';
+
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
 
