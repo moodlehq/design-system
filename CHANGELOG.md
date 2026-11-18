@@ -1,5 +1,25 @@
 # Changelog
 
+## [5.6.0](https://github.com/moodlehq/design-system/compare/design-system-v5.5.0...design-system-v5.6.0) (2026-11-18)
+
+
+### Features
+
+* **ActivityIcon:** Allow custom icons within frame via escape hatch ([#396](https://github.com/moodlehq/design-system/issues/396)) ([df8e6a3](https://github.com/moodlehq/design-system/commit/df8e6a353313295abe9e41e643757e0dc730b355))
+* **ComboBox:** Introduce new CB comp for searching values within a listbox ([24b870b](https://github.com/moodlehq/design-system/commit/24b870b603ab94d07388556f6d74219c5c75053c))
+* **Inputs:** Updates required for combobox ([ab2c139](https://github.com/moodlehq/design-system/commit/ab2c139c9e6cc5f782378ef397c4b1dedef55d8b))
+* **Internal:** Updates required for combobox ([0cc9060](https://github.com/moodlehq/design-system/commit/0cc9060165bf0870d639efc200a76ef4ab3e5519))
+* **RadioGroup:** Add new RadioGroup component ([038d283](https://github.com/moodlehq/design-system/commit/038d283060896bf1afca3b1eb0fafb07604d3a64))
+* **Select:** Add new Select component ([#400](https://github.com/moodlehq/design-system/issues/400)) ([51c7f7a](https://github.com/moodlehq/design-system/commit/51c7f7a5423fafe8f23b4dbc325d48b0e4e65c3b))
+* Ship generated agent guidance with the package ([#382](https://github.com/moodlehq/design-system/issues/382)) ([5eab395](https://github.com/moodlehq/design-system/commit/5eab3958f7b35a2e7ed1be564cc24c4ca629f196))
+* **tokens:** Add new tokens for Moodle Grid ([#397](https://github.com/moodlehq/design-system/issues/397)) ([e68bd9d](https://github.com/moodlehq/design-system/commit/e68bd9d781dc241f6f39620d6746f6cc200fbd25))
+
+
+### Bug Fixes
+
+* **Input, RadioGroup:** Focus the first invalid field on a failed submit ([b058abb](https://github.com/moodlehq/design-system/commit/b058abbd50dafffeb9129f7728d028279b230213))
+* **Radio:** Outrank Bootstrap validation styles and keep caller descriptions ([35438d4](https://github.com/moodlehq/design-system/commit/35438d4369a8d559aed87869b514bc6da5630547))
+
 ## [5.5.0](https://github.com/moodlehq/design-system/compare/design-system-v5.4.0...design-system-v5.5.0) (2026-10-21)
 
 
