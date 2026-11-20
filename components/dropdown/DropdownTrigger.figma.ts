@@ -24,6 +24,7 @@ const size = figma.selectedInstance.getEnum('Variant', {
   button: figma.selectedInstance.getEnum('Size', {
     sm: 'sm',
     md: 'md',
+    lg: 'lg',
   }),
 });
 const startIcon = isButton

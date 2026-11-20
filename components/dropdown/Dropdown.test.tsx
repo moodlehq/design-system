@@ -87,6 +87,20 @@ describe('Dropdown: Unit Test', () => {
     expect(trigger).toHaveClass('mds-btn--size-sm');
   });
 
+  it('forwards size="lg" to the trigger Button', () => {
+    renderDropdown({ appearance: 'subtle', size: 'lg' });
+    const trigger = screen.getByRole('button', { name: 'Label' });
+    expect(trigger).toHaveClass('btn-ghost');
+    expect(trigger).toHaveClass('mds-btn--size-lg');
+  });
+
+  it('defaults the trigger size to md', () => {
+    renderDropdown({});
+    expect(screen.getByRole('button', { name: 'Label' })).toHaveClass(
+      'mds-btn--size-md',
+    );
+  });
+
   it('forwards extra props and the ref to the root element', () => {
     const ref = createRef<HTMLDivElement>();
     render(

@@ -77,9 +77,9 @@ const meta = {
       // nav-pill is constrained to md by design.
       if: { arg: 'variant', eq: 'button' },
       control: { type: 'select' },
-      options: ['sm', 'md'],
+      options: ['sm', 'md', 'lg'],
       table: {
-        type: { summary: 'sm | md' },
+        type: { summary: 'sm | md | lg' },
         defaultValue: { summary: 'md' },
       },
     },
@@ -198,6 +198,12 @@ export const TriggerVariants: Story = {
           {triggerItems}
         </Dropdown>
         <Dropdown label="Small + icon" size="sm" startIcon={iconMapping.Smile}>
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Large" size="lg">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Large + icon" size="lg" startIcon={iconMapping.Smile}>
           {triggerItems}
         </Dropdown>
       </div>
