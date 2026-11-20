@@ -75,6 +75,99 @@ describe('DropdownTrigger: Unit Test', () => {
       expect(screen.getByRole('button')).toHaveClass('mds-btn--size-sm');
     });
 
+    it('defaults to md', () => {
+      const { container } = render(<DropdownTrigger label="Label" />);
+      expect(screen.getByRole('button')).toHaveClass('mds-btn--size-md');
+      expect(
+        container.querySelector('.mds-dropdown-trigger__chevron--sm'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('forwards lg to Button', () => {
+      render(<DropdownTrigger label="Label" size="lg" />);
+      const trigger = screen.getByRole('button', { name: 'Label' });
+      expect(trigger).toHaveClass('mds-btn', 'btn', 'mds-btn--size-lg');
+      expect(trigger).not.toHaveClass('mds-btn--icon-only');
+    });
+
+    it.each(['emphasis', 'default', 'subtle'] as const)(
+      'keeps the %s appearance mapping at lg',
+      (appearance) => {
+        const expected = {
+          emphasis: 'btn-secondary',
+          default: 'btn-outline-secondary',
+          subtle: 'btn-ghost',
+        }[appearance];
+        render(
+          <DropdownTrigger label="Label" appearance={appearance} size="lg" />,
+        );
+        expect(screen.getByRole('button')).toHaveClass(
+          expected,
+          'mds-btn--size-lg',
+        );
+      },
+    );
+
+    it('renders the md (12×8) chevron and startIcon for labelled lg triggers', () => {
+      const { container } = render(
+        <DropdownTrigger
+          label="Label"
+          size="lg"
+          startIcon={
+            <i className="fa-solid fa-face-smile" aria-hidden="true" />
+          }
+        />,
+      );
+      const chevron = container.querySelector('.mds-dropdown-trigger__chevron');
+      expect(chevron).toBeInTheDocument();
+      expect(chevron).toHaveAttribute('aria-hidden', 'true');
+      expect(chevron).not.toHaveClass('mds-dropdown-trigger__chevron--sm');
+      expect(container.querySelector('i.fa-face-smile')).toBeInTheDocument();
+      expect(screen.getByRole('button')).toHaveTextContent('Label');
+    });
+
+    it('keeps icon-only behaviour at lg: no chevron, label as accessible name', () => {
+      const { container } = render(
+        <DropdownTrigger
+          label="Open menu"
+          size="lg"
+          startIcon={<i className="fa-solid fa-gear" aria-hidden="true" />}
+          iconOnly
+        />,
+      );
+      const trigger = screen.getByRole('button', { name: 'Open menu' });
+      expect(trigger).toHaveClass('mds-btn--icon-only', 'mds-btn--size-lg');
+      expect(trigger).not.toHaveTextContent('Open menu');
+      expect(
+        container.querySelector('.mds-dropdown-trigger__chevron'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('keeps menu semantics at lg', () => {
+      render(<DropdownTrigger label="Label" size="lg" open />);
+      const trigger = screen.getByRole('button');
+      expect(trigger).toHaveAttribute('type', 'button');
+      expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+      expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      expect(trigger).toHaveClass('mds-dropdown-trigger--open');
+    });
+
+    it('falls back to md and warns in development for an invalid size', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      render(
+        <DropdownTrigger
+          label="Label"
+          // @ts-expect-error — runtime validation path for JS consumers
+          size="xl"
+        />,
+      );
+      expect(screen.getByRole('button')).toHaveClass('mds-btn--size-md');
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('[MDS DropdownTrigger] Invalid size "xl"'),
+      );
+      warnSpy.mockRestore();
+    });
+
     it('uses the small chevron for sm triggers', () => {
       const { container } = render(<DropdownTrigger label="Label" size="sm" />);
       expect(
@@ -124,6 +217,25 @@ describe('DropdownTrigger: Unit Test', () => {
       const trigger = screen.getByRole('button');
       expect(trigger).toHaveClass('mds-nav-pill');
       expect(trigger).not.toHaveClass('mds-btn');
+    });
+
+    it('ignores size="lg", keeps md nav-pill rendering, and warns in development', () => {
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const { container } = render(
+        <DropdownTrigger label="Label" variant="nav-pill" size="lg" />,
+      );
+      const trigger = screen.getByRole('button');
+      expect(trigger).toHaveClass('mds-nav-pill');
+      expect(trigger).not.toHaveClass('mds-btn--size-lg');
+      expect(
+        container.querySelector('.mds-dropdown-trigger__chevron--sm'),
+      ).toBeInTheDocument();
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'nav-pill variant only supports appearance="default" and size="md"',
+        ),
+      );
+      warnSpy.mockRestore();
     });
 
     it('ignores icons and warns in development', () => {

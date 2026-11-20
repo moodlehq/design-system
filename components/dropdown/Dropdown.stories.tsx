@@ -67,10 +67,10 @@ const meta = {
       // nav-pill is constrained to md by design — hide the control to match DropdownTrigger behaviour.
       if: { arg: 'variant', eq: 'button' },
       control: { type: 'select' },
-      options: ['sm', 'md'],
+      options: ['sm', 'md', 'lg'],
       description: 'Trigger size.',
       table: {
-        type: { summary: 'sm | md' },
+        type: { summary: 'sm | md | lg' },
         defaultValue: { summary: 'md' },
       },
     },
