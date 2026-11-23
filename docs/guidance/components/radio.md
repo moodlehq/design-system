@@ -46,13 +46,38 @@ Generated from the component TypeScript types, not from ZeroHeight. Inherited HT
 | `invalid` | `boolean` |  | Marks the input as invalid: applies danger border/label colour and sets aria-invalid. Independent of invalidFeedback — invalid styling can be shown without a message. |
 | `invalidFeedback` | `string` |  | Pre-translated error message rendered below the label. Requires invalid={true} and hideLabel={false} to be displayed. Only invalid feedback is supported; is-valid and neutral feedback states are intentionally not implemented. |
 
+### RadioGroupProps
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` |  | Pre-translated group label (the question). Also the accessible name fallback when hideLabel is true. |
+| `hideLabel` | `boolean` | `false` | Hides the visible label row (label, required marker, info button). Supply aria-label, aria-labelledby, or label so the group keeps an accessible name. |
+| `options` (required) | `RadioGroupOption[]` |  | The options to render, each as a Radio. Use 2 to 5 options. |
+| `name` | `string` |  | Shared name for every radio input. Generated when omitted. |
+| `value` | `string` |  | Selected value (controlled). Pair with onChange. |
+| `defaultValue` | `string` |  | Initially selected value (uncontrolled). |
+| `onChange` | `(value: string, event: ChangeEvent<HTMLInputElement>) => void` |  | Called with the newly selected value when the selection changes. The value comes first, so React Hook Form's `register()` (which expects an event) isn't supported. Use `Controller` instead: `<RadioGroup value={field.value} onChange={field.onChange} onBlur={field.onBlur} inputRef={field.ref} />`. |
+| `onBlur` | `FocusEventHandler<HTMLDivElement>` |  | Called when focus leaves the group. Moving between radios, or from the info button to a radio, doesn't count. |
+| `inputRef` | `Ref<HTMLInputElement>` |  | Ref to the first enabled radio input, for programmatic focus (for example a form library focusing the field on error). `ref` targets the root wrapper. |
+| `orientation` | `RadioGroupOrientation` |  | Layout of the options. Defaults to 'vertical'. Horizontal does not wrap: it switches to vertical by itself when the options don't fit on one line. Use it only for a few short labels. |
+| `required` | `boolean` |  | Marks the group as required: shows the asterisk and enables native required validation on the radios. |
+| `disabled` | `boolean` | `false` | Disables every radio and mutes the supporting text. Takes precedence over invalid. |
+| `invalid` | `boolean` | `false` | Marks every radio invalid and turns the supporting text to the danger colour. Fully controlled: the group stays invalid until the caller sets `invalid` to false, so the error on screen always matches the form's state. Clear it in `onChange` (form libraries that re-validate on change, like React Hook Form after a failed submit, do this for you). Only the native `required` error clears by itself once an option is selected. |
+| `invalidFeedback` | `string` |  | Pre-translated error message shown in place of supportingText while invalid. Also shown when native required validation fails, in place of the browser's message (which follows the browser's language, not the user's). Pass it whenever `required` is set, even while `invalid` is false. |
+| `supportingText` | `string` |  | Pre-translated guidance shown below the options. |
+| `infoTooltipLabel` | `string` |  | Pre-translated accessible name for the info button. Include the field label so the button is identifiable out of context (for example, "More information about Delivery method"). The button is rendered only when this is set. |
+
+Allowed values:
+
+- `orientation`: `vertical`, `horizontal`
+
 ## Built from
 
 Generated from the component source and CSS, not from ZeroHeight.
 
 - MDS components: none
 
-- Semantic tokens: `--mds-bg-interactive-danger-default`, `--mds-bg-interactive-primary-default`, `--mds-bg-interactive-primary-disabled`, `--mds-bg-interactive-secondary-disabled`, `--mds-bg-surface-default`, `--mds-border-feedback-danger`, `--mds-border-interactive-danger-default`, `--mds-border-interactive-secondary-default`, `--mds-border-interactive-secondary-disabled`, `--mds-border-radius-pill`, `--mds-focus-default`, `--mds-font-family-base`, `--mds-font-size-paragraph-default`, `--mds-font-size-paragraph-small`, `--mds-font-weight-medium`, `--mds-font-weight-regular`, `--mds-letter-spacing-default`, `--mds-line-height-paragraph-default`, `--mds-line-height-paragraph-xs`, `--mds-spacing-none`, `--mds-spacing-offset`, `--mds-spacing-xs`, `--mds-spacing-xxs`, `--mds-stroke-weight-md`, `--mds-stroke-weight-sm`, `--mds-text-danger`, `--mds-text-default`, `--mds-text-muted`
+- Semantic tokens: `--mds-bg-interactive-danger-default`, `--mds-bg-interactive-primary-default`, `--mds-bg-interactive-primary-disabled`, `--mds-bg-interactive-secondary-disabled`, `--mds-bg-surface-default`, `--mds-border-feedback-danger`, `--mds-border-interactive-danger-default`, `--mds-border-interactive-secondary-default`, `--mds-border-interactive-secondary-disabled`, `--mds-border-radius-pill`, `--mds-focus-default`, `--mds-font-family-base`, `--mds-font-size-paragraph-default`, `--mds-font-size-paragraph-small`, `--mds-font-weight-medium`, `--mds-font-weight-regular`, `--mds-letter-spacing-default`, `--mds-line-height-paragraph-default`, `--mds-line-height-paragraph-small`, `--mds-line-height-paragraph-xs`, `--mds-spacing-md`, `--mds-spacing-none`, `--mds-spacing-offset`, `--mds-spacing-xs`, `--mds-spacing-xxs`, `--mds-stroke-weight-md`, `--mds-stroke-weight-sm`, `--mds-text-danger`, `--mds-text-default`, `--mds-text-muted`, `--mds-text-subtle`
 
 ## Usage
 

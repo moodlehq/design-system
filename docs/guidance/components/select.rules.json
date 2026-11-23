@@ -1,0 +1,24 @@
+{
+  "component": "Select",
+  "slug": "select",
+  "must": [
+    "Always show a sensible pre-selected option. Never leave the field looking blank or empty, native `<select>` can't represent \"nothing chosen\" cleanly, so the design shouldn't pretend otherwise.",
+    "Always associate Label with the field (`for`/`id` or `aria-labelledby`)."
+  ],
+  "mustNot": [
+    "Don't use for 2 to 5 options that people need to see all at once, use [Radio group](https://design.moodle.com/98292f05f/p/366522) instead.",
+    "Don't use for a single binary yes/no or on/off choice, use [Switch](https://design.moodle.com/98292f05f/p/585368) instead.",
+    "Don't use when the option list is long enough that typing to filter would genuinely help, or when people need to pick more than one value, that's a [Combobox](https://design.moodle.com/98292f05f/p/37396a) job.",
+    "Don't use when each option needs a description, an icon, or enough visual weight that a plain text label isn't enough to choose correctly, use [Choicebox](https://design.moodle.com/98292f05f/p/78314c) instead.",
+    "Don't use to trigger an action or navigate somewhere, nothing here gets saved to a form, use [Dropdown](https://design.moodle.com/98292f05f/p/8381b3) instead.",
+    "Don't reach for Select for a single yes/no toggle, that reads as over-engineering a Switch."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Radio group",
+    "Switch",
+    "Combobox",
+    "Choicebox",
+    "Dropdown"
+  ]
+}
