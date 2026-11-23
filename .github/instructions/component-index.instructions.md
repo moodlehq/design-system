@@ -32,6 +32,7 @@ Quick reference for AI agents and developers.
 | Radio           | Single-select options in a compact list (native radio input, label only)                                            | checked, label, disabled, invalid                                                                                    |
 | RadioGroup      | Labelled field for choosing exactly one of 2 to 5 options (wraps Radio)                                             | label, options (per-option disabled), value, orientation, required, invalid, invalidFeedback, supportingText         |
 | Select          | Native `<select>` form field for picking one value from a short, fixed list — not Dropdown, Combobox, or Choicebox  | options, label, invalid, invalidFeedback, supportingText, required                                                   |
+| Spinner         | Non-interactive loading indicator for waits of unknown length (not ProgressBar, which needs a known total)          | labelText, showLabel, size, appearance, delay                                                                        |
 | Switch          | Binary toggle control for on/off settings                                                                           | checked, label, disabled, onChange                                                                                   |
 | Tag             | Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise) | content, type, disabled; link: href, variant; removable: onRemove, removeLabel, username, email, institution, avatar |
 | Textarea        | Multi-line plain-text input with label, supporting text, counter, and validation — not a rich text editor           | label, invalid, invalidFeedback, supportingText, showCounter, resizable                                              |
@@ -117,6 +118,8 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
 - [RadioGroup stories](../../components/radio/RadioGroup.stories.tsx)
 - [Select implementation](../../components/select/Select.tsx)
 - [Select stories](../../components/select/Select.stories.tsx)
+- [Spinner implementation](../../components/spinner/Spinner.tsx)
+- [Spinner stories](../../components/spinner/Spinner.stories.tsx)
 - [Switch implementation](../../components/switch/Switch.tsx)
 - [Switch stories](../../components/switch/Switch.stories.tsx)
 - [Tag implementation](../../components/tag/Tag.tsx)
@@ -161,6 +164,7 @@ Use these as building blocks inside `Dropdown` and `DropdownMenu`.
   - 2–5 options people should see at once → `Radio`; options that need an icon or description → `Choicebox`; a single on/off choice → `Switch`.
   - A list long enough that typing to filter helps, or more than one value → `Combobox`. Never add search or `multiple` to `Select`.
 - `Select` always shows a chosen option. For "nothing chosen yet", pass an instructional first option with `value: ''` (e.g. "Select a country") together with `required`, so native validation fails until a real choice is made. Never pass `children`; options go in the `options` prop (`{ value, label }` or `{ label, options }` groups).
+- `Spinner` uses `showLabel`, not the `hideLabel` that form fields use. That's deliberate: a form field's visible label is the rule, but a spinner usually sits inside or beside something that already says what's happening (a button, a row, a field), so its label is visually hidden by default. `labelText` is always required, so the spinner is announced either way. Pass `showLabel` for `size="large"` (always, per ZeroHeight; a dev warning fires otherwise) and for standalone or long waits.
 - `Combobox` is the search field plus its option list, as one component. It nests `SearchInput`, so the magnifier, clear button and field styling come from there — don't restyle them:
   - Pass `options` (`{ value, label, username?, email?, institution?, avatar?, disabled? }`). A person picker is a `Combobox` with person options, not a separate component. Keep the same supporting fields on for every option so rows stay the same height.
   - `multiple` keeps the menu open after each choice; chosen values show as removable `Tag`s and the chevron becomes the clear button. Without it, choosing replaces the value and closes the menu. Already-chosen options are left out of the menu.

@@ -1,0 +1,239 @@
+/* Root: glyph plus optional label. Small puts the label beside the ring,
+   large puts it beneath, so there is no separate label-position setting.
+   It may shrink to its container so a long (often translated) label wraps
+   instead of overflowing. */
+.mds-spinner {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  max-inline-size: 100%;
+  vertical-align: middle;
+}
+
+.mds-spinner--small {
+  flex-direction: row;
+  gap: var(--mds-spacing-xs);
+}
+
+.mds-spinner--large {
+  flex-direction: column;
+  gap: var(--mds-spacing-md);
+}
+
+/* Glyph: the ring. Figma sets it to a fixed size per variant (not bound to a
+   variable), and the stroke uses the stroke-weight tokens Figma binds. */
+.mds-spinner-glyph {
+  display: block;
+  flex: none;
+  overflow: visible;
+  /* Start both arcs at 12 o'clock. The spin uses the separate `rotate`
+     property so it composes with this transform instead of replacing it. */
+  transform: rotate(-90deg);
+  /* Motion values come from the design team's loader reference (v13, played
+     at 1.25x). Figma shows the static ring only and no motion tokens exist. */
+  animation: mds-spinner-spin 2.5s linear infinite;
+}
+
+.mds-spinner--small .mds-spinner-glyph {
+  inline-size: 20px; /* Figma defines the Small glyph frame as fixed 20x20. */
+  block-size: 20px; /* Figma defines the Small glyph frame as fixed 20x20. */
+  stroke-width: var(--mds-stroke-weight-md);
+}
+
+.mds-spinner--large .mds-spinner-glyph {
+  inline-size: 64px; /* Figma defines the Large glyph frame as fixed 64x64. */
+  block-size: 64px; /* Figma defines the Large glyph frame as fixed 64x64. */
+  stroke-width: var(--mds-stroke-weight-xl);
+}
+
+/* Track and indicator: both circles run a dash animation over a 360-unit
+   path (pathLength), so the arc grows and shrinks while the track keeps a gap
+   either side of it. A dashoffset of one full length starts both at the top. */
+.mds-spinner-track,
+.mds-spinner-indicator {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dashoffset: 360;
+  animation: mds-spinner-indicator 10s ease-in-out infinite;
+}
+
+.mds-spinner-track {
+  animation-name: mds-spinner-track;
+}
+
+.mds-spinner--primary .mds-spinner-track {
+  stroke: var(--mds-spinner-primary-track);
+}
+
+.mds-spinner--primary .mds-spinner-indicator {
+  stroke: var(--mds-spinner-primary-indicator);
+}
+
+.mds-spinner--inverse .mds-spinner-track {
+  stroke: var(--mds-spinner-inverse-track);
+}
+
+.mds-spinner--inverse .mds-spinner-indicator {
+  stroke: var(--mds-spinner-inverse-indicator);
+}
+
+/* Label: Figma binds these text tokens, including the xs line height.
+   Labels wrap so long translations reflow on narrow viewports (WCAG 1.4.10),
+   but the xs line height (12px against 16px text) would make wrapped lines
+   overlap. So lines are spaced at the default line height and negative block
+   margins trim the extra half-leading back off: a single line still occupies
+   the 12px slot Figma specifies, with the text centred in it as before. */
+.mds-spinner-label {
+  min-inline-size: 0;
+  margin-block: calc(
+    (
+        var(--mds-line-height-paragraph-xs) -
+          var(--mds-line-height-paragraph-default)
+      ) /
+      2
+  );
+  font-family: var(--mds-font-family-base);
+  font-size: var(--mds-font-size-paragraph-default);
+  font-weight: var(--mds-font-weight-regular);
+  line-height: var(--mds-line-height-paragraph-default);
+  letter-spacing: var(--mds-letter-spacing-default);
+  overflow-wrap: anywhere;
+}
+
+/* Large stacks the label under the ring, so wrapped lines centre beneath it.
+   max-inline-size stops the column's centred item outgrowing the root. */
+.mds-spinner--large .mds-spinner-label {
+  max-inline-size: 100%;
+  text-align: center;
+}
+
+.mds-spinner--primary .mds-spinner-label {
+  color: var(--mds-text-default);
+}
+
+.mds-spinner--inverse .mds-spinner-label {
+  color: var(--mds-text-inverse);
+}
+
+/* The ring turns clockwise in both writing directions, like a clock, so no
+   [dir='rtl'] override is needed. */
+@keyframes mds-spinner-spin {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+/* Three-dash patterns let the visible arc wrap past 12 o'clock smoothly. The
+   50.001% and 87.501% steps re-base the pattern without a visible jump. */
+@keyframes mds-spinner-indicator {
+  0% {
+    stroke-dasharray: 0 0 0 360 0 360;
+  }
+  12.5% {
+    stroke-dasharray: 0 0 270 90 270 90;
+  }
+  25% {
+    stroke-dasharray: 0 270 0 360 0 360;
+  }
+  37.5% {
+    stroke-dasharray: 0 270 270 90 270 90;
+  }
+  50% {
+    stroke-dasharray: 0 540 0 360 0 360;
+  }
+  50.001% {
+    stroke-dasharray: 0 180 0 360 0 360;
+  }
+  62.5% {
+    stroke-dasharray: 0 180 270 90 270 90;
+  }
+  75% {
+    stroke-dasharray: 0 450 0 360 0 360;
+  }
+  87.5% {
+    stroke-dasharray: 0 450 270 90 270 90;
+  }
+  87.501% {
+    stroke-dasharray: 0 90 270 90 270 90;
+  }
+  100% {
+    stroke-dasharray: 0 360 1 360 0 360;
+  }
+}
+
+@keyframes mds-spinner-track {
+  0% {
+    stroke-dasharray: 0 20 320 40 320 40;
+  }
+  12.5% {
+    stroke-dasharray: 0 290 50 310 50 310;
+  }
+  25% {
+    stroke-dasharray: 0 290 320 40 320 40;
+  }
+  37.5% {
+    stroke-dasharray: 0 560 50 310 50 310;
+  }
+  37.501% {
+    stroke-dasharray: 0 200 50 310 50 310;
+  }
+  50% {
+    stroke-dasharray: 0 200 320 40 320 40;
+  }
+  62.5% {
+    stroke-dasharray: 0 470 50 310 50 310;
+  }
+  62.501% {
+    stroke-dasharray: 0 110 50 310 50 310;
+  }
+  75% {
+    stroke-dasharray: 0 110 320 40 320 40;
+  }
+  87.5% {
+    stroke-dasharray: 0 380 50 310 50 310;
+  }
+  100% {
+    stroke-dasharray: 0 380 320 40 320 40;
+  }
+}
+
+/* Reduced motion (ZeroHeight > Behaviour): the ring keeps turning, more
+   slowly, instead of stopping, so it still reads as activity. The arc stops
+   growing and shrinking and holds a fixed quarter length. */
+@media (prefers-reduced-motion: reduce) {
+  .mds-spinner-glyph {
+    /* Half speed, like Bootstrap's reduced-motion spinner. No motion tokens
+       exist, so the value lives here. */
+    animation-duration: 5s;
+  }
+
+  .mds-spinner-track,
+  .mds-spinner-indicator {
+    animation: none;
+  }
+
+  .mds-spinner-indicator {
+    stroke-dasharray: 90 270;
+  }
+
+  .mds-spinner-track {
+    stroke-dasharray: 0 110 230 20;
+  }
+}
+
+/* Forced colours: map the ring to system colours so the indicator stays
+   distinct from the track whatever palette the person has chosen.
+   The two-class selectors match the appearance rules' specificity, so this
+   block wins only by source order: keep it after them. */
+@media (forced-colors: active) {
+  .mds-spinner .mds-spinner-track {
+    stroke: GrayText;
+  }
+
+  .mds-spinner .mds-spinner-indicator {
+    stroke: CanvasText;
+  }
+}

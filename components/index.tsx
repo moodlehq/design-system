@@ -89,6 +89,9 @@ export type {
 export { Select } from './select';
 export type { SelectOption, SelectOptionGroup, SelectProps } from './select';
 
+export { Spinner } from './spinner';
+export type { SpinnerAppearance, SpinnerProps, SpinnerSize } from './spinner';
+
 export { Switch } from './switch';
 export type { SwitchProps } from './switch';
 

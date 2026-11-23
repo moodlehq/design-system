@@ -177,6 +177,8 @@ const PURPOSES: Record<string, string> = {
     'A single radio option (native radio input, label only). To ask one question with 2 to 5 options, use RadioGroup rather than laying out Radios by hand.',
   select:
     'Native <select> form field for picking one value from a short, fixed list. The value submits with the form — not Dropdown (actions/view settings), Combobox (type-to-filter or multi-select), or Choicebox (options with icon/description).',
+  spinner:
+    'Non-interactive loading indicator for waits of unknown length, with an always-present accessible label. Not ProgressBar (known total) or a skeleton (known layout).',
   switch: 'Binary toggle control for on/off settings.',
   tag: 'Compact removable or link token for labelling, categorising, or representing a selected value (person or otherwise). Nests Avatar and CloseButton rather than redrawing either.',
   textarea:
