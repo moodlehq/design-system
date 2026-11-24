@@ -105,16 +105,21 @@
   -moz-appearance: textfield;
 }
 
+/* No [class] bump inside :has(): these rules style our own wrapper, which
+   Bootstrap never targets, and they still outrank the 0,3,0 base wrapper rule.
+   Moodle compiles this CSS through its vendored scssphp 1.x, whose
+   matchExtends() raises "Array to string conversion" on [class] nested in
+   :has(), which fails Moodle's PHPUnit runs (failOnWarning). Don't add it back. */
 .mds-input[class]
   .mds-input-field-wrapper:has(
-    .mds-input-field[class]:hover:not(:disabled):not(:focus)
+    .mds-input-field:hover:not(:disabled):not(:focus)
   ) {
   background-color: var(--mds-bg-surface-default);
 }
 
 .mds-input[class]
   .mds-input-field-wrapper:has(
-    .mds-input-field[class]:active:not(
+    .mds-input-field:active:not(
         :disabled,
         .mds-input-field--readonly,
         .is-invalid
@@ -126,7 +131,7 @@
 
 .mds-input[class]
   .mds-input-field-wrapper:has(
-    .mds-input-field.is-invalid[class]:active:not(
+    .mds-input-field.is-invalid:active:not(
         :disabled,
         .mds-input-field--readonly
       )
@@ -134,22 +139,19 @@
   background-color: var(--mds-bg-surface-default);
 }
 
-.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field[class]:focus) {
+.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field:focus) {
   background-color: var(--mds-bg-surface-default);
   border-color: var(--mds-border-default);
 }
 
-.mds-input[class]
-  .mds-input-field-wrapper:has(.mds-input-field[class]:focus-visible) {
+.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field:focus-visible) {
   outline: var(--mds-stroke-weight-md) solid var(--mds-focus-default);
   outline-offset: 0;
   border-color: var(--mds-focus-default);
 }
 
 .mds-input[class]
-  .mds-input-field-wrapper:has(
-    .mds-input-field--pointer-focus[class]:focus-visible
-  ) {
+  .mds-input-field-wrapper:has(.mds-input-field--pointer-focus:focus-visible) {
   outline: none;
   border-color: var(--mds-border-interactive-primary-default);
 }
@@ -161,22 +163,19 @@
   background-image: none;
 }
 
-.mds-input[class]
-  .mds-input-field-wrapper:has(.mds-input-field.is-invalid[class]) {
+.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field.is-invalid) {
   border-color: var(--mds-border-interactive-danger-default);
 }
 
 .mds-input[class]
-  .mds-input-field-wrapper:has(
-    .mds-input-field.is-invalid[class]:focus-visible
-  ) {
+  .mds-input-field-wrapper:has(.mds-input-field.is-invalid:focus-visible) {
   outline-color: var(--mds-focus-danger);
   border-color: var(--mds-focus-danger);
 }
 
 .mds-input[class]
   .mds-input-field-wrapper:has(
-    .mds-input-field--pointer-focus.is-invalid[class]:focus-visible
+    .mds-input-field--pointer-focus.is-invalid:focus-visible
   ) {
   outline: none;
   border-color: var(--mds-border-interactive-danger-default);
@@ -186,8 +185,7 @@
   color: var(--mds-text-muted);
 }
 
-.mds-input[class]
-  .mds-input-field-wrapper:has(.mds-input-field--readonly[class]) {
+.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field--readonly) {
   border-color: var(--mds-border-default);
 }
 
@@ -196,8 +194,7 @@
   cursor: not-allowed;
 }
 
-.mds-input[class]
-  .mds-input-field-wrapper:has(.mds-input-field[class]:disabled) {
+.mds-input[class] .mds-input-field-wrapper:has(.mds-input-field:disabled) {
   background-color: var(--mds-bg-surface-strong);
   border-color: var(--mds-border-interactive-secondary-default);
 }
