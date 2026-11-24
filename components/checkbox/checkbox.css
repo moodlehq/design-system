@@ -166,3 +166,15 @@
   ~ .mds-checkbox-feedback {
   opacity: 0.5;
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* Bootstrap draws the tick and dash as a white background-image on a filled
+   box. Forced colors repaints that fill to Canvas, so the mark disappears and
+   every state looks like an empty box. Fall back to the native checkbox, which
+   the OS renders with system colours for checked, indeterminate and disabled. */
+@media (forced-colors: active) {
+  .mds-checkbox[class] .mds-checkbox-input {
+    appearance: auto;
+  }
+}

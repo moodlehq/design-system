@@ -94,3 +94,21 @@
 .mds-nav-pill--selected:hover:not([aria-disabled='true']) {
   background-color: var(--mds-bg-nav-pill-selected);
 }
+
+/* --- Forced colors (Windows High Contrast) ---------------------------------- */
+
+/* The selected fill and indicator dot are background-color, which forced
+   colors repaints to Canvas, so the selected pill isn't distinguishable.
+   Paint the dot Highlight and outline the selected pill in place of its
+   fill (focus-visible still overrides the outline). */
+@media (forced-colors: active) {
+  .mds-nav-pill__indicator {
+    forced-color-adjust: none;
+    background-color: Highlight;
+  }
+
+  .mds-nav-pill--selected {
+    outline: var(--mds-stroke-weight-sm) solid CanvasText;
+    outline-offset: calc(var(--mds-stroke-weight-sm) * -1);
+  }
+}

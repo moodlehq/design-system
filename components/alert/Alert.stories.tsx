@@ -337,6 +337,23 @@ export const RightToLeft: Story = {
   tags: ['test', 'stable'],
 };
 
+/** Forced-colors (Windows High Contrast) snapshot of `Variants` for Chromatic. */
+export const ForcedColors: Story = {
+  ...Variants,
+  tags: ['test', 'stable'],
+  parameters: {
+    ...Variants.parameters,
+    chromatic: { ...Variants.parameters?.chromatic, forcedColors: 'active' },
+    docs: {
+      ...Variants.parameters?.docs,
+      description: {
+        story:
+          'Forced-colors (Windows High Contrast) snapshot for Chromatic. To check locally, open DevTools → Rendering → "Emulate CSS media feature forced-colors" → active. Every status icon and dismiss button should stay visible.',
+      },
+    },
+  },
+};
+
 /**
  * After dismissal, focus moves to the next focusable element that follows the
  * alert in the DOM — keeping keyboard navigation predictable.
