@@ -1,0 +1,19 @@
+{
+  "component": "Combobox",
+  "slug": "combobox",
+  "must": [],
+  "mustNot": [
+    "Don't use for a fixed list people can scan without typing. Use [Select](https://design.moodle.com/98292f05f/p/013ac0) instead; if people can't or don't need to type, it isn't a Combobox.",
+    "Don't use for actions or view settings like sort order. Use a [Dropdown](/8381b3-dropdown). If nothing is saved with a form, it isn't a Combobox.",
+    "Don't use to search content when there's no list of options to pick from. Use [Search](/38ca1d-search) on its own.",
+    "Don't build a \"user picker\" as a separate component. A Combobox with person options is the user picker.",
+    "Don't assemble one yourself by placing a menu under an Input. Use Combobox."
+  ],
+  "useInstead": [],
+  "lookAlikes": [
+    "Select",
+    "Dropdown",
+    "Search",
+    "Input"
+  ]
+}

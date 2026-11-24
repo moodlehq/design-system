@@ -44,6 +44,9 @@ Generated from the component TypeScript types, not from ZeroHeight. Inherited HT
 | `trailingAction` | `ReactNode` |  | Control rendered at the end of the field, such as a clear or show-password button. |
 | `suppressNativeInvalid` | `boolean` | `false` | When true, native constraint-validation failures (e.g. `pattern`, `required`) don't drive the invalid state — only the `invalid` prop does. Lets consumers (e.g. SearchInput's "invalid only while Empty" rule) gate ALL invalid sources consistently, since native validation attrs pass straight through `...props` to the native `<input>` outside any consumer-level gate. |
 | `wrapperProps` | `Pick< HTMLAttributes<HTMLDivElement>, 'role' \| 'aria-label' \| 'aria-labelledby' >` |  | Attributes for the root wrapper rather than the native `<input>` (which receives `...props`). Lets consumers such as SearchInput turn the root into a landmark without adding an extra element around the field. |
+| `fieldWrapperRef` | `Ref<HTMLDivElement>` |  | Ref to the field wrapper (the bordered box around the start icon, input and trailing action). Lets consumers such as Combobox anchor a floating surface to the whole field rather than just the native `<input>`. |
+| `wrapField` | `(input: ReactElement) => ReactNode` |  | Wraps the native `<input>` inside the field wrapper, between the start icon and the trailing action. Lets consumers such as Combobox render chosen values as siblings of the input within one wrapping flex row. |
+| `inputRequired` | `boolean` |  | Overrides the native `required` attribute on the `<input>` without changing the required asterisk, which follows `required`. Lets consumers such as Combobox keep the field marked required visually while only enforcing it natively when no value has been chosen. |
 
 ### InputProps
 
@@ -67,9 +70,14 @@ Allowed values:
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `clearLabel` (required) | `string` |  | Accessible label for the button that clears the field's current value. |
+| `hideSearchIcon` | `boolean` | `false` | Hides the leading magnifying-glass icon. Only for composites such as Combobox, where the icon is dropped once the field holds chosen values. |
 | `landmark` | `boolean` | `false` | Renders the field's root as a `role="search"` landmark, named by the field's accessible name (`aria-labelledby`, `label`, or `aria-label` when the label is hidden). Give each landmark on a page a unique name so they can be told apart. Use for a page- or site-level search. Leave off for filters inside a table, toolbar, or panel, and when the consumer already wraps the field in `<search>` or `<form role="search">`, so the page doesn't collect redundant or nested landmarks. |
 | `onDebouncedChange` | `(value: string) => void` |  | Called with the field's current value `debounceMs` after the user stops typing — use this (not `onChange`) to trigger the actual search/filter request so instant search doesn't fire on every keystroke. Fires immediately, bypassing the debounce, when the value is cleared. |
 | `debounceMs` | `number` | `DEFAULT_DEBOUNCE_MS` | Debounce interval, in milliseconds, for `onDebouncedChange`. |
+| `trailingAction` | `ReactNode` |  | Extra control rendered after the clear button, at the end of the field (e.g. Combobox's open/close chevron). |
+| `showClear` | `boolean` |  | Overrides when the clear button is shown. By default it shows while the field has text. Pass `true` to keep it available when the field text is empty but the consumer holds other cleared-with-it state (e.g. Combobox's chosen values), or `false` to hide it. Never shown while `disabled`. |
+| `onClear` | `() => void` |  | Called after the clear button is activated and the field text has been cleared. Lets a consumer reset any state it holds alongside the text. |
+| `respectDefaultPrevented` | `boolean` | `false` | When true, a key that the consumer's `onKeyDown` marked handled with `event.preventDefault()` is not also handled by SearchInput (no Escape clear, no Enter block). Off by default, so existing callers that call `preventDefault()` for their own reasons keep today's behaviour. |
 
 ## Built from
 

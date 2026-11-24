@@ -15,5 +15,7 @@
     "Modal/Dialog",
     "Modal"
   ],
-  "lookAlikes": []
+  "lookAlikes": [
+    "Modal"
+  ]
 }
