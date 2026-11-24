@@ -12,7 +12,7 @@ types: dist/components/link/index.d.ts
 
 # Link
 
-A clickable element that triggers an action or submits a form.
+A clickable element that let users navigate to another page, view, or resource.
 
 ## Look-alikes
 

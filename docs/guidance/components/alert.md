@@ -14,6 +14,12 @@ types: dist/components/alert/index.d.ts
 
 A contextual message that draws attention to important information without interrupting the task at hand.
 
+## Look-alikes
+
+Modal
+
+Use instead: toast; inline field validation; Modal/Dialog; Modal.
+
 ## Accessibility
 
 - Keyboard:

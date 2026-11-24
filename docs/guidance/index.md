@@ -7,7 +7,7 @@ One page per shipped component. Check `status` and `package` in each page before
 ## Components
 
 - [Breadcrumb](components/breadcrumb.md) · Ready · A horizontal trail of links showing where the current page sits in the hierarchy.
-- [Link](components/link.md) · Ready · A clickable element that triggers an action or submits a form.
+- [Link](components/link.md) · Ready · A clickable element that let users navigate to another page, view, or resource.
 - [Nav pill](components/nav-pill.md) · Ready · A navigation link that lets users move between pages or sections within a nav bar.
 - [Pagination](components/pagination.md) · Ready · Lets users navigate between pages of content by showing their current position and providing controls to move forward, backward, or to a specific page.
 - [Activity icons](components/activity-icon.md) · Ready · Activity icons show the type of Moodle activity, resource, or file. They support quick recognition and a consistent visual language across the platform.
@@ -24,8 +24,10 @@ One page per shipped component. Check `status` and `package` in each page before
 - [Checkbox](components/checkbox.md) · Ready · A form control that lets users make one or more explicit selections from a set of options.
 - [Choicebox](components/choicebox.md) · Ready · A selectable card that lets users choose from a set of options with more context than a standard radio button.
 - [Close button](components/close-button.md) · Ready · The close button lets users dismiss a surface, like a modal, drawer, or alert, or clear an entered value.
+- [Combobox](components/combobox.md) · In progress · A search field that opens a list of options. People type to narrow the list, then pick one or more values that are saved with the form.
 - [Dropdown](components/dropdown.md) · Ready · A button that opens a menu of actions, selections, or navigation options.
 - [Favourite button](components/favourite-button.md) · Ready · An icon-only toggle button that lets users mark or unmark an item as a favourite.
+- [Select](components/select.md) · In progress · A form field for choosing one option from a short, fixed list, using the browser's own native picker.
 - [Switch](components/switch.md) · Ready · A binary input control that lets users turn a single setting on or off.
 - [Tag](components/tag.md) · Ready · A compact, pill-shaped element used to label, categorise, or tag content either as a clickable link to related content, or as a removable chip the user can dismiss.
 - [Text area](components/textarea.md) · Ready · A multi-line text input for longer-form free text, with support for labels, helper text, live counting, and validation.
@@ -41,8 +43,7 @@ One page per shipped component. Check `status` and `package` in each page before
 
 ## Documented but not in this package version
 
+- Modal · In progress
 - Board tile · In progress
 - Spinner · Unknown
 - Radio group · In progress
-- Combobox · In progress
-- Select · In progress
