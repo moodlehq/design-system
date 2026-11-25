@@ -20,10 +20,46 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        id: release
         with:
           config-file: .github/release-please/release-please-config.json
           manifest-file: .github/release-please/.release-please-manifest.json
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+      # Release Please only bumps package.json, the manifest and the changelog.
+      # llms.txt and docs/guidance/** embed the package version in their links,
+      # so rewrite them on the release PR branch. Version-only: no ZeroHeight
+      # fetch, so no unrelated doc changes land in the release PR.
+      - name: Checkout release PR branch
+        if: ${{ steps.release.outputs.prs_created == 'true' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ fromJSON(steps.release.outputs.pr).headBranchName }}
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+      - name: Setup Node
+        if: ${{ steps.release.outputs.prs_created == 'true' }}
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Update guidance version
+        if: ${{ steps.release.outputs.prs_created == 'true' }}
+        # Only tsx is needed; skip the full install.
+        run: npx --yes tsx@4 scripts/bump-guidance-version.ts
+
+      - name: Commit guidance version
+        if: ${{ steps.release.outputs.prs_created == 'true' }}
+        run: |
+          if git diff --quiet -- llms.txt docs/guidance; then
+            echo "Guidance already at the release version."
+            exit 0
+          fi
+          git config user.name "moodle-design-system-bot"
+          git config user.email "designsystem@moodle.com"
+          git add llms.txt docs/guidance
+          git commit -m "chore: Update guidance to release version"
+          git push
 
   deploy-storybook:
     permissions:
