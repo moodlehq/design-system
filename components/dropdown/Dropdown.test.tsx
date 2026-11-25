@@ -80,12 +80,18 @@ describe('Dropdown: Unit Test', () => {
     expect(onOpenChange).toHaveBeenCalledWith(true);
   });
 
-  it('forwards trigger configuration', () => {
-    renderDropdown({ appearance: 'emphasis', size: 'sm' });
-    const trigger = screen.getByRole('button', { name: 'Label' });
-    expect(trigger).toHaveClass('btn-secondary');
-    expect(trigger).toHaveClass('mds-btn--size-sm');
-  });
+  it.each([
+    ['emphasis', 'sm', 'btn-secondary'],
+    ['subtle', 'lg', 'btn-ghost'],
+  ] as const)(
+    'forwards trigger configuration (appearance "%s", size "%s")',
+    (appearance, size, expectedClass) => {
+      renderDropdown({ appearance, size });
+      const trigger = screen.getByRole('button', { name: 'Label' });
+      expect(trigger).toHaveClass(expectedClass);
+      expect(trigger).toHaveClass(`mds-btn--size-${size}`);
+    },
+  );
 
   it('forwards extra props and the ref to the root element', () => {
     const ref = createRef<HTMLDivElement>();

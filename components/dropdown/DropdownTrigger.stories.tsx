@@ -77,9 +77,9 @@ const meta = {
       // nav-pill is constrained to md by design.
       if: { arg: 'variant', eq: 'button' },
       control: { type: 'select' },
-      options: ['sm', 'md'],
+      options: ['sm', 'md', 'lg'],
       table: {
-        type: { summary: 'sm | md' },
+        type: { summary: 'sm | md | lg' },
         defaultValue: { summary: 'md' },
       },
     },
@@ -200,6 +200,12 @@ export const TriggerVariants: Story = {
         <Dropdown label="Small + icon" size="sm" startIcon={iconMapping.Smile}>
           {triggerItems}
         </Dropdown>
+        <Dropdown label="Large" size="lg">
+          {triggerItems}
+        </Dropdown>
+        <Dropdown label="Large + icon" size="lg" startIcon={iconMapping.Smile}>
+          {triggerItems}
+        </Dropdown>
       </div>
       {/* Special states */}
       <div style={showcaseInlineStyle}>
@@ -226,6 +232,70 @@ export const TriggerVariants: Story = {
     await expect(
       canvas.getByRole('button', { name: 'Disabled' }),
     ).toBeDisabled();
+  },
+};
+
+const largeAppearances = ['emphasis', 'default', 'subtle'] as const;
+
+/**
+ * Every appearance at `lg`, closed, with an icon, open and disabled.
+ * The open-state overrides in dropdown.css are keyed on appearance, not size,
+ * so this matrix is what gives Chromatic coverage of open × appearance at lg.
+ * Open and disabled cells render a bare DropdownTrigger with `open` so the
+ * `--open` class is applied without three menus overlapping the snapshot.
+ */
+export const LargeTriggers: Story = {
+  name: 'Large triggers',
+  parameters: showcaseParameters,
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--mds-spacing-md)',
+      }}
+    >
+      {largeAppearances.map((appearance) => (
+        <div key={appearance} style={showcaseInlineStyle}>
+          <DropdownTrigger
+            label={`${appearance} closed`}
+            appearance={appearance}
+            size="lg"
+          />
+          <DropdownTrigger
+            label={`${appearance} icon`}
+            appearance={appearance}
+            size="lg"
+            startIcon={iconMapping.Smile}
+          />
+          <DropdownTrigger
+            label={`${appearance} open`}
+            appearance={appearance}
+            size="lg"
+            open
+          />
+          <DropdownTrigger
+            label={`${appearance} disabled`}
+            appearance={appearance}
+            size="lg"
+            disabled
+          />
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvas }) => {
+    for (const appearance of largeAppearances) {
+      await expect(
+        canvas.getByRole('button', { name: `${appearance} closed` }),
+      ).toHaveAttribute('aria-expanded', 'false');
+      await expect(
+        canvas.getByRole('button', { name: `${appearance} open` }),
+      ).toHaveAttribute('aria-expanded', 'true');
+      await expect(
+        canvas.getByRole('button', { name: `${appearance} disabled` }),
+      ).toBeDisabled();
+    }
   },
 };
 

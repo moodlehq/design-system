@@ -13,7 +13,7 @@
 /* ------------------------------------------------------------------ */
 
 /* Chevron — masked so the glyph follows the trigger's text color across
-   hover/active/disabled states. md triggers use the 12×8 glyph.
+   hover/active/disabled states. md and lg triggers use the 12×8 glyph.
    Always points downward (no rotation). */
 .mds-dropdown-trigger__chevron {
   display: inline-block;

@@ -5,7 +5,8 @@ import type { ButtonVariant } from '../button/Button';
 
 type DropdownTriggerVariant = 'button' | 'nav-pill';
 type DropdownTriggerAppearance = 'emphasis' | 'default' | 'subtle';
-type DropdownTriggerSize = 'sm' | 'md';
+/** Visual size of a button-variant DropdownTrigger: `sm`, `md` or `lg`. */
+type DropdownTriggerSize = 'sm' | 'md' | 'lg';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 
@@ -24,7 +25,7 @@ const allowedAppearances: DropdownTriggerAppearance[] = [
   'default',
   'subtle',
 ];
-const allowedSizes: DropdownTriggerSize[] = ['sm', 'md'];
+const allowedSizes: DropdownTriggerSize[] = ['sm', 'md', 'lg'];
 
 // Runtime guard — icon props must be <i> or <svg> elements (same contract as Button)
 const isIconElement = (el: unknown): el is IconElement =>
@@ -40,7 +41,9 @@ export interface DropdownTriggerProps extends ButtonHTMLAttributes<HTMLButtonEle
   variant?: DropdownTriggerVariant;
   /** emphasis = filled secondary, default = outlined secondary, subtle = ghost. */
   appearance?: DropdownTriggerAppearance;
-  /** Visual size: md (default) or sm. Nav-pill variant is constrained to md. */
+  /** Visual size of the button variant: `sm`, `md` or `lg`. Maps directly onto
+   *  the Button size. Nav-pill variant is constrained to md. Has no effect
+   *  when `iconOnly` is set: icon-only triggers always render at Button lg. */
   size?: DropdownTriggerSize;
   /** Optional leading icon. Accepts only intrinsic `<i>` or `<svg>` elements. */
   startIcon?: IconElement;
@@ -144,7 +147,7 @@ export const DropdownTrigger = forwardRef<
     }
   }
 
-  // md triggers use the 12×8 chevron; sm and nav-pill use the 8×8 one.
+  // md and lg triggers use the 12×8 chevron; sm and nav-pill use the 8×8 one.
   const chevronClasses = [
     'mds-dropdown-trigger__chevron',
     resolvedSize === 'sm' || isNavPill
@@ -159,9 +162,11 @@ export const DropdownTrigger = forwardRef<
   // The chevron is passed as endIcon alongside any optional startIcon — this
   // requires Button to support both icon slots simultaneously (see Button.tsx).
   if (!isNavPill) {
-    // Icon-only triggers always use size="lg" — the lg variant changes only
-    // border-radius (md instead of pill), not spacing, so the icon-only trigger
-    // is not fully rounded. Non-icon-only triggers are restricted to sm/md.
+    // Icon-only triggers always use size="lg" — for icon-only Buttons the lg
+    // variant changes only border-radius (md instead of pill), not spacing, so
+    // the icon-only trigger is not fully rounded. This is independent of the
+    // requested size; labelled triggers pass sm/md/lg straight through to
+    // Button.
     const buttonSize = isIconOnly ? 'lg' : resolvedSize;
     return (
       <Button
