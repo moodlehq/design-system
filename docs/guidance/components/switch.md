@@ -1,7 +1,7 @@
 ---
 component: Switch
 slug: switch
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/585368-switch
 import: @moodlehq/design-system/components/switch
@@ -183,7 +183,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-switch--default)
 
-Props and types (TypeScript API): [Switch.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/switch/Switch.d.ts)
+Props and types (TypeScript API): [Switch.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/switch/Switch.d.ts)
 
 Full list of props and their types for Switch.
 

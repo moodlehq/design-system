@@ -1,7 +1,7 @@
 ---
 component: Avatar
 slug: avatar
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/65838c-avatar
 import: @moodlehq/design-system/components/avatar
@@ -145,7 +145,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-avatar--default)
 
-Props and types (TypeScript API): [Avatar.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/avatar/Avatar.d.ts)
+Props and types (TypeScript API): [Avatar.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/avatar/Avatar.d.ts)
 
 Full list of props and their types for Avatar.
 

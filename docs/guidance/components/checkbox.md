@@ -1,7 +1,7 @@
 ---
 component: Checkbox
 slug: checkbox
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/12e8f6-checkbox
 import: @moodlehq/design-system/components/checkbox
@@ -150,7 +150,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-checkbox--default)
 
-Props and types (TypeScript API): [Checkbox.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/checkbox/Checkbox.d.ts)
+Props and types (TypeScript API): [Checkbox.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/checkbox/Checkbox.d.ts)
 
 Full list of props and their types for Checkbox.
 

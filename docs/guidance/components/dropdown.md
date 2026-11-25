@@ -1,7 +1,7 @@
 ---
 component: Dropdown
 slug: dropdown
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/8381b3-dropdown
 import: @moodlehq/design-system/components/dropdown
@@ -143,7 +143,7 @@ Allowed values:
 | `label` (required) | `string` |  | Visible label text. Must be a caller-supplied translated string. For icon-only triggers it becomes the aria-label instead. |
 | `variant` | `DropdownTriggerVariant` | `'button'` | Visual form: a standalone button or a navigation pill. The nav-pill variant is constrained to Appearance=default and Size=md per the design. |
 | `appearance` | `DropdownTriggerAppearance` | `'default'` | emphasis = filled secondary, default = outlined secondary, subtle = ghost. |
-| `size` | `DropdownTriggerSize` | `'md'` | Visual size: md (default) or sm. Nav-pill variant is constrained to md. |
+| `size` | `DropdownTriggerSize` | `'md'` | Visual size of the button variant: `sm`, `md` or `lg`. Maps directly onto the Button size. Nav-pill variant is constrained to md. Has no effect when `iconOnly` is set: icon-only triggers always render at Button lg. |
 | `startIcon` | `IconElement` |  | Optional leading icon. Accepts only intrinsic `<i>` or `<svg>` elements. |
 | `iconOnly` | `boolean` | `false` | Renders only the startIcon (no label text, no chevron); the label prop is applied as aria-label so the trigger keeps an accessible name. |
 | `open` | `boolean` | `false` | Whether the dropdown this trigger controls is open. Drives aria-expanded and the pressed/active visual state (Figma State=active). |
@@ -153,7 +153,7 @@ Allowed values:
 
 - `variant`: `button`, `nav-pill`
 - `appearance`: `emphasis`, `default`, `subtle`
-- `size`: `sm`, `md`
+- `size`: `sm`, `md`, `lg`
 
 ## Built from
 
@@ -311,7 +311,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-dropdown-dropdown--default)
 
-Props and types (TypeScript API): [Dropdown.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/dropdown/Dropdown.d.ts)
+Props and types (TypeScript API): [Dropdown.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/dropdown/Dropdown.d.ts)
 
 Full list of props and their types for Dropdown.
 

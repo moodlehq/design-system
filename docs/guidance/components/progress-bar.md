@@ -1,7 +1,7 @@
 ---
 component: Progress bar
 slug: progress-bar
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/76a5ba-progress-bar
 import: @moodlehq/design-system/components/progress-bar
@@ -166,7 +166,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-progressbar--default)
 
-Props and types (TypeScript API): [ProgressBar.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/progress-bar/ProgressBar.d.ts)
+Props and types (TypeScript API): [ProgressBar.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/progress-bar/ProgressBar.d.ts)
 
 Full list of props and their types for Progress bar.
 

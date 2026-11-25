@@ -1,7 +1,7 @@
 ---
 component: Select
 slug: select
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: In progress
 source: https://design.moodle.com/98292f05f/v/latest/p/013ac0-select
 import: @moodlehq/design-system/components/select

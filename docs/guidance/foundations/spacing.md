@@ -1,6 +1,6 @@
 ---
 foundation: Spacing
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 source: https://design.moodle.com/
 ---
 

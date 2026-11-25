@@ -1,7 +1,7 @@
 ---
 component: Tag
 slug: tag
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/25b418-tag
 import: @moodlehq/design-system/components/tag
@@ -195,7 +195,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Removable](https://moodlehq.github.io/design-system/iframe.html?id=components-tag--removable)
 
-Props and types (TypeScript API): [Tag.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/tag/Tag.d.ts)
+Props and types (TypeScript API): [Tag.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/tag/Tag.d.ts)
 
 Full list of props and their types for Tag.
 
