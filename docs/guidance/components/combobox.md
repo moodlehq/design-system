@@ -1,7 +1,7 @@
 ---
 component: Combobox
 slug: combobox
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: In progress
 source: https://design.moodle.com/98292f05f/v/latest/p/37396a-combobox
 import: @moodlehq/design-system/components/combobox

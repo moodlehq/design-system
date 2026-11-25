@@ -1,7 +1,7 @@
 ---
 component: Search
 slug: input
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/38ca1d-search
 import: @moodlehq/design-system/components/input
@@ -139,7 +139,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-input-searchinput--default)
 
-Props and types (TypeScript API): [SearchInput.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/input/SearchInput.d.ts), with shared field props in [BaseInput.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/input/BaseInput.d.ts)
+Props and types (TypeScript API): [SearchInput.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/input/SearchInput.d.ts), with shared field props in [BaseInput.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/input/BaseInput.d.ts)
 
 Full list of props and their types for Search.
 

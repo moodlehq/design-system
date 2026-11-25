@@ -1,7 +1,7 @@
 ---
 component: Badge
 slug: badge
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/28c702-badge
 import: @moodlehq/design-system/components/badge
@@ -209,7 +209,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Primary](https://moodlehq.github.io/design-system/iframe.html?id=components-badge--primary)
 
-Props and types (TypeScript API): [Badge.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/badge/Badge.d.ts)
+Props and types (TypeScript API): [Badge.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/badge/Badge.d.ts)
 
 Full list of props and their types for Badge.
 

@@ -1,7 +1,7 @@
 ---
 component: Tooltip
 slug: tooltip
-package: "@moodlehq/design-system@5.5.0"
+package: "@moodlehq/design-system@5.6.0"
 status: Ready
 source: https://design.moodle.com/98292f05f/v/latest/p/59b4a5-tooltip
 import: @moodlehq/design-system/components/tooltip
@@ -166,7 +166,7 @@ Use the panel below to test every prop, state, and variant of this component int
 
 [Default](https://moodlehq.github.io/design-system/iframe.html?id=components-tooltip--default)
 
-Props and types (TypeScript API): [Tooltip.d.ts](https://unpkg.com/@moodlehq/design-system@5.5.0/dist/components/tooltip/Tooltip.d.ts)
+Props and types (TypeScript API): [Tooltip.d.ts](https://unpkg.com/@moodlehq/design-system@5.6.0/dist/components/tooltip/Tooltip.d.ts)
 
 Full list of props and their types for Tooltip.
 
