@@ -246,6 +246,26 @@ describe('Spinner: Unit Test', () => {
       expect(screen.getByRole('status')).toHaveTextContent('Still loading...');
     });
 
+    it('does not hide an already visible spinner when delay is turned on', () => {
+      vi.useFakeTimers();
+      const { rerender } = render(<Spinner labelText="Loading..." />);
+      rerender(<Spinner labelText="Loading..." delay />);
+      expect(screen.getByRole('status')).toHaveTextContent('Loading...');
+      expect(vi.getTimerCount()).toBe(0);
+    });
+
+    it('shows straight away when delay is turned off while pending', () => {
+      vi.useFakeTimers();
+      const { rerender } = render(<Spinner labelText="Loading..." delay />);
+      rerender(<Spinner labelText="Loading..." />);
+      expect(screen.getByRole('status')).toHaveTextContent('Loading...');
+      expect(vi.getTimerCount()).toBe(0);
+
+      // Turning delay back on after showing must not hide it again.
+      rerender(<Spinner labelText="Loading..." delay />);
+      expect(screen.getByRole('status')).toHaveTextContent('Loading...');
+    });
+
     it('cancels the pending show when unmounted before the delay ends', () => {
       vi.useFakeTimers();
       const { unmount } = render(<Spinner labelText="Loading..." delay />);

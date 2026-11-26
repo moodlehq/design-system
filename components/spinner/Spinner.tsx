@@ -61,19 +61,24 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(
     },
     ref,
   ) {
-    const [delayElapsed, setDelayElapsed] = useState(false);
+    // `delay` only holds back the first appearance. Once the spinner has been
+    // visible, a later switch to delay={true} must not hide it again, so this
+    // latches true and never resets.
+    const [hasShown, setHasShown] = useState(!delay);
+
+    // Turning delay off while pending shows the spinner straight away. Setting
+    // state during render is React's pattern for adjusting state from props,
+    // and it avoids painting one empty frame first.
+    if (!delay && !hasShown) setHasShown(true);
 
     useEffect(() => {
-      if (!delay) return;
-      const timer = setTimeout(
-        () => setDelayElapsed(true),
-        SPINNER_SHOW_DELAY_MS,
-      );
+      if (hasShown) return;
+      const timer = setTimeout(() => setHasShown(true), SPINNER_SHOW_DELAY_MS);
       // Unmounting before the delay ends (a quick load) cancels the show.
       return () => clearTimeout(timer);
-    }, [delay]);
+    }, [hasShown]);
 
-    const isWaiting = delay && !delayElapsed;
+    const isWaiting = !hasShown;
 
     const isAllowedSize = allowedSizes.includes(size as SpinnerSize);
     const isAllowedAppearance = allowedAppearances.includes(
