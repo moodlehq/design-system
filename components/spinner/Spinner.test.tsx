@@ -158,6 +158,22 @@ describe('Spinner: Unit Test', () => {
     expect(container.firstChild).toHaveAttribute('aria-live', 'off');
   });
 
+  // Guards the props spread order: role="status" must stay overridable.
+  it('lets consumers override the role and add aria attributes', () => {
+    const { container } = render(
+      <Spinner
+        labelText="Loading..."
+        role="alert"
+        aria-label="Uploading file"
+      />,
+    );
+    expect(container.firstChild).toHaveAttribute('role', 'alert');
+    expect(container.firstChild).toHaveAttribute(
+      'aria-label',
+      'Uploading file',
+    );
+  });
+
   it('appends a consumer className after the mds classes', () => {
     const { container } = render(
       <Spinner labelText="Loading..." className="custom-class" />,
@@ -211,6 +227,23 @@ describe('Spinner: Unit Test', () => {
       });
       expect(status.querySelector('svg')).not.toBeNull();
       expect(status).toHaveTextContent('Loading...');
+    });
+
+    // Progress-style labels ("1 of 5", "2 of 5"...) must not restart the timer,
+    // or the spinner would never appear.
+    it('does not restart the delay when labelText changes while pending', () => {
+      vi.useFakeTimers();
+      const { rerender } = render(<Spinner labelText="Loading..." delay />);
+      act(() => {
+        vi.advanceTimersByTime(200);
+      });
+      rerender(<Spinner labelText="Still loading..." delay />);
+      expect(screen.getByRole('status')).toBeEmptyDOMElement();
+
+      act(() => {
+        vi.advanceTimersByTime(100);
+      });
+      expect(screen.getByRole('status')).toHaveTextContent('Still loading...');
     });
 
     it('cancels the pending show when unmounted before the delay ends', () => {
