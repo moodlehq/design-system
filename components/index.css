@@ -22,6 +22,7 @@
 @import './radio/radio.css';
 @import './radio/radio-group.css';
 @import './select/select.css';
+@import './spinner/spinner.css';
 @import './switch/switch.css';
 @import './tag/tag.css';
 @import './textarea/textarea.css';
