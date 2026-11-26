@@ -132,18 +132,17 @@ export const Sizes: Story = {
     const statuses = canvas.getAllByRole('status');
     await expect(statuses).toHaveLength(2);
 
-    // A single-line label must still take Figma's 12px label slot, even
-    // though lines are spaced wider so wrapped labels don't overlap. Small
-    // is a row, so its height stays the 20px ring.
+    // A single-line label takes Figma's 24px label slot. Small is a row, so
+    // the label (taller than the 20px ring) sets its height.
     const [small, large] = statuses;
-    await expect(small.getBoundingClientRect().height).toBe(20);
+    await expect(small.getBoundingClientRect().height).toBe(24);
 
     const glyph = large.querySelector('svg') as SVGElement;
     const labelSlot =
       large.getBoundingClientRect().height -
       glyph.getBoundingClientRect().height -
       parseFloat(getComputedStyle(large).rowGap);
-    await expect(labelSlot).toBe(12);
+    await expect(labelSlot).toBe(24);
   },
   render: () => (
     <div style={rowStyle}>

@@ -77,21 +77,10 @@
   stroke: var(--mds-spinner-inverse-indicator);
 }
 
-/* Label: Figma binds these text tokens, including the xs line height.
-   Labels wrap so long translations reflow on narrow viewports (WCAG 1.4.10),
-   but the xs line height (12px against 16px text) would make wrapped lines
-   overlap. So lines are spaced at the default line height and negative block
-   margins trim the extra half-leading back off: a single line still occupies
-   the 12px slot Figma specifies, with the text centred in it as before. */
+/* Label: Figma's "Paragraph/Base text" style. Labels wrap so long
+   translations reflow on narrow viewports (WCAG 1.4.10). */
 .mds-spinner-label {
   min-inline-size: 0;
-  margin-block: calc(
-    (
-        var(--mds-line-height-paragraph-xs) -
-          var(--mds-line-height-paragraph-default)
-      ) /
-      2
-  );
   font-family: var(--mds-font-family-base);
   font-size: var(--mds-font-size-paragraph-default);
   font-weight: var(--mds-font-weight-regular);
