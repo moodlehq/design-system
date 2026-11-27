@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { createRef, useRef, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { Tag } from './Tag';
+import { Tag } from './Tag.js';
 
 describe('Tag: Unit Test', () => {
   describe('shared behaviour', () => {

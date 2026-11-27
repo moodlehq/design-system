@@ -9,10 +9,10 @@ import {
   useRef,
   useState,
 } from 'react';
-import { mergeRefs } from '../_internal/mergeRefs';
-import { CloseButton } from '../close-button/CloseButton';
-import type { BaseInputProps } from './BaseInput';
-import { BaseInput } from './BaseInput';
+import { mergeRefs } from '../_internal/mergeRefs.js';
+import { CloseButton } from '../close-button/CloseButton.js';
+import type { BaseInputProps } from './BaseInput.js';
+import { BaseInput } from './BaseInput.js';
 
 // Shared default so instant search has a consistent firing rate rather than
 // each consumer inventing (or omitting) its own; overridable via debounceMs.

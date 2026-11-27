@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemMultiselect } from './DropdownItemMultiselect';
+import { DropdownItemMultiselect } from './DropdownItemMultiselect.js';
 
 describe('DropdownItemMultiselect: Unit Test', () => {
   it('applies mds-dropdown-item--multiselect class and checkbox role', () => {

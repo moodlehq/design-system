@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import { FieldInfoButton } from '../_internal/FieldInfoButton.js';
 
 /** A pre-translated counter message, or a callback that builds one from the
  *  current value and maxLength (e.g. `(n, max) => t('chars', { n, max })`). */

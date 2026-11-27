@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemHeader } from './DropdownItemHeader';
+import { DropdownItemHeader } from './DropdownItemHeader.js';
 
 describe('DropdownItemHeader: Unit Test', () => {
   it('renders the header as non-interactive presentation', () => {

@@ -1,8 +1,8 @@
 import { forwardRef, useState } from 'react';
-import { Button } from '../button/Button';
-import { Tooltip } from '../tooltip/Tooltip';
-import type { BaseInputProps } from './BaseInput';
-import { BaseInput } from './BaseInput';
+import { Button } from '../button/Button.js';
+import { Tooltip } from '../tooltip/Tooltip.js';
+import type { BaseInputProps } from './BaseInput.js';
+import { BaseInput } from './BaseInput.js';
 
 /** Props for PasswordInput. */
 export interface PasswordInputProps extends Omit<

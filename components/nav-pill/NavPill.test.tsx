@@ -2,9 +2,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import * as fc from 'fast-check';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import type { NavPillProps } from './NavPill';
-import { NavPill } from './NavPill';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import type { NavPillProps } from './NavPill.js';
+import { NavPill } from './NavPill.js';
 
 // Explicit visible-character set keeps getAllByText assertions stable while
 // still exercising a wide range of label content (letters, numbers, symbols).

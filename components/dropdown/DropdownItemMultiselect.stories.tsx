@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { useArgs } from 'storybook/preview-api';
 import { expect, screen } from 'storybook/test';
-import { DropdownMenu } from './Dropdown';
-import { DropdownItemMultiselect } from './DropdownItemMultiselect';
+import { DropdownMenu } from './Dropdown.js';
+import { DropdownItemMultiselect } from './DropdownItemMultiselect.js';
 
 const showcaseParameters = {
   controls: { disable: true },

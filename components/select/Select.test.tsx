@@ -9,8 +9,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { type FormEvent, createRef } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { SelectProps } from './Select';
-import { Select } from './Select';
+import type { SelectProps } from './Select.js';
+import { Select } from './Select.js';
 
 const options: SelectProps['options'] = [
   { value: '', label: 'Select a country' },

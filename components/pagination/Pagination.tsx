@@ -5,7 +5,7 @@ import {
   resolvePaginationInputs,
   useViewportMaxVisible,
   type PageLabelFormatter,
-} from './pagination.helpers';
+} from './pagination.helpers.js';
 
 const MAX_VISIBLE_ELEMENTS = 9;
 

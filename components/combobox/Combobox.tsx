@@ -15,17 +15,17 @@ import {
   useRef,
   useState,
 } from 'react';
-import type { TagContentAvatar } from '../_internal/TagContent';
-import type { SearchInputProps } from '../input/SearchInput';
-import { SearchInput } from '../input/SearchInput';
-import { Tag } from '../tag';
-import { defaultFilterOptions } from './comboboxFilter';
-import { ComboboxListbox } from './ComboboxListbox';
+import type { TagContentAvatar } from '../_internal/TagContent.js';
+import type { SearchInputProps } from '../input/SearchInput.js';
+import { SearchInput } from '../input/SearchInput.js';
+import { Tag } from '../tag/index.js';
+import { defaultFilterOptions } from './comboboxFilter.js';
+import { ComboboxListbox } from './ComboboxListbox.js';
 import {
   useComboboxPopup,
   useComboboxRenderLimit,
   useComboboxValues,
-} from './useCombobox';
+} from './useCombobox.js';
 
 /** A single selectable row. Shapes both the listbox row and the tag it becomes. */
 export interface ComboboxOption {

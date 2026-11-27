@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { Input } from './Input';
+import { Input } from './Input.js';
 
 describe('Input: Unit Test', () => {
   it('applies the mds-input class name', () => {

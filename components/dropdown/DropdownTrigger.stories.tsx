@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
-import { Dropdown } from './Dropdown';
-import { DropdownItemAction } from './DropdownItemAction';
-import { DropdownItemDivider } from './DropdownItemDivider';
-import { DropdownItemHeader } from './DropdownItemHeader';
-import { DropdownTrigger } from './DropdownTrigger';
+import { Dropdown } from './Dropdown.js';
+import { DropdownItemAction } from './DropdownItemAction.js';
+import { DropdownItemDivider } from './DropdownItemDivider.js';
+import { DropdownItemHeader } from './DropdownItemHeader.js';
+import { DropdownTrigger } from './DropdownTrigger.js';
 
 const iconMapping = {
   Smile: <i className="fa-solid fa-face-smile" aria-hidden="true" />,

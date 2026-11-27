@@ -1,4 +1,4 @@
-import type { ComboboxOption } from './Combobox';
+import type { ComboboxOption } from './Combobox.js';
 
 /*
  * Built-in filtering for Combobox. Internal: not exported from the barrel.

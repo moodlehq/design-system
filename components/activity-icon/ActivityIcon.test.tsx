@@ -4,8 +4,8 @@ import type {
   ActivityIconAppearance,
   ActivityIconContainer,
   ActivityIconSize,
-} from './ActivityIcon';
-import { ActivityIcon } from './ActivityIcon';
+} from './ActivityIcon.js';
+import { ActivityIcon } from './ActivityIcon.js';
 
 // A stand-in for third-party artwork that is not in the icon registry.
 const customSrc = 'jessica.jpeg';

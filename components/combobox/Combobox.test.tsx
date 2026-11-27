@@ -9,9 +9,9 @@ import type { UserEvent } from '@testing-library/user-event';
 import userEvent from '@testing-library/user-event';
 import { createRef, useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import type { ComboboxOption, ComboboxProps } from './Combobox';
-import { Combobox } from './Combobox';
-import { COMBOBOX_RENDER_PAGE } from './useCombobox';
+import type { ComboboxOption, ComboboxProps } from './Combobox.js';
+import { Combobox } from './Combobox.js';
+import { COMBOBOX_RENDER_PAGE } from './useCombobox.js';
 
 const options: ComboboxOption[] = [
   { value: 'jose', label: 'José Alvarez' },

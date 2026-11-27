@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { DropdownTrigger } from './DropdownTrigger';
+import { DropdownTrigger } from './DropdownTrigger.js';
 
 describe('DropdownTrigger: Unit Test', () => {
   describe('rendering', () => {

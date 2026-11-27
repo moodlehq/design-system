@@ -14,12 +14,12 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import { FieldInfoButton } from '../_internal/FieldInfoButton.js';
 import {
   focusFirstInvalidOnSubmit,
   useSubmitAttemptTracking,
-} from '../_internal/validation';
-import { Radio } from './Radio';
+} from '../_internal/validation.js';
+import { Radio } from './Radio.js';
 
 export type RadioGroupOrientation = 'vertical' | 'horizontal';
 

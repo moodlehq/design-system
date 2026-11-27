@@ -13,11 +13,11 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FieldInfoButton } from '../_internal/FieldInfoButton';
+import { FieldInfoButton } from '../_internal/FieldInfoButton.js';
 import {
   focusFirstInvalidOnSubmit,
   useSubmitAttemptTracking,
-} from '../_internal/validation';
+} from '../_internal/validation.js';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 

@@ -6,10 +6,10 @@ import type {
   Ref,
 } from 'react';
 import { forwardRef, useRef } from 'react';
-import { getNextFocusableElement } from '../_internal/focus';
-import type { TagContentAvatar } from '../_internal/TagContent';
-import { countTagContentLines, TagContent } from '../_internal/TagContent';
-import { CloseButton } from '../close-button';
+import { getNextFocusableElement } from '../_internal/focus.js';
+import type { TagContentAvatar } from '../_internal/TagContent.js';
+import { countTagContentLines, TagContent } from '../_internal/TagContent.js';
+import { CloseButton } from '../close-button/index.js';
 
 /**
  * Link-mode colour variant. Deliberately scoped to what Figma/ZeroHeight

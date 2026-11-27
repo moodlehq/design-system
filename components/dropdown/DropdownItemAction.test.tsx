@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { DropdownItemAction } from './DropdownItemAction';
+import { DropdownItemAction } from './DropdownItemAction.js';
 
 describe('DropdownItemAction: Unit Test', () => {
   it('applies the mds-dropdown-item classes', () => {

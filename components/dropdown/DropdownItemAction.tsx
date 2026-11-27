@@ -1,9 +1,9 @@
 import { useListItem, useMergeRefs } from '@floating-ui/react';
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
-import { useDropdownContext } from './Dropdown';
-import type { IconElement } from './dropdownItemUtils';
-import { isIconElement } from './dropdownItemUtils';
+import { useDropdownContext } from './Dropdown.js';
+import type { IconElement } from './dropdownItemUtils.js';
+import { isIconElement } from './dropdownItemUtils.js';
 
 type DropdownItemActionVariant = 'default' | 'danger';
 

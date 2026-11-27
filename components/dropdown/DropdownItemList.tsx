@@ -1,7 +1,7 @@
 import { useListItem, useMergeRefs } from '@floating-ui/react';
 import type { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
-import { useDropdownContext } from './Dropdown';
+import { useDropdownContext } from './Dropdown.js';
 
 /** Props for DropdownItemList. */
 export interface DropdownItemListProps extends HTMLAttributes<HTMLDivElement> {

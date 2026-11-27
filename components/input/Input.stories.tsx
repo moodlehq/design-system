@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { Input } from './Input';
+import { Input } from './Input.js';
 
 const iconMapping = {
   None: undefined,

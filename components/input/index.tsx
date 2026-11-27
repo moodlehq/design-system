@@ -1,8 +1,8 @@
-export { Input } from './Input';
-export type { InputProps, InputType } from './Input';
+export { Input } from './Input.js';
+export type { InputProps, InputType } from './Input.js';
 
-export { PasswordInput } from './PasswordInput';
-export type { PasswordInputProps } from './PasswordInput';
+export { PasswordInput } from './PasswordInput.js';
+export type { PasswordInputProps } from './PasswordInput.js';
 
-export { SearchInput } from './SearchInput';
-export type { SearchInputProps } from './SearchInput';
+export { SearchInput } from './SearchInput.js';
+export type { SearchInputProps } from './SearchInput.js';

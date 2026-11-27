@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
-import { PasswordInput } from './PasswordInput';
+import { PasswordInput } from './PasswordInput.js';
 
 const meta = {
   title: 'Components/Input/PasswordInput',

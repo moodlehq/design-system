@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemCustom } from './DropdownItemCustom';
+import { DropdownItemCustom } from './DropdownItemCustom.js';
 
 describe('DropdownItemCustom: Unit Test', () => {
   it('renders custom slot content', () => {

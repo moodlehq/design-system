@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { useArgs } from 'storybook/preview-api';
 import { expect, waitFor } from 'storybook/test';
-import { Checkbox } from './Checkbox';
+import { Checkbox } from './Checkbox.js';
 
 const meta = {
   title: 'Components/Checkbox',

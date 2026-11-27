@@ -15,15 +15,17 @@ components/<name>/
   ComponentName.test.tsx    # Vitest unit tests
   ComponentName.stories.tsx # Storybook stories (also used for interaction/a11y tests)
   ComponentName.figma.ts    # Figma Code Connect template (see Code Connect section below)
-  index.tsx                 # local barrel: export * from './ComponentName';
+  index.tsx                 # local barrel: export * from './ComponentName.js';
 ```
 
 Add named and type exports to `components/index.tsx`:
 
 ```ts
-export { Button } from './button';
-export type { ButtonProps } from './button';
+export { Button } from './button/index.js';
+export type { ButtonProps } from './button/index.js';
 ```
+
+Relative imports of TypeScript modules must use an explicit `.js` extension (`./Button.js`, `../button/index.js`), even though the source file is `.tsx`. `vite-plugin-dts` copies specifiers into `dist/**/*.d.ts` verbatim, and consumers using `moduleResolution: node16`/`nodenext` cannot resolve extensionless ones. `tsconfig.json` uses `NodeNext` resolution, so `tsc` (and `npm run build`) rejects a missing extension. Asset imports (`.css`, `.svg`) and Code Connect `imports` snippet strings are unaffected.
 
 Consumers can import from the package root or using a component subpath:
 
@@ -113,9 +115,9 @@ Two separate rules apply:
 
 ```tsx
 // components/card/index.tsx
-export { Card } from './Card';
-export { CardHeader } from './CardHeader';
-export { CardBody } from './CardBody';
+export { Card } from './Card.js';
+export { CardHeader } from './CardHeader.js';
+export { CardBody } from './CardBody.js';
 
 // Consumer
 import { Card, CardHeader, CardBody } from '@moodlehq/design-system';

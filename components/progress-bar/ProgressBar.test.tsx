@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { ProgressBar, type ProgressBarProps } from './ProgressBar';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import { ProgressBar, type ProgressBarProps } from './ProgressBar.js';
 
 describe('ProgressBar: Unit Test', () => {
   it('applies mds-progress-bar class to the root wrapper element', () => {

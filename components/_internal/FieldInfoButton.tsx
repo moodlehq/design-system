@@ -1,5 +1,5 @@
-import { Button } from '../button';
-import { Tooltip } from '../tooltip';
+import { Button } from '../button/index.js';
+import { Tooltip } from '../tooltip/index.js';
 
 interface FieldInfoButtonProps {
   /** Tooltip text, also used as the button's accessible name. */

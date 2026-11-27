@@ -8,12 +8,12 @@ import {
   useRef,
   useState,
 } from 'react';
-import { FieldInfoButton } from '../_internal/FieldInfoButton';
-import { mergeRefs } from '../_internal/mergeRefs';
+import { FieldInfoButton } from '../_internal/FieldInfoButton.js';
+import { mergeRefs } from '../_internal/mergeRefs.js';
 import {
   focusFirstInvalidOnSubmit,
   useSubmitAttemptTracking,
-} from '../_internal/validation';
+} from '../_internal/validation.js';
 
 /** A single choice, rendered as a native `<option>`. */
 export interface SelectOption {

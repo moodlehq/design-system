@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect } from 'storybook/test';
-import { resolveColourToken } from '../../tests/utils/resolveColourToken';
-import { Button } from '../button';
-import type { TagAvatar, TagVariant } from './Tag';
-import { Tag } from './Tag';
+import { resolveColourToken } from '../../tests/utils/resolveColourToken.js';
+import { Button } from '../button/index.js';
+import type { TagAvatar, TagVariant } from './Tag.js';
+import { Tag } from './Tag.js';
 
 const PLACEHOLDER_IMG = 'jessica.jpeg';
 

@@ -2,8 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { Dropdown, DropdownMenu } from './Dropdown';
-import { DropdownItemAction } from './DropdownItemAction';
+import { Dropdown, DropdownMenu } from './Dropdown.js';
+import { DropdownItemAction } from './DropdownItemAction.js';
 
 const renderDropdown = (props = {}) =>
   render(

@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { Textarea } from './Textarea';
+import { Textarea } from './Textarea.js';
 
 describe('Textarea: Unit Test', () => {
   it('applies mds-textarea class to the wrapper', () => {

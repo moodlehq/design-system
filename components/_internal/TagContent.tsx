@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import type { AvatarProps, AvatarSize } from '../avatar';
-import { Avatar } from '../avatar';
+import type { AvatarProps, AvatarSize } from '../avatar/index.js';
+import { Avatar } from '../avatar/index.js';
 
 /**
  * Shared, presentational-only layout for Tag's identity content: the optional

@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import fc from 'fast-check';
 import { type JSX, useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { type SwitchProps, Switch } from './Switch';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import { type SwitchProps, Switch } from './Switch.js';
 
 const fuzzTextCharacters =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:\'"<>.,?/\\`~';

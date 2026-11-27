@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import type React from 'react';
 import { expect } from 'storybook/test';
-import { Avatar } from './Avatar';
+import { Avatar } from './Avatar.js';
 
 // Served from .storybook/assets/ via Storybook's staticDirs — a plain URL keeps the
 // Controls panel readable and works offline without an external image service.

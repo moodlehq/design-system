@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { Badge } from './Badge';
+import { Badge } from './Badge.js';
 
 describe('Badge: Unit Test', () => {
   it('renders the label text', () => {

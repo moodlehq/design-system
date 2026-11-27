@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { Button, type ButtonProps } from './Button';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import { Button, type ButtonProps } from './Button.js';
 
 const fuzzLabelCharacters =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:'<>.,.?/";

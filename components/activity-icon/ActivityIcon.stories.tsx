@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, waitFor } from 'storybook/test';
-import { ActivityIcon } from './ActivityIcon';
+import { ActivityIcon } from './ActivityIcon.js';
 import {
   type ActivityIconCategory,
   type ActivityIconName,
   activityIconCategories,
   activityIconNames,
   activityIconRegistry,
-} from './activityIconRegistry';
+} from './activityIconRegistry.js';
 
 const meta = {
   title: 'Components/ActivityIcon',

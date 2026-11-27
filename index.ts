@@ -4,4 +4,4 @@ import './tokens/css/index.css';
 
 import './components/index.css';
 
-export * from './components';
+export * from './components/index.js';
