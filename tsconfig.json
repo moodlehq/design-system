@@ -2,11 +2,14 @@
   "compilerOptions": {
     "target": "ES2022", // Specifies the JavaScript version to target when transpiling code.
     "lib": ["ES2022", "DOM"], // Specifies the libraries available for the code.
-    "module": "ESNext", // Defines the module system to use for code generation.
+    // NodeNext rather than bundler resolution, even though Vite does the bundling: vite-plugin-dts copies
+    // relative import specifiers into dist/**/*.d.ts verbatim, and consumers using node16/nodenext resolution
+    // can only follow them if they carry an explicit extension (`./Button.js`, `./button/index.js`).
+    // NodeNext makes `tsc` reject extensionless relative imports in the shipped source.
+    "module": "NodeNext", // Defines the module system to use for code generation.
+    "moduleResolution": "NodeNext", // Requires explicit .js extensions on relative imports (see above).
     "skipLibCheck": true, // Skips type checking of declaration files.
 
-    /* Bundler mode */
-    "moduleResolution": "bundler", // Specifies how modules are resolved when bundling.
     "allowImportingTsExtensions": true, // Allows importing TypeScript files with extensions.
     "resolveJsonModule": true, // Enables importing JSON modules.
     "isolatedModules": true, // Ensures each file is treated as a separate module.

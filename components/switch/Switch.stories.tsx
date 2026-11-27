@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { useArgs } from 'storybook/preview-api';
 import { expect, fn } from 'storybook/test';
-import { type SwitchVariant, Switch } from './Switch';
+import { type SwitchVariant, Switch } from './Switch.js';
 
 const meta = {
   title: 'Components/Switch',

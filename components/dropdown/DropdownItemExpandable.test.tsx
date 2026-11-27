@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { DropdownItemAction } from './DropdownItemAction';
-import { DropdownItemExpandable } from './DropdownItemExpandable';
+import { DropdownItemAction } from './DropdownItemAction.js';
+import { DropdownItemExpandable } from './DropdownItemExpandable.js';
 
 describe('DropdownItemExpandable: Unit Test', () => {
   it('opens and closes its submenu on click', async () => {

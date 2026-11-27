@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ComponentType } from 'react';
 import { useEffect, useState } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
-import type { ComboboxOption, ComboboxProps } from './Combobox';
-import { Combobox } from './Combobox';
+import type { ComboboxOption, ComboboxProps } from './Combobox.js';
+import { Combobox } from './Combobox.js';
 
 // ComboboxProps is a union (single vs multiple value shapes). Stories flip
 // `multiple` through a control, so they are typed against a flat version.

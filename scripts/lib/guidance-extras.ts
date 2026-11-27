@@ -202,7 +202,8 @@ export function builtFrom(
 
   const components = new Set<string>();
   for (const m of source.matchAll(
-    /from\s+['"]\.\.\/([\w-]+)(?:\/[\w-]+)?['"]/g,
+    // Source imports carry an explicit `.js` extension (`../button/index.js`) for NodeNext resolution.
+    /from\s+['"]\.\.\/([\w-]+)(?:\/[\w-]+)?(?:\.js)?['"]/g,
   )) {
     if (allSlugs.includes(m[1]) && m[1] !== slug) components.add(m[1]);
   }

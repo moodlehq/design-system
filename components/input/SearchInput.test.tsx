@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SearchInput } from './SearchInput';
+import { SearchInput } from './SearchInput.js';
 
 describe('SearchInput: Unit Test', () => {
   it('applies the mds-search-input class name', () => {

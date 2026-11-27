@@ -1,1 +1,1 @@
-export * from './NavPill';
+export * from './NavPill.js';

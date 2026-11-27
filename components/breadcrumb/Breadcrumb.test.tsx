@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { Breadcrumb, type BreadcrumbItem } from './Breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from './Breadcrumb.js';
 
 const resizeObserverMock = vi.fn(
   class {

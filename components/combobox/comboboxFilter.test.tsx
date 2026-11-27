@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { ComboboxOption } from './Combobox';
-import { defaultFilterOptions } from './comboboxFilter';
+import type { ComboboxOption } from './Combobox.js';
+import { defaultFilterOptions } from './comboboxFilter.js';
 
 const labelsOf = (result: ComboboxOption[]) =>
   result.map((option) => option.label);

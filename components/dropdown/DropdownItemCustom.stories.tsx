@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect } from 'storybook/test';
-import { Checkbox } from '../checkbox';
-import { Choicebox } from '../choicebox';
-import { DropdownMenu } from './Dropdown';
-import { DropdownItemAction } from './DropdownItemAction';
-import { DropdownItemCustom } from './DropdownItemCustom';
-import { DropdownItemDivider } from './DropdownItemDivider';
-import { DropdownItemExpandable } from './DropdownItemExpandable';
-import { DropdownItemSelect } from './DropdownItemSelect';
+import { Checkbox } from '../checkbox/index.js';
+import { Choicebox } from '../choicebox/index.js';
+import { DropdownMenu } from './Dropdown.js';
+import { DropdownItemAction } from './DropdownItemAction.js';
+import { DropdownItemCustom } from './DropdownItemCustom.js';
+import { DropdownItemDivider } from './DropdownItemDivider.js';
+import { DropdownItemExpandable } from './DropdownItemExpandable.js';
+import { DropdownItemSelect } from './DropdownItemSelect.js';
 
 const meta = {
   title: 'Components/Dropdown/DropdownItemCustom',

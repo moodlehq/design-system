@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, waitFor } from 'storybook/test';
-import { Button } from '../button';
-import { RadioGroup, type RadioGroupOption } from './RadioGroup';
+import { Button } from '../button/index.js';
+import { RadioGroup, type RadioGroupOption } from './RadioGroup.js';
 
 const frequencyOptions: RadioGroupOption[] = [
   { value: 'daily', label: 'Daily' },

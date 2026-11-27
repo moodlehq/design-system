@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, screen, userEvent, within } from 'storybook/test';
-import { Breadcrumb, type BreadcrumbItem } from './Breadcrumb';
+import { Breadcrumb, type BreadcrumbItem } from './Breadcrumb.js';
 
 // ─── Sample data ──────────────────────────────────────────────────────────────
 

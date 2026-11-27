@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useArgs } from 'storybook/preview-api';
 import { expect } from 'storybook/test';
-import { FavouriteButton } from './FavouriteButton';
+import { FavouriteButton } from './FavouriteButton.js';
 
 const meta = {
   title: 'Components/FavouriteButton',

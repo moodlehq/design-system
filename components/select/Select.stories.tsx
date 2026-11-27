@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
-import type { SelectProps } from './Select';
-import { Select } from './Select';
+import type { SelectProps } from './Select.js';
+import { Select } from './Select.js';
 
 const countryOptions: SelectProps['options'] = [
   { value: '', label: 'Select a country' },

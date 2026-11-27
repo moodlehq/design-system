@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
-import { SearchInput } from './SearchInput';
+import { SearchInput } from './SearchInput.js';
 
 const meta = {
   title: 'Components/Input/SearchInput',

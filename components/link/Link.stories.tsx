@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fireEvent, fn } from 'storybook/test';
-import { Link } from './Link';
+import { Link } from './Link.js';
 
 const iconMapping = {
   'Arrow Left': <i className="fa-solid fa-arrow-left" aria-hidden="true" />,

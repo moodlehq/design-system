@@ -1,8 +1,8 @@
 import { useListItem, useMergeRefs } from '@floating-ui/react';
 import type { HTMLAttributes } from 'react';
 import { forwardRef } from 'react';
-import { Checkbox } from '../checkbox';
-import { useDropdownContext } from './Dropdown';
+import { Checkbox } from '../checkbox/index.js';
+import { useDropdownContext } from './Dropdown.js';
 
 /** Props for DropdownItemMultiselect. */
 export interface DropdownItemMultiselectProps extends HTMLAttributes<HTMLDivElement> {

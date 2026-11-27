@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import type { ComponentPropsWithoutRef } from 'react';
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import type { PaginationProps } from './Pagination';
-import { Pagination } from './Pagination';
+import type { PaginationProps } from './Pagination.js';
+import { Pagination } from './Pagination.js';
 
 const defaultProps: PaginationProps = {
   totalPages: 5,

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect } from 'storybook/test';
-import { CloseButton } from './CloseButton';
+import { CloseButton } from './CloseButton.js';
 
 const meta = {
   title: 'Components/CloseButton',

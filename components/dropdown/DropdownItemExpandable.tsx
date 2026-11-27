@@ -17,7 +17,11 @@ import {
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { forwardRef, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { DropdownContext, DropdownMenu, useDropdownContext } from './Dropdown';
+import {
+  DropdownContext,
+  DropdownMenu,
+  useDropdownContext,
+} from './Dropdown.js';
 
 /** Props for DropdownItemExpandable. */
 export interface DropdownItemExpandableProps extends ButtonHTMLAttributes<HTMLButtonElement> {

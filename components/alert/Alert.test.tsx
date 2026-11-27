@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { Alert } from './Alert';
+import { Alert } from './Alert.js';
 
 describe('Alert: Unit Test', () => {
   it('applies mds and bootstrap alert classes for default info variant', () => {

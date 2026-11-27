@@ -33,8 +33,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import type { DropdownTriggerProps } from './DropdownTrigger';
-import { DropdownTrigger } from './DropdownTrigger';
+import type { DropdownTriggerProps } from './DropdownTrigger.js';
+import { DropdownTrigger } from './DropdownTrigger.js';
 
 type IconElement = ReactElement<'i' | 'svg'>;
 type CustomTriggerProps = React.HTMLProps<HTMLElement> &

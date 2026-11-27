@@ -146,7 +146,8 @@ function getInternalCssDependencies(
   for (const file of sourceFiles) {
     const code = fs.readFileSync(path.join(componentDir, file), 'utf8');
     for (const match of code.matchAll(
-      /from\s+['"]\.\.\/_internal\/(\w+)['"]/g,
+      // Source imports carry an explicit `.js` extension (`../_internal/TagContent.js`) for NodeNext resolution.
+      /from\s+['"]\.\.\/_internal\/(\w+)(?:\.js)?['"]/g,
     )) {
       importedHelpers.add(match[1].toLowerCase());
     }

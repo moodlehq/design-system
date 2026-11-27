@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemList } from './DropdownItemList';
+import { DropdownItemList } from './DropdownItemList.js';
 
 describe('DropdownItemList: Unit Test', () => {
   it('applies list classes and menuitemradio semantics', () => {

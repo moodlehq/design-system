@@ -1,1 +1,1 @@
-export * from './Choicebox';
+export * from './Choicebox.js';

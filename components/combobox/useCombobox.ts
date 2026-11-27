@@ -18,7 +18,7 @@ import type {
   RefObject,
 } from 'react';
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import type { ComboboxOption } from './Combobox';
+import type { ComboboxOption } from './Combobox.js';
 
 /*
  * State and wiring hooks for Combobox. Internal: not exported from the barrel.

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { countTagContentLines, TagContent } from './TagContent';
+import { countTagContentLines, TagContent } from './TagContent.js';
 
 // Guards the host contract documented in TagContent.tsx: the helper is
 // layout only, so hosts like a combobox `role="option"` row can wrap it

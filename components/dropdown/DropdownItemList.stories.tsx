@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, screen } from 'storybook/test';
-import { DropdownMenu } from './Dropdown';
-import { DropdownItemList } from './DropdownItemList';
+import { DropdownMenu } from './Dropdown.js';
+import { DropdownItemList } from './DropdownItemList.js';
 
 const meta = {
   title: 'Components/Dropdown/DropdownItemList',

@@ -2,8 +2,8 @@ import type { useInteractions } from '@floating-ui/react';
 import { FloatingPortal } from '@floating-ui/react';
 import type { CSSProperties, HTMLAttributes, MouseEvent } from 'react';
 import { memo } from 'react';
-import { TagContent } from '../_internal/TagContent';
-import type { ComboboxOption } from './Combobox';
+import { TagContent } from '../_internal/TagContent.js';
+import type { ComboboxOption } from './Combobox.js';
 
 /*
  * Display for Combobox's listbox. Internal: not exported from the barrel. All

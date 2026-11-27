@@ -5,8 +5,8 @@ import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { type RadioProps, Radio } from './Radio';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import { type RadioProps, Radio } from './Radio.js';
 
 // Read from disk: Vitest stubs CSS imports (including `?raw`) as empty strings.
 // (Not `new URL('./radio.css', import.meta.url)`: Vite rewrites that pattern

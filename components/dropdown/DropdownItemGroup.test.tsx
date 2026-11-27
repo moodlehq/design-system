@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemAction } from './DropdownItemAction';
-import { DropdownItemGroup } from './DropdownItemGroup';
+import { DropdownItemAction } from './DropdownItemAction.js';
+import { DropdownItemGroup } from './DropdownItemGroup.js';
 
 describe('DropdownItemGroup: Unit Test', () => {
   it('renders role=group with the label as accessible name', () => {

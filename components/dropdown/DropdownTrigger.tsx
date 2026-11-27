@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactElement } from 'react';
 import { forwardRef, isValidElement } from 'react';
-import { Button } from '../button';
-import type { ButtonVariant } from '../button/Button';
+import type { ButtonVariant } from '../button/Button.js';
+import { Button } from '../button/index.js';
 
 type DropdownTriggerVariant = 'button' | 'nav-pill';
 type DropdownTriggerAppearance = 'emphasis' | 'default' | 'subtle';

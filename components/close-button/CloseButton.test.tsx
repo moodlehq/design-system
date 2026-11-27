@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { CloseButton } from './CloseButton';
+import { CloseButton } from './CloseButton.js';
 
 describe('CloseButton: Unit Test', () => {
   it.each(['sm', 'md', 'lg'] as const)(

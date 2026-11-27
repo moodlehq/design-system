@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemSelect } from './DropdownItemSelect';
+import { DropdownItemSelect } from './DropdownItemSelect.js';
 
 describe('DropdownItemSelect: Unit Test', () => {
   it('exposes radio-like semantics with the selected state', () => {

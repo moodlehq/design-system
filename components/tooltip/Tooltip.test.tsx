@@ -3,8 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactElement } from 'react';
 import { describe, expect, it } from 'vitest';
-import { Button } from '../button';
-import { Tooltip } from './Tooltip';
+import { Button } from '../button/index.js';
+import { Tooltip } from './Tooltip.js';
 
 describe('Tooltip: Unit Test', () => {
   describe('rendering', () => {

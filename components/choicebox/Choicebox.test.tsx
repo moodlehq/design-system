@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import fc from 'fast-check';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { type ChoiceboxProps, Choicebox } from './Choicebox';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import { type ChoiceboxProps, Choicebox } from './Choicebox.js';
 
 const fuzzLabelCharacters =
   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:'<>.,.?/";

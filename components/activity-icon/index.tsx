@@ -1,1 +1,1 @@
-export * from './ActivityIcon';
+export * from './ActivityIcon.js';

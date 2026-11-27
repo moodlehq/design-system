@@ -1,9 +1,9 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { useRef, useState } from 'react';
-import { getNextFocusableElement } from '../_internal/focus';
-import type { ButtonProps } from '../button';
-import { Button } from '../button';
-import { CloseButton } from '../close-button';
+import { getNextFocusableElement } from '../_internal/focus.js';
+import type { ButtonProps } from '../button/index.js';
+import { Button } from '../button/index.js';
+import { CloseButton } from '../close-button/index.js';
 
 /** Semantic type of an Alert: `info`, `success`, `warning` or `danger`. */
 export type AlertType = 'info' | 'success' | 'warning' | 'danger';

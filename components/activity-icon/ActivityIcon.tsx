@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import type {
   ActivityIconCategory,
   ActivityIconName,
-} from './activityIconRegistry';
+} from './activityIconRegistry.js';
 import {
   activityIconCategories,
   activityIconNames,
   activityIconRegistry,
-} from './activityIconRegistry';
+} from './activityIconRegistry.js';
 
 const iconGlob = import.meta.glob<{ default: string }>('./assets/*.svg', {
   eager: false,

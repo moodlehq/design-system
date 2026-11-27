@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useEffect, useState } from 'react';
 import { expect, waitFor } from 'storybook/test';
-import { DropdownMenu } from './Dropdown';
-import { DropdownItemAction } from './DropdownItemAction';
-import { DropdownItemExpandable } from './DropdownItemExpandable';
+import { DropdownMenu } from './Dropdown.js';
+import { DropdownItemAction } from './DropdownItemAction.js';
+import { DropdownItemExpandable } from './DropdownItemExpandable.js';
 
 const meta = {
   title: 'Components/Dropdown/DropdownItemExpandable',

@@ -1,8 +1,8 @@
 import type { ComponentPropsWithoutRef, ReactElement } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { Dropdown, DropdownItemAction } from '../dropdown';
-import { Link } from '../link';
-import { Tooltip } from '../tooltip';
+import { Dropdown, DropdownItemAction } from '../dropdown/index.js';
+import { Link } from '../link/index.js';
+import { Tooltip } from '../tooltip/index.js';
 
 /** A single entry in a Breadcrumb trail. */
 export interface BreadcrumbItem {

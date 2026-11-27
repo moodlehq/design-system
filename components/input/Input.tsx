@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import type { BaseInputProps } from './BaseInput';
-import { BaseInput } from './BaseInput';
+import type { BaseInputProps } from './BaseInput.js';
+import { BaseInput } from './BaseInput.js';
 
 /** Text-like `type` values supported by Input. Passwords use PasswordInput instead. */
 export type InputType = 'email' | 'number' | 'tel' | 'text' | 'url';

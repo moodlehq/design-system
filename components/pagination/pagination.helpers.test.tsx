@@ -4,7 +4,7 @@ import {
   calculateVisiblePageNumbers,
   resolvePaginationInputs,
   useViewportMaxVisible,
-} from './pagination.helpers';
+} from './pagination.helpers.js';
 
 function ViewportProbe() {
   const viewportMaxVisible = useViewportMaxVisible();

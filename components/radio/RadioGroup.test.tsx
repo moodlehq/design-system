@@ -2,8 +2,8 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { type ReactNode, createRef, useState } from 'react';
 import { afterEach, describe, expect, it, onTestFinished, vi } from 'vitest';
-import { Input } from '../input';
-import { RadioGroup, type RadioGroupOption } from './RadioGroup';
+import { Input } from '../input/index.js';
+import { RadioGroup, type RadioGroupOption } from './RadioGroup.js';
 
 const options: RadioGroupOption[] = [
   { value: 'daily', label: 'Daily' },

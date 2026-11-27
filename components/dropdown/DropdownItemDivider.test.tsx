@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { DropdownItemDivider } from './DropdownItemDivider';
+import { DropdownItemDivider } from './DropdownItemDivider.js';
 
 describe('DropdownItemDivider: Unit Test', () => {
   it('renders the divider as a separator', () => {

@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import fc from 'fast-check';
 import { type JSX } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { fuzzComponent } from '../../tests/utils/fuzzComponent';
-import { type CheckboxProps, Checkbox } from './Checkbox';
+import { fuzzComponent } from '../../tests/utils/fuzzComponent.js';
+import { type CheckboxProps, Checkbox } from './Checkbox.js';
 
 describe('Checkbox: Unit Test', () => {
   const expectDevWarning = (
